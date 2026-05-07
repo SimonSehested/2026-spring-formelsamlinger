@@ -1,0 +1,97 @@
+\section{Frequency and time-domain analysis}
+
+\subsection{Steady-state gain}
+
+\subsubsection{DC gain}
+\[
+K_{\mathrm{ss}}=G(0)=\lim_{s\to 0}G(s)
+\]
+The steady-state gain is the output/input ratio for constant inputs when the final value exists.
+
+\subsubsection{Final value theorem}
+\[
+\lim_{t\to\infty}y(t)=\lim_{s\to 0}sY(s)
+\]
+The theorem applies when all poles of \(sY(s)\) are in the open left half-plane.
+
+\subsection{Frequency response}
+
+\subsubsection{Frequency response from transfer function}
+\[
+G(j\omega)=G(s)\big|_{s=j\omega}
+\]
+The frequency response gives magnitude and phase for sinusoidal steady-state inputs.
+
+\subsubsection{Sinusoidal steady-state output}
+\[
+u(t)=A\sin(\omega t)
+\quad\Longrightarrow\quad
+y_{\mathrm{ss}}(t)=A|G(j\omega)|\sin\bigl(\omega t+\angle G(j\omega)\bigr)
+\]
+The magnitude scales the sinusoid and the phase shifts it.
+
+\subsection{First-order response}
+
+\subsubsection{First-order transfer function}
+\[
+G(s)=\frac{K}{\tau s+1}
+\]
+The parameter \(K\) is the DC gain and \(\tau\) is the time constant.
+
+\subsubsection{First-order step response}
+\[
+y(t)=K\left(1-e^{-t/\tau}\right)u(t)
+\]
+At \(t=\tau\), the response has reached approximately \(63.2\%\) of its final value.
+
+\subsection{Second-order response}
+
+\subsubsection{Standard second-order system}
+\[
+G(s)=\frac{\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2}
+\]
+The natural frequency \(\omega_n\) sets the time scale, and the damping ratio \(\zeta\) sets oscillation and overshoot.
+
+\subsubsection{Second-order poles}
+\[
+p_{1,2}=-\zeta\omega_n\pm j\omega_n\sqrt{1-\zeta^2}
+\]
+Complex poles occur for \(0<\zeta<1\) and create oscillatory transients.
+
+\subsubsection{Percent overshoot}
+\[
+M_p=100e^{-\zeta\pi/\sqrt{1-\zeta^2}}\%
+\]
+Overshoot decreases as damping ratio increases. This formula is used for unit-step second-order specifications.
+
+\subsubsection{Settling time approximation}
+\[
+t_s\approx \frac{4}{\zeta\omega_n}
+\]
+The approximation corresponds to the common \(2\%\) settling-time rule.
+
+\subsubsection{Rise time and bandwidth rule}
+\[
+t_r\approx \frac{1.8}{\omega_n}
+\]
+This is a compact lookup approximation for underdamped second-order responses. % TODO: verify from lecture slides
+
+\subsection{Stability from poles}
+
+\subsubsection{Asymptotic stability}
+\[
+\operatorname{Re}(p_k)<0\quad\text{for all poles }p_k
+\]
+All poles must lie in the open left half-plane for asymptotic stability.
+
+\subsubsection{Unstable poles}
+\[
+\exists k:\operatorname{Re}(p_k)>0
+\]
+Any pole in the right half-plane makes the transfer function unstable.
+
+\subsubsection{Marginal stability}
+\[
+\operatorname{Re}(p_k)\leq 0,\quad \text{simple poles allowed on }j\omega\text{-axis}
+\]
+Repeated poles on the imaginary axis or at the origin are not marginally stable in the bounded-response sense.

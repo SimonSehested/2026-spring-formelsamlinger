@@ -1,0 +1,2667 @@
+SOURCE: input\lectures\22050 L06 - Sampling and Applications of Fourier Transformation 260120.pdf
+PAGES: 106
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impulse trains
+Sampling
+Applications of Fourier transformation
+22050 Continuous-Time Signals and Linear Systems
+Kaj-Åge Henneberg
+L06
+1
+
+-- 1 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Copyright © 2020 – current year. Kaj-Åge Henneberg. All rights reserved.
+The reader of this document is granted permission to:
+• 	Read the document in a PDF reader.
+• 	Make annotations in a private copy of the document.
+• 	Store local copies for private use.
+The reader is not permitted to:
+• 	Change the document other than adding annotations for personal use.
+• 	Reproduce content in any ways or means.
+• 	Redistribute the document.
+Direct consequences:
+• 	The reader is not permitted to make screen dumps of content and insert it in other documents.
+• 	In course assignments, the reader is permitted to write the same equations and draw the same diagrams,
+but should do this using their own tools.
+2
+
+-- 2 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Course overview
+• System
+– Model
+– Response
+– Performance
+• Domains
+– Time
+– Frequency
+– s-domain
+Stability
+System
+response
+System model
+ODE
+Stability
+System
+response
+System model
+s-analysis
+Time
+domain
+Frequency
+domain
+Laplace
+domain
+Bode Plot
+Fourier
+Analysis
+System model
+jw-analysis
+Filters
+3
+
+-- 3 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Lecture plan
+• 	Review of Fourier transformation
+• 	Fourier transform of the impulse train
+• 	Convolution with an impulse train
+• 	Multiplication with an impulse train (sampling)
+• 	Ideal and practical sampling
+• 	Ideal and practical reconstruction from samples
+Lathi: 5.0 - 5.2 incl.
+• 	Amplitude and phase spectra
+• 	Fourier analysis of filter circuits
+• 	First order lowpass filter
+• 	Nodal equations in frequency domain
+• 	Asymptote analysis
+• 	Frequency scaling
+• 	Impedance scaling
+• 	AC sweep
+• 	First order highpass
+• 	Nodal equations in frequency domain
+• 	Asymptote analysis
+• 	Frequency scaling
+• 	Impedance scaling
+• 	AC sweep
+4
+
+-- 4 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Review: Transform pair
+Forward
+Transform:
+𝑋𝑋 𝜔𝜔 	= 	�
+−∞
+∞
+𝑥𝑥 𝑡𝑡 𝑒𝑒 −𝑗𝑗𝑗𝑗𝑗𝑗 𝑑𝑑𝑡𝑡
+𝑥𝑥 𝑡𝑡 	= 1
+2𝜋𝜋 �
+−∞
+∞
+𝑋𝑋 𝜔𝜔 	𝑒𝑒 𝑗𝑗𝑗𝑗𝑗𝑗 𝑑𝑑𝜔𝜔
+Inverse
+Transform:
+Analysis
+Synthesis
+With this set of transforms we can
+go back and forth between time
+domain 	𝑥𝑥 𝑡𝑡 	and frequency domain
+𝑋𝑋 𝜔𝜔 	.
+We say that 𝑋𝑋 𝜔𝜔 	is the Fourier
+transform of 𝑥𝑥(𝑡𝑡), and that 𝑥𝑥 𝑡𝑡 	is
+the inverse Fourier transform of
+𝑋𝑋(𝜔𝜔).
+As 𝑋𝑋(𝜔𝜔) is a continuous density
+distribution of sinusoidal basis
+functions, 𝑋𝑋(𝜔𝜔) is also called a
+frequency spectrum.
+The spectrum is a complex valued
+function of frequency with modulus
+and angle:
+𝑋𝑋 𝜔𝜔 	= 	𝑋𝑋 𝜔𝜔 	𝑒𝑒 𝑗𝑗𝑗𝑋𝑋 𝑗𝑗 : Frequency spectrum
+𝑋𝑋 𝜔𝜔 	: Amplitude spectrum
+𝑗𝑋𝑋 𝜔𝜔 	: Phase spectrum
+5
+
+-- 5 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Review: Fourier Theorems
+𝑥𝑥 𝑎𝑎𝑡𝑡 1
+𝑎𝑎 𝑋𝑋 𝜔𝜔
+𝑎𝑎
+Time scaling:
+𝑥𝑥(𝑡𝑡 − 𝑡𝑡0) 	𝑒𝑒 −𝑗𝑗𝑗𝑗𝑗𝑗0 𝑋𝑋 𝜔𝜔	Time shift:
+𝑥𝑥 𝑡𝑡 𝑒𝑒 𝑗𝑗𝑗𝑗0𝑗𝑗 𝑋𝑋 𝜔𝜔 − 𝜔𝜔 0	Frequency shift:
+𝑥𝑥 𝑡𝑡 	∗ ℎ(𝑡𝑡) 	𝐻𝐻 𝜔𝜔 	𝑋𝑋 𝜔𝜔	Time domain convolution:
+1
+2𝜋𝜋 𝑋𝑋 𝜔𝜔 	∗ 𝐻𝐻(𝜔𝜔) 	ℎ 𝑡𝑡 𝑥𝑥 𝑡𝑡	Frequency domain convolution:
+�
+−∞
+𝑗𝑗
+𝑥𝑥 𝜏𝜏 𝑑𝑑𝜏𝜏 	𝜋𝜋𝑋𝑋 0 𝛿𝛿 𝜔𝜔 	+ 𝑋𝑋 𝜔𝜔
+𝑗𝑗𝜔𝜔	Time domain integration:
+𝑑𝑑𝑥𝑥
+𝑑𝑑𝑡𝑡 𝑗𝑗𝜔𝜔𝑋𝑋 𝜔𝜔	Time domain differentiation:
+6
+
+-- 6 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Review: Temporal Differentiation
+̈
+	𝑦𝑦 + 𝑎𝑎1̇ 𝑦𝑦 + 𝑎𝑎 0 𝑦𝑦 = 𝑏𝑏2̈ 𝑥𝑥 + 𝑏𝑏1̇ 𝑥𝑥 + 𝑏𝑏0 𝑥𝑥
+𝑗𝑗𝜔𝜔 2 + 𝑎𝑎1 ⋅ 	𝑗𝑗𝜔𝜔 	+ 𝑎𝑎0 𝑌𝑌 𝜔𝜔 	= 	𝑏𝑏2 ⋅ 	𝑗𝑗𝜔𝜔 2 + 𝑏𝑏1 ⋅ 	𝑗𝑗𝜔𝜔 	+ 𝑏𝑏0 𝑋𝑋 𝜔𝜔
+𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = 𝐻𝐻 𝜔𝜔 	= 𝑏𝑏2 ⋅ 	𝑗𝑗𝜔𝜔 2 + 𝑏𝑏1 ⋅ 	𝑗𝑗𝜔𝜔 	+ 𝑏𝑏0
+𝑗𝑗𝜔𝜔 2 + 𝑎𝑎1 ⋅ 	𝑗𝑗𝜔𝜔 	+ 𝑎𝑎0
+= 𝑃𝑃(𝑗𝑗𝜔𝜔)
+𝑄𝑄 𝑗𝑗𝜔𝜔
+System frequency
+characteristic:
+Application of the transform pair
+𝑑𝑑
+𝑑𝑑𝑡𝑡 𝑗𝑗𝜔𝜔
+We now have the means to Fourier transform a differential equation in order to obtain the frequency
+characteristic of the system.
+Conversely, if we have the frequency characteristic, we can translate it into the differential equation
+for the system. In many cases it might be faster to derive 𝐻𝐻(𝜔𝜔) from an electric circuit diagram first
+and then obtain the differential equation from 𝐻𝐻 𝜔𝜔 .
+In cases where we are only interested in 𝐻𝐻 𝜔𝜔 , we do not need to derive the differential equation.
+7
+
+-- 7 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Sampling
+Fig. 5.1 in the textbook shows that if
+we multiply a time signal 𝑥𝑥(𝑡𝑡) by a
+train of impulse functions 𝛿𝛿 𝑇𝑇(𝑡𝑡), a new
+signal is obtained 𝑥𝑥(𝑡𝑡) which is zero
+everywhere except for impulses
+located at discrete times 𝑛𝑛𝑛𝑛. The
+strength of each impulse equals the
+amplitude of 𝑥𝑥(𝑛𝑛𝑛𝑛).
+We will call 𝑥𝑥(𝑡𝑡) a sampled version of
+𝑥𝑥(𝑡𝑡).
+The amplitude spectrum of the original
+signal is shown at the top on the right-
+hand side. The amplitude spectrum of
+𝑥𝑥(𝑡𝑡) is shown at the bottom on the
+right-hand side.
+8
+
+-- 8 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Fourier Transformation of Periodic Signals
+𝑥𝑥 𝑡𝑡 	= 	�
+𝑛𝑛=−∞
+∞
+𝑋𝑋𝑛𝑛 𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗0𝑗𝑗
+𝑋𝑋 𝜔𝜔 	= 𝓕𝓕{𝑥𝑥 𝑡𝑡 } = 𝓕𝓕 	�
+𝑛𝑛=−∞
+∞
+𝑋𝑋𝑛𝑛 𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗0𝑗𝑗 = 	�
+𝑛𝑛=−∞
+∞
+𝓕𝓕 𝑋𝑋𝑛𝑛 𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗0𝑗𝑗
+𝐴𝐴 	𝐴𝐴2𝜋𝜋𝛿𝛿 𝜔𝜔
+Fourier Series
+synthesis of periodic
+signal:
+Fourier
+Transformation:
+Discrete and continuous
+functions of frequency:
+The former is not
+defined between stems.
+The latter is defined
+everywhere.
+𝑋𝑋 𝜔𝜔
+𝑗𝑋𝑋 𝜔𝜔 𝜔𝜔
+𝜔𝜔
+Continuous
+𝑋𝑋𝑛𝑛 	𝑋𝑋𝑛𝑛2𝜋𝜋𝛿𝛿 𝜔𝜔
+𝑋𝑋𝑛𝑛𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗0𝑗𝑗 2𝜋𝜋𝑋𝑋𝑛𝑛𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔 0
+Frequency shift
+𝑋𝑋𝑛𝑛
+𝑛𝑛𝜔𝜔 0
+𝑗𝑋𝑋𝑛𝑛
+𝑛𝑛𝜔𝜔 0
+Discrete 	𝑛𝑛𝜔𝜔 0
+= 	�
+𝑛𝑛=−∞
+∞
+2𝜋𝜋𝑋𝑋𝑛𝑛 𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔 0
+9
+
+-- 9 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Example
+𝐴𝐴 cos 𝜔𝜔 0 𝑡𝑡 	= 𝐴𝐴 𝑒𝑒 𝑗𝑗𝑗𝑗0𝑗𝑗 + 𝑒𝑒 −𝑗𝑗𝑗𝑗0𝑗𝑗
+2 = 	�
+𝑛𝑛=−∞
+∞
+𝑋𝑋𝑛𝑛 𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗0𝑗𝑗
+𝑋𝑋𝑛𝑛 = �𝐴𝐴/2 	𝑛𝑛 = ±1
+0 	𝑛𝑛 ≠ ±1
+Fourier Series synthesis of
+periodic signal:
+Fourier Transformation:
+Discrete and continuous
+functions of frequency:
+𝑋𝑋 𝜔𝜔 	= 	�
+𝑛𝑛=−∞
+∞
+2𝜋𝜋𝑋𝑋𝑛𝑛 𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔 0 	= 𝐴𝐴𝜋𝜋𝛿𝛿 𝜔𝜔 + 𝜔𝜔 0 	+ 𝐴𝐴𝜋𝜋𝛿𝛿 𝜔𝜔 − 𝜔𝜔 0
+𝑋𝑋𝑛𝑛
+𝜔𝜔
+𝐴𝐴
+2
+𝐴𝐴
+2
+𝜔𝜔 0	−𝜔𝜔 0
+Why is there no phase? 	Cos(x) is real and even
+𝑋𝑋 𝜔𝜔
+𝜔𝜔	𝜔𝜔 0	−𝜔𝜔 0
+𝐴𝐴𝜋𝜋 	𝐴𝐴𝜋𝜋
+10
+
+-- 10 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impulse train
+𝛿𝛿𝑇𝑇 	𝑡𝑡 	= 	�
+𝑛𝑛=−∞
+∞
+𝛿𝛿 𝑡𝑡 − 𝑛𝑛𝑛𝑛
+Fourier Series expansion:
+𝐷𝐷𝑛𝑛 = 1
+𝑛𝑛 �
+−𝑇𝑇/2
+𝑇𝑇/2
+𝛿𝛿𝑇𝑇 	𝑡𝑡 𝑒𝑒 −𝑗𝑗𝑛𝑛𝑗𝑗𝑠𝑠𝑗𝑗𝑑𝑑𝑡𝑡 = 1
+𝑛𝑛 �
+−𝑇𝑇/2
+𝑇𝑇/2
+𝛿𝛿𝑇𝑇 	𝑡𝑡 𝑒𝑒 −𝑗𝑗𝑛𝑛𝑗𝑗𝑠𝑠 0 𝑑𝑑𝑡𝑡 = 1
+𝑛𝑛
+𝜔𝜔𝑠𝑠 = 2𝜋𝜋
+𝑛𝑛
+𝛿𝛿𝑇𝑇 	𝑡𝑡
+𝑡𝑡	𝑛𝑛
+⋯ 	⋯
+𝛿𝛿𝑇𝑇 	𝑡𝑡 	= 	�
+𝑛𝑛=−∞
+∞
+𝐷𝐷𝑛𝑛 𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗𝑠𝑠 𝑗𝑗 = 	�
+𝑛𝑛=−∞
+∞
+1
+𝑛𝑛 𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗𝑠𝑠 𝑗𝑗
+Fourier Series coefficients:
+An impulse train is a periodic
+repetition of impulses, hence
+a periodic signal.
+We can expand it into a complex
+exponential Fourier series:
+11
+
+-- 11 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impulse train
+Fourier
+Transformatio
+n:
+Δ𝑇𝑇 	𝜔𝜔 	= 	�
+−∞
+∞
+𝛿𝛿𝑇𝑇 𝑡𝑡 𝑒𝑒 −𝑗𝑗𝑗𝑗𝑗𝑗𝑑𝑑𝑡𝑡 = 	�
+−∞
+∞
+�
+𝑛𝑛=−∞
+∞
+1
+𝑛𝑛 𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗𝑠𝑠𝑗𝑗 𝑒𝑒 −𝑗𝑗𝑗𝑗𝑗𝑗𝑑𝑑𝑡𝑡 = 	�
+𝑛𝑛=−∞
+∞
+�
+−∞
+∞
+1
+𝑛𝑛 𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗𝑠𝑠𝑗𝑗 𝑒𝑒 −𝑗𝑗𝑗𝑗𝑗𝑗𝑑𝑑𝑡𝑡
+𝜔𝜔𝑠𝑠 = 2𝜋𝜋
+𝑛𝑛Fourier Series expansion: 	𝛿𝛿𝑇𝑇 	𝑡𝑡 	= 	�
+𝑛𝑛=−∞
+∞
+1
+𝑛𝑛 𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗𝑠𝑠 𝑗𝑗
+𝐴𝐴 	2𝜋𝜋𝐴𝐴𝛿𝛿(𝜔𝜔)
+The spectrum of an
+impulse train is periodic
+in 𝜔𝜔 with period 𝜔𝜔𝑠𝑠:
+Δ𝑇𝑇 	𝜔𝜔
+𝜔𝜔𝜔𝜔𝑠𝑠 	2𝜔𝜔𝑠𝑠	−2𝜔𝜔𝑠𝑠 	−𝜔𝜔𝑠𝑠
+⋯ 	⋯
+𝜔𝜔𝑠𝑠
+𝛿𝛿𝑇𝑇 	𝑡𝑡
+𝑡𝑡	𝑛𝑛
+⋯ 	⋯	1
+𝑛𝑛 𝑒𝑒 𝑗𝑗𝑛𝑛𝑗𝑗0𝑗𝑗 2𝜋𝜋
+𝑛𝑛 𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔 0
+= 	�
+𝑛𝑛=−∞
+∞
+2𝜋𝜋
+𝑛𝑛 𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠 	= 	�
+𝑛𝑛=−∞
+∞
+𝜔𝜔𝑠𝑠 𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠
+𝐴𝐴𝑒𝑒 𝑗𝑗𝑗𝑗0𝑗𝑗 2𝜋𝜋𝐴𝐴𝛿𝛿(𝜔𝜔 − 𝜔𝜔 0)
+12
+
+-- 12 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impulse Train Convolution with Aperiodic Signal
+𝑡𝑡
+𝑥𝑥 𝑡𝑡
+*
+•
+𝛿𝛿𝑇𝑇 	𝑡𝑡
+𝑡𝑡	𝑛𝑛	−𝑛𝑛
+𝑡𝑡
+𝑥𝑥 𝑡𝑡 	∗ 𝛿𝛿𝑇𝑇 𝑡𝑡
+𝑛𝑛	−𝑛𝑛
+𝑋𝑋 𝜔𝜔 	⋅ Δ𝑇𝑇 	𝜔𝜔
+𝜔𝜔
+𝑋𝑋 𝜔𝜔
+𝜔𝜔
+Δ𝑇𝑇 	𝜔𝜔
+𝜔𝜔
+2𝜋𝜋
+𝑛𝑛
+13
+
+-- 13 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Aperiodic signal multiplied by impulse train
+𝑥𝑥 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 	⋅ 𝛿𝛿𝑇𝑇 𝑡𝑡	Multiplication in
+time:
+𝑋𝑋 𝜔𝜔 	= 1
+2𝜋𝜋 𝑋𝑋 𝜔𝜔 	∗ Δ𝑇𝑇 	𝜔𝜔 	= 1
+2𝜋𝜋 𝑋𝑋 𝜔𝜔 	∗ 	�
+𝑛𝑛=−∞
+∞
+𝜔𝜔𝑠𝑠 𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠 	= 𝜔𝜔𝑠𝑠
+2𝜋𝜋 �
+𝑛𝑛=−∞
+∞
+𝑋𝑋 𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠	Convolution in
+frequency
+domain:
+𝜔𝜔𝑠𝑠 > 2 ⋅ 𝐵𝐵
+Nyquist
+theorem:
+If the sampling frequency is too small, adjacent extensions of the frequency
+spectrum overlap and ”irreversible” aliasing occurs.
+𝜔𝜔
+𝑋𝑋 𝜔𝜔
+𝐵𝐵
+𝜔𝜔𝑠𝑠	−𝜔𝜔𝑠𝑠 	𝜔𝜔
+𝜔𝜔𝑠𝑠
+2𝜋𝜋 𝑋𝑋 𝜔𝜔 + 𝜔𝜔𝑠𝑠
+𝜔𝜔𝑠𝑠
+2𝜋𝜋 𝑋𝑋 𝜔𝜔 − 𝜔𝜔𝑠𝑠
+𝜔𝜔𝑠𝑠
+2𝜋𝜋 𝑋𝑋 𝜔𝜔
+𝜔𝜔𝑠𝑠/2	−𝜔𝜔𝑠𝑠/2 𝐵𝐵
+𝑋𝑋 𝜔𝜔
+14
+
+-- 14 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Mathematical sampling of Continuous-Time Signals
+𝑡𝑡
+𝑥𝑥 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 	⋅ 𝛿𝛿𝑇𝑇 𝑡𝑡
+•
+*
+𝑡𝑡
+𝑥𝑥 𝑡𝑡 𝛿𝛿𝑇𝑇 	𝑡𝑡
+𝑡𝑡
+𝑛𝑛
+Δ𝑇𝑇 	𝜔𝜔
+𝜔𝜔𝜔𝜔𝑠𝑠	−𝜔𝜔𝑠𝑠
+𝜔𝜔𝑠𝑠
+𝑋𝑋 𝜔𝜔
+𝜔𝜔	𝐵𝐵
+𝜔𝜔𝑠𝑠	−𝜔𝜔𝑠𝑠
+𝑋𝑋 𝜔𝜔 	= 1
+2𝜋𝜋 𝑋𝑋 𝜔𝜔 	∗ Δ𝑇𝑇 	𝜔𝜔
+𝜔𝜔𝐵𝐵
+15
+
+-- 15 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Sampling
+𝑡𝑡
+𝑥𝑥 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 	⋅ 𝛿𝛿𝑇𝑇 𝑡𝑡
+𝑡𝑡
+𝑥𝑥 𝑛𝑛Δ𝑡𝑡
+A sampled continuous-time signal is a series of
+equally spaced impulses with a strength
+determined by its amplitude.
+This type of sampling is a mathematical process,
+not a process done by an analog-digital converter
+(ADC).
+A discrete-time signal is a series of equally spaced
+numbers representing the same information.
+This sequence of numbers is produced by an ADC.
+16
+
+-- 16 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Mathematical sampling
+𝛿𝛿𝑇𝑇 	𝑡𝑡 	= 	�
+𝑛𝑛=−∞
+∞
+𝛿𝛿 𝑡𝑡 − 𝑛𝑛𝑛𝑛 	𝜔𝜔𝑠𝑠 = 2𝜋𝜋
+𝑛𝑛
+𝛿𝛿𝑇𝑇 	𝑡𝑡
+𝑡𝑡	𝑛𝑛
+⋯ 	⋯
+The trigonometric Fourier series: 	𝛿𝛿 𝑇𝑇 	𝑡𝑡 	= 1
+𝑛𝑛 1 + 2 cos 𝜔𝜔𝑠𝑠 𝑡𝑡 + 2 cos 2𝜔𝜔𝑠𝑠 𝑡𝑡 + 2 cos 3𝜔𝜔𝑠𝑠 𝑡𝑡 + ⋯
+𝑥𝑥 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 𝛿𝛿 𝑇𝑇 	𝑡𝑡 	= 1
+𝑛𝑛 𝑥𝑥 𝑡𝑡 	+ 2𝑥𝑥 𝑡𝑡 	cos 𝜔𝜔𝑠𝑠 𝑡𝑡 + 2𝑥𝑥 𝑡𝑡 	cos 2𝜔𝜔𝑠𝑠 𝑡𝑡 + 2𝑥𝑥 𝑡𝑡 	cos 3𝜔𝜔𝑠𝑠 𝑡𝑡 + ⋯
+𝑋𝑋 𝜔𝜔 	= 1
+𝑛𝑛 𝑋𝑋 𝜔𝜔 	+ 𝑋𝑋 𝜔𝜔 − 𝜔𝜔𝑠𝑠 	+ 𝑋𝑋 𝜔𝜔 + 𝜔𝜔𝑠𝑠 	+ 𝑋𝑋 𝜔𝜔 − 2𝜔𝜔𝑠𝑠 	+ 𝑋𝑋 𝜔𝜔 + 2𝜔𝜔𝑠𝑠 	+ ⋯
+𝑋𝑋 𝜔𝜔 	= 1
+𝑛𝑛 �
+𝑛𝑛=−∞
+∞
+𝑋𝑋(𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠)
+We just obtained the frequency
+characteristic of the mathematically sampled
+CT signal 𝑥𝑥(𝑡𝑡) using convolution in the
+frequency domain.
+An alternative approach is to use the
+modulation theorem.
+17
+
+-- 17 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Nyquist sampling theorem
+𝜔𝜔𝑠𝑠	−𝜔𝜔𝑠𝑠 	𝜔𝜔
+𝜔𝜔𝑠𝑠
+2𝜋𝜋 𝑋𝑋 𝜔𝜔 + 𝜔𝜔𝑠𝑠 𝜔𝜔𝑠𝑠
+2𝜋𝜋 𝑋𝑋 𝜔𝜔 − 𝜔𝜔𝑠𝑠
+𝜔𝜔𝑠𝑠
+2𝜋𝜋 𝑋𝑋 𝜔𝜔
+𝜔𝜔𝑠𝑠/2	−𝜔𝜔𝑠𝑠/2 𝐵𝐵
+The frequency spectrum 𝑋𝑋(𝜔𝜔) is
+periodic, with periodicity 𝜔𝜔𝑠𝑠.
+We can reconstruct 𝑋𝑋 𝜔𝜔 	from
+𝑋𝑋(𝜔𝜔) only if there is no overlap
+between the periodic repetitions
+of 𝑋𝑋 𝜔𝜔 	in 𝑋𝑋(𝜔𝜔).
+The conditions for reconstructing
+𝑋𝑋 𝜔𝜔 	from 𝑋𝑋(𝜔𝜔) has been
+formulated by several scientists
+and forgotten again. It was
+rediscovered by Nyquist and is
+now known as the Nyquist
+sampling theorem.
+𝐵𝐵 ≤ 𝜔𝜔𝑠𝑠
+2 𝜔𝜔𝑠𝑠 ≥ 2𝐵𝐵	Expressed in radians/s
+Expressed in Hz 	𝐵𝐵 ≤ 𝑓𝑓𝑠𝑠
+2 𝑓𝑓𝑠𝑠 ≥ 2𝐵𝐵 	𝑛𝑛 = 1
+𝑓𝑓𝑠𝑠
+Nyquist sampling rate: 	𝑓𝑓𝑠𝑠 = 2𝐵𝐵
+Some signals require: 	𝑓𝑓𝑠𝑠 > 2𝐵𝐵
+18
+
+-- 18 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Break
+Video 2
+Practical sampling
+19
+
+-- 19 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Practical sampling
+Fig. 5.3 in the textbook illustrates the
+practical sampling process where it is not
+possible to produce an impulse. Instead,
+a practically realizable pulse 𝑝𝑝 𝑇𝑇 	𝑡𝑡 	is
+multiplied onto the signal to be sampled.
+The pulse must be periodic with period 𝑛𝑛
+and the duration of each pulse must be
+less than 𝑛𝑛.
+It is shown that the resulting frequency
+spectrum still has periodic repetitions of
+𝑋𝑋(𝜔𝜔) but that each repetition now is
+scaled in magnitude. The exact scaling
+depends on the shape of the pulse.
+When the sampling pulse was an ideal
+impulse, all spectral repetition had the
+same scaling.
+20
+
+-- 20 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Practical sampling
+𝑝𝑝 𝑇𝑇 	𝑡𝑡 	= 𝐶𝐶0 + �
+𝑛𝑛=1
+∞
+𝐶𝐶𝑛𝑛 cos 𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡 + 𝜃𝜃𝑛𝑛
+The train of practically realizable pulses
+can be expressed as a compact Fourier
+series. Remember that the Fourier
+series is a periodic function, hence the
+Fourier series represent the entire train
+of pulses, not just one pulse.
+𝑥𝑥 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 𝑝𝑝 𝑇𝑇 	𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 	𝐶𝐶0 + �
+𝑛𝑛=1
+∞
+𝐶𝐶𝑛𝑛 cos 𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡 + 𝜃𝜃𝑛𝑛
+= 𝐶𝐶0 𝑥𝑥 𝑡𝑡 	+ �
+𝑛𝑛=1
+∞
+𝐶𝐶𝑛𝑛 𝑥𝑥(𝑡𝑡) cos 𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡 + 𝜃𝜃𝑛𝑛
+𝑋𝑋 𝜔𝜔 	= 1
+𝑛𝑛 𝐶𝐶0 𝑋𝑋 𝜔𝜔 	+ 𝐶𝐶1
+2 𝑋𝑋 𝜔𝜔 − 𝜔𝜔𝑠𝑠 	+ 𝑋𝑋 𝜔𝜔 + 𝜔𝜔𝑠𝑠 	+ 𝐶𝐶2
+2 𝑋𝑋 𝜔𝜔 − 2𝜔𝜔𝑠𝑠 	+ 𝑋𝑋 𝜔𝜔 + 2𝜔𝜔𝑠𝑠 	+ ⋯
+The practically sampled signal 𝑥𝑥 𝑡𝑡 	can
+now be expressed as a Fourier series
+expansion:
+Each term in the series is a modulation
+of the CT signal 𝑥𝑥(𝑡𝑡), but each repe-
+tition of the spectrum is scaled by
+𝐶𝐶𝑛𝑛/2.
+21
+
+-- 21 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Practical sampling
+Now we would like to consider a
+sampling pulse train for which we
+can derive its Fourier transform.
+The sampling pulse train is a
+train of square pulses. They
+are spaced apart by 𝑛𝑛, i.e. the
+time interval between
+samples.
+Each pulse has a height of 1
+and a width of 𝑛𝑛1.
+We will first approach this as
+done in the textbook, ch. 5.1.
+Then we will use an alternative
+approach.
+22
+
+-- 22 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Fourier series of square pulse
+𝑝𝑝 𝑇𝑇 	𝑡𝑡 	= 𝑎𝑎0 + �
+𝑛𝑛=1
+∞
+𝑎𝑎𝑛𝑛 cos(𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡) + �
+𝑛𝑛=1
+∞
+𝑏𝑏𝑛𝑛 sin(𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡)
+𝑎𝑎𝑛𝑛 = 2
+𝑛𝑛 �
+−𝑇𝑇1/2
+𝑇𝑇1/2
+𝑝𝑝 𝑇𝑇(𝑡𝑡) cos 𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡 𝑑𝑑𝑡𝑡 = 2
+𝑛𝑛 �
+−𝑇𝑇1/2
+𝑇𝑇1/2
+cos 𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡 𝑑𝑑𝑡𝑡 = 2
+𝑛𝑛𝑛𝑛𝜔𝜔𝑠𝑠
+sin 𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡 −𝑇𝑇1/2
+𝑇𝑇1/2 = 2
+𝑛𝑛𝑛𝑛𝜔𝜔𝑠𝑠
+sin 𝑛𝑛𝜔𝜔𝑠𝑠𝑛𝑛1
+2 − sin −𝑛𝑛𝜔𝜔𝑠𝑠𝑛𝑛1
+2
+𝑎𝑎0 = 1
+𝑛𝑛 �
+−𝑇𝑇1/2
+𝑇𝑇1/2
+𝑝𝑝 𝑇𝑇(𝑡𝑡) 𝑑𝑑𝑡𝑡 = 𝑛𝑛1
+𝑛𝑛
+𝑏𝑏𝑛𝑛 = 2
+𝑛𝑛 �
+−𝑇𝑇1/2
+𝑇𝑇1/2
+𝑝𝑝 𝑇𝑇 	𝑡𝑡 	sin 𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡 𝑑𝑑𝑡𝑡 = 0, 𝑝𝑝 𝑇𝑇 𝑒𝑒𝑒𝑒𝑒𝑒𝑛𝑛
+𝜔𝜔𝑠𝑠 = 2𝜋𝜋
+𝑛𝑛	We will assume that each
+pulse has a duration 𝑛𝑛1 and a
+periodicity of 𝑛𝑛.
+𝑎𝑎𝑛𝑛 = 2𝑛𝑛1
+𝑛𝑛
+2
+𝑛𝑛𝜔𝜔𝑠𝑠𝑛𝑛1
+sin 𝑛𝑛𝜔𝜔𝑠𝑠𝑛𝑛1
+2 = 2𝑛𝑛1
+𝑛𝑛 sinc 𝑛𝑛𝜔𝜔𝑠𝑠𝑛𝑛1
+2 = 2𝑛𝑛1
+𝑛𝑛 sinc 𝑛𝑛𝜋𝜋𝑛𝑛1
+𝑛𝑛
+23
+
+-- 23 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Practical sampling
+𝑥𝑥 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 𝑝𝑝 𝑇𝑇 	𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 𝑛𝑛1
+𝑛𝑛 + �
+𝑛𝑛=1
+∞
+2𝑛𝑛1
+𝑛𝑛 sinc 𝑛𝑛𝜋𝜋𝑛𝑛1
+𝑛𝑛 cos 𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡
+= 𝑛𝑛1
+𝑛𝑛 𝑥𝑥 𝑡𝑡 	+ 2𝑛𝑛1
+𝑛𝑛 �
+𝑛𝑛=1
+∞
+sinc 𝑛𝑛𝜋𝜋𝑛𝑛1
+𝑛𝑛 𝑥𝑥(𝑡𝑡) cos 𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡
+𝑋𝑋 𝜔𝜔 	= 𝑛𝑛1
+𝑛𝑛 𝑋𝑋 𝜔𝜔
++ 𝑛𝑛1
+𝑛𝑛 sinc 1𝜋𝜋𝑛𝑛1
+𝑛𝑛 𝑋𝑋 𝜔𝜔 − 𝜔𝜔𝑠𝑠 	+ 𝑋𝑋 𝜔𝜔 + 𝜔𝜔𝑠𝑠
++ 𝑛𝑛1
+𝑛𝑛 sinc 2𝜋𝜋𝑛𝑛1
+𝑛𝑛 𝑋𝑋 𝜔𝜔 − 2𝜔𝜔𝑠𝑠 	+ 𝑋𝑋 𝜔𝜔 + 2𝜔𝜔𝑠𝑠
++ ⋯
+𝑥𝑥 𝑡𝑡 	cos 𝜔𝜔 0 𝑡𝑡 1
+2 𝑋𝑋 𝜔𝜔 − 𝜔𝜔 0 	+ 1
+2 𝑋𝑋 𝜔𝜔 + 𝜔𝜔 0
+Inserting the Fourier series
+coefficients, we obtain:
+𝑥𝑥 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 𝑝𝑝 𝑇𝑇 	𝑡𝑡 	= 𝐶𝐶0 𝑥𝑥 𝑡𝑡 	+ �
+𝑛𝑛=1
+∞
+𝐶𝐶𝑛𝑛 𝑥𝑥(𝑡𝑡) cos 𝑛𝑛𝜔𝜔𝑠𝑠 𝑡𝑡 + 𝜃𝜃𝑛𝑛
+Modulation theorem:
+24
+
+-- 24 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Practical sampling – Alternative approach
+𝑥𝑥 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 𝑝𝑝 𝑇𝑇 	𝑡𝑡
+𝑋𝑋 𝜔𝜔 	= 1
+2𝜋𝜋 𝑋𝑋 𝜔𝜔 	∗ 	Δ 𝑇𝑇 	𝜔𝜔 𝑃𝑃 𝜔𝜔
+𝑝𝑝 𝑡𝑡 	= rect 𝑡𝑡
+𝑛𝑛1
+⇔ 𝑃𝑃 𝜔𝜔 	= 	𝑛𝑛1sinc 𝜔𝜔𝑛𝑛1
+2
+𝑥𝑥 𝑡𝑡 	⇔ 𝑋𝑋(𝜔𝜔)
+𝛿𝛿 𝑇𝑇 	𝑡𝑡 	= 	�
+𝑛𝑛=−∞
+∞
+𝛿𝛿(𝑡𝑡 − 𝑛𝑛𝑛𝑛) ⇔ Δ 𝑇𝑇 	𝜔𝜔 	= 2𝜋𝜋
+𝑛𝑛 �
+𝑛𝑛=−∞
+∞
+𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠
+Δ 𝑇𝑇 	𝜔𝜔 𝑃𝑃 𝜔𝜔 	= 2𝜋𝜋𝑛𝑛1
+𝑛𝑛 �
+𝑛𝑛=−∞
+∞
+sinc 𝑛𝑛𝜔𝜔𝑠𝑠𝑛𝑛1
+2 𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠
+Let us approach the same analysis using a
+different approach where we use the Fourier
+Transform theorems.
+The main idea here is to consider the
+practical sampling pulse to be the result of
+convolving a train of ideal impulse
+functions 𝛿𝛿 𝑇𝑇(𝑡𝑡) with a single square pulse
+𝑝𝑝(𝑡𝑡).
+= 𝑥𝑥 𝑡𝑡 	𝛿𝛿 𝑇𝑇 	𝑡𝑡 	∗ 𝑝𝑝 𝑡𝑡
+We make the Fourier Transform of the
+time-domain expression and then find
+the Fourier Transform of all three
+functions.
+We can then get the product:
+25
+
+-- 25 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Practical sampling – Alternative approach
+𝑋𝑋 𝜔𝜔 	= 1
+2𝜋𝜋 𝑋𝑋(𝜔𝜔) ∗ 2𝜋𝜋𝑛𝑛1
+𝑛𝑛 �
+𝑛𝑛=−∞
+∞
+sinc 𝑛𝑛𝜔𝜔𝑠𝑠𝑛𝑛1
+2 𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠
+𝑋𝑋 𝜔𝜔 	= 𝑛𝑛1
+𝑛𝑛 �
+𝑛𝑛=−∞
+∞
+sinc 𝑛𝑛𝜔𝜔𝑠𝑠𝑛𝑛1
+2 𝑋𝑋 𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠
+𝑋𝑋 𝜔𝜔 	= 1
+2𝜋𝜋 𝑋𝑋 𝜔𝜔 	∗ 	Δ 𝑇𝑇 	𝜔𝜔 𝑃𝑃𝑇𝑇 	𝜔𝜔
+Δ 𝑇𝑇 	𝜔𝜔 𝑃𝑃𝑇𝑇 	𝜔𝜔 	= 2𝜋𝜋𝑛𝑛1
+𝑛𝑛 �
+𝑛𝑛=−∞
+∞
+sinc 𝑛𝑛𝜔𝜔𝑠𝑠𝑛𝑛1
+2 𝛿𝛿 𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠
+From the previous slide we have:
+Next, we calculate the convolution:
+26
+
+-- 26 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Practical sampling – Alternative approach
+𝑋𝑋 𝜔𝜔 	= 𝑛𝑛1
+𝑛𝑛 �
+𝑛𝑛=−∞
+∞
+sinc 𝑛𝑛𝜔𝜔𝑠𝑠𝑛𝑛1
+2 𝑋𝑋 𝜔𝜔 − 𝑛𝑛𝜔𝜔𝑠𝑠
+Observations:
+Although we replaced the ideal
+sampling function (the impulse)
+with a square pulse, the
+frequency spectrum 𝑋𝑋 𝜔𝜔 	of the
+CT signal is still contained within
+the periodic spectrum 𝑋𝑋(𝜔𝜔).
+It is scaled in amplitude
+depending on the width of the
+sampling pulse, but provided the
+Nyquist sampling theorem is not
+violated, we can recover the
+spectrum 𝑋𝑋 𝜔𝜔 	by lowpass
+filtering 𝑋𝑋 𝜔𝜔 .
+We see that spectrum scaling is
+determined by the pulse width 𝑛𝑛1.
+Letting 𝑛𝑛1 → 0 would not work.
+27
+
+-- 27 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Break
+Video 2
+Reconstruction of CT signal
+Lathi 5.2
+28
+
+-- 28 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Reconstruction of Continuous-Time Signal
+𝜔𝜔
+𝑋𝑋 𝜔𝜔
+𝐻𝐻𝐷𝐷𝐷𝐷𝐷𝐷 	𝜔𝜔
+Ideal reconstruction:
+𝜔𝜔𝑠𝑠	−𝜔𝜔𝑠𝑠 	𝜔𝜔
+𝑋𝑋 𝜔𝜔
+𝐵𝐵
+We have just learned that we can
+reconstruct the spectrum 𝑋𝑋(𝜔𝜔) by
+lowpass filtering 𝑋𝑋(𝜔𝜔).
+We call this an ideal reconstruction
+because the periodic repetitions of
+spectra do not overlap.
+This is due to the Nyquist theorem
+not being violated.
+If the spectrum 𝑋𝑋 𝜔𝜔 	is preserved by the
+sampling, it means that it is possible to
+reconstruct 𝑥𝑥 𝑡𝑡 	from its samples.
+29
+
+-- 29 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Reconstruction of Continuous-Time Signal
+𝜔𝜔
+𝐹𝐹 𝜔𝜔
+Imperfect
+reconstruction: 	𝜔𝜔𝑠𝑠	−𝜔𝜔𝑠𝑠 	𝜔𝜔
+𝐵𝐵
+Here the Nyquist sampling theorem has been violated (𝜔𝜔𝑠𝑠 < 2𝐵𝐵).
+𝑋𝑋 𝜔𝜔
+In this case, the spectra overlap and in fact their overlapping parts add up and modify the spectrum in a
+region centered around 𝜔𝜔𝑠𝑠/2. This error is called aliasing.
+Aliasing is the irreversible consequence of violating the Nyquist sampling theorem.
+30
+
+-- 30 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Reconstruction of Continuous-Time signal from its samples
+𝑥𝑥 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 	⋅ 𝛿𝛿𝑇𝑇 𝑡𝑡
+ℎ 𝑡𝑡 	= rect 𝑡𝑡
+𝑛𝑛 𝑦𝑦 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 	∗ ℎ 𝑡𝑡 	= 𝑥𝑥 𝑡𝑡 	⋅ 	𝛿𝛿𝑇𝑇 𝑡𝑡 	∗ ℎ 𝑡𝑡
+𝛿𝛿𝑇𝑇 	𝑡𝑡 	= 	�
+𝑛𝑛=−∞
+∞
+𝛿𝛿 𝑡𝑡 − 𝑛𝑛𝑛𝑛
+= 	�
+𝑛𝑛=−∞
+∞
+𝑥𝑥 𝑡𝑡 rect 𝑡𝑡 − 𝑛𝑛𝑛𝑛
+𝑛𝑛
+ℎ(𝑡𝑡)	𝑥𝑥(𝑡𝑡) 	𝑦𝑦(𝑡𝑡)
+If we use a filter with a pulse as its impulse
+response to interpolate between samples, we
+get a staircase approximation 𝑦𝑦(𝑡𝑡).
+To create a CT signal from a set of samples,
+interpolation must be used.
+The reason for the poor interpolation is that
+we are multiplying the spectrum with a sinc.
+31
+
+-- 31 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Reconstruction of Continuous-Time signal from its samples by ideal interpolation
+To isolate the spectrum 𝑋𝑋(𝜔𝜔) from 𝑋𝑋 𝜔𝜔
+we could multiply with a rect function in
+the frequency domain, i.e. an ideal filter.
+𝑋𝑋 𝜔𝜔 	= 𝑋𝑋 𝜔𝜔 	𝐻𝐻(𝜔𝜔)
+𝐻𝐻 𝜔𝜔 	= 𝑛𝑛 rect 𝜔𝜔
+4𝜋𝜋𝐵𝐵
+ℎ 𝑡𝑡 	= sinc 2𝜋𝜋𝐵𝐵 𝑡𝑡
+𝑦𝑦 𝑡𝑡 	= 	�
+𝑛𝑛=−∞
+∞
+𝑥𝑥 𝑛𝑛𝑛𝑛 ℎ(𝑡𝑡 − 𝑛𝑛𝑛𝑛)
+𝑦𝑦 𝑡𝑡 	= 	�
+𝑛𝑛=−∞
+∞
+𝑥𝑥 𝑛𝑛𝑛𝑛 sinc 2𝜋𝜋𝐵𝐵 𝑡𝑡 − 𝑛𝑛𝑛𝑛
+𝑦𝑦 𝑛𝑛𝑛𝑛 	= 𝑥𝑥(𝑛𝑛𝑛𝑛)
+The reconstructed signal 𝑦𝑦 𝑡𝑡 	= 𝑥𝑥(𝑡𝑡) because they are both equal to ℱ−1 𝑋𝑋 𝜔𝜔 	𝐻𝐻 𝜔𝜔
+32
+
+-- 32 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Practical reconstruction of Continuous-Time signal from its samples
+The ideal interpolation requires a non-causal filter:
+ℎ 𝑡𝑡 	= sinc 2𝜋𝜋𝐵𝐵 𝑡𝑡
+If the sampling frequency is increased so 𝑗𝑗𝑠𝑠
+2 > 2𝜋𝜋𝐵𝐵,
+or 𝑓𝑓𝑠𝑠
+2 > 𝐵𝐵, then we can use a lowpass filter with a
+finite slope to attenuate all periodically repeated
+cycles.
+Ideally such a filter should have zero gain for all
+frequencies above 𝑓𝑓𝑠𝑠/2. No practical realizable
+filter can achieve this. The best we can aim for is
+some feasible compromise between increasing the
+sampling frequency and increasing the slope of
+the filter cut-off.
+Filter cut-off slope
+33
+
+-- 33 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Non-bandlimited signal
+Time-limited signals have infinite bandwidth.
+Let us make a signal 𝑦𝑦 𝑡𝑡 	time-limited by multiplying
+is with a pulse of duration 𝑛𝑛1.
+This means that the frequency spectrum of 𝑦𝑦(𝑡𝑡) will
+be the spectrum of 𝑥𝑥(𝑡𝑡) convolved with a never
+ending sinc function.
+𝑝𝑝 𝑡𝑡 	= rect 𝑡𝑡
+𝑛𝑛1
+⇔ 𝑃𝑃 𝜔𝜔 	= 	𝑛𝑛1sinc 𝜔𝜔𝑛𝑛1
+2
+𝑦𝑦 𝑡𝑡 	≝ 𝑥𝑥 𝑡𝑡 𝑝𝑝(𝑡𝑡)
+𝑌𝑌 𝜔𝜔 	= 𝑋𝑋 𝜔𝜔 	∗ 𝑛𝑛1sinc 𝜔𝜔𝑛𝑛1
+2
+All practically realizable signals are time-limited.
+Hence, all practically realizable signals have
+infinite bandwidth.
+34
+
+-- 34 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Non-bandlimited signal
+Time-limited signals have infinite bandwidth.
+When sampled, the frequency spectrum
+𝑋𝑋 𝜔𝜔 	will show overlapping tails, as
+shown on the sketch. The tail above
+𝑓𝑓𝑠𝑠/2 is also found reflected below 𝑓𝑓𝑠𝑠/2.
+It looks as if the upper tail has been
+folded about 𝑓𝑓𝑠𝑠/2, which is therefore
+termed the folding frequency.
+The folded tail adds to the spectrum
+and distorts it irreversibly.
+35
+
+-- 35 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Non-bandlimited signal
+Strictly speaking Nyquist sampling
+theorem can never be satisfied for
+practically realizable signals because the
+sampling frequency would need to be
+infinite.
+If the frequencies near the folding
+frequency originates from noise, we
+can use a lowpass filter to reduce its
+magnitude to an insignificant level. In
+such cases the distortion of the
+frequency spectrum is minimal at
+frequencies originating from noise.
+Such a lowpass filter is called an
+anti-aliasing filter. It is always
+placed in front of an ADC to minimize
+the effect of frequencies folding
+across the folding frequency.
+36
+
+-- 36 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Break
+Video 2
+Fourier analysis of filter circuits
+37
+
+-- 37 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Amplitude and phase
+𝐻𝐻 𝜔𝜔 	= 𝑃𝑃(𝑗𝑗𝜔𝜔)
+𝑄𝑄(𝑗𝑗𝜔𝜔)
+𝐻𝐻 𝜔𝜔 	= 	𝐻𝐻(𝜔𝜔) 𝑒𝑒 𝑗𝑗𝑗𝑗𝑗(𝑗𝑗)
+𝑃𝑃𝑃𝑃𝑃𝑃𝑃𝑃𝑃𝑃 𝑓𝑓𝑃𝑃𝑃𝑃𝑓𝑓
+= 𝑃𝑃(𝑗𝑗𝜔𝜔)
+𝑄𝑄(𝑗𝑗𝜔𝜔) = 𝑃𝑃(𝜔𝜔) 𝑒𝑒 𝑗𝑗𝑗𝑃𝑃(𝑗𝑗)
+𝑄𝑄(𝜔𝜔) 𝑒𝑒 𝑗𝑗𝑗𝑗𝑗(𝑗𝑗)
+𝑃𝑃𝑃𝑃𝑃𝑃𝑃𝑃𝑃𝑃 𝑓𝑓𝑃𝑃𝑃𝑃𝑓𝑓
+𝐻𝐻(𝜔𝜔) = 𝑃𝑃(𝜔𝜔)
+𝑄𝑄(𝜔𝜔)
+𝑒𝑒 𝑗𝑗𝑗𝑗𝑗(𝑗𝑗) = 𝑒𝑒 𝑗𝑗𝑗𝑃𝑃(𝑗𝑗)
+𝑒𝑒 𝑗𝑗𝑗𝑗𝑗(𝑗𝑗) = 𝑒𝑒 𝑗𝑗𝑗𝑃𝑃(𝑗𝑗)𝑒𝑒 −𝑗𝑗𝑗𝑗𝑗(𝑗𝑗) = 𝑒𝑒 𝑗𝑗 𝑗𝑃𝑃 𝑗𝑗 −𝑗𝑗𝑗 𝑗𝑗
+𝑗𝐻𝐻 𝜔𝜔 	= 	𝑗𝑃𝑃 𝜔𝜔
+𝑛𝑛𝑛𝑛𝑓𝑓𝑛𝑛𝑃𝑃𝑃𝑃𝑗𝑗𝑃𝑃𝑃𝑃
+𝑃𝑃𝑛𝑛𝑎𝑎𝑃𝑃𝑛𝑛
+− 	𝑗𝑄𝑄 𝜔𝜔
+𝑑𝑑𝑛𝑛𝑛𝑛𝑃𝑃𝑓𝑓𝑑𝑑𝑛𝑛𝑃𝑃𝑗𝑗𝑃𝑃𝑃𝑃
+𝑃𝑃𝑛𝑛𝑎𝑎𝑃𝑃𝑛𝑛
+We will often derive the frequency
+characteristic 𝐻𝐻 𝜔𝜔 	of a filter. It is in
+general a complex-valued function,
+and to visualize it, we need to plot its
+modulus (amplitude) and argument
+(phase).
+Comparing the exponentials on the
+left and right sides shows that the
+phase angle of 𝐻𝐻 𝜔𝜔 	is the phase
+angle of the numerator minus the
+phase angle of the denominator:
+Here we show that the modulus of
+𝐻𝐻 𝜔𝜔 	is the modulus of the
+numerator divided by the modulus
+of the denominator.
+38
+
+-- 38 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Amplitude and phase
+𝑧𝑧 = 𝑥𝑥 + 𝑗𝑗𝑦𝑦
+𝑧𝑧 	= 	𝑥𝑥 + 𝑗𝑗𝑦𝑦 	= 	𝑥𝑥 2 + 𝑦𝑦 2
+𝑗𝑧𝑧 = 𝜃𝜃 = tan−1 𝑦𝑦
+𝑥𝑥 = tan−1 ℑ 𝑧𝑧
+ℜ(𝑧𝑧)
+𝑅𝑅𝑒𝑒
+𝐼𝐼𝐼𝐼
+×
+×
+× 	× 0°
+90°
+−90°
+±180
+𝑅𝑅𝑒𝑒
+𝐼𝐼𝐼𝐼
+𝑦𝑦
+𝑥𝑥
+𝜃𝜃
+𝑧𝑧
+𝑦𝑦 = 𝑥𝑥 tan 𝜃𝜃
+39
+
+-- 39 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+First order active filters
++
+−
+𝑍𝑍1
+𝑍𝑍2
++
+𝑌𝑌 𝜔𝜔
+−
+𝑋𝑋 𝜔𝜔
+A non-inverting 1st order filter:
++
+−
+𝑍𝑍1 	𝑍𝑍2
++
+𝑌𝑌 𝜔𝜔
+−
+𝑋𝑋 𝜔𝜔
+An inverting 1st order filter:
+It is the frequency dependent nature of the impedances that determines, if the two circuits are
+lowpass, highpass, bandpass or bandstop filters.
+𝑌𝑌 𝜔𝜔 	= 	1 + 𝑍𝑍2 	𝜔𝜔
+𝑍𝑍1 𝜔𝜔 𝑋𝑋 𝜔𝜔
+𝑌𝑌 𝜔𝜔 	= − 𝑍𝑍2 𝜔𝜔
+𝑍𝑍1 𝜔𝜔 𝑋𝑋 𝜔𝜔
+We simply replace resistors with
+impedances in the gain equations.
+40
+
+-- 40 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+First order active low pass filter
+𝐻𝐻 𝜔𝜔 	= 𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔
+𝑝𝑝𝑝𝑃𝑃𝑠𝑠𝑃𝑃𝑃𝑃𝑠𝑠
+= − 𝑍𝑍2 	𝜔𝜔
+𝑍𝑍1 	𝜔𝜔
+Gain equation for inverting amplifier.
+𝑍𝑍1 	𝜔𝜔 	= 𝑅𝑅1
+𝑍𝑍2 	𝜔𝜔 	= 𝑅𝑅2||𝑍𝑍𝐷𝐷1 (𝜔𝜔) = 𝑅𝑅2 𝑍𝑍𝐷𝐷1 (𝜔𝜔)
+𝑅𝑅2 + 𝑍𝑍𝐷𝐷1 𝜔𝜔 =
+𝑅𝑅2 ⋅ 1
+𝑗𝑗𝜔𝜔𝐶𝐶1
+𝑅𝑅2 + 1
+𝑗𝑗𝜔𝜔𝐶𝐶1
+𝐷𝐷1 𝑃𝑃𝑛𝑛𝑑𝑑 𝑅𝑅2
+𝑑𝑑𝑛𝑛 𝑝𝑝𝑃𝑃𝑃𝑃𝑃𝑃𝑃𝑃𝑃𝑃𝑛𝑛𝑃𝑃
+= 𝑅𝑅2
+1 + 𝑗𝑗𝜔𝜔𝑅𝑅2 𝐶𝐶1
+𝑝𝑝𝑃𝑃𝑃𝑃𝑝𝑝𝑛𝑛𝑃𝑃𝑓𝑓𝑑𝑑𝑃𝑃𝑃𝑃
+𝑓𝑓𝑃𝑃𝑃𝑃𝑓𝑓
+Component impedances:
+𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔
+Now that we have seen an interesting example of
+using an inverting amplifier as a lowpass filter, let us
+look at how we design such a filter.
+41
+
+-- 41 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+First order active low pass filter
+Substitute impedances into gain equation:
+𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = − 𝑍𝑍2 	𝜔𝜔
+𝑍𝑍1 	𝜔𝜔 = 𝑗𝑗 𝑅𝑅2
+𝑅𝑅2 𝜔𝜔𝐶𝐶1 	− 𝑗𝑗 𝑅𝑅1
+= −
+𝑅𝑅2
+𝑅𝑅1
+1 + 𝑗𝑗𝜔𝜔𝑅𝑅2 𝐶𝐶1
+𝑝𝑝𝑃𝑃𝑃𝑃𝑝𝑝𝑛𝑛𝑃𝑃𝑓𝑓𝑑𝑑𝑃𝑃𝑃𝑃
+𝑓𝑓𝑃𝑃𝑃𝑃𝑓𝑓
+𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = 𝐻𝐻 𝜔𝜔 	= − 1
+1 + 𝑗𝑗𝜔𝜔
+𝐻𝐻(𝜔𝜔) = 1
+1 + 𝜔𝜔 2 = 1
+2
+𝑐𝑐𝑛𝑛𝑗𝑗−𝑃𝑃𝑓𝑓𝑓𝑓 𝑓𝑓𝑃𝑃𝑎𝑎𝑛𝑛𝑑𝑑𝑗𝑗𝑛𝑛𝑑𝑑𝑛𝑛
+⇒ 𝜔𝜔𝑐𝑐 = 1 𝑟𝑟𝑎𝑎𝑑𝑑
+𝑠𝑠 ⇒ 𝑓𝑓𝑐𝑐 = 1
+2𝜋𝜋 = 0.159Hz
+𝑐𝑐𝑛𝑛𝑗𝑗−𝑃𝑃𝑓𝑓𝑓𝑓 𝑓𝑓𝑃𝑃𝑛𝑛𝑓𝑓𝑛𝑛𝑛𝑛𝑛𝑛𝑐𝑐𝑝𝑝
+Component values inserted
+𝐻𝐻𝐿𝐿𝐿𝐿𝑃𝑃𝑠𝑠𝑝𝑝𝑓𝑓𝑝𝑝𝑗𝑗𝑃𝑃𝑗𝑗𝑛𝑛 	𝜔𝜔 	= − 1
+1 = −1 = 1 𝑒𝑒±𝑗𝑗 𝜋𝜋
+𝐻𝐻𝑗𝑗𝐿𝐿𝑃𝑃𝑠𝑠𝑝𝑝𝑓𝑓𝑝𝑝𝑗𝑗𝑃𝑃𝑗𝑗𝑛𝑛 	𝜔𝜔 	= − 1
+𝑗𝑗𝜔𝜔 = 𝑗𝑗
+𝜔𝜔 = 1
+𝜔𝜔 𝑒𝑒 𝑗𝑗 𝜋𝜋/2
+42
+
+-- 42 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+First order active low pass filter
+𝜃𝜃 𝜔𝜔 	= 	𝑗𝐻𝐻 𝜔𝜔 	= 180° − tan−1 𝜔𝜔
+𝜃𝜃 	0 	= 	𝑗𝐻𝐻 	0 	= 180° − tan−1 0 = 180°
+𝜃𝜃 ∞ 	= 	𝑗𝐻𝐻 ∞ 	= 180° − tan−1 ∞ = 180° − 90° = 90°
+𝑗𝐻𝐻 𝜔𝜔 	= 	𝑗𝑃𝑃 𝜔𝜔
+𝑛𝑛𝑛𝑛𝑓𝑓𝑛𝑛𝑃𝑃𝑃𝑃𝑗𝑗𝑃𝑃𝑃𝑃
+𝑃𝑃𝑛𝑛𝑎𝑎𝑃𝑃𝑛𝑛
+− 	𝑗𝑄𝑄 𝜔𝜔
+𝑑𝑑𝑛𝑛𝑛𝑛𝑃𝑃𝑓𝑓𝑑𝑑𝑛𝑛𝑃𝑃𝑗𝑗𝑃𝑃𝑃𝑃
+𝑃𝑃𝑛𝑛𝑎𝑎𝑃𝑃𝑛𝑛
+𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = 𝐻𝐻 𝜔𝜔 	= − 1
+1 + 𝑗𝑗𝜔𝜔
+Low frequency asymptote
+High frequency asymptote
+𝑅𝑅𝑒𝑒
+𝐼𝐼𝐼𝐼
+−1 	1
+43
+
+-- 43 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Cut-off frequency
+𝐻𝐻 𝜔𝜔𝑐𝑐 2 = 𝑌𝑌 𝜔𝜔𝑐𝑐 2
+𝑋𝑋 𝜔𝜔𝑐𝑐 2 = 1
+2
+𝑐𝑐𝑛𝑛𝑗𝑗−𝑃𝑃𝑓𝑓𝑓𝑓 𝑓𝑓𝑃𝑃𝑎𝑎𝑛𝑛𝑑𝑑𝑗𝑗𝑛𝑛𝑑𝑑𝑛𝑛
+A filter will let frequencies pass through in some frequency interval (pass band) and attenuate the
+output signal in other frequency intervals (stop band). The frequency that marks the transition
+between pass band and stop band is called the cut-off frequency 𝜔𝜔𝑐𝑐 or 𝑓𝑓𝑐𝑐.
+A quantitative definition for the cut-off frequency is that frequency where the power of the output
+signal is 50% of the power of the input signal. Power is 𝑉𝑉 ⋅ 𝐼𝐼 = 𝑉𝑉 2/𝑅𝑅.
+It follows that the cut-off frequency is that
+frequency, where the amplitude
+characteristic is 1/ 	2 :
+𝐻𝐻(𝜔𝜔𝑐𝑐) = 1
+2
+𝑐𝑐𝑛𝑛𝑗𝑗−𝑃𝑃𝑓𝑓𝑓𝑓 𝑓𝑓𝑃𝑃𝑎𝑎𝑛𝑛𝑑𝑑𝑗𝑗𝑛𝑛𝑑𝑑𝑛𝑛
+𝐻𝐻 𝜔𝜔𝑐𝑐 	𝑑𝑑𝑑𝑑 = 20 ⋅ log10
+1
+2 = −3 dB
+𝑐𝑐𝑛𝑛𝑗𝑗−𝑃𝑃𝑓𝑓𝑓𝑓 𝑓𝑓𝑃𝑃𝑎𝑎𝑛𝑛𝑑𝑑𝑗𝑗𝑛𝑛𝑑𝑑𝑛𝑛
+For some amplitude characteristics, this is equivalent
+to a 3 dB attenuation. The cut-off frequency is
+therefore also called the 3-dB frequency.
+Observation:
+The equations often use radians 𝜔𝜔, but in graphs, 𝑓𝑓 is
+used. Design specifications are usually given in Hertz. This
+must then be translated to radians before deriving
+component values.
+44
+
+-- 44 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+First order active low pass filter
+Amplitude characteristic
+Phase characteristic Non-ideal 	op-amp.
+Pass
+band
+Stop
+band
+45
+
+-- 45 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Frequency scaling
+Let us now change the cut-off frequency from
+0.159 Hz to 200 Hz. We do frequency scaling as
+follows:
+𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = −
+𝑅𝑅2
+𝑅𝑅1
+1 + 𝑗𝑗 𝐾𝐾𝐿𝐿 ⋅ 𝜔𝜔 𝑅𝑅2
+𝐶𝐶1
+𝐾𝐾𝐿𝐿	𝜔𝜔 = 𝐾𝐾𝐿𝐿 ⋅ 𝜔𝜔1
+𝐾𝐾𝐿𝐿 = 200Hz
+0.159Hz = 1258 ⇒ 𝐶𝐶1 = 1F
+1258 = 795μF
+We can also do an impedance scaling,
+where we scale all component with the same
+factor 𝐾𝐾𝑍𝑍, but without changing time
+constants. 𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = −
+𝐾𝐾𝑍𝑍 𝑅𝑅2
+𝐾𝐾𝑍𝑍 𝑅𝑅1
+1 + 𝑗𝑗 𝐾𝐾𝐿𝐿 ⋅ 𝜔𝜔 𝐾𝐾𝑍𝑍 𝑅𝑅2
+𝐶𝐶1
+𝐾𝐾𝐿𝐿𝐾𝐾𝑍𝑍
+If we desire a compact capacitor, we would like
+it to be smaller than 1μF.
+𝜏𝜏 = 𝑅𝑅 ⋅ 𝐶𝐶 = 𝐾𝐾𝑍𝑍 𝑅𝑅 ⋅ 𝐶𝐶/𝐾𝐾𝑍𝑍
+46
+
+-- 46 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impedance scaling
+Let us aim for a capacitor of 47nF. 𝐶𝐶1
+′′ = 𝐶𝐶1
+′
+𝐾𝐾𝑍𝑍
+= 𝐶𝐶1
+𝐾𝐾𝐿𝐿𝐾𝐾𝑍𝑍
+𝐾𝐾𝑍𝑍 = 795 μF
+47 nF = 16915
+𝑅𝑅1 = 16915 ⋅ 1Ω ≈ 15kΩ
+𝑅𝑅2 = 16915 ⋅ 1Ω ≈ 15kΩ
+𝐶𝐶1 = 47nF
+So here we let the impedance
+scaling factor 𝐾𝐾𝑍𝑍 be decided from
+a desired magnitude of the
+capacitor value.
+Capacitors are usually available in the E6
+series. We may then have to fit odd values
+of resistors or use E48 or E96 resistors.
+It is much cheaper to get a high precision
+resistor than a high precision capacitor.
+C values
+E6:
+10
+15
+22
+33
+47
+68
+𝑅𝑅1 𝐶𝐶1 ≈ 15kΩ ⋅ 47nF = 0.705ms
+𝑅𝑅1 𝐶𝐶1 = 1Ω ⋅ 795μF = 0.795ms
+𝑓𝑓𝑐𝑐 = 226Hz
+𝑓𝑓𝑐𝑐 = 200Hz
+Then the resistor values are
+determined based on this.
+47
+
+-- 47 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Result of scaling
+We have now a finished lowpass filter.
+We can read the cut-off frequency at -
+3dB on the magnitude plot or at half
+the phase angle change (here 135°) on
+the phase plot.
+48
+
+-- 48 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Using a lookup table
+R\C 	1 	1,2 	1,5 	1,8 	2,2 	2,7 	3,3 	3,9 	4,7 	5,6 	6,8 	8,2 	10
+1 	1,000 	1,200 	1,500 	1,800 	2,200 	2,700 	3,300 	3,900 	4,700 	5,600 	6,800 	8,200 	10,000
+1,2 	1,200 	1,440 	1,800 	2,160 	2,640 	3,240 	3,960 	4,680 	5,640 	6,720 	8,160 	9,840 	12,000
+1,5 	1,500 	1,800 	2,250 	2,700 	3,300 	4,050 	4,950 	5,850 	7,050 	8,400 	10,200 	12,300 	15,000
+1,8 	1,800 	2,160 	2,700 	3,240 	3,960 	4,860 	5,940 	7,020 	8,460 	10,080 	12,240 	14,760 	18,000
+2,2 	2,200 	2,640 	3,300 	3,960 	4,840 	5,940 	7,260 	8,580 	10,340 	12,320 	14,960 	18,040 	22,000
+2,7 	2,700 	3,240 	4,050 	4,860 	5,940 	7,290 	8,910 	10,530 	12,690 	15,120 	18,360 	22,140 	27,000
+3,3 	3,300 	3,960 	4,950 	5,940 	7,260 	8,910 	10,890 	12,870 	15,510 	18,480 	22,440 	27,060 	33,000
+3,9 	3,900 	4,680 	5,850 	7,020 	8,580 	10,530 	12,870 	15,210 	18,330 	21,840 	26,520 	31,980 	39,000
+4,7 	4,700 	5,640 	7,050 	8,460 	10,340 	12,690 	15,510 	18,330 	22,090 	26,320 	31,960 	38,540 	47,000
+5,6 	5,600 	6,720 	8,400 	10,080 	12,320 	15,120 	18,480 	21,840 	26,320 	31,360 	38,080 	45,920 	56,000
+6,8 	6,800 	8,160 	10,200 	12,240 	14,960 	18,360 	22,440 	26,520 	31,960 	38,080 	46,240 	55,760 	68,000
+8,2 	8,200 	9,840 	12,300 	14,760 	18,040 	22,140 	27,060 	31,980 	38,540 	45,920 	55,760 	67,240 	82,000
+𝜏𝜏 = 𝑅𝑅1 𝐶𝐶1 ≈ 15kΩ ⋅ 47nF = 0.705ms
+𝜏𝜏 = 𝑅𝑅1 𝐶𝐶1 = 1Ω ⋅ 795μF = 0.795ms (𝑖𝑖𝑑𝑑𝑒𝑒𝑎𝑎𝑖𝑖)
+We just arbitrarily chose a capacitor value of 47nF. We then had
+to round-off the resistor value.
+𝑅𝑅1 𝐶𝐶1 = 1.2 × 10𝑥𝑥 ⋅ 6.8 × 10𝑝𝑝 = 0.816ms
+𝜏𝜏 = 𝑅𝑅 ⋅ 𝐶𝐶
+E6 	E12
+This look-up
+table is made
+in Excel.
+𝑓𝑓𝑐𝑐 = 195Hz
+Using a look-up table, we can spot the best combination.
+Here 8.160 is the number closest to 7.95.
+The numbers
+of interest are
+often found in
+a narrow
+diagonal.
+49
+
+-- 49 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Using a lookup table
+1.2 × 10𝑥𝑥 ⋅ 6.8 × 10𝑝𝑝 = 8.16 × 10𝑥𝑥+𝑝𝑝 = 8.16 × 10−4
+𝑥𝑥 + 𝑦𝑦 = −4
+𝑅𝑅1 𝐶𝐶1 = 1.2 × 10𝑥𝑥 ⋅ 6.8 × 10𝑝𝑝 = 0.816ms
+We can aim for 𝐶𝐶1 = 6.8nF, i.e., 𝑦𝑦 = −9: 	𝑥𝑥 = −𝑦𝑦 − 4 = 9 − 4 = 5
+In this case we will get a resistor
+𝑅𝑅1 = 1.2 × 105 Ω = 120kΩ
+Alternatively, we could use: 	𝑅𝑅1 = 12kΩ, 𝐶𝐶1 = 68nF
+Observation:
+Picking an arbitrary value for 𝐶𝐶 and then calculating the resistor value will not give the best approximation
+to the time constant and cut-off frequency. Using a look-up table is an easy approach to spot the best
+combination of R and C values. Look-up tables are easily constructed in Excel.
+The look-up table gives the base value, but not
+the scale. We need to determine the multipliers
+for 𝑅𝑅 and 𝐶𝐶.
+We get one equation and two scale parameters.
+We need to choose one and calculate the other:
+𝑅𝑅1 = 120kΩ, 𝐶𝐶1 = 6.8nF
+50
+
+-- 50 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+First order high pass filter
+𝐻𝐻 𝜔𝜔 	= 𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = − 𝑍𝑍2 	𝜔𝜔
+𝑍𝑍1 	𝜔𝜔
+Gain equation for inverting amplifier.
+𝑍𝑍1 	𝜔𝜔 	= 𝑅𝑅1 + 1
+𝑗𝑗𝜔𝜔𝐶𝐶1
+𝑍𝑍2 	𝜔𝜔 	= 𝑅𝑅2
+Component impedances:
+𝐻𝐻 𝜔𝜔 	= 𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = − 𝑅𝑅2
+𝑅𝑅1 + 1
+𝑗𝑗𝜔𝜔𝐶𝐶1
+= − 𝑗𝑗𝜔𝜔𝑅𝑅2 𝐶𝐶1
+1 + 𝑗𝑗𝜔𝜔𝑅𝑅1 𝐶𝐶1
+𝑝𝑝𝑃𝑃𝑃𝑃𝑝𝑝𝑛𝑛𝑃𝑃𝑓𝑓𝑑𝑑𝑃𝑃𝑃𝑃
+𝑓𝑓𝑃𝑃𝑃𝑃𝑓𝑓
+𝐻𝐻 𝜔𝜔 	= 𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = − 𝑗𝑗𝜔𝜔
+1 + 𝑗𝑗𝜔𝜔 Component values inserte
+𝐻𝐻𝐿𝐿𝐿𝐿𝑃𝑃𝑠𝑠𝑝𝑝𝑓𝑓𝑝𝑝𝑗𝑗𝑃𝑃𝑗𝑗𝑛𝑛 	𝜔𝜔 	= − 𝑗𝑗𝜔𝜔
+1 = −𝑗𝑗𝜔𝜔 = 𝜔𝜔 𝑒𝑒 −𝑗𝑗 𝜋𝜋/2
+𝐻𝐻𝑗𝑗𝐿𝐿𝑃𝑃𝑠𝑠𝑝𝑝𝑓𝑓𝑝𝑝𝑗𝑗𝑃𝑃𝑗𝑗𝑛𝑛 	𝜔𝜔 	= − 𝑗𝑗𝜔𝜔
+𝑗𝑗𝜔𝜔 = 1𝑒𝑒 −𝑗𝑗 𝜋𝜋
+A highpass filter with a phase starting in -90
+degrees and ending in -180 degrees.
+51
+
+-- 51 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+First order high pass filter
+𝜃𝜃 𝜔𝜔 	= 	𝑗𝐻𝐻 𝜔𝜔 	= −180° + 90° − tan−1 𝜔𝜔
+𝜃𝜃 	0 	= 	𝑗𝐻𝐻 	0 	= −90° − tan−1 0 = −90°
+𝜃𝜃 ∞ 	= 	𝑗𝐻𝐻 ∞ 	= −90° − tan−1 ∞ = −90° − 90° = −180°
+𝐻𝐻 𝜔𝜔 	= 𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = − 𝑗𝑗𝜔𝜔
+1 + 𝑗𝑗𝜔𝜔
+𝑧𝑧 = 𝑥𝑥 + 𝑗𝑗𝑦𝑦
+𝑧𝑧 	= 	𝑥𝑥 + 𝑗𝑗𝑦𝑦 	= 	𝑥𝑥 2 + 𝑦𝑦 2
+𝑗𝑧𝑧 = tan−1 𝑦𝑦
+𝑥𝑥
+𝑅𝑅𝑒𝑒
+𝐼𝐼𝐼𝐼
+×
+×
+× 	× 0°
+90°
+−90°
+±180 𝑗𝐻𝐻 𝜔𝜔 	= 	𝑗𝑃𝑃 𝜔𝜔
+𝑛𝑛𝑛𝑛𝑓𝑓𝑛𝑛𝑃𝑃𝑃𝑃𝑗𝑗𝑃𝑃𝑃𝑃
+𝑃𝑃𝑛𝑛𝑎𝑎𝑃𝑃𝑛𝑛
+− 	𝑗𝑄𝑄 𝜔𝜔
+𝑑𝑑𝑛𝑛𝑛𝑛𝑃𝑃𝑓𝑓𝑑𝑑𝑛𝑛𝑃𝑃𝑗𝑗𝑃𝑃𝑃𝑃
+𝑃𝑃𝑛𝑛𝑎𝑎𝑃𝑃𝑛𝑛
+52
+
+-- 52 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+High pass filter with normalized cut-off frequency
+Amplitude characteristic
+Phase characteristic
+Stop
+band
+Pass
+band
+53
+
+-- 53 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Frequency scaling
+Let us now scale the cut-off frequency from 0.159
+to 20 Hz. We can scale the frequency
+characteristic as follows:
+𝜔𝜔 = 𝐾𝐾𝐿𝐿 ⋅ 𝜔𝜔1
+𝐾𝐾𝐿𝐿 = 20Hz
+0.159Hz = 125.8 ⇒ 𝐶𝐶1 = 1F
+125.8 = 7950 μF
+If we desire a compact capacitor, we would like
+it to be smaller than 1μF.
+𝐻𝐻 𝜔𝜔 	= −
+𝑗𝑗 	𝐾𝐾𝐿𝐿 ⋅ 𝜔𝜔 	𝐾𝐾𝑍𝑍 ⋅ 𝑅𝑅2
+𝐶𝐶1
+𝐾𝐾𝐿𝐿𝐾𝐾𝑍𝑍
+1 + 𝑗𝑗 𝐾𝐾𝐿𝐿 ⋅ 𝜔𝜔 	𝐾𝐾𝑍𝑍 ⋅ 𝑅𝑅1
+𝐶𝐶1
+𝐾𝐾𝐿𝐿𝐾𝐾𝑍𝑍
+𝐻𝐻 𝜔𝜔 	= −
+𝑗𝑗 𝐾𝐾𝐿𝐿 ⋅ 𝜔𝜔𝑅𝑅2
+𝐶𝐶1
+𝐾𝐾𝐿𝐿
+1 + 𝑗𝑗𝐾𝐾𝐿𝐿 ⋅ 𝜔𝜔𝑅𝑅1
+𝐶𝐶1
+𝐾𝐾𝐿𝐿
+We can also do an impedance scaling,
+where we scale all component with the same
+factor 𝐾𝐾𝑍𝑍, but without changing time
+constants.
+𝜏𝜏 = 𝑅𝑅 ⋅ 𝐶𝐶 = 𝐾𝐾𝑍𝑍 𝑅𝑅 ⋅ 𝐶𝐶
+𝐾𝐾𝑍𝑍
+= 1Ω ⋅ 7950μF = 7.95ms
+54
+
+-- 54 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Using a lookup table
+R\C 	1 	1,2 	1,5 	1,8 	2,2 	2,7 	3,3 	3,9 	4,7 	5,6 	6,8 	8,2 	10
+1 	1,000 	1,200 	1,500 	1,800 	2,200 	2,700 	3,300 	3,900 	4,700 	5,600 	6,800 	8,200 	10,000
+1,2 	1,200 	1,440 	1,800 	2,160 	2,640 	3,240 	3,960 	4,680 	5,640 	6,720 	8,160 	9,840 	12,000
+1,5 	1,500 	1,800 	2,250 	2,700 	3,300 	4,050 	4,950 	5,850 	7,050 	8,400 	10,200 	12,300 	15,000
+1,8 	1,800 	2,160 	2,700 	3,240 	3,960 	4,860 	5,940 	7,020 	8,460 	10,080 	12,240 	14,760 	18,000
+2,2 	2,200 	2,640 	3,300 	3,960 	4,840 	5,940 	7,260 	8,580 	10,340 	12,320 	14,960 	18,040 	22,000
+2,7 	2,700 	3,240 	4,050 	4,860 	5,940 	7,290 	8,910 	10,530 	12,690 	15,120 	18,360 	22,140 	27,000
+3,3 	3,300 	3,960 	4,950 	5,940 	7,260 	8,910 	10,890 	12,870 	15,510 	18,480 	22,440 	27,060 	33,000
+3,9 	3,900 	4,680 	5,850 	7,020 	8,580 	10,530 	12,870 	15,210 	18,330 	21,840 	26,520 	31,980 	39,000
+4,7 	4,700 	5,640 	7,050 	8,460 	10,340 	12,690 	15,510 	18,330 	22,090 	26,320 	31,960 	38,540 	47,000
+5,6 	5,600 	6,720 	8,400 	10,080 	12,320 	15,120 	18,480 	21,840 	26,320 	31,360 	38,080 	45,920 	56,000
+6,8 	6,800 	8,160 	10,200 	12,240 	14,960 	18,360 	22,440 	26,520 	31,960 	38,080 	46,240 	55,760 	68,000
+8,2 	8,200 	9,840 	12,300 	14,760 	18,040 	22,140 	27,060 	31,980 	38,540 	45,920 	55,760 	67,240 	82,000
+𝜏𝜏 = 𝑅𝑅1 𝐶𝐶1 = 1Ω ⋅ 7950μF = 7.95ms (𝑖𝑖𝑑𝑑𝑒𝑒𝑎𝑎𝑖𝑖)
+Using a look-up table, we can spot the best combination of 𝑅𝑅1
+and 𝐶𝐶1. Here 8.160 is the number closest to 7.95. 	𝑅𝑅1 𝐶𝐶1 = 1.2 × 10𝑥𝑥 ⋅ 6.8 × 10𝑝𝑝 = 8.16ms
+𝜏𝜏 = 𝑅𝑅 ⋅ 𝐶𝐶
+E6 	E12
+This look-up
+table is made
+in Excel.
+The numbers
+of interest are
+of-ten found in
+a narrow
+diago-nal.
+55
+
+-- 55 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impedance scaling
+Let us aim for a capacitor of 680nF. 𝐶𝐶1
+′′ = 𝐶𝐶1
+′
+𝐾𝐾𝑍𝑍
+= 𝐶𝐶1
+𝐾𝐾𝐿𝐿𝐾𝐾𝑍𝑍
+𝐾𝐾𝑍𝑍 = 7950 μF
+680 nF = 11691
+𝑅𝑅1 = 11691 ⋅ 1Ω ≈ 12kΩ
+𝑅𝑅2 = 11691 ⋅ 1Ω ≈ 12kΩ
+𝐶𝐶1 = 680nF
+So again, we let the impedance
+scaling factor 𝐾𝐾𝑍𝑍 be decided from
+a desired magnitude of the
+capacitor value.
+C values
+E6:
+10
+15
+22
+33
+47
+68
+Then the resistor values are
+determined based on this.
+56
+
+-- 56 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Scaled high pass filter 	Pass
+band
+Stop
+band
+Simulation in Multisim
+57
+
+-- 57 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Scaled high pass filter
+Simulation in KiCad
+58
+
+-- 58 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem set
+Problems
+Video 3
+59
+
+-- 59 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter
+A Sallen-Key filter is shown here. You are asked to
+analyse this circuit and:
+1. Derive the equation for the frequency
+characteristic 𝐻𝐻(𝜔𝜔). Use Maple/Python if possible.
+Verify the numerical values of the coefficients
+(𝑎𝑎1, 𝑎𝑎 0) with those calculated in Lecture 1.
+2. 	Derive the differential equation.
+3. Derive the equation for the amplitude
+characteristic 	𝐻𝐻(𝜔𝜔) 	and determine Pass band gain
+and Stop band asymptote slope (dB/decade).
+4. Derive the equation for phase angle 𝑗𝐻𝐻 𝜔𝜔 	and
+predict phase angles at low and high frequencies.
+5. Plot the amplitude and phase characteristics in
+Maple/Python.
+6. Draw the circuit in KiCad/Spice, run an AC sweep
+and plot the amplitude and phase characteristics.
+7. Validate the mathematical analysis by comparing
+Maple/Python graphs with KiCad/Spice graphs.
+C values
+E6:
+10
+15
+22
+33
+47
+68
+𝑋𝑋(𝜔𝜔) 𝑌𝑌(𝜔𝜔)
+𝑉𝑉𝐷𝐷
+𝑉𝑉𝑑𝑑	𝑉𝑉𝐷𝐷
+60
+
+-- 60 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter
+A Sallen-Key filter is shown here. You are asked to
+analyse this circuit and:
+1. Derive the equation for the frequency
+characteristic 𝐻𝐻(𝜔𝜔). Use Maple/Python if possible.
+Verify the numerical values of the coefficients
+(𝑎𝑎1, 𝑎𝑎0) with those calculated in Lecture 1.
+2. 	Derive the differential equation.
+3. Derive the equation for the amplitude
+characteristic 	𝐻𝐻(𝜔𝜔) 	and determine Pass band gain
+and Stop band asymptote slope (dB/decade).
+4. Derive the equation for phase angle 𝑗𝐻𝐻 𝜔𝜔 	and
+predict phase angles at low and high frequencies.
+5. Plot the amplitude and phase characteristics in
+Maple/Python.
+6. Draw the circuit in KiCad/Spice, run an AC sweep
+and plot the amplitude and phase characteristics.
+7. Validate the mathematical analysis by comparing
+Maple/Python graphs with KiCad/Spice graphs.
+C values
+E6:
+10
+15
+22
+33
+47
+68
+𝑉𝑉𝐷𝐷
+𝑉𝑉𝑑𝑑
+𝑉𝑉𝐷𝐷
+𝑌𝑌
+𝑋𝑋
+61
+
+-- 61 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter
+A Sallen-Key filter is shown here. You are asked to
+analyse this circuit and:
+1. Derive the equation for the frequency
+characteristic 𝐻𝐻(𝜔𝜔). Use Maple/Python if possible.
+Verify the numerical values of the coefficients (𝑎𝑎1, 𝑎𝑎0)
+with those calculated in Lecture 1.
+2. Derive the differential equation.
+3. Derive the equation for the amplitude
+characteristic 	𝐻𝐻(𝜔𝜔) 	and determine Pass band
+gain and Stop band asymptote slope (dB/decade).
+4. Derive the equation for phase angle 𝑗𝐻𝐻(𝜔𝜔) and
+predict phase angles at low and high frequencies.
+5. Plot the amplitude and phase characteristics in
+Maple/Python.
+6. Draw the circuit in KiCad/Spice, run an AC sweep
+and plot the amplitude and phase characteristics.
+7. Validate the mathematical analysis by comparing
+Maple/Python graphs with KiCad/Spice graphs.
+C values
+E6:
+10
+15
+22
+33
+47
+68
+𝑉𝑉𝐷𝐷(𝜔𝜔)
+𝑉𝑉𝐷𝐷 (𝜔𝜔)
+𝑉𝑉𝑑𝑑(𝜔𝜔)
+𝑋𝑋 𝜔𝜔
+𝑌𝑌 𝜔𝜔
+62
+
+-- 62 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem solutions
+Solutions
+63
+
+-- 63 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter
+C values
+E6:
+10
+15
+22
+33
+47
+68
+𝑋𝑋(𝜔𝜔) 𝑌𝑌(𝜔𝜔)
+A Sallen-Key filter is shown here. You are asked to
+analyse this circuit and:
+1. Derive the equation for the frequency
+characteristic 𝐻𝐻(𝜔𝜔). Use Maple/Python if possible.
+Verify the numerical values of the coefficients
+(𝑎𝑎1, 𝑎𝑎 0) with those calculated in Lecture 1.
+2. 	Derive the differential equation.
+3. Derive the equation for the amplitude
+characteristic 	𝐻𝐻(𝜔𝜔) 	and determine Pass band
+gain and Stop band asymptote slope (dB/decade).
+4. Derive the equation for phase angle 𝑗𝐻𝐻 𝜔𝜔 	and
+predict phase angles at low and high frequencies.
+5. Plot the amplitude and phase characteristics in
+Maple/Python.
+6. Draw the circuit in KiCad/Spice, run an AC sweep
+and plot the amplitude and phase characteristics.
+7. Validate the mathematical analysis by comparing
+Maple/Python graphs with KiCad/Spice graphs.
+64
+
+-- 64 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+We now want to analyse the Sallen-
+Key filter from a frequency domain
+perspective.
+We want to:
+1. 	Obtain the equation for the
+frequency characteristic.
+2. 	Check the values of the equation
+coefficients.
+3. 	Obtain the differential equation from
+the frequency characteristic
+4. 	Predict the main features of the
+amplitude and phase characteristics
+5. 	Plot the amplitude and phase
+characteristics in Maple/Python.
+𝑋𝑋(𝜔𝜔) 𝑌𝑌(𝜔𝜔)
+65
+
+-- 65 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+Nodal symbols have been added.
+We will write the frequency
+domain equations using
+impedances and nodal analysis.
+𝐴𝐴: − 𝑋𝑋 − 𝑉𝑉𝐷𝐷
+𝑅𝑅1
++ 𝑉𝑉𝐷𝐷 − 𝑌𝑌
+𝑍𝑍𝐷𝐷2
++ 𝑉𝑉𝐷𝐷 − 𝑉𝑉𝑑𝑑
+𝑅𝑅2
+= 0
+𝐵𝐵: − 𝑉𝑉𝐷𝐷 − 𝑉𝑉𝑑𝑑
+𝑅𝑅2
++ 𝑉𝑉𝑑𝑑
+𝑍𝑍𝐷𝐷1
+= 0
+𝑉𝑉𝑑𝑑 = 𝑉𝑉𝐷𝐷 = 𝑅𝑅3
+𝑅𝑅3 + 𝑅𝑅4
+⋅ 𝑌𝑌 = 1
+𝐾𝐾 ⋅ 𝑌𝑌
+Constraint:
+All variables are Fourier transformed with 𝜔𝜔 as their argument.
+Hence, we use capital letters.
+𝑋𝑋(𝜔𝜔) 𝑌𝑌(𝜔𝜔)
+𝑉𝑉𝐷𝐷(𝜔𝜔)
+𝑉𝑉𝑑𝑑(𝜔𝜔)
+𝑉𝑉𝐷𝐷 (𝜔𝜔)
+66
+
+-- 66 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+𝐴𝐴: − 𝑋𝑋 − 𝑉𝑉𝐷𝐷
+𝑅𝑅1
++ 𝑉𝑉𝐷𝐷 − 𝑌𝑌
+𝑍𝑍𝐷𝐷2
++ 𝑉𝑉𝐷𝐷 − 𝑉𝑉𝑑𝑑
+𝑅𝑅2
+= 0
+𝐵𝐵: − 𝑉𝑉𝐷𝐷 − 𝑉𝑉𝑑𝑑
+𝑅𝑅2
++ 𝑉𝑉𝑑𝑑
+𝑍𝑍𝐷𝐷1
+= 0
+𝑉𝑉𝑑𝑑 = 1
+𝐾𝐾 ⋅ 𝑌𝑌
+Constraint:
+Writing the frequency domain equations in Maple:
+Equations:
+67
+
+-- 67 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+Solving for a
+symbolic expression
+for 𝑌𝑌:
+Defining the impedances:
+Obtaining 𝑉𝑉𝑂𝑂 expressed
+in terms of the
+components:
+Constructing a function for 𝑌𝑌(𝜔𝜔):
+68
+
+-- 68 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+Observation:
+The gain 𝐾𝐾 is part of the
+coefficient to 𝑗𝑗𝜔𝜔. This means
+that the gain interferes with
+the cut-off frequency.
+Changing the gain resistors
+will also change the cut-off
+frequency.
+For this reason, the Sallen-
+Key filter is often used with
+𝐾𝐾 = 1. In such cases, we
+build the filter around a
+unity gain op-amp circuit.
+𝐻𝐻 𝜔𝜔 	= 𝐾𝐾
+𝑗𝑗𝜔𝜔 2 𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2 + 𝑗𝑗𝜔𝜔 	𝐶𝐶1 	𝑅𝑅1 + 𝑅𝑅2 	+ 𝑅𝑅1 𝐶𝐶2 	1 − 𝐾𝐾 	+ 1
+Alternative form:
+69
+
+-- 69 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+Lowpass 	Highpass 	Bandpass
+𝑅𝑅1 	𝑘𝑘Ω 	3.9894 	1784.1 	56.419
+𝑅𝑅2 	𝑘𝑘Ω 	0.8865 	892.06 	34.117
+𝑅𝑅3 	𝑘𝑘Ω 	1.0 	1.0 	149.72
+𝑅𝑅4 	𝑘𝑘Ω 	1.0 	1.0 	1.0
+𝑅𝑅5 	𝑘𝑘Ω 	− 	− 	1.0
+𝐶𝐶1 	𝑛𝑛𝐹𝐹 	1795.2 	1784.1 	56.419
+𝐶𝐶2 	𝑛𝑛𝐹𝐹 	398.94 	3568.2 	56.419
+𝑎𝑎1 	2.83 ⋅ 103 6.283 ⋅ 10−1 3.141 ⋅ 101
+𝑎𝑎0 	3.95 ⋅ 105 9.87 ⋅ 10−2 9.87 ⋅ 104
+𝑏𝑏2 	0 	2 	0
+𝑏𝑏1 	0 	0 	6.283 ⋅ 102
+𝑏𝑏0 	7.89 ⋅ 105 0 	0
+Filter table
+The coefficients agree with what was
+obtained in the time domain.
+70
+
+-- 70 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = 𝐻𝐻 𝜔𝜔 	=
+𝐾𝐾
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑗𝑗𝜔𝜔 2 + 1
+𝑅𝑅1 𝐶𝐶2 + 1
+𝑅𝑅2 𝐶𝐶2 + 1 − 𝐾𝐾
+𝑅𝑅2 𝐶𝐶1 𝑗𝑗𝜔𝜔 	+ 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑗𝑗𝜔𝜔 2 + 1
+𝑅𝑅1 𝐶𝐶2
++ 1
+𝑅𝑅2 𝐶𝐶2
++ 1 − 𝐾𝐾
+𝑅𝑅2 𝐶𝐶1
+𝑗𝑗𝜔𝜔 	+ 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑌𝑌 𝜔𝜔 	= 𝐾𝐾
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑋𝑋(𝜔𝜔)
+𝑗𝑗𝜔𝜔 2 𝑌𝑌 𝜔𝜔 	+ 1
+𝑅𝑅1 𝐶𝐶2
++ 1
+𝑅𝑅2 𝐶𝐶2
++ 1 − 𝐾𝐾
+𝑅𝑅2 𝐶𝐶1
+𝑗𝑗𝜔𝜔 𝑌𝑌 𝜔𝜔 	+ 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑌𝑌 𝜔𝜔 	= 𝐾𝐾
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑋𝑋(𝜔𝜔)
+̈
+	𝑦𝑦(𝑡𝑡) + 1
+𝑅𝑅1 𝐶𝐶2
++ 1
+𝑅𝑅2 𝐶𝐶2
++ 1 − 𝐾𝐾
+𝑅𝑅2 𝐶𝐶1̇
+𝑦𝑦(𝑡𝑡) + 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑦𝑦(𝑡𝑡) = 𝐾𝐾
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑥𝑥(𝑡𝑡)
+We readily obtain the
+differential equation from
+the frequency
+characteristic:
+Inverse Fourier
+transforming
+each term:
+71
+
+-- 71 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+𝐻𝐻 𝜔𝜔 	= 𝐾𝐾
+𝑗𝑗𝜔𝜔 2 𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2 + 𝑗𝑗𝜔𝜔 	𝐶𝐶1 	𝑅𝑅1 + 𝑅𝑅2 	+ 𝑅𝑅1 𝐶𝐶2 	1 − 𝐾𝐾 	+ 1
+lim
+𝑗𝑗→∞ 𝐻𝐻 𝜔𝜔 	= 𝐻𝐻 	𝜔𝜔𝑗𝑗𝐿𝐿 	= 𝐾𝐾
+𝑗𝑗𝜔𝜔 2 𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+= − 𝐾𝐾
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+⋅ 1
+𝜔𝜔 2 → 0
+lim
+𝑗𝑗→0 𝐻𝐻 𝜔𝜔 	= 𝐻𝐻 𝜔𝜔 𝐿𝐿𝐿𝐿 	= 𝐾𝐾
+1 = 𝐾𝐾	Low frequency (LF) asymptote:
+High frequency (HF) asymptote:
+Before plotting the magnitude and
+phase of 𝐻𝐻(𝜔𝜔) it is helpful to have
+an idea about what to expect. We
+can get that from low and high
+frequency asymptotes.
+When interpreting the limit of an expression, we include only the term with dominant magnitude and consider
+the contributions from the other terms to be insignificant. So, for the denominator, we only include the 2 nd
+order term for the high frequency asymptote, while to the low frequency asymptote the constant term will
+dominate.
+The asymptotes tell us that the filter has constant gain at low frequencies and that the gain goes to zero
+for high frequency. So, we have a low pass filter.
+72
+
+-- 72 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+𝐻𝐻 𝜔𝜔 𝐿𝐿𝐿𝐿 	𝑑𝑑𝑑𝑑 = 20dB ⋅ log10 𝐾𝐾 = 20dB ⋅ log10 2 = 6dB
+HF slope:
+DC gain in
+decibels:
+We can also predict the order of the filter. It is revealed by the slope of the declining asymptote, but we
+need to plot the amplitude spectrum in decibels. A first order filter has a slope of 20 dB per decade
+frequency change. A 2 nd order filter a slope of 40 dB/decade, a 3 rd order filter a slope of 60 dB/decade, and
+so on.
+𝐻𝐻 	10 ⋅ 𝜔𝜔𝑗𝑗𝐿𝐿 	𝑑𝑑𝑑𝑑 − 𝐻𝐻 𝜔𝜔𝑗𝑗𝐿𝐿 	𝑑𝑑𝑑𝑑 = 20dB ⋅ log10
+𝐾𝐾
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+⋅ 1
+10 ⋅ 𝜔𝜔 2 − 20dB ⋅ log10
+𝐾𝐾
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+⋅ 1
+𝜔𝜔 2
+= 20dB ⋅ log10
+𝜔𝜔 2
+10 ⋅ 𝜔𝜔 2 = 20dB ⋅ log10
+1
+10 2 = 20dB ⋅ log10 10−2
+= −2 ⋅ 20dB ⋅ log10 10 = −40dB/decade
+decade
+73
+
+-- 73 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+𝐻𝐻 𝜔𝜔𝑗𝑗𝐿𝐿 	= 𝐾𝐾
+𝑗𝑗𝜔𝜔 2 𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+= − 𝐾𝐾
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+⋅ 1
+𝜔𝜔 2
+𝐻𝐻 𝜔𝜔 𝐿𝐿𝐿𝐿 	= 𝐾𝐾
+1 = 𝐾𝐾
+𝑗𝐻𝐻 𝜔𝜔 𝐿𝐿𝐿𝐿 	= tan−1 0
+𝐾𝐾 = 0°
+𝑗𝐻𝐻 𝜔𝜔𝑗𝑗𝐿𝐿 	= ±180°
+𝜃𝜃 = tan−1 𝐼𝐼𝐼𝐼 𝑧𝑧
+𝑅𝑅𝑒𝑒 𝑧𝑧
+𝐼𝐼𝑓𝑓 𝐼𝐼𝐼𝐼 𝑧𝑧 	= 0, 𝑡𝑡ℎ𝑒𝑒𝑛𝑛 𝑖𝑖𝑓𝑓 𝑅𝑅𝑒𝑒 𝑧𝑧 	> 0 ⇒ 𝜃𝜃 = 0
+𝐼𝐼𝑓𝑓 𝐼𝐼𝐼𝐼 𝑧𝑧 	= 0, 𝑡𝑡ℎ𝑒𝑒𝑛𝑛 𝑖𝑖𝑓𝑓 𝑅𝑅𝑒𝑒 𝑧𝑧 	< 0 ⇒ 𝜃𝜃 = ±180°
+𝐼𝐼𝑓𝑓 𝑅𝑅𝑒𝑒 𝑧𝑧 	= 0, 𝑡𝑡ℎ𝑒𝑒𝑛𝑛 𝑖𝑖𝑓𝑓 𝐼𝐼𝐼𝐼 𝑧𝑧 	> 0 ⇒ 𝜃𝜃 = 90°
+𝐼𝐼𝑓𝑓 𝑅𝑅𝑒𝑒 𝑧𝑧 	= 0, 𝑡𝑡ℎ𝑒𝑒𝑛𝑛 𝑖𝑖𝑓𝑓 𝐼𝐼𝐼𝐼 𝑧𝑧 	< 0 ⇒ 𝜃𝜃 = −90°
+𝑧𝑧 = 𝑥𝑥 + 𝑗𝑗𝑦𝑦
+Phase characteristic:
+Tricky cases of tan−1():
+Low frequency (LF) asymptote:
+High frequency (HF) asymptote:
+𝑅𝑅𝑒𝑒
+𝐼𝐼𝐼𝐼
+74
+
+-- 74 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+A few commands to standardize plots.
+Magnitude plots are in decibel with
+logarithmic frequency axis in Hz.
+Phase plots are in degrees with
+logarithmic frequency axes in Hz.
+Using display with aligncolumns will
+align the y-axes for better
+comparison of magnitude and phase
+plots.
+There will be some annoying table
+borders. They can be removed using
+the interactive Table tools palette.
+75
+
+-- 75 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+Maple 	Multisim
+76
+
+-- 76 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+77
+
+-- 77 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+𝐻𝐻(𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑) = 𝑏𝑏0
+𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑 2 + 𝑎𝑎1 	𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑 	+ 𝑎𝑎 0
+= 1
+2 ⋅ 𝐻𝐻(𝑗𝑗𝜔𝜔 𝐿𝐿𝐿𝐿)
+𝐻𝐻(𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑) = 𝑏𝑏0
+𝑎𝑎 0 	1 − 𝜔𝜔 3𝑑𝑑𝑑𝑑
+2
+𝑎𝑎 0
+2
++ 𝑎𝑎1
+𝑎𝑎 0 𝜔𝜔 3𝑑𝑑𝑑𝑑
+2
+= 1
+2 ⋅ 𝑏𝑏0
+𝑎𝑎 0
+1 − 𝜔𝜔 3𝑑𝑑𝑑𝑑
+2
+𝑎𝑎 0
+2
++ 𝑎𝑎1
+𝑎𝑎 0
+𝜔𝜔 3𝑑𝑑𝑑𝑑
+2
+− 2 = 0
+𝑎𝑎 0
+2 − 2𝑎𝑎 0 𝜔𝜔 3𝑑𝑑𝑑𝑑
+2 + 𝜔𝜔 3𝑑𝑑𝑑𝑑
+4 + 𝑎𝑎1
+2 𝜔𝜔3𝑑𝑑𝑑𝑑
+2 − 2𝑎𝑎 0
+2 = 0
+𝜔𝜔 3𝑑𝑑𝑑𝑑
+4 + 	𝑎𝑎1
+2 − 2𝑎𝑎 0 	𝜔𝜔 3𝑑𝑑𝑑𝑑
+2 − 𝑎𝑎 0
+2 = 0
+We can derive a general expression for
+the 3-dB cut-off frequency for a 2 nd
+order lowpass filter.
+78
+
+-- 78 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+𝑦𝑦 = 𝜔𝜔 2 𝑦𝑦 2 + 	𝑎𝑎1
+2 − 2𝑎𝑎 0 	𝑦𝑦 − 𝑎𝑎 0
+2 = 0
+𝑦𝑦 =
+− 𝑎𝑎1
+2 − 2𝑎𝑎 0 	± 	𝑎𝑎1
+2 − 2𝑎𝑎 0 2 − 4(−𝑎𝑎 0
+2)
+2
+𝑦𝑦 =
+− 𝑎𝑎1
+2 − 2𝑎𝑎 0 	± 	𝑎𝑎1
+4 − 4𝑎𝑎 0 𝑎𝑎1
+2 + 8𝑎𝑎 0
+2
+2
+𝜔𝜔 3𝑑𝑑𝑑𝑑
+4 + 	𝑎𝑎1
+2 − 2𝑎𝑎 0 	𝜔𝜔 3𝑑𝑑𝑑𝑑
+2 − 𝑎𝑎 0
+2 = 0
+79
+
+-- 79 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+𝑎𝑎 0 = 1; 𝑎𝑎1 = 	2
+2 nd order lowpass filter
+80
+
+-- 80 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 10 – Lowpass filter (sol)
+Same filter, but different components:
+81
+
+-- 81 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter
+C values
+E6:
+10
+15
+22
+33
+47
+68
+𝑋𝑋(𝜔𝜔)
+𝑌𝑌(𝜔𝜔)
+A Sallen-Key filter is shown here. You are asked to
+analyse this circuit and:
+1. Derive the equation for the frequency
+characteristic 𝐻𝐻(𝜔𝜔). Use Maple/Python if possible.
+Verify the numerical values of the coefficients
+(𝑎𝑎1, 𝑎𝑎 0) with those calculated in Lecture 1.
+2. 	Derive the differential equation.
+3. Derive the equation for the amplitude
+characteristic 	𝐻𝐻(𝜔𝜔) 	and determine Pass band gain
+and Stop band asymptote slope (dB/decade).
+4. Derive the equation for phase angle 𝑗𝐻𝐻 𝜔𝜔 	and
+predict phase angles at low and high frequencies.
+5. Plot the amplitude and phase characteristics in
+Maple/Python.
+6. Draw the circuit in KiCad/Spice, run an AC sweep
+and plot the amplitude and phase characteristics.
+7. Validate the mathematical analysis by comparing
+Maple/Python graphs with KiCad/Spice graphs.
+82
+
+-- 82 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+𝑉𝑉𝐷𝐷(𝜔𝜔)
+𝑋𝑋(𝜔𝜔) 𝑉𝑉𝐷𝐷 (𝜔𝜔)
+𝑉𝑉𝑑𝑑(𝜔𝜔)
+𝑌𝑌(𝜔𝜔)
+𝐴𝐴: − 𝑋𝑋 𝜔𝜔 	− 𝑉𝑉𝐷𝐷 𝜔𝜔
+𝑍𝑍𝐷𝐷1
++ 𝑉𝑉𝐷𝐷 𝜔𝜔 	− 𝑌𝑌 𝜔𝜔
+𝑅𝑅1
++ 𝑉𝑉𝐷𝐷 𝜔𝜔 	− 𝑉𝑉𝑑𝑑 	𝜔𝜔
+𝑍𝑍𝐷𝐷2
+= 0
+𝐵𝐵: − 𝑉𝑉𝐷𝐷 𝜔𝜔 	− 𝑉𝑉𝑑𝑑 	𝜔𝜔
+𝑍𝑍𝐷𝐷2
++ 𝑉𝑉𝑑𝑑 	𝜔𝜔
+𝑅𝑅2
+= 0
+𝐶𝐶: 𝑉𝑉𝐷𝐷 	𝜔𝜔 	= 𝑅𝑅3
+𝑅𝑅3 + 𝑅𝑅4
+𝑌𝑌 𝜔𝜔 	= 1
+𝐾𝐾 𝑌𝑌(𝜔𝜔)
+𝑉𝑉𝑑𝑑 	𝜔𝜔 	= 𝑉𝑉𝐷𝐷 	𝜔𝜔 	= 1
+𝐾𝐾 𝑌𝑌(𝜔𝜔)
+Constraints:
+Nodal equations:
+𝑉𝑉𝐷𝐷 (𝜔𝜔)
+𝑌𝑌(𝜔𝜔) = 𝑅𝑅3
+𝑅𝑅3 + 𝑅𝑅4
+𝑉𝑉𝑑𝑑 	𝜔𝜔 	= 𝑉𝑉𝐷𝐷 	𝜔𝜔 	= 𝑅𝑅3
+𝑅𝑅3 + 𝑅𝑅4
+𝑌𝑌 𝜔𝜔 	= 1
+𝐾𝐾 𝑌𝑌 𝜔𝜔
+𝑌𝑌 𝜔𝜔 	= 	1 + 𝑅𝑅4
+𝑅𝑅3
+𝑉𝑉𝑑𝑑 	𝜔𝜔 	= 𝐾𝐾 𝑉𝑉𝑑𝑑 	𝜔𝜔
+83
+
+-- 83 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+𝐴𝐴: − 𝑋𝑋 𝜔𝜔 	− 𝑉𝑉𝐷𝐷 𝜔𝜔
+𝑍𝑍𝐷𝐷1
++ 𝑉𝑉𝐷𝐷 𝜔𝜔 	− 𝑌𝑌 𝜔𝜔
+𝑅𝑅1
++ 𝑉𝑉𝐷𝐷 𝜔𝜔 	− 𝑉𝑉𝑑𝑑 	𝜔𝜔
+𝑍𝑍𝐷𝐷2
+= 0
+𝐵𝐵: − 𝑉𝑉𝐷𝐷 𝜔𝜔 	− 𝑉𝑉𝑑𝑑 	𝜔𝜔
+𝑍𝑍𝐷𝐷2
++ 𝑉𝑉𝑑𝑑 	𝜔𝜔
+𝑅𝑅2
+= 0
+𝐶𝐶: 𝑉𝑉𝐷𝐷 	𝜔𝜔 	= 𝑅𝑅3
+𝑅𝑅3 + 𝑅𝑅4
+𝑌𝑌 𝜔𝜔 	= 1
+𝐾𝐾 𝑌𝑌(𝜔𝜔)
+𝑉𝑉𝑑𝑑 	𝜔𝜔 	= 𝑉𝑉𝐷𝐷 	𝜔𝜔 	= 1
+𝐾𝐾 𝑌𝑌(𝜔𝜔)
+Constraints:
+Nodal equations:
+84
+
+-- 84 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+𝑌𝑌 𝜔𝜔
+𝑋𝑋 𝜔𝜔 = 𝐻𝐻 𝜔𝜔 	= 𝐾𝐾 𝑗𝑗𝜔𝜔 2
+𝑗𝑗𝜔𝜔 2 + 𝑗𝑗𝜔𝜔 1
+𝑅𝑅2 𝐶𝐶1 + 1
+𝑅𝑅2 𝐶𝐶2 + 1 − 𝐾𝐾
+𝑅𝑅1 𝐶𝐶1 + 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑗𝑗𝜔𝜔 2 + 𝑗𝑗𝜔𝜔 1
+𝑅𝑅2 𝐶𝐶1
++ 1
+𝑅𝑅2 𝐶𝐶2
++ 1 − 𝐾𝐾
+𝑅𝑅1 𝐶𝐶1
++ 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑌𝑌 𝜔𝜔 	= 𝐾𝐾 𝑗𝑗𝜔𝜔 2 𝑋𝑋 𝜔𝜔
+𝑗𝑗𝜔𝜔 2 𝑌𝑌 𝜔𝜔 	+ 	𝑗𝑗𝜔𝜔 𝑌𝑌 𝜔𝜔 1
+𝑅𝑅2 𝐶𝐶1
++ 1
+𝑅𝑅2 𝐶𝐶2
++ 1 − 𝐾𝐾
+𝑅𝑅1 𝐶𝐶1
++ 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑌𝑌 𝜔𝜔 	= 𝐾𝐾 𝑗𝑗𝜔𝜔 2 𝑋𝑋 𝜔𝜔
+̈
+	𝑦𝑦(𝑡𝑡) + 1
+𝑅𝑅2 𝐶𝐶1
++ 1
+𝑅𝑅2 𝐶𝐶2
++ 1 − 𝐾𝐾
+𝑅𝑅1 𝐶𝐶1̇
+𝑦𝑦(𝑡𝑡) + 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑦𝑦(𝑡𝑡) = 𝐾𝐾̈𝑥𝑥(𝑡𝑡)
+2. Reorganizing and
+inverse Fourier
+transforming yields the
+differential equation:
+85
+
+-- 85 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+Rewriting 𝐻𝐻 𝜔𝜔 	manually
+Coefficients agree with
+those calculated in
+Lecture 1.
+86
+
+-- 86 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+𝐻𝐻 𝜔𝜔 	= 𝑗𝑗 𝜔𝜔 2 ⋅ 𝐾𝐾
+𝑗𝑗 𝜔𝜔 2 + 𝑎𝑎1 𝑗𝑗𝜔𝜔 	+ 𝑎𝑎0
+3. Derive the equation for the
+amplitude characteristic 	𝐻𝐻(𝜔𝜔)
+and determine Pass band gain
+and Stop band asymptote slope.
+lim
+𝑗𝑗→0 𝐻𝐻 𝜔𝜔 	= lim
+𝑗𝑗→0
+𝑗𝑗 𝜔𝜔 2 ⋅ 𝐾𝐾
+𝑎𝑎0
+= lim
+𝑗𝑗→0
+− 	𝜔𝜔 2 ⋅ 𝐾𝐾
+𝑎𝑎0
+= 0
+lim
+𝑗𝑗→∞ 𝐻𝐻 𝜔𝜔 	= lim
+𝑗𝑗→∞
+𝑗𝑗 𝜔𝜔 2 ⋅ 𝐾𝐾
+𝑗𝑗 𝜔𝜔 2 = 𝐾𝐾
+Low frequency asymptote
+High frequency asymptote
+The asymptotes reveal that the low frequencies are attenuated, and the high frequencies are amplified by 𝐾𝐾.
+𝑅𝑅𝑒𝑒
+𝐼𝐼𝐼𝐼
+±180°
+87
+
+-- 87 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+LF slope:
+𝐻𝐻𝐿𝐿𝐿𝐿 	10 ⋅ 𝜔𝜔 	𝑑𝑑𝑑𝑑 − 𝐻𝐻𝐿𝐿𝐿𝐿 	𝜔𝜔 	𝑑𝑑𝑑𝑑 = 20dB ⋅ log10 𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2 𝐾𝐾 	10 𝜔𝜔 2 − 20dB ⋅ log10 𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2 𝐾𝐾 	𝜔𝜔 2
+= 20dB ⋅ log10
+10 𝜔𝜔 2
+𝜔𝜔 2 = 20dB ⋅ log10 102
+= 2 ⋅ 20dB ⋅ log10 10 = 40dB/decade
+𝐻𝐻 𝜔𝜔 	= 𝐾𝐾 𝑗𝑗𝜔𝜔 2
+𝑗𝑗𝜔𝜔 2 + 𝑗𝑗𝜔𝜔 1
+𝑅𝑅2 𝐶𝐶1 + 1
+𝑅𝑅2 𝐶𝐶2 + 1 − 𝐾𝐾
+𝑅𝑅1 𝐶𝐶1 + 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+The low-frequency asymptote is: 	𝐻𝐻𝐿𝐿𝐿𝐿 	𝜔𝜔 	= 𝐾𝐾 𝑗𝑗𝜔𝜔 2
+1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+= 𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2 𝐾𝐾 	𝑗𝑗 𝜔𝜔 2
+log 𝐴𝐴 − log 𝐵𝐵 = log 𝐴𝐴
+𝐵𝐵
+88
+
+-- 88 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+4. Derive the equation for phase
+angle 𝑗𝐻𝐻 𝜔𝜔 	and predict phase
+angles at low and high
+frequencies.
+𝐻𝐻 𝜔𝜔 	= 𝑗𝑗 𝜔𝜔 2 ⋅ 𝐾𝐾
+𝑗𝑗 𝜔𝜔 2 + 𝑎𝑎1 𝑗𝑗𝜔𝜔 	+ 𝑎𝑎0
+𝑗𝐻𝐻 𝜔𝜔 	= 𝑗 𝑗𝑗 𝜔𝜔 2 − 𝑗 	𝑗𝑗 𝜔𝜔 2 + 𝑎𝑎1 𝑗𝑗𝜔𝜔 	+ 𝑎𝑎0
+𝑗𝐻𝐻 0 	= 180° − 0° = 180°
+𝑗𝐻𝐻 ∞ 	= 180° − 180° = 0°
+𝑗𝐻𝐻 𝜔𝜔 	= 	𝑗𝑃𝑃 𝜔𝜔
+𝑛𝑛𝑛𝑛𝑓𝑓𝑛𝑛𝑃𝑃𝑃𝑃𝑗𝑗𝑃𝑃𝑃𝑃
+𝑃𝑃𝑛𝑛𝑎𝑎𝑃𝑃𝑛𝑛
+− 	𝑗𝑄𝑄 𝜔𝜔
+𝑑𝑑𝑛𝑛𝑛𝑛𝑃𝑃𝑓𝑓𝑑𝑑𝑛𝑛𝑃𝑃𝑗𝑗𝑃𝑃𝑃𝑃
+𝑃𝑃𝑛𝑛𝑎𝑎𝑃𝑃𝑛𝑛
+𝑅𝑅𝑒𝑒
+𝐼𝐼𝐼𝐼
+89
+
+-- 89 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+5. 	- 	7. Plot the amplitude and phase
+characteristics in Maple.
+90
+
+-- 90 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+91
+
+-- 91 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+𝐻𝐻(𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑) = 𝑏𝑏2 	𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑 2
+𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑 2 + 𝑎𝑎1 	𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑 	+ 𝑎𝑎 0
+= 1
+2 ⋅ 𝐻𝐻(𝑗𝑗𝜔𝜔𝑗𝑗𝐿𝐿)
+We can derive a general expression for
+the 3-dB cut-off frequency for a 2 nd
+order highpass filter.
+𝑎𝑎 0 − 𝜔𝜔 3𝑑𝑑𝑑𝑑
+2 2 + 	𝑎𝑎1 𝜔𝜔 3𝑑𝑑𝑑𝑑 2 = 2𝜔𝜔 3𝑑𝑑𝑑𝑑
+4
+𝑎𝑎 0
+2 − 2𝑎𝑎 0 𝜔𝜔 3𝑑𝑑𝑑𝑑
+2 + 𝜔𝜔 3𝑑𝑑𝑑𝑑
+4 + 	𝑎𝑎1 𝜔𝜔3𝑑𝑑𝑑𝑑 2 = 2𝜔𝜔 3𝑑𝑑𝑑𝑑
+4
+−𝜔𝜔 3𝑑𝑑𝑑𝑑
+4 + (𝑎𝑎1
+2 − 2𝑎𝑎 0)𝜔𝜔 3𝑑𝑑𝑑𝑑
+2 + 𝑎𝑎 0
+2 = 0
+𝐻𝐻(𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑) = 𝑏𝑏2 	𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑 2
+𝑎𝑎 0 − 𝜔𝜔 3𝑑𝑑𝑑𝑑
+2 	2 + 	𝑎𝑎1 𝜔𝜔3𝑑𝑑𝑑𝑑 2
+= 𝑏𝑏2 	𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑 2
+2 	𝑗𝑗𝜔𝜔 3𝑑𝑑𝑑𝑑 2
+92
+
+-- 92 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+𝑦𝑦 =
+− 𝑎𝑎1
+2 − 2𝑎𝑎 0 	± 	𝑎𝑎1
+2 − 2𝑎𝑎 0 2 + 4𝑎𝑎 0
+2
+−2
+−𝜔𝜔 3𝑑𝑑𝑑𝑑
+4 + (𝑎𝑎1
+2 − 2𝑎𝑎 0)𝜔𝜔 3𝑑𝑑𝑑𝑑
+2 + 𝑎𝑎 0
+2 = 0
+𝑥𝑥 = 	𝑦𝑦
+93
+
+-- 93 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+94
+
+-- 94 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 11 – Highpass filter (sol)
+95
+
+-- 95 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter
+C values
+E6:
+10
+15
+22
+33
+47
+68
+𝑋𝑋 𝜔𝜔
+𝑌𝑌 𝜔𝜔
+A Sallen-Key filter is shown here. You are asked to
+analyse this circuit and:
+1. Derive the equation for the frequency
+characteristic 𝐻𝐻(𝜔𝜔). Use Maple/Python if possible.
+Verify the numerical values of the coefficients
+(𝑎𝑎1, 𝑎𝑎 0) with those calculated in Lecture 1.
+2. 	Derive the differential equation.
+3. Derive the equation for the amplitude
+characteristic 	𝐻𝐻(𝜔𝜔) 	and determine Pass band gain
+and Stop band asymptote slope (dB/decade).
+4. Derive the equation for phase angle 𝑗𝐻𝐻 𝜔𝜔 	and
+predict phase angles at low and high frequencies.
+5. Plot the amplitude and phase characteristics in
+Maple/Python.
+6. Draw the circuit in KiCad/Spice, run an AC sweep
+and plot the amplitude and phase characteristics.
+7. Validate the mathematical analysis by comparing
+Maple/Python graphs with KiCad/Spice graphs.
+96
+
+-- 96 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter (sol)
+Setting up the nodal equations in the
+frequency domain:
+𝑉𝑉𝐷𝐷(𝜔𝜔)
+𝑉𝑉𝐷𝐷 (𝜔𝜔)
+𝑉𝑉𝑑𝑑(𝜔𝜔)
+𝑋𝑋 𝜔𝜔
+𝑌𝑌 𝜔𝜔
+97
+
+-- 97 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter (sol)
+𝐻𝐻 𝜔𝜔 	=
+𝐾𝐾
+𝑅𝑅1 𝐶𝐶1 𝑗𝑗𝜔𝜔
+𝑗𝑗𝜔𝜔 2 + 𝑗𝑗𝜔𝜔 1
+𝑅𝑅1 𝐶𝐶1 + 1
+𝑅𝑅3 𝐶𝐶1 + 1
+𝑅𝑅3 𝐶𝐶2 + 1 − 𝐾𝐾
+𝑅𝑅2 𝐶𝐶1 + 𝑅𝑅1 + 𝑅𝑅2
+𝑅𝑅1 𝑅𝑅2 𝑅𝑅3 𝐶𝐶1 𝐶𝐶2
+After some manual
+rewriting, we get the
+equation in polynomial
+form:
+98
+
+-- 98 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter (sol)
+2. 	Coefficients agree with
+those calculated in
+Lecture 1.
+99
+
+-- 99 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter (sol)
+𝐻𝐻 𝜔𝜔 	= 𝑗𝑗 𝜔𝜔 ⋅ 𝑏𝑏1
+𝑗𝑗 𝜔𝜔 2 + 𝑎𝑎1 𝑗𝑗𝜔𝜔 	+ 𝑎𝑎0
+3. Derive the equation for the
+amplitude characteristic 	𝐻𝐻(𝜔𝜔)
+and determine Pass band gain
+and Stop band asymptote slope.
+lim
+𝑗𝑗→0 𝐻𝐻 𝜔𝜔 	= lim
+𝑗𝑗→0
+𝑗𝑗 𝜔𝜔 ⋅ 𝑏𝑏1
+𝑎𝑎0
+= 0
+lim
+𝑗𝑗→∞ 𝐻𝐻 𝜔𝜔 	= lim
+𝑗𝑗→∞
+𝑗𝑗 𝜔𝜔 ⋅ 𝑏𝑏1
+𝑗𝑗 𝜔𝜔 2 = lim
+𝑗𝑗→∞
+𝑏𝑏1
+𝑗𝑗 𝜔𝜔 = lim
+𝑗𝑗→∞
+−𝑗𝑗 ⋅ 𝑏𝑏1
+𝜔𝜔 = 0
+Low frequency asymptote
+High frequency asymptote
+The asymptotes reveal that both the low and high frequencies are attenuated. It must be a bandpass filter.
+𝑅𝑅𝑒𝑒
+𝐼𝐼𝐼𝐼
+90 °
+𝑅𝑅𝑒𝑒
+𝐼𝐼𝐼𝐼
+−90 °
+100
+
+-- 100 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter (sol)
+LF slope:
+𝐻𝐻𝐿𝐿𝐿𝐿 	10 ⋅ 𝜔𝜔 	𝑑𝑑𝑑𝑑 − 𝐻𝐻𝐿𝐿𝐿𝐿 	𝜔𝜔 	𝑑𝑑𝑑𝑑 = 20dB ⋅ log10
+𝐾𝐾 𝑅𝑅2 𝑅𝑅3 𝐶𝐶2
+𝑅𝑅1 + 𝑅𝑅2
+10 𝜔𝜔 	− 20dB ⋅ log10
+𝐾𝐾 𝑅𝑅2 𝑅𝑅3 𝐶𝐶2
+𝑅𝑅1 + 𝑅𝑅2
+𝜔𝜔
+= 20dB ⋅ log10
+10 𝜔𝜔 1
+𝜔𝜔 1 = 20dB ⋅ log10 101
+= 1 ⋅ 20dB ⋅ log10 10 = 20dB/decade
+The low-frequency asymptote is: 	𝐻𝐻𝐿𝐿𝐿𝐿 	𝜔𝜔 	=
+𝐾𝐾
+𝑅𝑅1 𝐶𝐶1 𝑗𝑗𝜔𝜔
+𝑅𝑅1 + 𝑅𝑅2
+𝑅𝑅1 𝑅𝑅2 𝑅𝑅3 𝐶𝐶1 𝐶𝐶2
+= 𝐾𝐾 𝑅𝑅2 𝑅𝑅3 𝐶𝐶2
+𝑅𝑅1 + 𝑅𝑅2
+𝑗𝑗𝜔𝜔
+log 𝐴𝐴 − log 𝐵𝐵 = log 𝐴𝐴
+𝐵𝐵
+𝐻𝐻 𝜔𝜔 	=
+𝐾𝐾
+𝑅𝑅1 𝐶𝐶1 𝑗𝑗𝜔𝜔
+𝑗𝑗𝜔𝜔 2 + 𝑗𝑗𝜔𝜔 1
+𝑅𝑅1 𝐶𝐶1 + 1
+𝑅𝑅3 𝐶𝐶1 + 1
+𝑅𝑅3 𝐶𝐶2 + 1 − 𝐾𝐾
+𝑅𝑅2 𝐶𝐶1 + 𝑅𝑅1 + 𝑅𝑅2
+𝑅𝑅1 𝑅𝑅2 𝑅𝑅3 𝐶𝐶1 𝐶𝐶2
+101
+
+-- 101 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter (sol)
+HF slope:
+𝐻𝐻𝑗𝑗𝐿𝐿 	10 ⋅ 𝜔𝜔 	𝑑𝑑𝑑𝑑 − 𝐻𝐻𝑗𝑗𝐿𝐿 	𝜔𝜔 	𝑑𝑑𝑑𝑑 = 20dB ⋅ log10
+𝐾𝐾
+𝑅𝑅1 𝐶𝐶1(10 𝜔𝜔) − 20dB ⋅ log10
+𝐾𝐾
+𝑅𝑅1 𝐶𝐶1(𝜔𝜔)
+= 20dB ⋅ log10
+𝜔𝜔 1
+10 𝜔𝜔 1 = 20dB ⋅ log10
+1
+10 1 = 20dB ⋅ log10 10−1
+= −1 ⋅ 20dB ⋅ log10 10 = −20dB/decade
+The high-frequency asymptote is: 	𝐻𝐻𝑗𝑗𝐿𝐿 	𝜔𝜔 	=
+𝐾𝐾
+𝑅𝑅1 𝐶𝐶1 𝑗𝑗𝜔𝜔
+𝑗𝑗𝜔𝜔 2 = 𝐾𝐾
+𝑅𝑅1 𝐶𝐶1(𝑗𝑗𝜔𝜔)
+log 𝐴𝐴 − log 𝐵𝐵 = log 𝐴𝐴
+𝐵𝐵
+𝐻𝐻 𝜔𝜔 	=
+𝐾𝐾
+𝑅𝑅1 𝐶𝐶1 𝑗𝑗𝜔𝜔
+𝑗𝑗𝜔𝜔 2 + 𝑗𝑗𝜔𝜔 1
+𝑅𝑅1 𝐶𝐶1 + 1
+𝑅𝑅3 𝐶𝐶1 + 1
+𝑅𝑅3 𝐶𝐶2 + 1 − 𝐾𝐾
+𝑅𝑅2 𝐶𝐶1 + 𝑅𝑅1 + 𝑅𝑅2
+𝑅𝑅1 𝑅𝑅2 𝑅𝑅3 𝐶𝐶1 𝐶𝐶2
+102
+
+-- 102 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter (sol)
+4. Derive the equation for phase
+angle 𝑗𝐻𝐻 𝜔𝜔 	and predict phase
+angles at low and high
+frequencies.
+𝐻𝐻 𝜔𝜔 	= 𝑗𝑗𝜔𝜔 𝑏𝑏1
+𝑗𝑗 𝜔𝜔 2 + 𝑎𝑎1 𝑗𝑗𝜔𝜔 	+ 𝑎𝑎0
+𝑗𝐻𝐻 𝜔𝜔 	= 𝑗 𝑗𝑗𝜔𝜔 𝑏𝑏1 − 𝑗 	𝑗𝑗 𝜔𝜔 2 + 𝑎𝑎1 𝑗𝑗𝜔𝜔 	+ 𝑎𝑎0
+𝑗𝐻𝐻 0 	= 90° − 0° = 90°
+𝑗𝐻𝐻 ∞ 	= 90° − 180° = −90°
+𝑗𝐻𝐻 𝜔𝜔 	= 	𝑗𝑃𝑃 𝜔𝜔
+𝑛𝑛𝑛𝑛𝑓𝑓𝑛𝑛𝑃𝑃𝑃𝑃𝑗𝑗𝑃𝑃𝑃𝑃
+𝑃𝑃𝑛𝑛𝑎𝑎𝑃𝑃𝑛𝑛
+− 	𝑗𝑄𝑄 𝜔𝜔
+𝑑𝑑𝑛𝑛𝑛𝑛𝑃𝑃𝑓𝑓𝑑𝑑𝑛𝑛𝑃𝑃𝑗𝑗𝑃𝑃𝑃𝑃
+𝑃𝑃𝑛𝑛𝑎𝑎𝑃𝑃𝑛𝑛
+𝑅𝑅𝑒𝑒
+𝐼𝐼𝐼𝐼
+103
+
+-- 103 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter (sol)
+5. – 7. Plot and compare.
+See next slide
+104
+
+-- 104 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter (sol)
+105
+
+-- 105 of 106 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12 – Bandpass filter (sol)
+So far, the phase function angle() has given satisfying results when plotting the phase. For unknown reasons
+angle() gives 	a very sharp phase jump from 90 to -90 degrees for the bandpass filter. Then I tried to use a
+function 𝜃𝜃() shown above, it gives a smoother phase transition in good agreement with what KiCad shows.
+arctan() can take two arguments, the imaginary part first, and the real part second. In this way it can figure
+out, in what quadrant the complex number is located.
+Imaginary argument 	Real argument
+106
+
+-- 106 of 106 --
+

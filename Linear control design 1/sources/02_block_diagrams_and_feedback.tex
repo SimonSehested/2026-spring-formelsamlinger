@@ -1,0 +1,77 @@
+\section{Block diagrams and feedback}
+
+\subsection{Block diagram algebra}
+
+\subsubsection{Series connection}
+\[
+G_{\mathrm{series}}(s)=G_1(s)G_2(s)
+\]
+Series blocks multiply because the output of the first block is the input of the next block.
+
+\subsubsection{Parallel connection}
+\[
+G_{\mathrm{parallel}}(s)=G_1(s)+G_2(s)
+\]
+Parallel paths with the same input and summed outputs add their transfer functions.
+
+\subsubsection{Negative feedback reduction}
+\[
+\frac{Y(s)}{R(s)}=\frac{C(s)G(s)}{1+C(s)G(s)H(s)}
+\]
+For negative feedback, the loop transfer function \(C(s)G(s)H(s)\) appears in the characteristic denominator.
+
+\subsubsection{Positive feedback reduction}
+\[
+\frac{Y(s)}{R(s)}=\frac{G(s)}{1-G(s)H(s)}
+\]
+Positive feedback changes the sign in the characteristic denominator and can reduce stability margins.
+
+\subsubsection{Unity feedback closed loop}
+\[
+T(s)=\frac{Y(s)}{R(s)}=\frac{L(s)}{1+L(s)}, \qquad L(s)=C(s)G(s)
+\]
+The loop transfer function \(L(s)\) determines both closed-loop stability and frequency-domain robustness.
+
+\subsection{Error and sensitivity in feedback}
+
+\subsubsection{Reference-to-error transfer function}
+\[
+\frac{E(s)}{R(s)}=\frac{1}{1+C(s)G(s)H(s)}
+\]
+Large loop gain reduces tracking error where the feedback model is valid.
+
+\subsubsection{Measured feedback signal}
+\[
+Y_m(s)=H(s)Y(s)
+\]
+The measurement block represents sensors, filters, encoders, or camera-based measurements used by the controller.
+
+\subsection{Hand tuning controllers}
+
+\subsubsection{P controller}
+\[
+u(t)=K_P e(t), \qquad C_P(s)=K_P
+\]
+Increasing \(K_P\) usually increases speed and reduces static error, but it can reduce damping and robustness.
+
+\subsubsection{PI controller}
+\[
+u(t)=K_P\left(e(t)+\frac{1}{\tau_i}\int_0^t e(\xi)\,d\xi\right),
+\qquad
+C_{PI}(s)=K_P\frac{\tau_i s+1}{\tau_i s}
+\]
+Integral action increases low-frequency loop gain and can remove step reference error for stable type-0 plants.
+
+\subsubsection{PD controller}
+\[
+u(t)=K_P\left(e(t)+\tau_d\frac{de(t)}{dt}\right),
+\qquad
+C_{PD}(s)=K_P(1+\tau_d s)
+\]
+Derivative action reacts to fast error changes and can add damping, but it amplifies high-frequency noise.
+
+\subsubsection{PID controller}
+\[
+C_{PID}(s)=K_P\frac{\tau_i\tau_d s^2+\tau_i s+1}{\tau_i s}
+\]
+The PID controller combines low-frequency integral action with phase-shaping derivative action.

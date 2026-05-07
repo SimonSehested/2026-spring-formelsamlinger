@@ -1,0 +1,82 @@
+\section{Disturbances, sensitivity, and prefilters}
+
+\subsection{Disturbance transfer functions}
+
+\subsubsection{Superposition for multiple inputs}
+\[
+Y(s)=G_{yr}(s)R(s)+G_{yd_1}(s)D_1(s)+G_{yd_2}(s)D_2(s)
+\]
+Linear systems allow each reference or disturbance contribution to be analysed separately.
+
+\subsubsection{Output disturbance after the plant input}
+\[
+Y(s)=\frac{G(s)C(s)}{1+C(s)G(s)}R(s)
++\frac{1}{1+C(s)G(s)}D(s)
+\]
+For an additive output disturbance, feedback suppresses the disturbance by the sensitivity function.
+
+\subsubsection{Input disturbance before the plant}
+\[
+Y(s)=\frac{G(s)C(s)}{1+C(s)G(s)}R(s)
++\frac{G(s)}{1+C(s)G(s)}D(s)
+\]
+The plant filters the disturbance before feedback attenuation.
+
+\subsubsection{Measurement disturbance}
+\[
+Y(s)=\frac{G(s)C(s)}{1+C(s)G(s)}R(s)
+-\frac{G(s)C(s)}{1+C(s)G(s)}N(s)
+\]
+Measurement noise passes through the complementary sensitivity path.
+
+\subsection{Sensitivity functions}
+
+\subsubsection{Sensitivity function}
+\[
+S(s)=\frac{1}{1+L(s)}
+\]
+Sensitivity maps output disturbances and model uncertainty effects in standard unity feedback.
+
+\subsubsection{Complementary sensitivity function}
+\[
+T(s)=\frac{L(s)}{1+L(s)}
+\]
+Complementary sensitivity maps reference tracking and measurement-noise transmission.
+
+\subsubsection{Input sensitivity}
+\[
+G_{ur}(s)=\frac{C(s)}{1+C(s)G(s)}
+\]
+The control input can become large near bandwidth limits, resonance peaks, or fast reference commands.
+
+\subsubsection{Steady-state disturbance error}
+\[
+e_{\mathrm{ss},d}=\lim_{s\to0}sE_d(s)
+\]
+The final value theorem gives constant-disturbance error when the closed-loop poles are stable.
+
+\subsubsection{Disturbance magnitude from Bode plot}
+\[
+|y_{\mathrm{ss}}|=|G_{yd}(j\omega)|\,|d_{\mathrm{ss}}|
+\]
+At very low frequency, the Bode magnitude approximates constant disturbance sensitivity.
+
+\subsection{Prefilters}
+
+\subsubsection{Reference prefilter}
+\[
+Y(s)=\frac{F(s)L(s)}{1+L(s)}R(s)
+\]
+A prefilter shapes reference tracking without changing the loop transfer function and stability margins.
+
+\subsubsection{First-order prefilter}
+\[
+F(s)=\frac{1}{\tau_f s+1}
+\]
+A first-order prefilter reduces fast reference content and can reduce overshoot or input peaks.
+
+\subsubsection{Lead prefilter}
+\[
+F_{\mathrm{lead}}(s)=\frac{\tau_f s+1}{\alpha_f\tau_f s+1}
+\]
+The slides use lead-shaped prefilters to improve reference response without changing feedback robustness.

@@ -1,0 +1,74 @@
+\section{PI-Lead controller design}
+
+\subsection{PI controller}
+
+\subsubsection{PI transfer function}
+\[
+C_{PI}(s)=K_P\frac{\tau_i s+1}{\tau_i s}
+\]
+The PI controller adds one zero at \(-1/\tau_i\) and one pole at the origin.
+
+\subsubsection{PI phase contribution}
+\[
+\phi_{PI}(\omega)=\arctan(\omega\tau_i)-90^\circ
+\]
+The PI part increases low-frequency gain but contributes negative phase near crossover.
+
+\subsubsection{PI design ratio}
+\[
+N_i=\omega_c\tau_i
+\]
+The ratio \(N_i\) places the PI zero relative to the desired crossover frequency.
+
+\subsection{Lead controller}
+
+\subsubsection{Lead transfer function}
+\[
+C_{\mathrm{lead}}(s)=\frac{\tau_d s+1}{\alpha\tau_d s+1},\qquad 0<\alpha<1
+\]
+The lead part adds positive phase and increases high-frequency gain by approximately \(1/\alpha\).
+
+\subsubsection{Lead maximum phase}
+\[
+\phi_{\max}=\sin^{-1}\left(\frac{1-\alpha}{1+\alpha}\right)
+\]
+Smaller \(\alpha\) gives more phase lead but also more high-frequency amplification.
+
+\subsubsection{Lead center frequency}
+\[
+\omega_{\max}=\frac{1}{\tau_d\sqrt{\alpha}}
+\]
+The lead part should be centered near the desired crossover frequency.
+
+\subsubsection{Lead time constant from crossover}
+\[
+\tau_d=\frac{1}{\omega_c\sqrt{\alpha}}
+\]
+This selection places the maximum phase contribution at \(\omega_c\).
+
+\subsection{PI-Lead controller}
+
+\subsubsection{PI-Lead transfer function}
+\[
+C(s)=K_P\frac{\tau_i s+1}{\tau_i s}\frac{\tau_d s+1}{\alpha\tau_d s+1}
+\]
+PI-Lead design combines zero steady-state step error with phase-margin improvement.
+
+\subsubsection{Crossover gain condition}
+\[
+|C(j\omega_c)G(j\omega_c)|=1
+\]
+The proportional gain is selected after the dynamic PI and lead parts are placed.
+
+\subsubsection{Proportional gain from magnitude}
+\[
+K_P=\frac{1}{|G(j\omega_c)|\,|C_{PI,0}(j\omega_c)|\,|C_{\mathrm{lead}}(j\omega_c)|}
+\]
+Here \(C_{PI,0}\) excludes \(K_P\). This formula enforces the desired crossover frequency.
+
+\subsubsection{Phase-margin design equation}
+\[
+\angle G(j\omega_c)+\phi_{PI}(\omega_c)+\phi_{\mathrm{lead}}(\omega_c)
+=-180^\circ+\gamma_M
+\]
+The controller phase contributions must lift the open-loop phase to the desired phase margin.

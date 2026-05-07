@@ -1,0 +1,68 @@
+\section{ADC Performance}
+
+\subsection{Quantization}
+
+\subsubsection{ADC least significant bit}
+\[
+\Delta=\frac{V_{\mathrm{FS}}}{2^N}.
+\]
+The quantization step is the voltage represented by one code transition for an \(N\)-bit converter.
+
+\subsubsection{Quantization error range}
+\[
+e_q=x_q-x, \qquad -\frac{\Delta}{2}\leq e_q<\frac{\Delta}{2}.
+\]
+For an ideal rounding quantizer, the quantization error is bounded by half an LSB.
+
+\subsubsection{Quantization noise power}
+\[
+\sigma_q^2=\frac{\Delta^2}{12}.
+\]
+The uniform-noise model is used when the quantization error is approximately uncorrelated with the input.
+
+\subsection{Dynamic Range and Resolution}
+
+\subsubsection{Ideal ADC signal-to-quantization-noise ratio}
+\[
+\mathrm{SQNR}_{\mathrm{dB}}\approx 6.02N+1.76\ \mathrm{dB}
+\]
+for a full-scale sine wave. Each additional bit improves the ideal SQNR by approximately \(6\) dB.
+
+\subsubsection{Effective number of bits}
+\[
+\mathrm{ENOB}=\frac{\mathrm{SINAD}_{\mathrm{dB}}-1.76}{6.02}.
+\]
+ENOB converts measured distortion and noise performance into an equivalent ideal bit count.
+
+\subsubsection{Signal-to-noise-and-distortion ratio}
+\[
+\mathrm{SINAD}_{\mathrm{dB}}=10\log_{10}\left(\frac{P_{\mathrm{signal}}}{P_{\mathrm{noise}}+P_{\mathrm{distortion}}}\right).
+\]
+SINAD includes both noise and harmonic distortion relative to the fundamental signal power.
+
+\subsubsection{Total harmonic distortion}
+\[
+\mathrm{THD}_{\mathrm{dB}}=10\log_{10}\left(\frac{\sum_{k=2}^{K}P_k}{P_1}\right).
+\]
+THD compares harmonic power to the fundamental power.
+
+\subsubsection{Spurious-free dynamic range}
+\[
+\mathrm{SFDR}_{\mathrm{dB}}=20\log_{10}\left(\frac{A_1}{A_{\mathrm{spur,max}}}\right).
+\]
+SFDR is the amplitude ratio between the fundamental and the largest spur.
+
+\subsection{Sampling Limits}
+
+\subsubsection{Aperture jitter noise}
+\[
+\mathrm{SNR}_{\mathrm{jitter,dB}}\approx -20\log_{10}(2\pi f_{\mathrm{in}}\sigma_t).
+\]
+Sampling-time uncertainty creates amplitude error proportional to input frequency and jitter standard deviation.
+
+\subsubsection{Oversampling process gain}
+\[
+G_{\mathrm{OSR,dB}}=10\log_{10}(\mathrm{OSR}),\qquad
+\mathrm{OSR}=\frac{f_s}{2B}.
+\]
+Oversampling spreads quantization noise over a wider band. Lowpass filtering to bandwidth \(B\) improves in-band SNR by the process gain.

@@ -1,0 +1,43 @@
+\section{Course overview and control concepts}
+
+\subsection{Linear Control Design 1}
+
+\subsubsection{PID-based controller structure}
+\[
+C_{\mathrm{PID}}(s)=K_P\left(1+\frac{1}{\tau_i s}+\tau_d s\right)
+\]
+The course focuses on PID-based controller design for linear models. The parameters \(K_P\), \(\tau_i\), and \(\tau_d\) set proportional action, integral action, and derivative action.
+
+\subsubsection{Feedback control objective}
+\[
+e(t)=r(t)-y_m(t), \qquad u(t)=C(s)e(t)
+\]
+The controller acts on the error between the reference and the measured output. Feedback is used to shape tracking, disturbance rejection, stability margins, and robustness.
+
+\subsubsection{Control performance keywords}
+\[
+\{t_r,\ t_s,\ M_p,\ e_{\mathrm{ss}},\ \omega_c,\ \gamma_M,\ A_M\}
+\]
+The recurring specifications are rise time, settling time, overshoot, steady-state error, crossover frequency, phase margin, and gain margin.
+
+\subsection{Course topic order}
+
+\subsubsection{Inferred lecture structure}
+\[
+\begin{array}{c|l}
+1 & \text{Introduction and feedback control}\\
+2 & \text{Block diagrams, control process, hand tuning}\\
+3 & \text{Transfer functions and Laplace transform}\\
+4 & \text{Frequency domain and time-domain response}\\
+5 & \text{Modelling and linearization}\\
+6 & \text{Bode plots, stability margins, P design}\\
+7 & \text{Nyquist plot and stability criterion}\\
+8 & \text{PI-Lead design}\\
+9 & \text{PI-Lead design specifications}\\
+10 & \text{Unstable systems}\\
+11 & \text{Limited systems and P-Lead-Lag design}\\
+12 & \text{Disturbances, sensitivity, prefilters}\\
+13 & \text{Feed-forward control}
+\end{array}
+\]
+This order follows the numbered slide packages and the exam concepts.

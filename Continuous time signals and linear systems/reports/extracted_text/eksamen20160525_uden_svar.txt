@@ -1,0 +1,576 @@
+SOURCE: input\exams\eksamen20160525 uden svar.pdf
+PAGES: 18
+
+Side 1 af 18 sider
+Danmarks Tekniske Universitet
+Skriftlig prøve, den 25/5-2016
+Kursus navn: Signaler og lineære systemer i kontinuert tid Kursus nr.: 31605
+Tilladte hjælpemidler: Ingen hjælpemidler. Ingen lommeregner.
+Varighed: 4 timer.
+Vægtning: For hvert spørgsm˚	al angives højst et bogstav som svar. Korrekte svar giver 3
+point, forkerte svar trækker 1 point fra, mens ubesvaret er neutralt.
+N˚	ar opgaverne er besvaret overføres besvarelserne til skemaet p˚	a side 2.
+Kun side 2 afleveres.
+
+-- 1 of 18 --
+
+Side 2 af 18 sider
+Danmarks Tekniske Universitet
+Besvarelsesark for skriftlig eksamen
+Kursusnummer: 31605
+Studienummer:
+Navn:
+Underskrift:
+Dato: 25/5-2016
+Spørgsm˚	al Svar
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+
+-- 2 of 18 --
+
+Side 3 af 18 sider
+Oplysninger til brug under besvarelsen:
+Impulsrespons
+Et LTIC system med systemligning
+Q(D)y(t) = P (D)x(t)
+Q(D) = Dn + an−1Dn−1 + ... + a0
+P (D) = bmDm + bm−1Dm−1 + ... + b0
+hvor D = d
+dt , har impulsresponset
+h(t) = P (D)[yn(t)u(t)]
+= bnδ(t) + [P (D)yn(t)]u(t) , m ≤ n
+hvor yn er en løsning til den homogene ligning med begyndelsesbetingelser Dn−1yn(0) = 1,
+Dn−2yn(0) = 0, Dn−3yn(0) = 0, ... , yn(0) = 0. Den samlede løsning til systemligningen
+kan da skrives
+y(t) = yzi(t) + yzs(t)
+= yzi(t) + h(t) ∗ x(t)
+Foldning er defineret ved
+(f ∗ g)(t) = f (t) ∗ g(t) =
+∫ ∞
+−∞
+f (t − τ )g(τ )dτ
+Visse foldningsintegraler:
+f1(t) f2(t) (f1 ∗ f2)(t)
+eλ1tu(t) eλ2tu(t) eλ1t−eλ2t
+λ1−λ2 u(t) λ1 6 = λ2
+eλtu(t) eλtu(t) teλtu(t)
+eλtu(t) teλtu(t) 1
+2 t2eλtu(t)
+
+-- 3 of 18 --
+
+Side 4 af 18 sider
+Fouriertransformation af f (t) er defineret ved
+F (ω) =
+∫ ∞
+−∞
+f (t) exp(−jωt) dt f (t) = 1
+2π
+∫ ∞
+−∞
+F (ω) exp(jωt) dω
+Laplacetransformation af f (t) er defineret ved
+F (s) =
+∫ ∞
+0−
+f (t) exp(−st)dt
+Begyndelsesværditeoremet
+Hvis g(t) og dens afledede kan laplacetransformeres er
+g(0+) = lim
+t→0+ g(t) = lim
+s→∞ sG(s)
+forudsat at grænseværdien eksisterer.
+Slutværditeoremet
+g(∞) = lim
+t→∞ g(t) = lim
+s→0 sG(s)
+forudsat at sG(s) udelukkende har poler i venstre halvplan.
+Regneregler for RLC komponenter
+Kondensator i(t) = C dv
+dt v(t) = 1
+C
+∫ t
+i(τ )dτ
+Modstand i(t) = v(t)
+R v(t) = R i(t)
+Spole i(t) = 1
+L
+∫ t
+v(τ )dτ v(t) = L di
+dt
+Fysisk form af et 2. ordens system:
+Den “fysiske” form af et 2. ordens system kan i laplacedomænet skrives
+H(s) = (b2s2 + b1s + b0) 1
+s2 + 2ζωns + ω2
+n
+hvor ζ er dæmpningsfaktoren og polerne ligger i
+σd ± jωd = −ζ ωn ± j√1 − ζ2 ωn
+
+-- 4 of 18 --
+
+Side 5 af 18 sider
+Visse laplace- og fouriertransformerede:
+f (t) F (s) F (ω)
+˙f (t) sF (s) − f (0−) jω F (ω)
+¨	f (t) s2F (s) − sf (0−) − ˙f (0−) (jω)2F (ω)
+f (t) ∗ g(t) F (s)G(s) F (ω)G(ω)
+f (t)g(t) 1
+2π j F (s) ∗ G(s) 1
+2π F (ω) ∗ G(ω)
+1 2πδ(ω)
+sgn(t) 2
+jω
+δ(t) 1 1
+u(t) 1
+s
+1
+jω + πδ(ω)
+r(t) = tu(t) 1
+s2 eksisterer ikke
+exp(−at)u(t) 1
+s + a
+1
+jω + a , a > 0
+t exp(−at)u(t) 1
+(s + a)2
+1
+(jω + a)2 , a > 0
+cos(bt) u(t) s
+s2 + b2
+jω
+−ω2 + b2 + π
+2 (δ(ω − b) + δ(ω + b))
+sin(bt) u(t) b
+s2 + b2
+b
+−ω2 + b2 + π
+2j (δ(ω − b) − δ(ω + b))
+exp(−at) cos(bt) u(t) s + a
+(s + a)2 + b2
+jω + a
+(jω + a)2 + b2 , a > 0
+exp(−at) sin(bt) u(t) b
+(s + a)2 + b2
+b
+(jω + a)2 + b2 , a > 0
+cos(ω0t) π( δ(ω − ω0) + δ(ω + ω0) )
+rect( t
+τ
+) = u( τ
+2 −|t|) τ sinc( ωτ
+2 )
+∆( t
+τ
+) = (1−2|t|/τ )u( τ
+2 −|t|) τ
+2 sinc2( ωτ
+4 )
+
+-- 5 of 18 --
+
+Side 6 af 18 sider
+Opgave 1
+Lad x(t) være input og y(t) være output. Angiv hvilket af systemerne
+A ˙y(t) + 2t2y(t) = x(t)
+B ˙y(t) + y(t) = x2(t)
+C ˙y(t) + y(t) = x(t + 3)
+D ˙y(t) + y(t) = x(t)
+der ikke er kausalt. Det korrekte svar overføres til skemaet side 2.
+Opgave 2
+Foldningen af en forskudt stepfunktion, u(t − t0), med en stepfunktion, u(t), har værdien
+A u(t − t0) ∗ u(t) = u(t − t0)
+B u(t − t0) ∗ u(t) = (t − t0) u(t − t0) = r(t − t0)
+C u(t − t0) ∗ u(t) = 1
+2 (t − t0)2 u(t − t0) = 1
+2 r2(t − t0)
+D u(t − t0) ∗ u(t) = 1
+6 (t − t0)3 u(t − t0) = 1
+6 r3(t − t0)
+Tip: Udregn først foldningen u(t) ∗ u(t) uden tidsforskydning. (Eksplicit eller ved tabelop-
+slag.) Udfør dernæst tidsforskydningen.
+
+-- 6 of 18 --
+
+Side 7 af 18 sider
+Opgave 3
+Hvad er effekten af signalet
+y(t) = 2 cos(t)
+A 1
+B 2
+C 4
+D 4π2
+Tip: Effekten (power) af et signal er middelværdien af kvadratet p˚	a signalets absolutværdi.
+Udnyt eventuelt at cos2(t) + sin2(t) = 1.
+Opgave 4
+Et LTIC-system er beskrevet ved ligningen
+˙y(t) = ˙x(t) + x(t)
+hvor x(t) betegner input og y(t) er output. Hvilket af nedenst˚	aende udsagn er korrekt?
+A Systemet er ustabilt.
+B Systemet har frekvenskarakteristik H(ω) = 1
+jω + 1
+C Systemets impulsrespons er h(t) = δ(t) − exp(−t)u(t)
+D Systemets impulsrespons er h(t) = δ(t) + u(t)
+
+-- 7 of 18 --
+
+Side 8 af 18 sider
+Opgave 5
+Et 1. ordens system er beskrevet ved ligningen
+˙y(t) + y(t) = 2x(t) , y(0−) = 2
+Hvad er impulsresponset for systemet
+A h(t) = δ(t) + etu(t)
+B h(t) = δ(t) − e−tu(t)
+C h(t) = 2e−tu(t)
+D h(t) = 2e−tδ(t)
+Opgave 6
+Hvad er zero-input responset for systemet i Opgave 5?
+A yzi(t) = etu(t)
+B yzi(t) = 2e−tu(t)
+C yzi(t) = 3e−tu(t)
+D yzi(t) = 4e−tδ(t)
+Opgave 7
+Et LTIC-system er beskrevet ved ligningen
+(D + 1)y(t) = 2x(t) , y(0−) = 2
+Hvad er systemets samlede respons p˚	a inputtet x(t) = u(t)?
+A y(t) = 2u(t)
+B y(t) = 2u(t) exp(−t)
+C y(t) = 2u(t)(1 − exp(−2t))
+D Ingen af ovenst˚	aende.
+Tip: Det samlede respons er summen y = yzi + yzs.
+
+-- 8 of 18 --
+
+Side 9 af 18 sider
+Opgave 8
+Et 2.ordens LTIC system er beskrevet ved differentialligningen
+(D2 + 1)2 y(t) = x(t)
+hvor D = d
+dt . Hvilket af nedenst˚	aende er korrekt?
+A Systemet er stabilt.
+B Systemet er marginalt ustabilt.
+C Systemet er overdæmpet.
+D Systemet er kritisk dæmpet.
+Tip: Bemærk at differentialligningen kan ogs˚	a skrives
+(D + j)2 (D − j)2 y(t) = x(t)
+Hvor ligger polerne? Er de gentagne?
+Opgave 9
+Det oplyses at overføringsfunktionen H(s) for et system er
+H(s) = 1
+s + 2 − 1
+s + 3
+Hvad er konvergensomr˚	adet?
+A Im(s) > −3
+B Re(s) < −3
+C Re(s) > −2
+D Re(s) < −2
+Tip: Det er underforst˚	aet at H(s) er den unilateralt laplacetransformerede overførings-
+funktion.
+
+-- 9 of 18 --
+
+Side 10 af 18 sider
+Opgave 10
+Et 2. ordens butterworthfilter har overføringsfunktionen
+H(s) = s2
+s2 + 2 ζ s + 1
+hvor ζ = cos(π
+4 ). Angiv værdien af output til tiden t = 0+ n˚	ar input er
+x(t) = u(t) exp(−t)
+A yzs(0+) = −1
+B yzs(0+) = 0
+C yzs(0+) = 1
+D yzs(0+) er ikke defineret.
+Tip: Overvej om begyndelsesværditeoremet kan benyttes.
+
+-- 10 of 18 --
+
+Side 11 af 18 sider
+Opgave 11
+Et LTIC-filter har bodeplottet
+-80
+-60
+-40
+-20
+0
+Amplitude [dB]
+10−2 	10−1 	100 	101 	102
+ω [rad/sek]
+0
+45
+90
+135
+180
+phase [deg]
+Angiv hvilken overføringsfunktion der svarer til det viste bodeplot
+A H(s) = 1
+(s + 1)2
+B H(s) = s2
+(s + 1)2
+C H(s) = 1
+s2 + 2 1
+10 s + 1
+D H(s) = s2
+s2 − 21
+5 s + 1
+
+-- 11 of 18 --
+
+Side 12 af 18 sider
+Opgave 12
+Et 2. ordens system har Bode-plottet
+-60
+-40
+-20
+0
+20
+40
+60
+amplitude (dB)
+10 -2 	10 -1 	10 0 	10 1 	10 2
+ω
+-180
+-135
+-90
+-45
+0
+45
+90
+135
+180
+phase (deg)
+hvor “sort” svarer til det fulde system og de øvrige (stiplede) kurver svarer til faktoriserin-
+gen af systemet. Angiv hvilken overføringsfunktion der svarer til det viste Bode-plot.
+A H(s) = s
+(s + 1)2
+B H(s) = 1
+s2 + 2 1
+10 s + 1
+C H(s) = s
+s2 + 2 1
+10 s + 1
+D H(s) = s2
+s2 + 2 1
+10 s + 1
+
+-- 12 of 18 --
+
+Side 13 af 18 sider
+Opgave 13
+Et normaliseret lavpasfilter har overføringsfunktionen
+H(s) = 1
+s2 + 2ζs + 1
+hvor ζ ∈ ]0, 1[. Hvilken af nedenst˚	aende substitutioner skal foretages for at opn˚	a et
+højpasfilter med knækfrekvens i ωn?
+A s erstattes af ω2
+n
+s
+B s erstattes af 1
+s + ωn
+C s erstattes af ωn
+s
+D s erstattes af ωns
+Opgave 14
+Et filter har diagrammet
+0
+x(t) y(t)
+b
+a +
+C
+R3
+R2
+R1
+hvor spændingen x(t) er input og spændingen y(t) er output. Hvilket af nedenst˚	aende er
+ikke korrekt?
+A Overføringsfunktionen i laplacedomænet er
+H(s) = R2
+R2 + R3
+s
+1/(R1C) + s
+B Systemet er stabilt.
+C Systemet er et højpasfilter.
+D Den karakteristiske tid for kredsløbet er τ = R1C.
+Bemærk: Der spørges om hvilken af svarmulighederne, som ikke er opfyldt.
+
+-- 13 of 18 --
+
+Side 14 af 18 sider
+Opgave 15
+Et lineært system har overføringsfunktionen
+H(s) = s
+(s + 1)2
+og begyndelsesbetingelserne er y(0−) = 2 og ˙y(0−) = −1 i tidsdomænet. Angiv partial-
+brøksekspansionen af overføringsfunktionen.
+A H(s) = 1
+s − 1
+(s + 1)2
+B H(s) = 1
+s + 1 − 1
+s2
+C H(s) = 1
+s + 1 − 1
+(s + 1)2
+D H(s) = 1
+s + 1 − 2
+(s + 1)2
+Opgave 16
+Betragt igen systemet med overføringsfunktionen
+H(s) = s
+(s + 1)2
+Hvilket af nedendenst˚	aende er korrekt?
+A Systemet har impulsresponset h(t) = u(t) (1 − t) exp(−t)
+B Systemet er et lavpasfilter.
+C Systemet er et højpasfilter.
+D Systemet er ustabilt.
+
+-- 14 of 18 --
+
+Side 15 af 18 sider
+Opgave 17
+Figuren viser pol-nulpunktsdiagrammet for et LTIC system
+-4 	-3 	-2 	-1 	1 	2 	3 	4
+-4
+-3
+-2
+-1
+1
+2
+3
+4
+σ
+ω
+med forstærkning 117. (Røde kryds angiver poler og der er ingen nulpunkter.)
+A Systemet er et all-pass filter, d.v.s. at alle frekvenser forstærkes lige meget.
+B Systemet er et lavpasfilter.
+C Knækfrekvensen i systemet er 3.
+D Ingen af ovenst˚	aende.
+
+-- 15 of 18 --
+
+Side 16 af 18 sider
+Opgave 18
+Et tracking-filter har i laplacedomænet overføringsfunktionen
+T (s) = 3s + 2
+(s + 1)(s + 2)
+Hvad er den asymptotiske fejl, erampe, p˚	a rampep˚	avirkningen, f (t) = t u(t) = r(t)?
+A erampe = 0
+B erampe = 3
+2
+C erampe = ∞
+D Ingen ovenst˚	aende.
+Tip: For input f (t) med tilhørende output y(t) defineres den asymptotiske fejl som
+ef = lim
+t→∞(y(t) − f (t))
+Overvej om slutværditeoremet kan bruges.
+
+-- 16 of 18 --
+
+Side 17 af 18 sider
+Opgave 19
+Det oplyses at signalet
+f (t) = ∆
+( t
+τ
+)
+=
+{ 1 − 2|t|/τ , |t| ≤ τ /2
+0 , |t| > τ /2
+har den fouriertransformerede
+Fω(ω) = τ
+2 sinc2(ωτ
+4 )
+-1 	-0.5 	0 	0.5 	1
+t==
+0
+0.2
+0.4
+0.6
+0.8
+1
+"(t== )
+-20 	-10 	0 	10 	20
+!=
+0
+0.2
+0.4
+0.6
+0.8
+1
+sinc
+2( 	!=
+4 	)
+Vi definerer
+F (s) = Fω(s/j)
+Hvad er den unilateralt laplacetransformerede af det forsinkede signal
+g(t) = f (t − t0) = ∆
+(t − t0
+τ
+)
+hvor t0 > τ
+2 ?
+A G(s) = F (s − t−1
+0 )
+B G(s) = F (s) exp(st0 − t)
+C G(s) = F (s) exp(−st0)
+D Den laplacetransformerede af g(t) eksisterer ikke.
+
+-- 17 of 18 --
+
+Side 18 af 18 sider
+Opgave 20
+Et 2. ordens filter har diagrammet
+0
+x(t) 	y(t)
+R	C
+L
+hvor spændingen x(t) er input og spændingen y(t) er output. Filterets input (d.v.s. x(t))
+p˚	atrykkes spændingen v(0−) = 1V i tiden −∞ < t < 0. Angiv filtrets samlede respons i
+laplacedomænet.
+A Y (s) = s2
+s2 + R
+L s + 1
+LC
+X(s) − s v(0−)
+s2 + R
+L s + 1
+LC
+B Y (s) = s2
+s2 + R
+L s + 1
+LC
+X(s)
+C Y (s) = s2
+s2 + R
+L s + 1
+LC
+X(s) + s v(0−)
+s2 + R
+L s + 1
+LC
+D Y (s) = 1
+s2 + R
+L s + 1
+LC
+X(s)
+Tip: Som kontrol kan man sætte x(t) = v(0−)u(t) = 1V u(t). Hvilket samlet output
+forventer man da?
+
+-- 18 of 18 --
+

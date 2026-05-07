@@ -1,0 +1,56 @@
+\section{Nyquist plot and stability}
+
+\subsection{Nyquist curve}
+
+\subsubsection{Nyquist plot definition}
+\[
+\Gamma=\{L(j\omega):\omega\in(-\infty,\infty)\}
+\]
+The Nyquist plot maps the open-loop frequency response into the complex plane.
+
+\subsubsection{Critical point}
+\[
+-1+j0
+\]
+Closed-loop stability is assessed by the relation between the Nyquist curve and the critical point.
+
+\subsection{Nyquist stability criterion}
+
+\subsubsection{Encirclement equation}
+\[
+Z=P+N
+\]
+Here \(P\) is the number of open-loop right-half-plane poles, \(N\) is the net clockwise encirclements of \(-1\), and \(Z\) is the number of closed-loop right-half-plane poles. % TODO: verify sign convention from source
+
+\subsubsection{Closed-loop stability condition}
+\[
+Z=0
+\]
+The closed loop is stable when the Nyquist encirclements compensate the open-loop unstable poles so that no closed-loop right-half-plane poles remain.
+
+\subsubsection{Stable open-loop special case}
+\[
+P=0,\qquad N=0
+\]
+If the open-loop system is stable, the Nyquist curve must not encircle the point \(-1+j0\).
+
+\subsection{Margins from Nyquist}
+
+\subsubsection{Phase margin from unit circle intersection}
+\[
+|L(j\omega_c)|=1,\qquad
+\gamma_M=180^\circ+\arg L(j\omega_c)
+\]
+On a Nyquist plot, \(\omega_c\) is where the curve intersects the unit circle.
+
+\subsubsection{Gain margin from negative real-axis intersection}
+\[
+L(j\omega_\pi)=-a,\qquad A_M=\frac{1}{a}
+\]
+The gain margin is read where the Nyquist curve crosses the negative real axis.
+
+\subsubsection{P-controller scaling in Nyquist}
+\[
+L_K(j\omega)=K_P L(j\omega)
+\]
+Changing \(K_P\) radially scales the Nyquist curve. The critical gain occurs when the scaled curve passes through \(-1+j0\).

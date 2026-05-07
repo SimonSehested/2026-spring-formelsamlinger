@@ -1,0 +1,2888 @@
+SOURCE: input\lectures\22050 L13 - Butterworth HP Filter and AC coupled in-amp - 260502.pdf
+PAGES: 105
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Butterworth filter design – part 2
+Instrumentation amplifier
+22050 Continuous-Time Signals and Linear Systems
+Kaj-Åge Henneberg
+L13
+1
+
+-- 1 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Copyright © 2020 – current year. Kaj-Åge Henneberg. All rights reserved.
+The reader of this document is granted permission to:
+• 	Read the document in a PDF reader.
+• 	Make annotations in a private copy of the document.
+• 	Store local copies for private use.
+The reader is not permitted to:
+• 	Change the document other than adding annotations for personal use.
+• 	Reproduce content in any ways or means.
+• 	Redistribute the document.
+Direct consequences:
+• 	The reader is not permitted to make screen dumps of content and insert it in other documents.
+• 	In course assignments, the reader is permitted to write the same equations and draw the same diagrams,
+but should do this using their own tools.
+2
+
+-- 2 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Course overview
+Stability
+System
+response
+System model
+ODE
+Stability
+System
+response
+System model
+s-analysis
+Time
+domain
+Frequency
+domain
+Laplace
+domain
+Bode Plot
+Fourier
+Analysis
+System model
+jw-analysis
+Filters
+3
+
+-- 3 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Lecture plan
+• 	Frequency transformation from low-pass to high-pass – Lathi 7.7
+• 	Filter specification
+• 	Matching Butterworth Transfer function to Sallen-Key filter circuit
+• 	Sensitivity-constrained filter design
+• 	Instrumentation amplifier (in-amp) – Not in Lathi
+• 	The difference amplifier
+• 	Adding preamplifiers to the difference amplifier
+• 	Common mode rejection ratio (CMRR)
+• 	Appendices
+• 	Imbalanced resistors in in-amp
+• 	AC coupled instrumentation amplifier
+4
+
+-- 4 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Next topic
+From low-pass to high-pass
+Filter specifications
+Video
+5
+
+-- 5 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+low-pass to high-pass Transformation
+P. Kraniauskas, Transforms in Signals and Systems, Addison Wesley.
+̂
+	𝑠𝑠𝐿𝐿𝐿𝐿 ← 𝜔𝜔𝑝𝑝
+𝑠𝑠𝐻𝐻𝐿𝐿
+𝑗𝑗 �	𝜔𝜔 𝐿𝐿𝐿𝐿 ← 𝜔𝜔𝑝𝑝
+𝑗𝑗𝜔𝜔 𝐻𝐻𝐿𝐿
+= −𝑗𝑗 𝜔𝜔𝑝𝑝
+𝜔𝜔 𝐻𝐻𝐿𝐿
+�	𝜔𝜔 𝐿𝐿𝐿𝐿 ← − 𝜔𝜔𝑝𝑝
+𝜔𝜔 𝐻𝐻𝐿𝐿
+Transformation of a prototype low-pass
+filter into the final high-pass is
+accomplished by mapping of the
+frequency axis:
+�	𝜔𝜔 ← − 𝑘𝑘
+𝜔𝜔
+low-pass 	high-pass
+6
+
+-- 6 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+low-pass to High-pass Transformation
+𝐻𝐻𝐿𝐿𝐿𝐿 	𝑠𝑠 	= 𝑏𝑏0
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎 0
+=
+𝑏𝑏0
+𝑎𝑎 0
+𝑠𝑠
+𝑎𝑎 0
+2
++ 𝑎𝑎1
+𝑎𝑎 0
+𝑠𝑠
+𝑎𝑎0
++ 1
+𝐻𝐻𝐻𝐻𝐿𝐿	̂	 	𝑠𝑠𝐻𝐻𝐿𝐿 	=
+𝑏𝑏0
+𝑎𝑎 0
+1
+̂
+	𝑠𝑠𝐻𝐻𝐿𝐿
+2
++ 𝑎𝑎1
+𝑎𝑎0
+1
+̂
+	𝑠𝑠𝐻𝐻𝐿𝐿 + 1
+𝐻𝐻𝐿𝐿𝐿𝐿̂ 	𝑠𝑠𝐿𝐿𝐿𝐿 	=
+𝑏𝑏0
+𝑎𝑎 0̂
+𝑠𝑠𝐿𝐿𝐿𝐿
+2 + 𝑎𝑎1
+𝑎𝑎 0̂
+𝑠𝑠𝐿𝐿𝐿𝐿 + 1
+𝐻𝐻𝐻𝐻𝐿𝐿	̂	 	𝑠𝑠𝐻𝐻𝐿𝐿 	= 𝑏𝑏2̂ 𝑠𝑠𝐻𝐻𝐿𝐿
+2̂
+𝑠𝑠𝐻𝐻𝐿𝐿
+2 + 𝑎𝑎1
+𝑎𝑎 0̂
+𝑠𝑠𝐻𝐻𝐿𝐿 + 1 𝑏𝑏2 = 𝑏𝑏0
+𝑎𝑎 0
+Using frequency transformation,
+we can rewrite a low-pass filter
+characteristic into one for a high-
+pass filter.
+Consequently, if we start out with
+a frequency-normalized low-pass
+filter, we can transform it into a
+frequency-normalized high-pass
+filter.
+For this reason, we will rarely see
+filter coefficient tables for high-
+pass, band-pass and band-stop
+filters.
+̂
+	𝑠𝑠𝐻𝐻𝐿𝐿 ≝ 𝑠𝑠𝐻𝐻𝐿𝐿
+𝜔𝜔𝑝𝑝
+̂
+	𝑠𝑠𝐿𝐿𝐿𝐿 ≝ 𝑠𝑠𝐿𝐿𝐿𝐿
+𝑎𝑎 0
+Frequency-normalized high-pass
+filter:
+1
+̂
+	𝑠𝑠𝐻𝐻𝐿𝐿
+→̂ 𝑠𝑠𝐿𝐿𝐿𝐿
+7
+
+-- 7 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Butterworth High-pass Filter Specifications
+�	𝜔𝜔 𝐿𝐿𝐿𝐿 ← − 𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿
+𝜔𝜔 𝐻𝐻𝐿𝐿
+�	𝜔𝜔 𝑠𝑠,𝐿𝐿𝐿𝐿 ← − 𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿
+𝜔𝜔 𝑠𝑠,𝐻𝐻𝐿𝐿
+�	𝜔𝜔 𝑝𝑝,𝐿𝐿𝐿𝐿 ← − 𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿
+𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿
+= −1
+𝑛𝑛 = 1
+2log10 	�	𝜔𝜔 𝑠𝑠,𝐿𝐿𝐿𝐿/ �	𝜔𝜔 𝑝𝑝,𝐿𝐿𝐿𝐿
+log10
+10− 𝐺𝐺 𝑠𝑠,𝑑𝑑𝑑𝑑
+10 	− 1
+10− 𝐺𝐺𝑝𝑝,𝑑𝑑𝑑𝑑
+10 	− 1
+=
+𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿
+𝜔𝜔 𝑠𝑠,𝐻𝐻𝐿𝐿	1
+𝐺𝐺𝑠𝑠
+𝐺𝐺𝑝𝑝
+�	𝜔𝜔𝐿𝐿𝐿𝐿
+𝐻𝐻𝐿𝐿𝐿𝐿 	�	𝜔𝜔𝐿𝐿𝐿𝐿
+𝜔𝜔 𝑠𝑠,𝐻𝐻𝐿𝐿 𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿
+𝐺𝐺𝑠𝑠
+𝐺𝐺𝑝𝑝
+𝜔𝜔𝐻𝐻𝐿𝐿
+𝐻𝐻 𝜔𝜔𝐻𝐻𝐿𝐿	Filter
+performance
+specifications for
+a high-pass filter
+are formulated
+for the high-pass
+filter and then
+transformed to
+the frequency-
+normalized low-
+pass filter, so
+that we can
+determine the
+required filter
+order.
+1
+2log10 	𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿/𝜔𝜔 𝑠𝑠,𝐻𝐻𝐿𝐿
+log10
+10− 𝐺𝐺 𝑠𝑠,𝑑𝑑𝑑𝑑
+10 	− 1
+10− 𝐺𝐺𝑝𝑝,𝑑𝑑𝑑𝑑
+10 	− 1
+8
+
+-- 8 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Example: high-pass Butterworth Filter
+𝐺𝐺𝑠𝑠 ≤ −26 dB, 	𝜔𝜔𝑠𝑠 = 2𝜋𝜋 0.01 rad/s
+𝐺𝐺𝑝𝑝 = −3 dB, 	𝜔𝜔𝑝𝑝 = 2𝜋𝜋 0.05 rad/s
+Find the transfer function order for the filter
+satisfying the following specifications:
+�	𝜔𝜔𝑠𝑠,𝐿𝐿𝐿𝐿 ← − 𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿
+𝜔𝜔 𝑠𝑠,𝐻𝐻𝐿𝐿
+= − 0.05
+0.01 = −5
+�	𝜔𝜔 𝑝𝑝,𝐿𝐿𝐿𝐿 ← − 𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿
+𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿
+= − 0.05
+0.05 = −1
+𝑛𝑛 = 1.861 →
+𝑛𝑛 = 1
+2log10 	�	𝜔𝜔𝑠𝑠,𝐿𝐿𝐿𝐿/ �	𝜔𝜔𝑝𝑝,𝐿𝐿𝐿𝐿
+log10
+10− 𝐺𝐺𝑠𝑠,𝑑𝑑𝑑𝑑
+10 	− 1
+10− 𝐺𝐺𝑝𝑝,𝑑𝑑𝑑𝑑
+10 	− 1
+= 1
+2log10 	𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿/𝜔𝜔 𝑠𝑠,𝐻𝐻𝐿𝐿
+log10
+10− 𝐺𝐺 𝑠𝑠,𝑑𝑑𝑑𝑑
+10 	− 1
+10− 𝐺𝐺𝑝𝑝,𝑑𝑑𝑑𝑑
+10 	− 1
+2
+𝜔𝜔 𝑠𝑠,𝐻𝐻𝐿𝐿 𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿
+𝐺𝐺𝑠𝑠
+𝐺𝐺𝑝𝑝
+𝜔𝜔𝐻𝐻𝐿𝐿
+𝐻𝐻 𝜔𝜔𝐻𝐻𝐿𝐿
+9
+
+-- 9 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Next topic
+From low-pass to high-pass
+Filter circuit
+Video
+10
+
+-- 10 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+2nd order Sallen-Key high-pass filter
+11
+𝐻𝐻𝐻𝐻𝐿𝐿 	𝑗𝑗𝜔𝜔 	= 𝐾𝐾 𝑗𝑗𝜔𝜔 2
+𝑗𝑗𝜔𝜔 2 + 𝑗𝑗𝜔𝜔 1
+𝑅𝑅1 𝐶𝐶1 + 1
+𝑅𝑅1 𝐶𝐶2 + 1 − 𝐾𝐾
+𝑅𝑅2 𝐶𝐶1 + 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝑉𝑉𝑆𝑆 𝜔𝜔
++
+− 	+
+𝑉𝑉𝑜𝑜 𝜔𝜔
+−
+𝐶𝐶2
+𝑅𝑅2
+𝑅𝑅1
+𝐶𝐶1
+𝑉𝑉𝑎𝑎 	𝑉𝑉𝑏𝑏
+𝑅𝑅𝐺𝐺2
+𝑅𝑅𝐺𝐺1
+To determine the component
+values, we must match the circuit
+equation with the performance
+equation.
+The performance equation for
+the frequency-normalized
+Butterworth high-pass filter:
+𝐻𝐻𝐻𝐻𝐿𝐿 	�	𝜔𝜔 𝐻𝐻𝐿𝐿 	= 𝑏𝑏2 	𝑗𝑗 �	𝜔𝜔 𝐻𝐻𝐿𝐿 2
+𝑗𝑗 �	𝜔𝜔 𝐻𝐻𝐿𝐿 2 + 𝑎𝑎1
+𝑎𝑎0
+𝑗𝑗 �	𝜔𝜔 𝐻𝐻𝐿𝐿 	+ 1
+
+-- 11 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+2nd order Sallen-Key high-pass filter - Sensitivity
+𝐻𝐻𝐻𝐻𝐿𝐿 	𝑗𝑗𝜔𝜔 	= 𝐾𝐾 𝑗𝑗𝜔𝜔 2
+𝑗𝑗𝜔𝜔 2 + 𝑗𝑗𝜔𝜔 1
+𝑅𝑅1 𝐶𝐶1 + 1
+𝑅𝑅1 𝐶𝐶2 + 1 − 𝐾𝐾
+𝑅𝑅2 𝐶𝐶1 + 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+1
+𝑄𝑄 ≝ 2𝜁𝜁 ⇒
+𝑄𝑄 ≝ 1
+2𝜁𝜁 = 1
+2
+2 	𝑎𝑎 0
+𝑎𝑎1
+= 𝑎𝑎 0
+𝑎𝑎1
+𝑄𝑄𝐻𝐻𝐿𝐿 = 𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝐶𝐶1 + 𝐶𝐶2 	𝑅𝑅2 + 𝑅𝑅1 𝐶𝐶2(1 − 𝐾𝐾)
+𝜔𝜔𝑛𝑛 = 1
+𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+We will set the gain
+to unity, 𝐾𝐾 = 1. 𝑄𝑄𝐻𝐻𝐿𝐿 = 𝑅𝑅1 𝑅𝑅2 𝐶𝐶1 𝐶𝐶2
+𝐶𝐶1 + 𝐶𝐶2 	𝑅𝑅2
+= 𝑅𝑅1
+𝑅𝑅2
+⋅ 𝐶𝐶1 𝐶𝐶2
+𝐶𝐶1 + 𝐶𝐶2
+𝑆𝑆𝑥𝑥
+𝜔𝜔𝑛𝑛 = − 1
+2
+𝑆𝑆𝑅𝑅1
+𝑄𝑄 = 1
+2 𝑆𝑆𝑅𝑅2
+𝑄𝑄 = − 1
+2
+𝑆𝑆𝐶𝐶1
+𝑄𝑄 = 𝐶𝐶2 − 𝐶𝐶1
+2(𝐶𝐶1 + 𝐶𝐶2)
+𝑆𝑆𝐶𝐶2
+𝑄𝑄 = 𝐶𝐶1 − 𝐶𝐶2
+2(𝐶𝐶1 + 𝐶𝐶2)
+Sensitivity analysis on coefficients.
+𝑆𝑆𝑥𝑥
+𝑦𝑦 ≝ 𝑥𝑥
+𝑦𝑦
+𝜕𝜕𝑦𝑦
+𝜕𝜕𝑥𝑥
+Observation:
+For a Sallen-Key high-pass filters we obtain low
+sensitivity for 𝑸𝑸 if we match the capacitors.
+12
+
+-- 12 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+2nd order Sallen-Key high-pass filter
+13
+𝐻𝐻𝐻𝐻𝐿𝐿 	𝑗𝑗 �	𝜔𝜔 	= 𝐾𝐾 𝑗𝑗 �	𝜔𝜔 2
+𝑗𝑗 �	𝜔𝜔 2 + 𝑎𝑎1 	𝑗𝑗 �	𝜔𝜔 	+ 𝑎𝑎 0
+By matching coefficients in
+the above two equations, we
+obtain two equations:
+𝐻𝐻𝐻𝐻𝐿𝐿 	𝑗𝑗 �	𝜔𝜔 	= 𝐾𝐾 𝑗𝑗𝜔𝜔 2
+𝑗𝑗 �	𝜔𝜔 2 + 𝑗𝑗 �	𝜔𝜔 1
+�	𝑅𝑅1̂ 𝐶𝐶1
++ 1
+�	𝑅𝑅1̂ 𝐶𝐶2
++ 1 − 𝐾𝐾
+�	𝑅𝑅2̂ 𝐶𝐶1
++ 1
+�	𝑅𝑅1 �	𝑅𝑅2̂ 𝐶𝐶1̂ 𝐶𝐶2
+�	𝑅𝑅1 �	𝑅𝑅2̂ 𝐶𝐶 2 = 1
+𝑎𝑎 0
+2
+�	𝑅𝑅1̂ 𝐶𝐶 = 𝑎𝑎1
+𝐾𝐾 ≝ 1,	̂	 𝐶𝐶1 ≝	̂	 𝐶𝐶2 ≝	̂	 𝐶𝐶
+This time we match capacitors. 	�	𝑅𝑅1̂ 𝐶𝐶 = 2
+𝑎𝑎1
+�	𝑅𝑅1
+�	𝑅𝑅2
+= 2
+𝑎𝑎1
+2𝑎𝑎 0
+𝑎𝑎1
+= 4𝑎𝑎 0
+𝑎𝑎1
+2 = 4 ⋅ 1
+2 2 = 2 ≈ 68
+33
+We eliminate the capacitor
+and obtain a ratio for the
+resistors:
+�	𝑅𝑅2̂ 𝐶𝐶 2
+𝑎𝑎1
+= 1
+𝑎𝑎 0
+�	𝑅𝑅2̂ 𝐶𝐶 = 𝑎𝑎1
+2𝑎𝑎 0
+
+-- 13 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+2nd order Sallen-Key high-pass filter
+14
+̂
+	𝜏𝜏1 = 	�	𝑅𝑅1̂ 𝐶𝐶 = 2
+𝑎𝑎1
+= 1.414 ⇒̂ 𝐶𝐶 = 1.414s
+0.68Ω = 2.079F
+̂
+	𝜏𝜏 2 = 	�	𝑅𝑅2̂ 𝐶𝐶 = 𝑎𝑎1
+2𝑎𝑎 0
+= 0.707 ⇒̂ 𝐶𝐶 = 0.707s
+0.33Ω = 2.142F
+̂
+𝐶𝐶 2 = 1
+𝑎𝑎 0 �	𝑅𝑅1 �	𝑅𝑅2
+̂
+𝐶𝐶 = 1
+𝑎𝑎 0 �	𝑅𝑅1 �	𝑅𝑅2
+= 1
+0.68 × 0.33 = 2.11 ≈ 2.2
+We have several options.
+�	𝑅𝑅1 �	𝑅𝑅2̂ 𝐶𝐶 2 = 1
+𝑎𝑎 0
+⇒
+Good options are 1.2, 1.5, and 2.2F
+�	𝑅𝑅1 �	𝑅𝑅2̂ 𝐶𝐶 2 = 1
+𝑎𝑎 0
+= 1 ⇒ 𝜏𝜏1 𝜏𝜏 2 = 1
+We see that the product of the two time
+constants is 1.
+This is best obtained for 𝐶𝐶 = 1.2F, 𝑅𝑅𝑅 =
+1.2Ω, 𝑅𝑅2 = 0.56Ω
+We can use a look-up table for time constants and
+in one and the same column (same C value) find
+the two best time constants.
+But there might be more than one useful column
+(C value).
+If we decide to stick to a ratio of ~2 for the
+resistors, we can obtain a suggestion for the best
+capacitor value:
+
+-- 14 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+2nd order Sallen-Key high-pass filter - Butterworth
+15
+R1*C1 	0,1 	0,12 	0,15 	0,18 	0,22 	0,27 	0,33 	0,39 	0,47 	0,56 	0,68 	0,82 	1 	1,2 	1,5 	1,8 	2,2 	2,7 	3,3 	3,9 	4,7 	5,6 	6,8 	8,2 	10
+0,1 	0,010 	0,012 	0,015 	0,018 	0,022 	0,027 	0,033 	0,039 	0,047 	0,056 	0,068 	0,082 	0,100 	0,120 	0,150 	0,180 	0,220 	0,270 	0,330 	0,390 	0,470 	0,560 	0,680 	0,820 	1,000
+0,12 	0,012 	0,014 	0,018 	0,022 	0,026 	0,032 	0,040 	0,047 	0,056 	0,067 	0,082 	0,098 	0,120 	0,144 	0,180 	0,216 	0,264 	0,324 	0,396 	0,468 	0,564 	0,672 	0,816 	0,984 	1,200
+0,15 	0,015 	0,018 	0,023 	0,027 	0,033 	0,041 	0,050 	0,059 	0,071 	0,084 	0,102 	0,123 	0,150 	0,180 	0,225 	0,270 	0,330 	0,405 	0,495 	0,585 	0,705 	0,840 	1,020 	1,230 	1,500
+0,18 	0,018 	0,022 	0,027 	0,032 	0,040 	0,049 	0,059 	0,070 	0,085 	0,101 	0,122 	0,148 	0,180 	0,216 	0,270 	0,324 	0,396 	0,486 	0,594 	0,702 	0,846 	1,008 	1,224 	1,476 	1,800
+0,22 	0,022 	0,026 	0,033 	0,040 	0,048 	0,059 	0,073 	0,086 	0,103 	0,123 	0,150 	0,180 	0,220 	0,264 	0,330 	0,396 	0,484 	0,594 	0,726 	0,858 	1,034 	1,232 	1,496 	1,804 	2,200
+0,27 	0,027 	0,032 	0,041 	0,049 	0,059 	0,073 	0,089 	0,105 	0,127 	0,151 	0,184 	0,221 	0,270 	0,324 	0,405 	0,486 	0,594 	0,729 	0,891 	1,053 	1,269 	1,512 	1,836 	2,214 	2,700
+0,33 	0,033 	0,040 	0,050 	0,059 	0,073 	0,089 	0,109 	0,129 	0,155 	0,185 	0,224 	0,271 	0,330 	0,396 	0,495 	0,594 	0,726 	0,891 	1,089 	1,287 	1,551 	1,848 	2,244 	2,706 	3,300
+0,39 	0,039 	0,047 	0,059 	0,070 	0,086 	0,105 	0,129 	0,152 	0,183 	0,218 	0,265 	0,320 	0,390 	0,468 	0,585 	0,702 	0,858 	1,053 	1,287 	1,521 	1,833 	2,184 	2,652 	3,198 	3,900
+0,47 	0,047 	0,056 	0,071 	0,085 	0,103 	0,127 	0,155 	0,183 	0,221 	0,263 	0,320 	0,385 	0,470 	0,564 	0,705 	0,846 	1,034 	1,269 	1,551 	1,833 	2,209 	2,632 	3,196 	3,854 	4,700
+0,56 	0,056 	0,067 	0,084 	0,101 	0,123 	0,151 	0,185 	0,218 	0,263 	0,314 	0,381 	0,459 	0,560 	0,672 	0,840 	1,008 	1,232 	1,512 	1,848 	2,184 	2,632 	3,136 	3,808 	4,592 	5,600
+0,68 	0,068 	0,082 	0,102 	0,122 	0,150 	0,184 	0,224 	0,265 	0,320 	0,381 	0,462 	0,558 	0,680 	0,816 	1,020 	1,224 	1,496 	1,836 	2,244 	2,652 	3,196 	3,808 	4,624 	5,576 	6,800
+0,82 	0,082 	0,098 	0,123 	0,148 	0,180 	0,221 	0,271 	0,320 	0,385 	0,459 	0,558 	0,672 	0,820 	0,984 	1,230 	1,476 	1,804 	2,214 	2,706 	3,198 	3,854 	4,592 	5,576 	6,724 	8,200
+1 	0,100 	0,120 	0,150 	0,180 	0,220 	0,270 	0,330 	0,390 	0,470 	0,560 	0,680 	0,820 	1,000 	1,200 	1,500 	1,800 	2,200 	2,700 	3,300 	3,900 	4,700 	5,600 	6,800 	8,200 	10,000
+1,2 	0,120 	0,144 	0,180 	0,216 	0,264 	0,324 	0,396 	0,468 	0,564 	0,672 	0,816 	0,984 	1,200 	1,440 	1,800 	2,160 	2,640 	3,240 	3,960 	4,680 	5,640 	6,720 	8,160 	9,840 	12,000
+1,5 	0,150 	0,180 	0,225 	0,270 	0,330 	0,405 	0,495 	0,585 	0,705 	0,840 	1,020 	1,230 	1,500 	1,800 	2,250 	2,700 	3,300 	4,050 	4,950 	5,850 	7,050 	8,400 	10,200 	12,300 	15,000
+1,8 	0,180 	0,216 	0,270 	0,324 	0,396 	0,486 	0,594 	0,702 	0,846 	1,008 	1,224 	1,476 	1,800 	2,160 	2,700 	3,240 	3,960 	4,860 	5,940 	7,020 	8,460 	10,080 	12,240 	14,760 	18,000
+2,2 	0,220 	0,264 	0,330 	0,396 	0,484 	0,594 	0,726 	0,858 	1,034 	1,232 	1,496 	1,804 	2,200 	2,640 	3,300 	3,960 	4,840 	5,940 	7,260 	8,580 	10,340 	12,320 	14,960 	18,040 	22,000
+2,7 	0,270 	0,324 	0,405 	0,486 	0,594 	0,729 	0,891 	1,053 	1,269 	1,512 	1,836 	2,214 	2,700 	3,240 	4,050 	4,860 	5,940 	7,290 	8,910 	10,530 	12,690 	15,120 	18,360 	22,140 	27,000
+3,3 	0,330 	0,396 	0,495 	0,594 	0,726 	0,891 	1,089 	1,287 	1,551 	1,848 	2,244 	2,706 	3,300 	3,960 	4,950 	5,940 	7,260 	8,910 	10,890 	12,870 	15,510 	18,480 	22,440 	27,060 	33,000
+3,9 	0,390 	0,468 	0,585 	0,702 	0,858 	1,053 	1,287 	1,521 	1,833 	2,184 	2,652 	3,198 	3,900 	4,680 	5,850 	7,020 	8,580 	10,530 	12,870 	15,210 	18,330 	21,840 	26,520 	31,980 	39,000
+4,7 	0,470 	0,564 	0,705 	0,846 	1,034 	1,269 	1,551 	1,833 	2,209 	2,632 	3,196 	3,854 	4,700 	5,640 	7,050 	8,460 	10,340 	12,690 	15,510 	18,330 	22,090 	26,320 	31,960 	38,540 	47,000
+5,6 	0,560 	0,672 	0,840 	1,008 	1,232 	1,512 	1,848 	2,184 	2,632 	3,136 	3,808 	4,592 	5,600 	6,720 	8,400 	10,080 	12,320 	15,120 	18,480 	21,840 	26,320 	31,360 	38,080 	45,920 	56,000
+6,8 	0,680 	0,816 	1,020 	1,224 	1,496 	1,836 	2,244 	2,652 	3,196 	3,808 	4,624 	5,576 	6,800 	8,160 	10,200 	12,240 	14,960 	18,360 	22,440 	26,520 	31,960 	38,080 	46,240 	55,760 	68,000
+8,2 	0,820 	0,984 	1,230 	1,476 	1,804 	2,214 	2,706 	3,198 	3,854 	4,592 	5,576 	6,724 	8,200 	9,840 	12,300 	14,760 	18,040 	22,140 	27,060 	31,980 	38,540 	45,920 	55,760 	67,240 	82,000
+10 	1,000 	1,200 	1,500 	1,800 	2,200 	2,700 	3,300 	3,900 	4,700 	5,600 	6,800 	8,200 	10,000 	12,000 	15,000 	18,000 	22,000 	27,000 	33,000 	39,000 	47,000 	56,000 	68,000 	82,000 	100,00
+̂
+	𝜏𝜏1 = 	�	𝑅𝑅1̂ 𝐶𝐶 = 2
+𝑎𝑎1
+= 2
+2 = 	2 = 1.414
+̂
+	𝜏𝜏 2 = 	�	𝑅𝑅2̂ 𝐶𝐶 = 𝑎𝑎1
+2𝑎𝑎 0
+= 2
+2 = 0.707
+0.968 1.0575 	1.086	𝜏𝜏1 𝜏𝜏 2 =
+
+-- 15 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+2nd order Sallen-Key high-pass filter - Butterworth
+16
+The low-frequency asymptote has a slope of +40 dB/decade, the cut-off is at 1 rad/s and the
+phase is 90 degrees at the cut-off. So, it looks promising.
+In the RC look-up table on the previous slide
+we see that there are several options. Here we
+have chosen this combination:
+�	𝑅𝑅1 ≈ 1.2Ω
+�	𝑅𝑅2 ≈ 0.56Ω
+̂
+𝐶𝐶 ≈ 1.2𝐹𝐹
+
+-- 16 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Frequency scaling - revisited
+𝐻𝐻𝐻𝐻𝐿𝐿 	𝑗𝑗 �	𝜔𝜔 	= 𝐾𝐾 𝑗𝑗 �	𝜔𝜔 2
+𝑗𝑗 �	𝜔𝜔 2 + 𝑗𝑗 �	𝜔𝜔 1
+�	𝑅𝑅1̂ 𝐶𝐶1
++ 1
+�	𝑅𝑅1̂ 𝐶𝐶2
++ 1 − 𝐾𝐾
+�	𝑅𝑅2̂ 𝐶𝐶1
++ 1
+�	𝑅𝑅1 �	𝑅𝑅2̂ 𝐶𝐶1̂ 𝐶𝐶2
+The frequency characteristic for
+the frequency-normalized high-
+pass filter. The hats indicate
+that the components have the
+value for a cut-off frequency of
+1 rad/s. 	𝐻𝐻𝐻𝐻𝐿𝐿 	𝑗𝑗 �	𝜔𝜔 	= 𝐾𝐾 𝑗𝑗 �	𝜔𝜔 2̂ 𝐶𝐶1̂ 𝐶𝐶2
+𝑗𝑗 �	𝜔𝜔 2̂ 𝐶𝐶1̂ 𝐶𝐶2 + 𝑗𝑗 �	𝜔𝜔̂ 𝐶𝐶2
+�	𝑅𝑅1
++̂ 𝐶𝐶1
+�	𝑅𝑅1
++̂ 𝐶𝐶2 	1 − 𝐾𝐾
+�	𝑅𝑅2
++ 1
+�	𝑅𝑅1 �	𝑅𝑅2
+𝐻𝐻𝐻𝐻𝐿𝐿 	𝑗𝑗 �	𝜔𝜔 	=
+𝐾𝐾 𝑗𝑗𝐾𝐾𝐹𝐹 �	𝜔𝜔 2̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹̂
+𝐶𝐶2
+𝐾𝐾𝐹𝐹
+𝑗𝑗𝐾𝐾𝐹𝐹 �	𝜔𝜔 2̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹̂
+𝐶𝐶2
+𝐾𝐾𝐹𝐹 + 𝑗𝑗𝐾𝐾𝐹𝐹 �	𝜔𝜔̂ 𝐶𝐶2
+𝐾𝐾𝐹𝐹 �	𝑅𝑅1
++̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹 �	𝑅𝑅1
++̂ 𝐶𝐶2 	1 − 𝐾𝐾
+𝐾𝐾𝐹𝐹 �	𝑅𝑅2
++ 1
+�	𝑅𝑅1 �	𝑅𝑅2
+We can multiply the
+normalized frequency
+variable 	�	𝜔𝜔 by a factor 𝐾𝐾𝐹𝐹 	if
+we also divide all capacitors
+by the same factor.
+𝐻𝐻𝐻𝐻𝐿𝐿 	𝑗𝑗𝜔𝜔 	=
+𝐾𝐾 𝑗𝑗𝜔𝜔 2̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹̂
+𝐶𝐶2
+𝐾𝐾𝐹𝐹
+𝑗𝑗𝜔𝜔 2̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹̂
+𝐶𝐶2
+𝐾𝐾𝐹𝐹 + 𝑗𝑗𝜔𝜔̂ 𝐶𝐶2
+𝐾𝐾𝐹𝐹 �	𝑅𝑅1
++̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹 �	𝑅𝑅1
++̂ 𝐶𝐶2 	1 − 𝐾𝐾
+𝐾𝐾𝐹𝐹 �	𝑅𝑅2
++ 1
+�	𝑅𝑅1 �	𝑅𝑅2
+𝜔𝜔 ≝ 𝐾𝐾𝐹𝐹 �	𝜔𝜔
+17
+
+-- 17 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Frequency scaling - revisited
+𝐻𝐻𝐻𝐻𝐿𝐿 	𝑗𝑗𝜔𝜔 	=
+𝐾𝐾 𝑗𝑗𝜔𝜔 2̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹̂
+𝐶𝐶2
+𝐾𝐾𝐹𝐹
+𝑗𝑗𝜔𝜔 2̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹̂
+𝐶𝐶2
+𝐾𝐾𝐹𝐹 + 𝑗𝑗𝜔𝜔̂ 𝐶𝐶2
+𝐾𝐾𝐹𝐹 �	𝑅𝑅1
++̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹 �	𝑅𝑅1
++̂ 𝐶𝐶2 	1 − 𝐾𝐾
+𝐾𝐾𝐹𝐹 �	𝑅𝑅2
++ 1
+�	𝑅𝑅1 �	𝑅𝑅2
+𝐻𝐻𝐻𝐻𝐿𝐿 	𝑗𝑗𝜔𝜔 	= 𝐾𝐾 𝑗𝑗𝜔𝜔 2 𝐶𝐶1
+′𝐶𝐶2
+′
+𝑗𝑗𝜔𝜔 2 𝐶𝐶1
+′𝐶𝐶2
+′ + 𝑗𝑗𝜔𝜔 𝐶𝐶2
+′
+𝑅𝑅1
+′ + 𝐶𝐶2
+′
+𝑅𝑅1
+′ + 𝐶𝐶2
+′ 1 − 𝐾𝐾
+𝑅𝑅2
+′ 	+ 1
+𝑅𝑅1
+′ 𝑅𝑅2
+′
+By frequency scaling, we scale the
+normalized frequency axis while also
+downscaling all capacitors.
+The shape of the magnitude and
+phase curves are determined by the
+resistance values and the values of
+the capacitor impedances. At the
+normalized cut-off frequency 	�	𝜔𝜔𝑐𝑐, the
+resistors and the capacitor
+impedances have certain values.
+𝑍𝑍𝐶𝐶 = 1
+𝑗𝑗 �	𝜔𝜔𝑐𝑐̂ 𝐶𝐶 = 1
+𝑗𝑗 𝐾𝐾𝐹𝐹 �	𝜔𝜔𝑐𝑐̂
+𝐶𝐶
+𝐾𝐾𝐹𝐹
+= 1
+𝑗𝑗𝜔𝜔𝑐𝑐 𝐶𝐶𝐶
+𝑅𝑅 ′ = 	�	𝑅𝑅 	𝐶𝐶 ′ ≝̂ 𝐶𝐶
+𝐾𝐾𝐹𝐹
+The frequency scaling changes
+the frequency scale and the
+capacitor values without
+changing the capacitor
+impedance. So, we now have
+the same capacitor impedance,
+but at a new cut-off frequency
+𝜔𝜔𝑐𝑐.
+18
+
+-- 18 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+2nd order Sallen-Key high-pass filter - Butterworth
+Frequency scaling
+𝐾𝐾𝐹𝐹 = 2𝜋𝜋 ⋅ 0.05 = 0.314159
+𝐶𝐶1
+′ =̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹
+= 1.2F
+0.314159 = 3.82F ≈ 3.9 F
+𝐶𝐶2
+′ =̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹
+= 3.9 F
+𝑅𝑅1
+′ = 	�	𝑅𝑅1 = 1.2Ω
+𝑅𝑅2
+′ = 	�	𝑅𝑅2 = 0.56Ω
+19
+
+-- 19 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+2nd order Sallen-Key high pass filter - Butterworth
+Impedance scaling:
+𝐾𝐾𝑧𝑧 = 𝐶𝐶1
+′
+3.9 ⋅ 10−6F = 3.9F
+3.9 ⋅ 10−6F = 1 × 106
+𝐶𝐶1 = 𝐶𝐶2 = 3.9μF 	desired capacitor value
+𝑅𝑅1 = 𝐾𝐾𝑧𝑧 ⋅ 𝑅𝑅1
+′ = 𝐾𝐾𝑧𝑧 ⋅ 1.2Ω = 1.2MΩ
+𝑅𝑅2 = 𝐾𝐾𝑧𝑧 ⋅ 𝑅𝑅2
+′ = 𝐾𝐾𝑧𝑧 ⋅ 0.56Ω = 560kΩ
++
+− 	+
+𝑌𝑌 𝜔𝜔
+−
+𝑋𝑋 𝜔𝜔
+𝐶𝐶2
+𝑅𝑅2
+𝑅𝑅1
+𝐶𝐶1
+𝑉𝑉𝑎𝑎 	𝑉𝑉𝑏𝑏
+1.2MΩ
+3.9μF 	3.9μF
+560𝑘𝑘Ω
+20
+
+-- 20 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Monte Carlo analysis of original high-pass filter
+Not available in KiCad
+21
+
+-- 21 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Size of capacitors
+https://docs.rs-online.com/74f3/0900766b8171c883.pdf
+Capacitors for filter circuits can
+be quite large.
+This one will not fit in a
+Smartwatch.
+22
+
+-- 22 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Next topic
+Instrumentation amplifier
+Video
+23
+
+-- 23 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+The difference amplifier
+𝑅𝑅4𝑎𝑎 = 𝑅𝑅4𝑏𝑏	𝑉𝑉𝑜𝑜 = 𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎
+𝑉𝑉𝐴𝐴 − 𝑉𝑉𝐵𝐵 	𝑅𝑅3𝑎𝑎 = 𝑅𝑅3𝑏𝑏
+Using source superposition:
+By matching resistance values,
+we can simplify the circuit
+equation.
+�	𝑉𝑉𝑜𝑜,𝐴𝐴 𝑉𝑉𝑑𝑑=0 = 	1 + 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑉𝑉𝑎𝑎 = 	1 + 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎 + 𝑅𝑅4𝑎𝑎
+𝑉𝑉𝐴𝐴
+�	𝑉𝑉𝑜𝑜,𝐵𝐵 𝑉𝑉 𝐴𝐴 =0 = − 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝑜𝑜 = 	�	𝑉𝑉𝑜𝑜,𝐴𝐴 𝑉𝑉𝑑𝑑=0 + 	�	𝑉𝑉𝑜𝑜,𝐵𝐵 𝑉𝑉 𝐴𝐴 =0 = 𝑅𝑅3𝑏𝑏 + 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎 + 𝑅𝑅4𝑎𝑎
+𝑉𝑉𝐴𝐴 − 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑉𝑉𝐵𝐵
+24
++
+−
+𝑅𝑅3𝑎𝑎
+𝑅𝑅4𝑎𝑎
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝐴𝐴
+𝑉𝑉𝑜𝑜
+𝑉𝑉𝑏𝑏
+𝑉𝑉𝑎𝑎
+𝑅𝑅4𝑏𝑏	𝑅𝑅3𝑏𝑏
+
+-- 24 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+3 op-amp model of instrumentation amplifier
+-
++
+Amplifier ground+
++
+-
+-
+𝑉𝑉2
+𝑅𝑅1𝑏𝑏
+𝑅𝑅1𝑎𝑎
+𝑉𝑉1 	𝑉𝑉𝐴𝐴
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝑏𝑏
+𝑉𝑉𝑎𝑎 𝑉𝑉𝑜𝑜
+𝑅𝑅2𝑏𝑏
+𝑅𝑅2𝑎𝑎
+𝑅𝑅3𝑏𝑏
+𝑅𝑅3𝑎𝑎
+𝑅𝑅4𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑉𝑉2
+𝑉𝑉1
+𝑈𝑈𝑅𝑈𝑈
+𝑈𝑈𝑅𝑈𝑈
+𝑈𝑈2
+𝑉𝑉𝐴𝐴 = 	1 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1 − 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2
+𝑉𝑉𝐵𝐵 = 	1 + 𝑅𝑅2𝑏𝑏
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2 − 𝑅𝑅2𝑏𝑏
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1
+To increase the input impedance, we
+can place a non-inverting op-amp in
+front of nodes 𝑉𝑉𝐴𝐴 and 𝑉𝑉𝐵𝐵.
+Using source superposition we
+obtain:
+𝑉𝑉𝑜𝑜 = 𝑅𝑅3𝑏𝑏 + 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎 + 𝑅𝑅4𝑎𝑎
+𝑉𝑉𝐴𝐴 − 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑉𝑉𝐵𝐵
+25
+
+-- 25 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+3 op-amp model of instrumentation amplifier
+𝑉𝑉𝑜𝑜 = 𝑅𝑅3𝑏𝑏 + 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎 + 𝑅𝑅4𝑎𝑎
+𝑉𝑉𝐴𝐴 − 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝐴𝐴 = 	1 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1 − 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2
+𝑉𝑉𝐵𝐵 = 	1 + 𝑅𝑅2𝑏𝑏
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2 − 𝑅𝑅2𝑏𝑏
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1
+These expressions are
+greatly simplified if we
+match resistors.
+𝑅𝑅3𝑎𝑎 = 𝑅𝑅3𝑏𝑏 = 𝑅𝑅4𝑎𝑎 = 𝑅𝑅4𝑏𝑏
+𝑅𝑅2𝑎𝑎 = 𝑅𝑅2𝑏𝑏
+𝑅𝑅1𝑎𝑎 = 𝑅𝑅1𝑏𝑏 = 𝑅𝑅𝐺𝐺
+2
+𝑉𝑉𝑜𝑜 = 𝑉𝑉𝐴𝐴 − 𝑉𝑉𝐵𝐵
+𝑉𝑉𝐴𝐴 = 	1 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉1 − 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉2
+𝑉𝑉𝐵𝐵 = 	1 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉2 − 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉1
+Matched resistors	Unmatched resistors
+26
+
+-- 26 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Source model
+27
+𝑉𝑉𝑑𝑑 ≝ 𝑉𝑉1 − 𝑉𝑉2
+𝑉𝑉𝑐𝑐𝑐𝑐 ≝ 𝑉𝑉1 + 𝑉𝑉2
+2
+-
++
+Amplifier ground+
++
+-
+-
+𝑅𝑅1𝑏𝑏
+𝑅𝑅1𝑎𝑎
+𝑉𝑉𝐴𝐴
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝑏𝑏
+𝑉𝑉𝑎𝑎 𝑉𝑉𝑜𝑜
+𝑅𝑅2𝑏𝑏
+𝑅𝑅2𝑎𝑎
+𝑅𝑅3𝑏𝑏
+𝑅𝑅3𝑎𝑎
+𝑅𝑅4𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑉𝑉2
+𝑉𝑉1
+𝑈𝑈𝑅𝑈𝑈
+𝑈𝑈𝑅𝑈𝑈
+𝑈𝑈2
+𝑉𝑉𝑐𝑐𝑐𝑐
+𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝑑𝑑
+2
++
++
+𝑉𝑉1 = 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉2 = 𝑉𝑉𝑐𝑐𝑐𝑐 − 𝑉𝑉𝑑𝑑
+2
++
+𝑉𝑉2
+𝑉𝑉1
+We have two input signals 𝑉𝑉1 and 𝑉𝑉2.
+The difference between the signal is called the
+differential signal:
+The average is called the common mode signal:
+
+-- 27 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+3 op-amp model of instrumentation amplifier
+𝑉𝑉1 = 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉2 = 𝑉𝑉𝑐𝑐𝑐𝑐 − 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝐴𝐴 = 	1 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉1 − 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉2
+𝑉𝑉𝐴𝐴 = 	1 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 	𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑉𝑉𝑑𝑑
+2 − 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 	𝑉𝑉𝑐𝑐𝑐𝑐 − 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝐴𝐴 = 	𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+𝑉𝑉𝑐𝑐𝑐𝑐 	+ 	1 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉𝑑𝑑
+2 − 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+𝑉𝑉𝑐𝑐𝑐𝑐 − 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝐴𝐴 = 𝑉𝑉𝑐𝑐𝑐𝑐 + 	1 + 2𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉𝑑𝑑
+2
+An instrumentation amplifier
+processes differential and
+common mode signals very
+differently. To see this, we
+express the input signals in
+terms of 𝑉𝑉𝑑𝑑 and 𝑉𝑉𝑐𝑐𝑐𝑐.
+𝑉𝑉𝑑𝑑 ≝ 𝑉𝑉1 − 𝑉𝑉2
+𝑉𝑉𝑐𝑐𝑐𝑐 ≝ 𝑉𝑉1 + 𝑉𝑉2
+2
+𝑉𝑉𝐴𝐴 = 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+2
+Observation:
+𝑉𝑉𝑐𝑐𝑐𝑐 is not amplified.
+28
+
+-- 28 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+3 op-amp model of instrumentation amplifier
+𝑉𝑉𝐵𝐵 = 	1 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉2 − 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉1
+𝑉𝑉𝐵𝐵 = 	1 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 	𝑉𝑉𝑐𝑐𝑐𝑐 − 𝑉𝑉𝑑𝑑
+2 − 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 	𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝐵𝐵 = 	𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+𝑉𝑉𝑐𝑐𝑐𝑐 	− 	1 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉𝑑𝑑
+2 − 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑅𝑅2
+𝑅𝑅𝐺𝐺
+𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝐵𝐵 = 𝑉𝑉𝑐𝑐𝑐𝑐 − 	1 + 2𝑅𝑅2
+𝑅𝑅𝐺𝐺
+⋅ 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝐵𝐵 = 𝑉𝑉𝑐𝑐𝑐𝑐 − 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+2
+Similar derivation
+for node B:
+Observation:
+𝑉𝑉𝑐𝑐𝑐𝑐 is not amplified.
+𝑉𝑉1 = 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉2 = 𝑉𝑉𝑐𝑐𝑐𝑐 − 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝑑𝑑 ≝ 𝑉𝑉1 − 𝑉𝑉2
+𝑉𝑉𝑐𝑐𝑐𝑐 ≝ 𝑉𝑉1 + 𝑉𝑉2
+2
+29
+
+-- 29 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Risc of internal saturation
+30
+-
++
+Amplifier ground+
++
+-
+-
+𝑉𝑉2
+𝑅𝑅1𝑏𝑏
+𝑅𝑅1𝑎𝑎
+𝑉𝑉1 	𝑉𝑉𝐴𝐴
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝑏𝑏
+𝑉𝑉𝑎𝑎 𝑉𝑉𝑜𝑜
+𝑅𝑅2𝑏𝑏
+𝑅𝑅2𝑎𝑎
+𝑅𝑅3𝑏𝑏
+𝑅𝑅3𝑎𝑎
+𝑅𝑅4𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑉𝑉2
+𝑉𝑉1
+𝑈𝑈𝑅𝑈𝑈
+𝑈𝑈𝑅𝑈𝑈
+𝑈𝑈2
+𝑉𝑉𝐵𝐵 = 𝑉𝑉𝑐𝑐𝑐𝑐 − 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝐴𝐴 = 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉1 = 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉2 = 𝑉𝑉𝑐𝑐𝑐𝑐 − 𝑉𝑉𝑑𝑑
+2
+It is not uncommon that the common
+mode signal is significantly larger than
+the differential signal.
+This would often be the case, if the
+common mode signal is due to
+electrical interference.
+𝑉𝑉𝑐𝑐𝑐𝑐 is not amplified in the gain stages
+U1A and U1B. This implies that a fairly
+large common mode signal may be
+tolerated without saturation.
+To avoid signal saturation, we need to
+be concerned about the magnitude of
+the voltage in the internal nodes 𝑉𝑉𝐴𝐴 and
+𝑉𝑉𝐵𝐵.
+
+-- 30 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Risc of internal saturation
+31
+−𝑉𝑉𝑠𝑠𝑎𝑎𝑠𝑠 < 𝑉𝑉𝐵𝐵 = 𝑉𝑉𝑐𝑐𝑐𝑐 − 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+2 < 𝑉𝑉𝑠𝑠𝑎𝑎𝑠𝑠
+−𝑉𝑉𝑠𝑠𝑎𝑎𝑠𝑠 < 𝑉𝑉𝐴𝐴 = 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+2 < 𝑉𝑉𝑠𝑠𝑎𝑎𝑠𝑠
+Signal saturation threshold in an op-amp
+or in-amp depends on the voltage supply
+and if the in-amp or op-amp can operate
+with signal amplitudes equal to the
+voltage supply or if it has rail margins.
+For a given component, the saturation
+voltage can be found in the data sheet.
+If we know the amplitude of the common
+mode signal and the differential signal,
+we can calculate the maximum gain we
+can achieve without saturating internal
+nodes.
+Example: LM358 op-amp.
+𝑉𝑉𝑠𝑠𝑎𝑎𝑠𝑠 	< 	𝑉𝑉𝐶𝐶𝐶𝐶 	− 	𝑉𝑉𝑟𝑟𝑎𝑎𝑟𝑟𝑟𝑟−𝑐𝑐𝑎𝑎𝑟𝑟𝑚𝑚𝑟𝑟𝑛𝑛
+𝑉𝑉𝑠𝑠𝑎𝑎𝑠𝑠 < 5V − 1.5V = 3.5V
+−3.5V < 𝑉𝑉𝐴𝐴, 𝑉𝑉𝐵𝐵 < 3.5V
+
+-- 31 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+3 op-amp model of instrumentation amplifier
+𝑉𝑉𝐴𝐴 = 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+2 𝑉𝑉𝐵𝐵 = 𝑉𝑉𝑐𝑐𝑐𝑐 − 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝑜𝑜 = 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+2 − 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+2
+𝑉𝑉𝑜𝑜 = 𝐺𝐺 ⋅ 𝑉𝑉𝑑𝑑
+Output of non-saturated in-amp:
+Taking the difference, the
+common mode signal is
+subtracted.
+Observation:
+An ideal instrumentation amplifier
+• 	amplifies the differential signal
+• 	cancels completely the common mode signal.
+𝑉𝑉𝑜𝑜 = 𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎
+𝑉𝑉𝐴𝐴 − 𝑉𝑉𝐵𝐵
+𝑅𝑅3𝑎𝑎 = 𝑅𝑅3𝑏𝑏 = 𝑅𝑅4𝑎𝑎 = 𝑅𝑅4𝑏𝑏 ⇒ 	𝑉𝑉𝑜𝑜 = 	𝑉𝑉𝐴𝐴 − 𝑉𝑉𝐵𝐵
+32
+
+-- 32 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝑉𝑉𝑜𝑜 = 𝑅𝑅3𝑏𝑏 + 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎 + 𝑅𝑅4𝑎𝑎
+𝑉𝑉𝐴𝐴 − 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝐴𝐴 = 	1 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1 − 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2
+𝑉𝑉𝐵𝐵 = 	1 + 𝑅𝑅2𝑏𝑏
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2 − 𝑅𝑅2𝑏𝑏
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1
+We derived earlier:
+-
++
+Amplifier ground+
++
+-
+-
+𝑉𝑉2
+𝑅𝑅1𝑏𝑏
+𝑅𝑅1𝑎𝑎
+𝑉𝑉1 	𝑉𝑉𝐴𝐴
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝑏𝑏
+𝑉𝑉𝑎𝑎 𝑉𝑉𝑜𝑜
+𝑅𝑅2𝑏𝑏
+𝑅𝑅2𝑎𝑎
+𝑅𝑅3𝑏𝑏
+𝑅𝑅3𝑎𝑎
+𝑅𝑅4𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑉𝑉2
+𝑉𝑉1
+𝑈𝑈𝑅𝑈𝑈
+𝑈𝑈𝑅𝑈𝑈
+𝑈𝑈2
+𝑅𝑅3𝑎𝑎 = 𝑅𝑅3𝑏𝑏 = 𝑅𝑅4𝑎𝑎
+𝑅𝑅4𝑏𝑏 = 𝛼𝛼𝑅𝑅4𝑎𝑎
+𝑅𝑅2𝑏𝑏 = 𝛽𝛽𝑅𝑅2𝑎𝑎
+We now permit imbalance
+between certain internal
+resistors:
+33
+
+-- 33 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉1 − 𝑉𝑉2
+𝑉𝑉1 = 𝑉𝑉2 = 𝑉𝑉𝑐𝑐𝑐𝑐 ⇒
+𝑉𝑉𝑜𝑜𝑐𝑐 = 1 − 𝛼𝛼
+2 𝑉𝑉𝑐𝑐𝑐𝑐
+𝑉𝑉𝑜𝑜𝑐𝑐 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉𝑐𝑐𝑐𝑐 − 𝛼𝛼 ⋅ 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉𝑐𝑐𝑐𝑐 − 𝑉𝑉𝑐𝑐𝑐𝑐
+𝐺𝐺𝑐𝑐 = 𝑉𝑉𝑜𝑜𝑐𝑐
+𝑉𝑉𝑐𝑐𝑐𝑐
+= 1 − 𝛼𝛼
+2
+𝑉𝑉1 = −𝑉𝑉2 = 𝑉𝑉𝑑𝑑
+2 ⇒ 	𝑉𝑉𝑜𝑜𝑑𝑑 = 1 + 3𝛼𝛼
+4 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉𝑑𝑑
+It is shown in an appendix that:
+Output from
+common mode
+signal:
+Output from
+differential
+signal:
+Observation:
+If we were to build an in-amp using three op-amps, we would be challenged to obtain perfect
+match of resistors. The result is a poor rejection of common mode signals. Although much
+pricier than three op-amps, a monolithic in-amp is a far better option.
+34
+
+-- 34 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+The INA121 Instrumentation amplifier
+-
++
+Amplifier ground+
++
+-
+-
+𝑉𝑉2
+𝑉𝑉𝐶𝐶
+𝑉𝑉1 	𝑉𝑉𝐴𝐴
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝑏𝑏
+𝑉𝑉𝑎𝑎 𝑉𝑉𝑜𝑜
+25kΩ
+25kΩ
+40𝑘𝑘Ω
+𝑉𝑉2
+𝑉𝑉1
+40kΩ
+40kΩ
+40kΩ
+𝑅𝑅𝐺𝐺
+1
+8
+2
+3
+5
+6
+𝑉𝑉𝑜𝑜 = 𝑅𝑅4
+𝑅𝑅3
+1 + 2𝑅𝑅2
+𝑅𝑅𝐺𝐺
+(𝑉𝑉1 − 𝑉𝑉2)
+𝑉𝑉𝑜𝑜 = 40kΩ
+40kΩ 1 + 2 ⋅ 25kΩ
+𝑅𝑅𝐺𝐺
+(𝑉𝑉1 − 𝑉𝑉2)
+𝑉𝑉𝑜𝑜 = 	1 + 50kΩ
+𝑅𝑅𝐺𝐺
+(𝑉𝑉1 − 𝑉𝑉2)
+𝐺𝐺 = 1 + 50kΩ
+𝑅𝑅𝐺𝐺
+Gain
+𝑅𝑅𝐺𝐺 = 50kΩ
+𝐺𝐺 − 1
+Gain resistor
+INA121
+35
+
+-- 35 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+The INA121 Instrumentation amplifier
+INA121
+𝑅𝑅𝐺𝐺 = 50kΩ
+𝐺𝐺 − 1
+Gain resistor
+Many other instrumentation
+amplifier share the same pin
+layout, and it is therefore straight
+forward to replace an in-amp of
+one type with one of another
+type.
+The expression for gain will vary
+from one in-amp to another.
+Do not mistake an in-amp for an
+op-amp. They look the same.
+36
+
+-- 36 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Next topic
+Instrumentation
+amplifier
+Common mode rejection ratio
+Video
+37
+
+-- 37 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Common mode rejection ratio
++
+−
+𝑉𝑉𝐶𝐶
+𝑉𝑉𝑜𝑜
+𝑔𝑔𝑛𝑛𝑔𝑔
+𝐸𝐸1
+𝐸𝐸2
++
++	+
+Ideal DC
+in-amp	𝑉𝑉𝑠𝑠
+2
+𝑉𝑉𝑠𝑠
+2
+𝑉𝑉1
+𝑉𝑉2
+To the right, a combination of sources are now
+feeding signals to an in-amp. We would like to
+set up equations to determine the output signal.
+𝑉𝑉𝐶𝐶 	is common mode signal. It can be either a DC
+or AC signal. A typical common model signal is
+50Hz noise from power lines.
+The differential sources 𝑉𝑉𝑠𝑠 and 𝐸𝐸1, 𝐸𝐸2 have been
+split into separate AC and DC sources.
+𝑉𝑉1 = 𝑉𝑉𝐶𝐶 + 𝑉𝑉𝑠𝑠
+2 + 𝐸𝐸1 	𝑉𝑉2 = 𝑉𝑉𝐶𝐶 − 𝑉𝑉𝑠𝑠
+2 + 𝐸𝐸2
+𝑉𝑉𝑑𝑑 = 𝑉𝑉1 − 𝑉𝑉2 = 𝑉𝑉𝑠𝑠 + 𝐸𝐸1 − 𝐸𝐸2
+𝑉𝑉𝑜𝑜 = 𝐺𝐺𝑑𝑑 ⋅ 𝑉𝑉𝑠𝑠 + 𝐺𝐺𝑑𝑑 ⋅ (𝐸𝐸1 − 𝐸𝐸2)
+If we assume an ideal in-amp with differential
+gain 𝐺𝐺𝑑𝑑, then output will be:
+38
+𝑉𝑉𝑐𝑐𝑐𝑐 = 𝑉𝑉1 + 𝑉𝑉2
+2 = 𝑉𝑉𝐶𝐶 + 𝐸𝐸1 + 𝐸𝐸2
+2
+
+-- 38 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Common mode rejection ratio
+Now we will assume that the in-amp is non-
+ideal. This implies that some small common
+mode signal will be present at the output.
++
+−
+𝑉𝑉𝐶𝐶
+𝑉𝑉𝑜𝑜
+𝑔𝑔𝑛𝑛𝑔𝑔
+𝐸𝐸1
+𝐸𝐸2
++
++	+
+Non-ideal AC
+in-amp	𝑉𝑉𝑠𝑠
+2
+𝑉𝑉𝑠𝑠
+2
+𝑉𝑉1
+𝑉𝑉2
+𝑉𝑉1 = 𝑉𝑉𝐶𝐶 + 𝑉𝑉𝑠𝑠
+2 + 𝐸𝐸1 	𝑉𝑉2 = 𝑉𝑉𝐶𝐶 − 𝑉𝑉𝑠𝑠
+2 + 𝐸𝐸2
+𝑉𝑉𝑑𝑑 = 𝑉𝑉1 − 𝑉𝑉2 = 𝑉𝑉𝑠𝑠 + 𝐸𝐸1 − 𝐸𝐸2
+For a high-performance in-amp, 𝐺𝐺𝑑𝑑 will be large
+(𝐺𝐺𝑑𝑑 ≫ 1), and 𝐺𝐺𝑐𝑐 	will be very small (𝐺𝐺𝑐𝑐 ≪ 1).
+𝑉𝑉𝑜𝑜 = 𝐺𝐺𝑑𝑑 ⋅ 𝑉𝑉𝑟𝑟𝑑𝑑
+𝑉𝑉 𝑜𝑜𝑑𝑑
++ 𝐺𝐺𝑐𝑐 ⋅ 𝑉𝑉𝑐𝑐𝑐𝑐
+𝑉𝑉𝑜𝑜𝑜𝑜
+𝑉𝑉𝑜𝑜 = 𝐺𝐺𝑑𝑑 ⋅ 𝑉𝑉𝑑𝑑
+𝑉𝑉 𝑜𝑜𝑑𝑑
++ 𝐺𝐺𝑐𝑐 ⋅ 𝑉𝑉𝑐𝑐𝑐𝑐
+𝑉𝑉𝑜𝑜𝑜𝑜
+𝐺𝐺𝑑𝑑 ≝ 𝑉𝑉𝑜𝑜𝑑𝑑
+𝑉𝑉𝑑𝑑
+𝐺𝐺𝑐𝑐 ≝ 𝑉𝑉𝑜𝑜𝑐𝑐
+𝑉𝑉𝑐𝑐𝑐𝑐
+Differential mode gain
+Common mode gain
+𝑉𝑉𝑐𝑐𝑐𝑐 = 𝑉𝑉1 + 𝑉𝑉2
+2 = 𝑉𝑉𝑐𝑐 + 𝐸𝐸1 + 𝐸𝐸2
+2
+39
+𝐺𝐺𝑐𝑐 	is not designed, it is a consequence of a design.
+We can only measure it.
+
+-- 39 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Common mode rejection ratio
+𝑉𝑉𝑜𝑜 = 𝐺𝐺𝑑𝑑 ⋅ 𝑉𝑉𝑑𝑑
+𝑉𝑉 𝑜𝑜𝑑𝑑
++ 𝐺𝐺𝑐𝑐 ⋅ 𝑉𝑉𝑐𝑐𝑐𝑐
+𝑉𝑉𝑜𝑜𝑜𝑜
+𝐺𝐺𝑑𝑑 ≝ 𝑉𝑉𝑜𝑜𝑑𝑑
+𝑉𝑉𝑑𝑑
+𝐺𝐺𝑐𝑐 ≝ 𝑉𝑉𝑜𝑜𝑐𝑐
+𝑉𝑉𝑐𝑐𝑐𝑐
+A numerical measure of how
+well an in-amp rejects common
+mode signal is referred to as
+the common mode rejection
+ratio, CMRR.
+𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅𝑑𝑑𝐵𝐵 ≝ 20 log 𝐺𝐺𝑑𝑑
+𝐺𝐺𝑐𝑐
+If is often presented in
+decibel:
+𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅 ≝ 𝐺𝐺𝑑𝑑
+𝐺𝐺𝑐𝑐
+𝑉𝑉𝑜𝑜 = 𝐺𝐺𝑑𝑑 ⋅ 𝑉𝑉𝑑𝑑
+𝑉𝑉 𝑜𝑜𝑑𝑑
++ 𝐺𝐺𝑑𝑑
+𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅 ⋅ 𝑉𝑉𝑐𝑐𝑐𝑐
+𝑉𝑉𝑜𝑜𝑜𝑜
+40
++
+−
+𝑉𝑉𝐶𝐶
+𝑉𝑉𝑜𝑜
+𝑔𝑔𝑛𝑛𝑔𝑔
+𝐸𝐸1
+𝐸𝐸2
++
++	+
+Non-ideal AC
+in-amp	𝑉𝑉𝑠𝑠
+2
+𝑉𝑉𝑠𝑠
+2
+𝑉𝑉1
+𝑉𝑉2
+𝑉𝑉𝑐𝑐𝑐𝑐 = 𝑉𝑉1 + 𝑉𝑉2
+2 = 𝑉𝑉𝐶𝐶 + 𝐸𝐸1 + 𝐸𝐸2
+2
+The common mode input signal can be a summation of
+many sources. F. ex:
+𝐸𝐸1, 𝐸𝐸2: sensor offset voltages
+𝑉𝑉𝐶𝐶 : Electrical interference radiating into sensor cables.
+
+-- 40 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Common mode rejection ratio
+Example:
+𝑉𝑉𝑑𝑑 = 5mV
+𝑉𝑉𝑐𝑐𝑐𝑐 = 500mV
+Calculate 𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅
+𝑉𝑉𝑜𝑜 = 𝐺𝐺𝑑𝑑 ⋅ 𝑉𝑉𝑑𝑑
+𝑉𝑉 𝑜𝑜𝑑𝑑
++ 𝐺𝐺𝑐𝑐 ⋅ 𝑉𝑉𝑐𝑐𝑐𝑐
+𝑉𝑉𝑜𝑜𝑜𝑜
+𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅 = 𝐺𝐺𝑑𝑑
+𝐺𝐺𝑐𝑐
+= 1000
+0.1 = 104 = 80dB
+𝐺𝐺𝑑𝑑 =
+The CMRR is typically determined by first
+determining 𝐺𝐺𝑑𝑑 	and 𝐺𝐺𝑐𝑐 	experimentally.
+From this we get: 𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅 = 𝐺𝐺𝑑𝑑/𝐺𝐺𝑐𝑐
+𝑉𝑉𝑜𝑜𝑐𝑐 = 50mV
+𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅 ≝ 𝐺𝐺𝑑𝑑
+𝐺𝐺𝑐𝑐
+𝐺𝐺𝑐𝑐 =
+𝑉𝑉𝑜𝑜𝑑𝑑 = 5V
+5V
+5mV = 1000
+𝑉𝑉𝑜𝑜𝑑𝑑
+𝑉𝑉𝑑𝑑
+=
+𝑉𝑉𝑜𝑜𝑐𝑐
+𝑉𝑉𝑐𝑐𝑐𝑐
+= 50mV
+500mV = 0.1
+41
++
+−
+𝑉𝑉𝐶𝐶
+𝑉𝑉𝑜𝑜
+𝑔𝑔𝑛𝑛𝑔𝑔
+𝐸𝐸1
+𝐸𝐸2
++
++	+
+Non-ideal AC
+in-amp	𝑉𝑉𝑠𝑠
+2
+𝑉𝑉𝑠𝑠
+2
+𝑉𝑉1
+𝑉𝑉2
+
+-- 41 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Common mode rejection ratio and signal-to-noise ratio (SNR)
+Example continued:
+𝑉𝑉𝑑𝑑
+𝑉𝑉𝑐𝑐𝑐𝑐
+=
+𝑉𝑉𝑜𝑜𝑑𝑑
+𝑉𝑉𝑜𝑜𝑐𝑐
+=
+𝑉𝑉𝑜𝑜𝑑𝑑
+𝑉𝑉𝑜𝑜𝑐𝑐 𝑑𝑑𝐵𝐵
+= 𝑉𝑉𝑑𝑑
+𝑉𝑉𝑐𝑐𝑐𝑐 𝑑𝑑𝐵𝐵
++ 𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅𝑑𝑑𝐵𝐵
+Observation:
+The CMRR is the improvement in SNR
+from input to output.
+Input SNR
+Output SNR
+5mV
+500mV = 10−2 ~ − 40dB
+5V
+0.05V = 102 ~ 40dB
+𝑉𝑉𝑑𝑑 = 5mV
+𝑉𝑉𝑐𝑐𝑐𝑐 = 500mV 	𝑉𝑉𝑜𝑜𝑐𝑐 = 50mV
+𝑉𝑉𝑜𝑜𝑑𝑑 = 5V
+What is the improvement in SNR?
+42
++
+−
+𝑉𝑉𝐶𝐶
+𝑉𝑉𝑜𝑜
+𝑔𝑔𝑛𝑛𝑔𝑔
+𝐸𝐸1
+𝐸𝐸2
++
++	+
+Non-ideal AC
+in-amp	𝑉𝑉𝑠𝑠
+2
+𝑉𝑉𝑠𝑠
+2
+𝑉𝑉1
+𝑉𝑉2
+
+-- 42 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+AC performance
+Source model 	HP filter 	In-amp
+This circuit model includes a
+source model and an AC-
+coupled in-amp.
+The source model has the
+following sources:
+𝑉𝑉𝐶𝐶−𝐴𝐴𝐶𝐶1 : AC common mode
+𝑉𝑉𝐶𝐶−𝐷𝐷𝐶𝐶1 	: DC common mode
+𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶(1,2): AC differential sources
+𝑉𝑉𝐷𝐷−𝐷𝐷𝐶𝐶(1,2): DC differential sources
+43
+Differential high-pass
+filter is described in an
+appendix.
+
+-- 43 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+AC sweep of differential signal
+In this AC sweep the two AC
+differential sources had an
+amplitude of 0.5V each. The
+DC differential sources and
+the common mode sources
+had an amplitude of 0V.
+The differential gain
+𝐺𝐺𝑑𝑑~1000.
+The red curve is the output
+from the in-amp.
+Observations:
+The output signal is 60dB (1000) larger
+than the input signal.
+44
+
+-- 44 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+AC sweep of common mode signal
+Here is shown the output
+when only a 1V
+common mode signal
+is present on the input.
+At 50Hz, the common
+mode signal is attenuated
+at least 45.6dB.
+𝐺𝐺𝑐𝑐 = 0.00525
+The differential gain
+𝐺𝐺𝑑𝑑 = 1000.
+The CMRR is: 	𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅 = 𝐺𝐺𝑑𝑑
+𝐺𝐺𝑐𝑐
+= 1000
+0.00525 = 1.90 × 105 = 105.6dB = 60dB − (−45.6dB)
+45
+
+-- 45 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem set
+Problems
+46
+
+-- 46 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 1 – EMG high-pass filter
+Documentation:
+• 	Draw the amplitude and phase spectra in
+Maple/Python for the frequency-normalized filter as
+well as for the final design.
+𝑅𝑅2
+𝑅𝑅1
+Design a Butterworth high-pass filter with the following
+specifications:
+𝐺𝐺∞ = 0dB
+𝜔𝜔𝑐𝑐 = 𝜔𝜔𝑝𝑝 = 2𝜋𝜋 ⋅ 2Hz
+𝐺𝐺𝑝𝑝 = −3dB
+𝜔𝜔𝑠𝑠 = 2𝜋𝜋 ⋅ 0.02Hz
+𝐺𝐺𝑠𝑠 = −60dB
+Design constraints:
+• 	Use a Sallen-Key circuit of lowest possible order.
+• 	The filter should be very insensitive to component drift.
+• 	Use resistors from the E12 series and capacitors from the
+E6 series as much as possible, but not at all costs. Hint: Do not start from
+scratch. Start with the
+frequency-normalized HP
+filter designed in the
+lecture and scale it to the
+design-specifications.
+47
+�	𝑅𝑅1 ≈ 0.68Ω
+�	𝑅𝑅2 ≈ 0.33Ω
+̂
+𝐶𝐶 ≈ 2.2𝐹𝐹
+
+-- 47 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+48
+Source model 	HP filter 	3-op-amp model of in-amp
+In this problem you will explore the AC and DC signals in an AC-coupled in-amp.
+Sources are split in AC/DC and differential/common mode.
+
+-- 48 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+49
+Do an operating point simulation to obtain DC voltages in different nodal points.
+Part 1
+
+-- 49 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+50
+Run a transient
+simulation.
+Plot signals in
+nodes:
+A1, B1, A2, B2.
+Explain the signals
+making use of the DC
+operating voltages found
+earlier.
+Part 2
+
+-- 50 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+51
+Run a transient
+simulation.
+Plot signals in
+nodes:
+C1.
+Explain the signal making
+use of the DC operating
+voltages found earlier.
+Part 3
+
+-- 51 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+52
+Run a transient
+simulation.
+Create and plot two
+new differential
+signals:
+A1 – B1
+A2 – B2
+Explain the signals
+making use of the DC
+operating voltages found
+earlier.
+Part 4
+
+-- 52 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+53
+Run a transient
+simulation.
+Plot the output signal
+of the in-amp.
+Explain the signals
+making use of the DC
+operating voltages found
+earlier.
+Part 5
+
+-- 53 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+54
+Run an AC sweep
+simulation using VD-
+AC1 and VD-AC2.
+Plot the amplitude
+spectra of the output
+signals of the in-amp
+output and filter.
+Part 6
+
+-- 54 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+55
+Run a common
+mode AC sweep
+simulation using VC-
+AC1.
+Plot the amplitude
+spectra of the output
+signals of the in-amp
+output and filter.
+Part 7
+
+-- 55 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+56
+Using the differential
+and common mode
+AC sweeps, calculate
+the CMRR.
+Part 8
+
+-- 56 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Imbalanced In-amp
+57
+Change R14 to 11k.
+Run a new common
+mode AC sweep
+simulation using VC-
+AC1.
+Plot the amplitude
+spectra of the output
+signals of the in-amp
+output and filter.
+Part 9
+
+-- 57 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem set
+Solutions
+58
+
+-- 58 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 1 – EMG high-pass filter 𝑅𝑅2
+𝑅𝑅1
+Documentation:
+• 	Draw the amplitude and phase spectra in
+Maple/Python for the frequency-normalized filter as
+well as for the final design.
+Design a Butterworth high-pass filter with the following
+specifications:
+𝐺𝐺∞ = 0dB
+𝜔𝜔𝑐𝑐 = 𝜔𝜔𝑝𝑝 = 2𝜋𝜋 ⋅ 2Hz
+𝐺𝐺𝑝𝑝 = −3dB
+𝜔𝜔𝑠𝑠 = 2𝜋𝜋 ⋅ 0.02Hz
+𝐺𝐺𝑠𝑠 = −60dB
+Design constraints:
+• 	Use a Sallen-Key circuit of lowest possible order.
+• 	The filter should be very insensitive to component drift.
+• 	Use resistors from the E12 series and capacitors from the
+E6 series as much as possible, but not at all costs.
+59
+Hint: Do not start from
+scratch. Start with the
+frequency-normalized HP
+filter designed in the
+lecture and scale it to the
+design-specifications.
+�	𝑅𝑅1 ≈ 0.68Ω
+�	𝑅𝑅2 ≈ 0.33Ω
+̂
+𝐶𝐶 ≈ 2.2𝐹𝐹
+
+-- 59 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 1 – EMG high-pass filter
+Determination of filter order:
+𝐺𝐺∞ = 0dB
+𝜔𝜔𝑐𝑐 = 𝜔𝜔𝑝𝑝 = 2𝜋𝜋 ⋅ 2Hz
+𝐺𝐺𝑝𝑝 = −3dB
+𝜔𝜔𝑠𝑠 = 2𝜋𝜋 ⋅ 0.02Hz
+𝐺𝐺𝑠𝑠 = −60dB
+𝜔𝜔𝑠𝑠 𝜔𝜔𝑝𝑝
+𝐺𝐺𝑠𝑠
+𝐺𝐺𝑝𝑝
+𝜔𝜔
+𝐻𝐻 𝜔𝜔
+𝑛𝑛𝐻𝐻𝐿𝐿 = 1
+2log10 	𝜔𝜔 𝑝𝑝,𝐻𝐻𝐿𝐿/𝜔𝜔 𝑠𝑠,𝐻𝐻𝐿𝐿
+log10
+10− 𝐺𝐺𝑠𝑠,𝑑𝑑𝑑𝑑
+10 	− 1
+10− 𝐺𝐺𝑝𝑝,𝑑𝑑𝑑𝑑
+10 	− 1
+𝑛𝑛𝐻𝐻𝐿𝐿 = 1
+2log10 2/0.02 log10
+10− −60
+10 	− 1
+10− −3
+10 − 1
+= 1.5
+We need a 2 nd order filter.
+60
+
+-- 60 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 1 – EMG high-pass filter (sol)
+The low-frequency asymptote has a slope of +40dB/decade, the cut-off is at 1 rad/s and the phase is 90
+degrees at the cut-off. So, it looks promising.
+For the frequency-normalized filter
+Several pairs of component values were
+considered in the lecture slides. Here I
+have used:
+�	𝑅𝑅1 ≈ 0.68Ω
+�	𝑅𝑅2 ≈ 0.33Ω
+̂
+𝐶𝐶 ≈ 2.2𝐹𝐹
+61
+
+-- 61 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 1 – EMG high-pass filter (sol)
+Frequency scaling
+𝐾𝐾𝐹𝐹 = 2𝜋𝜋 ⋅ 2 = 12.5663
+𝐶𝐶1
+′ =̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹
+= 2.2F
+12.5663 = 175mF
+𝐶𝐶2
+′ =̂ 𝐶𝐶1
+𝐾𝐾𝐹𝐹
+= 175mF
+𝑅𝑅1
+′ = 	�	𝑅𝑅1 = 0.68Ω
+𝑅𝑅2
+′ = 	�	𝑅𝑅2 = 0.33Ω
+𝜏𝜏1 = 𝑅𝑅1
+′ 𝐶𝐶1
+′ = 0.119s
+𝜏𝜏 2 = 𝑅𝑅2
+′ 𝐶𝐶2
+′ = 0.05775s
+Looking up the best component values in the time constant look-up table
+on the next slide, we find that a capacitor value of 1μF will work well.
+A value of 1.2μF would also work well, but it
+belongs to the E12 series.
+62
+
+-- 62 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+2nd order Sallen-Key high pass filter - Butterworth
+R1*C1 	0,1 	0,12 	0,15 	0,18 	0,22 	0,27 	0,33 	0,39 	0,47 	0,56 	0,68 	0,82 	1 	1,2 	1,5 	1,8 	2,2 	2,7 	3,3 	3,9 	4,7 	5,6 	6,8 	8,2 	10
+0,1 	0,010 	0,012 	0,015 	0,018 	0,022 	0,027 	0,033 	0,039 	0,047 	0,056 	0,068 	0,082 	0,100 	0,120 	0,150 	0,180 	0,220 	0,270 	0,330 	0,390 	0,470 	0,560 	0,680 	0,820 	1,000
+0,12 	0,012 	0,014 	0,018 	0,022 	0,026 	0,032 	0,040 	0,047 	0,056 	0,067 	0,082 	0,098 	0,120 	0,144 	0,180 	0,216 	0,264 	0,324 	0,396 	0,468 	0,564 	0,672 	0,816 	0,984 	1,200
+0,15 	0,015 	0,018 	0,023 	0,027 	0,033 	0,041 	0,050 	0,059 	0,071 	0,084 	0,102 	0,123 	0,150 	0,180 	0,225 	0,270 	0,330 	0,405 	0,495 	0,585 	0,705 	0,840 	1,020 	1,230 	1,500
+0,18 	0,018 	0,022 	0,027 	0,032 	0,040 	0,049 	0,059 	0,070 	0,085 	0,101 	0,122 	0,148 	0,180 	0,216 	0,270 	0,324 	0,396 	0,486 	0,594 	0,702 	0,846 	1,008 	1,224 	1,476 	1,800
+0,22 	0,022 	0,026 	0,033 	0,040 	0,048 	0,059 	0,073 	0,086 	0,103 	0,123 	0,150 	0,180 	0,220 	0,264 	0,330 	0,396 	0,484 	0,594 	0,726 	0,858 	1,034 	1,232 	1,496 	1,804 	2,200
+0,27 	0,027 	0,032 	0,041 	0,049 	0,059 	0,073 	0,089 	0,105 	0,127 	0,151 	0,184 	0,221 	0,270 	0,324 	0,405 	0,486 	0,594 	0,729 	0,891 	1,053 	1,269 	1,512 	1,836 	2,214 	2,700
+0,33 	0,033 	0,040 	0,050 	0,059 	0,073 	0,089 	0,109 	0,129 	0,155 	0,185 	0,224 	0,271 	0,330 	0,396 	0,495 	0,594 	0,726 	0,891 	1,089 	1,287 	1,551 	1,848 	2,244 	2,706 	3,300
+0,39 	0,039 	0,047 	0,059 	0,070 	0,086 	0,105 	0,129 	0,152 	0,183 	0,218 	0,265 	0,320 	0,390 	0,468 	0,585 	0,702 	0,858 	1,053 	1,287 	1,521 	1,833 	2,184 	2,652 	3,198 	3,900
+0,47 	0,047 	0,056 	0,071 	0,085 	0,103 	0,127 	0,155 	0,183 	0,221 	0,263 	0,320 	0,385 	0,470 	0,564 	0,705 	0,846 	1,034 	1,269 	1,551 	1,833 	2,209 	2,632 	3,196 	3,854 	4,700
+0,56 	0,056 	0,067 	0,084 	0,101 	0,123 	0,151 	0,185 	0,218 	0,263 	0,314 	0,381 	0,459 	0,560 	0,672 	0,840 	1,008 	1,232 	1,512 	1,848 	2,184 	2,632 	3,136 	3,808 	4,592 	5,600
+0,68 	0,068 	0,082 	0,102 	0,122 	0,150 	0,184 	0,224 	0,265 	0,320 	0,381 	0,462 	0,558 	0,680 	0,816 	1,020 	1,224 	1,496 	1,836 	2,244 	2,652 	3,196 	3,808 	4,624 	5,576 	6,800
+0,82 	0,082 	0,098 	0,123 	0,148 	0,180 	0,221 	0,271 	0,320 	0,385 	0,459 	0,558 	0,672 	0,820 	0,984 	1,230 	1,476 	1,804 	2,214 	2,706 	3,198 	3,854 	4,592 	5,576 	6,724 	8,200
+1 	0,100 	0,120 	0,150 	0,180 	0,220 	0,270 	0,330 	0,390 	0,470 	0,560 	0,680 	0,820 	1,000 	1,200 	1,500 	1,800 	2,200 	2,700 	3,300 	3,900 	4,700 	5,600 	6,800 	8,200 	10,000
+1,2 	0,120 	0,144 	0,180 	0,216 	0,264 	0,324 	0,396 	0,468 	0,564 	0,672 	0,816 	0,984 	1,200 	1,440 	1,800 	2,160 	2,640 	3,240 	3,960 	4,680 	5,640 	6,720 	8,160 	9,840 	12,000
+1,5 	0,150 	0,180 	0,225 	0,270 	0,330 	0,405 	0,495 	0,585 	0,705 	0,840 	1,020 	1,230 	1,500 	1,800 	2,250 	2,700 	3,300 	4,050 	4,950 	5,850 	7,050 	8,400 	10,200 	12,300 	15,000
+1,8 	0,180 	0,216 	0,270 	0,324 	0,396 	0,486 	0,594 	0,702 	0,846 	1,008 	1,224 	1,476 	1,800 	2,160 	2,700 	3,240 	3,960 	4,860 	5,940 	7,020 	8,460 	10,080 	12,240 	14,760 	18,000
+2,2 	0,220 	0,264 	0,330 	0,396 	0,484 	0,594 	0,726 	0,858 	1,034 	1,232 	1,496 	1,804 	2,200 	2,640 	3,300 	3,960 	4,840 	5,940 	7,260 	8,580 	10,340 	12,320 	14,960 	18,040 	22,000
+2,7 	0,270 	0,324 	0,405 	0,486 	0,594 	0,729 	0,891 	1,053 	1,269 	1,512 	1,836 	2,214 	2,700 	3,240 	4,050 	4,860 	5,940 	7,290 	8,910 	10,530 	12,690 	15,120 	18,360 	22,140 	27,000
+3,3 	0,330 	0,396 	0,495 	0,594 	0,726 	0,891 	1,089 	1,287 	1,551 	1,848 	2,244 	2,706 	3,300 	3,960 	4,950 	5,940 	7,260 	8,910 	10,890 	12,870 	15,510 	18,480 	22,440 	27,060 	33,000
+3,9 	0,390 	0,468 	0,585 	0,702 	0,858 	1,053 	1,287 	1,521 	1,833 	2,184 	2,652 	3,198 	3,900 	4,680 	5,850 	7,020 	8,580 	10,530 	12,870 	15,210 	18,330 	21,840 	26,520 	31,980 	39,000
+4,7 	0,470 	0,564 	0,705 	0,846 	1,034 	1,269 	1,551 	1,833 	2,209 	2,632 	3,196 	3,854 	4,700 	5,640 	7,050 	8,460 	10,340 	12,690 	15,510 	18,330 	22,090 	26,320 	31,960 	38,540 	47,000
+5,6 	0,560 	0,672 	0,840 	1,008 	1,232 	1,512 	1,848 	2,184 	2,632 	3,136 	3,808 	4,592 	5,600 	6,720 	8,400 	10,080 	12,320 	15,120 	18,480 	21,840 	26,320 	31,360 	38,080 	45,920 	56,000
+6,8 	0,680 	0,816 	1,020 	1,224 	1,496 	1,836 	2,244 	2,652 	3,196 	3,808 	4,624 	5,576 	6,800 	8,160 	10,200 	12,240 	14,960 	18,360 	22,440 	26,520 	31,960 	38,080 	46,240 	55,760 	68,000
+8,2 	0,820 	0,984 	1,230 	1,476 	1,804 	2,214 	2,706 	3,198 	3,854 	4,592 	5,576 	6,724 	8,200 	9,840 	12,300 	14,760 	18,040 	22,140 	27,060 	31,980 	38,540 	45,920 	55,760 	67,240 	82,000
+10 	1,000 	1,200 	1,500 	1,800 	2,200 	2,700 	3,300 	3,900 	4,700 	5,600 	6,800 	8,200 	10,000 	12,000 	15,000 	18,000 	22,000 	27,000 	33,000 	39,000 	47,000 	56,000 	68,000 	82,000 	100,00
+𝜏𝜏1 = 𝑅𝑅1 𝐶𝐶 = 0.𝑅𝑅9𝑠𝑠
+𝜏𝜏 2 = 𝑅𝑅2𝐶𝐶 = 0.05775𝑠𝑠
+E6 	E6	E12 	E12
+63
+
+-- 63 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 1 – EMG high-pass filter (sol)
+Impedance scaling:
+𝐾𝐾𝑧𝑧 = 𝐶𝐶1
+′
+1 ⋅ 10−6F = 175mF
+1 ⋅ 10−6F = 175000
+𝐶𝐶1 = 𝐶𝐶2 = 𝑅𝜇𝜇𝐹𝐹
+𝑅𝑅1 = 𝐾𝐾𝑧𝑧 ⋅ 0.68Ω = 119.0kΩ ≈ 𝑅20kΩ
+𝑅𝑅2 = 𝐾𝐾𝑧𝑧 ⋅ 0.33Ω = 57.77kΩ ≈ 56kΩ
++
+− 	+
+𝑌𝑌 𝜔𝜔
+−
+𝑋𝑋 𝜔𝜔
+𝐶𝐶2
+𝑅𝑅2
+𝑅𝑅1
+𝐶𝐶1
+𝑉𝑉𝑎𝑎 	𝑉𝑉𝑏𝑏
+120kΩ
+1μF 	1μF
+56kΩ
+chosen capacitor value
+64
+
+-- 64 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 1 – EMG high-pass filter (sol)
+Design a Butterworth high-pass filter with the
+following specifications:
+𝐺𝐺∞ = 0dB
+𝜔𝜔𝑐𝑐 = 𝜔𝜔𝑝𝑝 = 2𝜋𝜋 ⋅ 2Hz
+𝐺𝐺𝑝𝑝 = −3dB
+𝜔𝜔𝑠𝑠 = 2𝜋𝜋 ⋅ 0.02Hz
+𝐺𝐺𝑠𝑠 = −60dB
+Validation:
+65
+
+-- 65 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 1 – EMG high-pass filter (sol)
+𝑅𝑅2
+𝑅𝑅1
+66
+
+-- 66 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+67
+Source model 	HP filter 	3-op-amp model of in-amp
+In this problem you will explore the AC and DC signals in an AC-coupled in-amp.
+Sources are split in AC/DC and differential/common mode.
+
+-- 67 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+68
+Do an operating point simulation to obtain DC voltages in different nodal points.
+Part 1
+
+-- 68 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2(sol)
+69
+DC operating voltages.
+𝑉𝑉𝐶𝐶1 is the average of 𝑉𝑉𝐴𝐴 1 and 𝑉𝑉𝐵𝐵1 . The highpass filter is a differential highpass filter. It blocks a
+differential DC signal. It does not block common mode DC signals.
+Unless the in-amp is saturated, it will attenuate both AC and DC common mode signals.
+The output DC signal is likely due to bias currents in op-amps.
+
+-- 69 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+70
+Run a transient
+simulation.
+Plot signals in
+nodes:
+A1, B1, A2, B2.
+Explain the signals
+making use of the DC
+operating voltages found
+earlier.
+Part 2
+
+-- 70 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 (sol)
+71
+𝑉𝑉𝐴𝐴 1 = 40mV + 𝑉𝑉𝐶𝐶−𝐴𝐴𝐶𝐶1 + 𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶1
+𝑉𝑉𝐴𝐴 2 = 10mV + 𝑉𝑉𝐶𝐶−𝐴𝐴𝐶𝐶1 + 𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶1
+𝑉𝑉𝐵𝐵1 = −20mV + 𝑉𝑉𝐶𝐶−𝐴𝐴𝐶𝐶1 − 𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶2
+𝑉𝑉𝐵𝐵2 = 10mV + 𝑉𝑉𝐶𝐶−𝐴𝐴𝐶𝐶1 − 𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶2
+
+-- 71 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+72
+Run a transient
+simulation.
+Plot signals in
+nodes:
+C1.
+Explain the signal making
+use of the DC operating
+voltages found earlier.
+Part 3
+
+-- 72 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 (sol)
+73
+𝑉𝑉𝐶𝐶1 = 10mV + 𝑉𝑉𝐶𝐶−𝐴𝐴𝐶𝐶1
+
+-- 73 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+74
+Run a transient
+simulation.
+Create and plot two
+new differential
+signals:
+A1 – B1
+A2 – B2
+Explain the signals
+making use of the DC
+operating voltages found
+earlier.
+Part 4
+
+-- 74 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 (sol)
+75
+𝑉𝑉𝐴𝐴 1 − 𝑉𝑉𝐵𝐵1 = 60mV + 𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶1 + 𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶2
+𝑉𝑉𝐴𝐴 2 − 𝑉𝑉𝐵𝐵2 = 𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶1 + 𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶2
+
+-- 75 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+76
+Run a transient
+simulation.
+Plot the output signal
+of the in-amp.
+Explain the signals
+making use of the DC
+operating voltages found
+earlier.
+Part 5
+
+-- 76 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 (sol)
+77
+𝑉𝑉𝑟𝑟𝑛𝑛−𝑎𝑎𝑐𝑐𝑝𝑝−𝑜𝑜𝑜𝑜𝑠𝑠 = Gd(𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶1 + 𝑉𝑉𝐷𝐷−𝐴𝐴𝐶𝐶2)
+
+-- 77 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+78
+Run an AC sweep
+simulation using VD-
+AC1 and VD-AC2.
+Plot the amplitude
+spectra of the output
+signals of the in-amp
+output and filter.
+Part 6
+
+-- 78 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 (sol)
+AC sweep
+Simulate a differential signal AC sweep
+from 1mHz – 10kHz. The differential gain
+should be 1000 = 60dB.
+79
+
+-- 79 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+80
+Run a common
+mode AC sweep
+simulation using VC-
+AC1.
+Plot the amplitude
+spectra of the output
+signals of the in-amp
+output and filter.
+Part 7
+
+-- 80 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp (sol)
+AC sweep
+Simulate a common mode AC sweep from 1mHz – 10kHz.
+The attenuation is about -91dB.
+81
+
+-- 81 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp
+82
+Using the differential
+and common mode
+AC sweeps, calculate
+the CMRR.
+Part 8
+
+-- 82 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Balanced In-amp (sol)
+The solution shows a common mode
+gain of -91.3dB within the passband.
+CMRR = 60dB – (-91.3dB ) = 151.3dB
+83
+
+-- 83 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 Imbalanced In-amp
+84
+Change R14 to 11k.
+Run a new common
+mode AC sweep
+simulation using VC-
+AC1.
+Plot the amplitude
+spectra of the output
+signals of the in-amp
+output and filter.
+Part 9
+
+-- 84 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem 2 (sol)
+85
+The solution shows a
+common mode gain of -
+26dB within the passband.
+CMRR = 60dB – (-26dB ) = 86dB
+
+-- 85 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Next topic
+Appendix
+Resistor imbalance
+inside in-amp
+86
+
+-- 86 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝑉𝑉𝑜𝑜 = 𝑅𝑅3𝑏𝑏 + 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎 + 𝑅𝑅4𝑎𝑎
+𝑉𝑉𝐴𝐴 − 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝐴𝐴 = 	1 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1 − 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2
+𝑉𝑉𝐵𝐵 = 	1 + 𝑅𝑅2𝑏𝑏
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2 − 𝑅𝑅2𝑏𝑏
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1
+We derived earlier:
+𝑅𝑅3𝑎𝑎 = 𝑅𝑅3𝑏𝑏 = 𝑅𝑅4𝑎𝑎 = 𝑅𝑅4𝑏𝑏
+𝑅𝑅2𝑎𝑎 = 𝑅𝑅2𝑏𝑏
+We then assumed that
+internal resistors were
+balanced:
+-
++
+Amplifier ground+
++
+-
+-
+𝑉𝑉2
+𝑅𝑅1𝑏𝑏
+𝑅𝑅1𝑎𝑎
+𝑉𝑉1 	𝑉𝑉𝐴𝐴
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝑏𝑏
+𝑉𝑉𝑎𝑎 𝑉𝑉𝑜𝑜
+𝑅𝑅2𝑏𝑏
+𝑅𝑅2𝑎𝑎
+𝑅𝑅3𝑏𝑏
+𝑅𝑅3𝑎𝑎
+𝑅𝑅4𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑉𝑉2
+𝑉𝑉1
+𝑈𝑈𝑅𝑈𝑈
+𝑈𝑈𝑅𝑈𝑈
+𝑈𝑈2
+𝑉𝑉𝑜𝑜 = 𝑅𝑅4
+𝑅𝑅3
+1 + 2𝑅𝑅2
+𝑅𝑅𝐺𝐺
+(𝑉𝑉1 − 𝑉𝑉2)
+87
+
+-- 87 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝑉𝑉𝑜𝑜 = 𝑅𝑅3𝑏𝑏 + 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎 + 𝑅𝑅4𝑎𝑎
+𝑉𝑉𝐴𝐴 − 𝑅𝑅4𝑏𝑏
+𝑅𝑅3𝑏𝑏
+𝑉𝑉𝐵𝐵
+𝑉𝑉𝑜𝑜 = 𝑅𝑅3𝑎𝑎 + 𝛼𝛼𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎 + 𝑅𝑅4𝑎𝑎
+𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎
+𝑉𝑉𝐴𝐴 − 𝛼𝛼𝑅𝑅4𝑎𝑎
+𝑅𝑅3𝑎𝑎
+𝑉𝑉𝐵𝐵	𝑅𝑅3𝑎𝑎 = 𝑅𝑅3𝑏𝑏 = 𝑅𝑅4𝑎𝑎
+𝑅𝑅4𝑏𝑏 = 𝛼𝛼𝑅𝑅4𝑎𝑎
+𝑅𝑅2𝑏𝑏 = 𝛽𝛽𝑅𝑅2𝑎𝑎
+We now permit imbalance
+between certain internal
+resistors:
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 𝑉𝑉𝐴𝐴 − 𝛼𝛼𝑉𝑉𝐵𝐵
+𝑉𝑉𝐴𝐴 = 	1 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1 − 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2
+𝑉𝑉𝐵𝐵 = 	1 + 𝛽𝛽𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2 − 𝛽𝛽𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1
+88
+
+-- 88 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 𝑉𝑉𝐴𝐴 − 𝛼𝛼𝑉𝑉𝐵𝐵
+𝑉𝑉𝐴𝐴 = 	1 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1 − 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2
+𝑉𝑉𝐵𝐵 = 	1 + 𝛽𝛽𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2 − 𝛽𝛽𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 1 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1 − 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2
+−𝛼𝛼 	1 + 𝛽𝛽𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2 − 𝛽𝛽𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2
++ 1 + 𝛼𝛼
+2
+𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1 − 𝛼𝛼 𝛽𝛽𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2
++𝛼𝛼 𝛽𝛽𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉1 − 1 + 𝛼𝛼
+2
+𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+⋅ 𝑉𝑉2
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2
++ 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼𝛽𝛽 ⋅ 𝑉𝑉2 + 𝛼𝛼𝛽𝛽 ⋅ 𝑉𝑉1 − 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉2
+Inserting 𝑉𝑉𝐴𝐴 and 𝑉𝑉𝐵𝐵 in 𝑉𝑉𝑜𝑜:
+89
+
+-- 89 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2
++ 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	⋅ 𝑉𝑉1 − 1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	⋅ 𝑉𝑉2
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2
++ 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉1 − 𝑉𝑉2
+𝑅𝑅𝐺𝐺 ≝ 𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏 	𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉1 − 𝑉𝑉2
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2
++ 𝑅𝑅2𝑎𝑎
+𝑅𝑅1𝑎𝑎 + 𝑅𝑅1𝑏𝑏
+1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼𝛽𝛽 ⋅ 𝑉𝑉2 + 𝛼𝛼𝛽𝛽 ⋅ 𝑉𝑉1 − 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉2
+Further reorganisation of terms:
+90
+
+-- 90 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉1 − 𝑉𝑉2
+𝛽𝛽 = 1 	𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 3𝛼𝛼
+2 𝑉𝑉1 − 𝑉𝑉2
+𝑉𝑉𝑜𝑜 = 	1 + 1 + 𝛽𝛽 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+𝑉𝑉1 − 𝑉𝑉2	𝛼𝛼 = 1
+𝛼𝛼 = 𝛽𝛽 = 1 	𝑉𝑉𝑜𝑜 = 	1 + 2𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+𝑉𝑉1 − 𝑉𝑉2
+Verifying result by reinserting
+balanced resistors:
+This final reduced expression is identical to the expression derived for
+the instrumentation amplifier with balanced resistors.
+91
+
+-- 91 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝑉𝑉1 = 𝑉𝑉2 = 𝑉𝑉𝑐𝑐𝑐𝑐 ⇒
+𝑉𝑉𝑜𝑜 = 1 − 𝛼𝛼
+2 𝑉𝑉𝑐𝑐𝑐𝑐
+𝐺𝐺𝑐𝑐 = 𝑉𝑉𝑜𝑜
+𝑉𝑉𝑐𝑐𝑐𝑐
+= 1 − 𝛼𝛼
+2
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉1 − 𝑉𝑉2
+Let us now derive the output from
+an imbalanced instrumentation
+amplifier with only a common
+mode input.
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉𝑐𝑐𝑐𝑐 − 𝛼𝛼 ⋅ 𝑉𝑉𝑐𝑐𝑐𝑐 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉𝑐𝑐𝑐𝑐 − 𝑉𝑉𝑐𝑐𝑐𝑐
+From this result we can define a
+common mode gain 𝐺𝐺𝑐𝑐:
+92
+
+-- 92 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉1 − 𝛼𝛼 ⋅ 𝑉𝑉2 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉1 − 𝑉𝑉2
+𝑉𝑉1 = −𝑉𝑉2 = 𝑉𝑉𝑑𝑑
+2 𝑉𝑉𝑜𝑜 = 1 + 𝛼𝛼
+2 ⋅ 𝑉𝑉𝑑𝑑
+2 + 𝛼𝛼 ⋅ 𝑉𝑉𝑑𝑑
+2 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉𝑑𝑑
+𝑉𝑉𝑜𝑜 = 1 + 3𝛼𝛼
+4 ⋅ 𝑉𝑉𝑑𝑑 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉𝑑𝑑
+𝑉𝑉𝑜𝑜 = 1 + 3𝛼𝛼
+4 + 𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉𝑑𝑑
+𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟 ≝ 1 + 2𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+𝑅𝑅2𝑎𝑎
+𝑅𝑅𝐺𝐺
+= 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟 − 1
+2 𝑉𝑉𝑜𝑜 = 1 + 3𝛼𝛼
+4 + 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟 − 1
+2
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉𝑑𝑑
+Let us now derive the output from
+an imbalanced instrumentation
+amplifier with only a differential
+mode input.
+93
+
+-- 93 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝑉𝑉𝑜𝑜 = 1 + 3𝛼𝛼
+4 + 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟 − 1
+2
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽 	𝑉𝑉𝑑𝑑
+We continue manipulating:
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟 ≝ 1 + 3𝛼𝛼
+4 + 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟 − 1
+2
+1 + 𝛼𝛼
+2 + 𝛼𝛼𝛽𝛽
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟 = 1 + 3𝛼𝛼
+4 + 	𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟 − 1 1 + 𝛼𝛼
+4 + 𝛼𝛼𝛽𝛽
+2
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟 = 1 + 3𝛼𝛼
+4 − 1 + 𝛼𝛼
+4 − 𝛼𝛼𝛽𝛽
+2 + 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+1 + 𝛼𝛼
+4 + 𝛼𝛼𝛽𝛽
+2
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟 = 𝛼𝛼
+2 1 − 𝛽𝛽 	+ 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+1 + 𝛼𝛼 + 2𝛼𝛼𝛽𝛽
+4
+We can now define the
+differential gain for the
+imbalanced instrumentation
+amplifier:
+94
+
+-- 94 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟 = 𝛼𝛼
+2 1 − 𝛽𝛽 	+ 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+1 + 𝛼𝛼 + 2𝛼𝛼𝛽𝛽
+4Numerical example:
+Assume that 𝛼𝛼 = 𝛽𝛽 = 0.9
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟 = 0.9
+2 1 − 0.9 	+ 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+1 + 0.9 + 2 ⋅ 0.9 ⋅ 0.9
+4
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟 = 0.045 + 0.88𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟 = 0.88𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+The first term is negligible.
+𝛼𝛼 = 𝛽𝛽 = 1.1 ⇒ 	𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟 = 1.13𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+𝛼𝛼 = 𝛽𝛽 = 0.9 ⇒
+95
+
+-- 95 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟 = 𝑉𝑉𝑜𝑜
+𝑉𝑉𝑑𝑑
+= 𝛼𝛼
+2 1 − 𝛽𝛽 	+ 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+1 + 𝛼𝛼 + 2𝛼𝛼𝛽𝛽
+4
+𝐺𝐺𝑐𝑐 = 𝑉𝑉𝑜𝑜
+𝑉𝑉𝑐𝑐𝑐𝑐
+= 1 − 𝛼𝛼
+2
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟
+𝐺𝐺𝑐𝑐
+=
+𝛼𝛼
+2 1 − 𝛽𝛽 	+ 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+1 + 𝛼𝛼 + 2𝛼𝛼𝛽𝛽
+4
+1 − 𝛼𝛼
+2
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟
+𝐺𝐺𝑐𝑐
+= 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+1 + 𝛼𝛼 + 2𝛼𝛼𝛽𝛽
+2 1 − 𝛼𝛼
+The purpose of a differential amplifier
+is to amplify differential signals and
+block common mode signals.
+In a real-life instrumentation amplifier,
+some level of imbalance is to be
+expected in the internal resistors. The
+result is that a common mode input
+signal will not be blocked
+completely.
+We can express the ability to
+suppress common mode signals as
+the ratio of differential gain to
+common mode gain. Here the
+term in red is small (see previous
+slide) and has been ignored.
+96
+
+-- 96 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟
+𝐺𝐺𝑐𝑐
+= 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+1 + 𝛼𝛼 + 2𝛼𝛼𝛽𝛽
+2 1 − 𝛼𝛼
+The most influential factor is 𝛼𝛼.
+Let us assume 𝛽𝛽 = 1:
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟
+𝐺𝐺𝑐𝑐
+= 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+1 + 3𝛼𝛼
+2 1 − 𝛼𝛼
+𝛼𝛼 = 0.99 𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟
+𝐺𝐺𝑐𝑐
+= 198.5𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+𝐺𝐺𝑑𝑑,𝑟𝑟𝑐𝑐𝑏𝑏𝑎𝑎𝑟𝑟
+𝐺𝐺𝑐𝑐
+= 18.5𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟
+𝛼𝛼 = 0.9
+1%
+10%
+97
+
+-- 97 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Imbalance inside instrumentation amplifier
+The gain ratio 𝐺𝐺𝑑𝑑/𝐺𝐺𝑐𝑐 	is called the
+common mode rejection ratio:
+𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅 = 𝐺𝐺𝑑𝑑
+𝐺𝐺𝑐𝑐
+𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅𝑑𝑑𝐵𝐵 = 20 log10
+𝐺𝐺𝑑𝑑
+𝐺𝐺𝑐𝑐
+𝛼𝛼 = 0.99 	𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅𝑑𝑑𝐵𝐵 = 20 log10 198.5 ⋅ 10 = 66dB
+𝛼𝛼 = 0.9
+1%
+10%
+Assume as an example 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟 = 10.
+𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅𝑑𝑑𝐵𝐵 = 20 log10 18.5 ⋅ 10 = 45dB
+CMRR is usually given in decibel:
+𝛼𝛼 = 0.99 	𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅𝑑𝑑𝐵𝐵 = 20 log10 198.5 ⋅ 100 = 86dB
+𝛼𝛼 = 0.9
+1%
+10%
+Assume as an example 𝐺𝐺𝑑𝑑,𝑏𝑏𝑎𝑎𝑟𝑟 = 100.
+𝐶𝐶𝐶𝐶𝑅𝑅𝑅𝑅𝑑𝑑𝐵𝐵 = 20 log10 18.5 ⋅ 100 = 65dB
+Observation:
+A large differential gain improves the CMRR.
+98
+
+-- 98 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Next topic
+Appendix
+AC coupled
+instrumentation amplifier
+Video
+99
+
+-- 99 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+DC components in source
+𝑍𝑍1 	𝑍𝑍2
+𝑍𝑍3 	𝑍𝑍4
+𝑉𝑉𝑠𝑠
++
+−
+𝑉𝑉𝐴𝐴 	𝑉𝑉𝐵𝐵
+𝑉𝑉𝑜𝑜
+𝑔𝑔𝑛𝑛𝑔𝑔
+𝐸𝐸𝐴𝐴 	𝐸𝐸𝐵𝐵
+In-amp
+𝑉𝑉𝐴𝐴
+𝑍𝑍𝐴𝐴
+= 𝑉𝑉𝑠𝑠
+𝑍𝑍1
++ 𝐸𝐸𝐴𝐴
+𝑍𝑍3
+𝑉𝑉𝐵𝐵
+𝑍𝑍𝐵𝐵
+= 𝑉𝑉𝑠𝑠
+𝑍𝑍2
++ 𝐸𝐸𝐵𝐵
+𝑍𝑍4
+𝑉𝑉𝐴𝐴 = 𝑍𝑍𝐴𝐴
+𝑍𝑍1
+𝑉𝑉𝑠𝑠 + 𝑍𝑍𝐴𝐴
+𝑍𝑍3
+𝐸𝐸𝐴𝐴 = 𝑍𝑍3
+𝑍𝑍1 + 𝑍𝑍3
+𝑉𝑉𝑠𝑠 + 𝑍𝑍1
+𝑍𝑍1 + 𝑍𝑍3
+𝐸𝐸𝐴𝐴
+𝑉𝑉𝐵𝐵 = 𝑍𝑍𝐵𝐵
+𝑍𝑍2
+𝑉𝑉𝑠𝑠 + 𝑍𝑍𝐵𝐵
+𝑍𝑍4
+𝐸𝐸𝐵𝐵 = 𝑍𝑍4
+𝑍𝑍2 + 𝑍𝑍4
+𝑉𝑉𝑠𝑠 + 𝑍𝑍2
+𝑍𝑍2 + 𝑍𝑍4
+𝐸𝐸𝐵𝐵
+𝑍𝑍𝐴𝐴 ≝ 𝑍𝑍1 𝑍𝑍3
+𝑍𝑍1 + 𝑍𝑍3
+𝑍𝑍𝐵𝐵 ≝ 𝑍𝑍2 𝑍𝑍4
+𝑍𝑍2 + 𝑍𝑍4
+𝑉𝑉𝐴𝐴 − 𝑉𝑉𝐵𝐵 = 𝑍𝑍3
+𝑍𝑍1 + 𝑍𝑍3
+− 𝑍𝑍4
+𝑍𝑍2 + 𝑍𝑍4
+𝑉𝑉𝑠𝑠
+𝐴𝐴𝐶𝐶 𝑠𝑠𝑟𝑟𝑚𝑚𝑛𝑛𝑎𝑎𝑟𝑟
++ 𝑍𝑍1
+𝑍𝑍1 + 𝑍𝑍3
+𝐸𝐸𝐴𝐴 − 𝑍𝑍2
+𝑍𝑍2 + 𝑍𝑍4
+𝐸𝐸𝐵𝐵
+𝐷𝐷𝐶𝐶 𝑠𝑠𝑟𝑟𝑚𝑚𝑛𝑛𝑎𝑎𝑟𝑟
+Now we will add a DC source in series with 𝑍𝑍3
+and 𝑍𝑍4. This may challenge the amplifier.
+We need to derive an expression for 𝑉𝑉𝐴𝐴 − 𝑉𝑉𝐵𝐵.
+Using the technique of current superposition:
+Node A:
+Node B:
+As expected, the amplifier now must
+amplify both an AC and a DC signal:
+100
+
+-- 100 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Limited gain due to DC component
+𝑉𝑉𝐴𝐴 − 𝑉𝑉𝐵𝐵 = 𝑍𝑍3
+𝑍𝑍1 + 𝑍𝑍3
+− 𝑍𝑍4
+𝑍𝑍2 + 𝑍𝑍4
+𝑉𝑉𝑠𝑠
+𝐴𝐴𝐶𝐶 𝑠𝑠𝑟𝑟𝑚𝑚𝑛𝑛𝑎𝑎𝑟𝑟
++ 𝑍𝑍1
+𝑍𝑍1 + 𝑍𝑍3
+𝐸𝐸𝐴𝐴 − 𝑍𝑍2
+𝑍𝑍2 + 𝑍𝑍4
+𝐸𝐸𝐵𝐵
+𝐷𝐷𝐶𝐶 𝑠𝑠𝑟𝑟𝑚𝑚𝑛𝑛𝑎𝑎𝑟𝑟
+We have not been specific about
+the context, so we do not know
+anything about the magnitudes
+of the impedances, nor the
+magnitude of the AC and DC
+sources.
+𝑉𝑉𝐴𝐴 − 𝑉𝑉𝐵𝐵 = 𝑉𝑉𝐴𝐴𝐶𝐶 + 𝑉𝑉𝐷𝐷𝐶𝐶
+𝑉𝑉𝐴𝐴𝐶𝐶 = 𝑍𝑍3
+𝑍𝑍1 + 𝑍𝑍3
+− 𝑍𝑍4
+𝑍𝑍2 + 𝑍𝑍4
+𝑉𝑉𝑠𝑠 = 𝑍𝑍4 + Δ𝑍𝑍
+𝑍𝑍1 + 𝑍𝑍4 + Δ𝑍𝑍 − 𝑍𝑍4
+𝑍𝑍1 + 𝑍𝑍4
+𝑉𝑉𝑠𝑠
+≈ 𝑍𝑍4 + Δ𝑍𝑍
+𝑍𝑍1 + 𝑍𝑍4
+− 𝑍𝑍4
+𝑍𝑍1 + 𝑍𝑍4
+𝑉𝑉𝑠𝑠 	≈ Δ𝑍𝑍
+𝑍𝑍1 + 𝑍𝑍4
+𝑉𝑉𝑠𝑠
+𝑉𝑉𝐷𝐷𝐶𝐶 = 𝑍𝑍1
+𝑍𝑍1 + 𝑍𝑍3
+𝐸𝐸𝐴𝐴 − 𝑍𝑍2
+𝑍𝑍2 + 𝑍𝑍4
+𝐸𝐸𝐵𝐵 = 𝑍𝑍1
+𝑍𝑍1 + 𝑍𝑍4 + Δ𝑍𝑍 𝐸𝐸𝐴𝐴 − 𝑍𝑍1
+𝑍𝑍1 + 𝑍𝑍4
+𝐸𝐸𝐵𝐵
+≈ 𝑍𝑍1
+𝑍𝑍1 + 𝑍𝑍4
+𝐸𝐸𝐴𝐴 − 𝐸𝐸𝐵𝐵
+𝑍𝑍1 = 𝑍𝑍2
+𝑍𝑍3 = 𝑍𝑍4 + ΔZ
+Δ𝑍𝑍 ≪ min(𝑍𝑍1, 𝑍𝑍2, 𝑍𝑍3, 𝑍𝑍4)
+We will assume that all impedances
+have very similar values, but that
+there is a small detectable
+difference Δ𝑍𝑍 between 𝑍𝑍3 and 𝑍𝑍4.
+101
+
+-- 101 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Limited gain due to DC component
+𝑉𝑉𝐴𝐴𝐶𝐶 = Δ𝑍𝑍
+𝑍𝑍1 + 𝑍𝑍4
+≪1
+𝑉𝑉𝑠𝑠 ≈ ±2.5mV
+For the sake of illustration, we will assume that the
+AC signal is in the range of ±2.5mV:
+𝑉𝑉𝐷𝐷𝐶𝐶 = 𝑍𝑍1
+𝑍𝑍1 + 𝑍𝑍4
+≈1/2
+𝐸𝐸𝐴𝐴 − 𝐸𝐸𝐵𝐵 	≈ 100mV
+We will assume that the DC sources are half-cell
+voltages originating from within the sensors 𝑍𝑍3 and
+𝑍𝑍4. These DC sources can be hundreds of millivolts
+thus their difference can also be hundreds of
+millivolts. Here we will assume a DC voltage of
+100mV.
+We don’t care about the DC signal. However,
+we want to amplify the AC signal to the full
+range of a 5V ADC. 𝑉𝑉𝑜𝑜 = 𝐺𝐺𝑑𝑑 ⋅ 𝑉𝑉𝐴𝐴𝐶𝐶 + 𝐺𝐺𝑑𝑑 ⋅ 𝑉𝑉𝐷𝐷𝐶𝐶
+𝐺𝐺𝑑𝑑 = 𝑉𝑉𝑜𝑜
+𝑉𝑉𝐴𝐴𝐶𝐶
+= 5V
+5mV = 1000
+𝑉𝑉𝑜𝑜,𝐷𝐷𝐶𝐶 = 1000 ⋅ 100mV = 100V
+To amplify the AC signal adequately, we need a gain of:
+This gain will saturate the amplifier because the DC
+voltage on the output would have to be 100V.
+If we are to obtain a gain of 1000 for the AC signal,
+we must remove the DC signal with a high-pass
+filter.
+102
+
+-- 102 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+AC coupled In-amp at input
+We need to block the DC potential before
+the instrumentation amplifier. Hence, we
+need an AC-coupled instrumentation
+amplifier.
+𝑍𝑍 𝑇𝑇 = 𝑅𝑅1|| 	𝑅𝑅2 + 𝑍𝑍𝐶𝐶1 + 𝑅𝑅3|| 	𝑅𝑅4 + 𝑍𝑍𝐶𝐶2
+𝐼𝐼𝑇𝑇 = 𝑉𝑉𝐼𝐼𝐷𝐷
+𝑍𝑍 𝑇𝑇
+𝐼𝐼𝑅𝑅2 = 𝐼𝐼𝑇𝑇 ⋅ 𝑅𝑅1
+𝑅𝑅1 + 𝑅𝑅2 + 𝑍𝑍𝐶𝐶1
+𝐼𝐼𝑅𝑅4 = 𝐼𝐼𝑇𝑇 ⋅ 𝑅𝑅3
+𝑅𝑅3 + 𝑅𝑅4 + 𝑍𝑍𝐶𝐶2
+Current dividers:
+𝑉𝑉𝑜𝑜 𝐷𝐷 = 𝑅𝑅2 𝐼𝐼𝑅𝑅2 + 𝑅𝑅4 𝐼𝐼𝑅𝑅4
+𝑉𝑉𝑟𝑟𝐷𝐷: Differential input signal
+𝑉𝑉𝑜𝑜𝐷𝐷: Differential output signal
+Starting at the filter output:
+-
++	𝑉𝑉𝐴𝐴𝐶𝐶
+𝑉𝑉𝐴𝐴
+𝑉𝑉𝐵𝐵
+𝐶𝐶1
+𝐶𝐶2
+𝑉𝑉𝑜𝑜
+𝑉𝑉𝐶𝐶
+𝑉𝑉𝐷𝐷
+𝑅𝑅1
+𝑅𝑅3
+𝑅𝑅2
+𝑅𝑅4
+𝑉𝑉𝐺𝐺	𝑉𝑉𝑟𝑟𝐷𝐷 𝑉𝑉𝑜𝑜𝐷𝐷
+AC-coupling
+𝑉𝑉𝐷𝐷𝐶𝐶
+𝐼𝐼𝑇𝑇
+103
+
+-- 103 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+AC coupled In-amp at input
+𝑉𝑉𝑜𝑜 𝐷𝐷
+𝑉𝑉𝑟𝑟𝐷𝐷
+=
+𝑅𝑅2 + 𝑅𝑅4 	𝑅𝑅3 + 𝑅𝑅2 	𝑅𝑅4 + 𝑍𝑍𝐶𝐶2 𝑅𝑅1 + 𝑅𝑅3 𝑅𝑅4 	𝑅𝑅2 + 𝑍𝑍𝐶𝐶1
+𝑅𝑅2 + 𝑅𝑅4 + 𝑍𝑍𝐶𝐶1 + 𝑍𝑍𝐶𝐶2 𝑅𝑅3 + 	𝑅𝑅4 + 𝑍𝑍𝐶𝐶2 𝑅𝑅2 + 𝑍𝑍𝐶𝐶1 𝑅𝑅1 + 𝑅𝑅3 	𝑅𝑅4 + 𝑍𝑍𝐶𝐶2 𝑅𝑅2 + 𝑍𝑍𝐶𝐶1
+If all components are matched perfectly:
+𝑅𝑅3 = 𝑅𝑅1 	𝐶𝐶2 = 𝐶𝐶1	𝑅𝑅4 = 𝑅𝑅2
+𝑉𝑉𝑜𝑜 𝐷𝐷 𝑗𝑗𝜔𝜔
+𝑉𝑉𝑟𝑟𝐷𝐷 (𝑗𝑗𝜔𝜔) = 𝑗𝑗𝜔𝜔 	𝑅𝑅1𝐶𝐶1
+𝑗𝑗𝜔𝜔 	𝑅𝑅1𝐶𝐶1 + 1
+From Maple:
+We obtain a classic first order
+high-pass filter with cut-off
+frequency:
+𝑓𝑓𝐶𝐶 = 1
+2𝜋𝜋𝑅𝑅1𝐶𝐶1
+𝐶𝐶1 = 1
+2𝜋𝜋𝑅𝑅1𝑓𝑓𝐶𝐶
+To obtain symmetry we set:
+𝑅𝑅1 = 𝑅𝑅2 = 𝑅𝑅3 = 𝑅𝑅4 	𝐶𝐶2 = 𝐶𝐶1
+𝑉𝑉𝑜𝑜 𝐷𝐷
+𝑉𝑉𝑟𝑟𝐷𝐷
+= 𝑅𝑅2
+𝑅𝑅2 + 𝑍𝑍𝐶𝐶1
+Letting Maple simplify again:
+104
+
+-- 104 of 105 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+AC coupled In-amp at input
+We need a high input
+impedance, hence 𝑅𝑅1 and 𝑅𝑅2
+must be chosen in the MΩ
+range.
+𝑅𝑅1 = 𝑅𝑅2 = 4.7MΩ
+𝑓𝑓𝐶𝐶 = 0.03 Hz ⇒ 𝐶𝐶1 = 𝐶𝐶2 = 1
+2π 4.7MΩ 0.03Hz = 1.𝑅2μF ≈ 𝑅μF
+𝑓𝑓𝐶𝐶 = 20 Hz ⇒ 𝐶𝐶1 = 𝐶𝐶2 = 1
+2π 4.7MΩ 20Hz = 1.7nF ≈ 1.5nF
+105
+
+-- 105 of 105 --
+

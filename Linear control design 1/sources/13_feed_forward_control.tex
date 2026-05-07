@@ -1,0 +1,53 @@
+\section{Feed-forward control}
+
+\subsection{Feed-forward principle}
+
+\subsubsection{Feed-forward definition}
+\[
+u(t)=u_{\mathrm{fb}}(t)+u_{\mathrm{ff}}(t)
+\]
+Feed-forward uses the reference or a measured disturbance directly, without waiting for output error.
+
+\subsubsection{Reference feed-forward}
+\[
+U(s)=C(s)E(s)+F_r(s)R(s)
+\]
+Reference feed-forward can improve tracking but does not by itself reject unmeasured disturbances.
+
+\subsection{Disturbance feed-forward}
+
+\subsubsection{Disturbance path model}
+\[
+Y(s)=G(s)U(s)+D(s)d(s)
+\]
+Here \(G(s)\) is the manipulated-input path and \(D(s)\) is the disturbance path.
+
+\subsubsection{Ideal dynamic disturbance feed-forward}
+\[
+F_d(s)=-\frac{D(s)}{G(s)}
+\]
+If \(U_{\mathrm{ff}}(s)=F_d(s)d(s)\), the disturbance contribution cancels when the model is exact and \(F_d(s)\) is stable and proper.
+
+\subsubsection{Filtered feed-forward}
+\[
+F_{d,\mathrm{filt}}(s)=-\frac{D(s)}{G(s)}Q(s)
+\]
+The filter \(Q(s)\) is added when the ideal ratio is improper, noisy, or too aggressive.
+
+\subsubsection{Feed-forward properness condition}
+\[
+\deg D(s)-\deg G(s)\leq 0
+\]
+The dynamic feed-forward ratio must be proper for direct implementation. Otherwise a low-pass filter is required.
+
+\subsubsection{Disturbance sensitivity with feed-forward}
+\[
+G_{yd}(s)=\frac{D(s)+G(s)F_d(s)}{1+C(s)G(s)}
+\]
+Perfect dynamic feed-forward makes the numerator zero and removes the disturbance path in the nominal model.
+
+\subsubsection{Steady-state feed-forward}
+\[
+F_d(0)=-\frac{D(0)}{G(0)}
+\]
+Static feed-forward cancels constant disturbances when the DC gains are finite and known.

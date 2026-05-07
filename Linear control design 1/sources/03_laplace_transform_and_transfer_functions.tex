@@ -1,0 +1,73 @@
+\section{Laplace transform and transfer functions}
+
+\subsection{Laplace transform}
+
+\subsubsection{Unilateral Laplace transform}
+\[
+X(s)=\mathcal{L}\{x(t)\}=\int_{0^-}^{\infty}x(t)e^{-st}\,dt
+\]
+The Laplace transform maps differential equations into algebraic equations in \(s\).
+
+\subsubsection{Derivative property}
+\[
+\mathcal{L}\{\dot{x}(t)\}=sX(s)-x(0^-), \qquad
+\mathcal{L}\{x^{(n)}(t)\}=s^nX(s)-\sum_{k=0}^{n-1}s^{n-1-k}x^{(k)}(0^-)
+\]
+With zero initial conditions, each time derivative corresponds to multiplication by \(s\).
+
+\subsubsection{Integral property}
+\[
+\mathcal{L}\left\{\int_0^t x(\xi)\,d\xi\right\}=\frac{X(s)}{s}
+\]
+Integration adds one pole at the origin.
+
+\subsubsection{Common Laplace pairs}
+\[
+\begin{array}{c|c}
+x(t) & X(s)\\ \hline
+\delta(t) & 1\\
+u(t) & 1/s\\
+e^{-at}u(t) & 1/(s+a)\\
+t u(t) & 1/s^2\\
+\sin(\omega t)u(t) & \omega/(s^2+\omega^2)\\
+\cos(\omega t)u(t) & s/(s^2+\omega^2)
+\end{array}
+\]
+These pairs support transfer-function construction and time-response lookup.
+
+\subsection{Transfer functions}
+
+\subsubsection{Transfer function definition}
+\[
+G(s)=\frac{Y(s)}{U(s)}\bigg|_{\text{zero initial conditions}}
+\]
+A transfer function is the input-output model of a linear time-invariant system in the Laplace domain.
+
+\subsubsection{Differential equation to transfer function}
+\[
+a_n y^{(n)}+\cdots+a_1\dot{y}+a_0y=b_m u^{(m)}+\cdots+b_1\dot{u}+b_0u
+\]
+\[
+G(s)=\frac{Y(s)}{U(s)}=
+\frac{b_m s^m+\cdots+b_1s+b_0}{a_n s^n+\cdots+a_1s+a_0}
+\]
+The denominator polynomial gives the poles, and the numerator polynomial gives the zeros.
+
+\subsubsection{Poles and zeros}
+\[
+G(s)=K\frac{\prod_i(s-z_i)}{\prod_k(s-p_k)}
+\]
+Poles \(p_k\) define natural modes and stability. Zeros \(z_i\) shape phase, transient response, and Bode slope.
+
+\subsubsection{Characteristic equation}
+\[
+1+L(s)=0
+\]
+Closed-loop poles are the roots of the characteristic equation. Stability is determined by these roots, not by the numerator of \(T(s)\).
+
+\subsubsection{Proper and strictly proper transfer functions}
+\[
+\deg N(s)\leq \deg D(s) \quad \text{proper}, \qquad
+\deg N(s)<\deg D(s) \quad \text{strictly proper}
+\]
+Properness is required for physically implementable dynamic systems and feed-forward filters.

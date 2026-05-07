@@ -1,0 +1,84 @@
+\section{Time Domain and Impulse Response}
+
+\subsection{System Equations}
+
+\subsubsection{Differential operator notation}
+\[
+D=\frac{d}{dt}, \qquad Q(D)y(t)=P(D)x(t).
+\]
+The operator notation writes constant-coefficient differential equations compactly. \(Q(D)\) describes the output-side dynamics and \(P(D)\) describes input derivatives.
+
+\subsubsection{Characteristic equation}
+\[
+Q(s)=a_Ns^N+a_{N-1}s^{N-1}+\cdots+a_0=0.
+\]
+The roots of \(Q(s)\) determine the natural modes of the zero-input response and the poles of the transfer function.
+
+\subsubsection{Zero-input and zero-state response}
+\[
+y(t)=y_{\mathrm{zi}}(t)+y_{\mathrm{zs}}(t), \qquad
+y_{\mathrm{zs}}(t)=h(t)*x(t).
+\]
+The zero-input response is caused by initial conditions. The zero-state response is caused by the input through the impulse response.
+
+\subsubsection{Natural modes from roots}
+\[
+\begin{array}{c|c}
+\text{root of }Q(s) & \text{time-domain mode}\\ \hline
+p & C e^{pt}u(t)\\
+p\text{ repeated }r\text{ times} & (C_0+C_1t+\cdots+C_{r-1}t^{r-1})e^{pt}u(t)\\
+\sigma\pm j\omega_d & e^{\sigma t}(C_1\cos\omega_d t+C_2\sin\omega_d t)u(t)
+\end{array}
+\]
+Real roots give exponential modes. Complex conjugate roots give damped oscillatory modes.
+
+\subsection{Impulse, Step, and Ramp Responses}
+
+\subsubsection{Impulse response definition}
+\[
+h(t)=T\{\delta(t)\}.
+\]
+The impulse response fully characterizes an LTIC system in the time domain.
+
+\subsubsection{Impulse response from transfer function}
+\[
+h(t)=\mathcal{L}^{-1}\{H(s)\}, \qquad
+H(s)=\frac{P(s)}{Q(s)}.
+\]
+With zero initial conditions, the transfer function is the Laplace transform of the impulse response.
+
+\subsubsection{Direct feedthrough impulse term}
+\[
+H(s)=K+\widetilde{H}(s)
+\quad \Longleftrightarrow \quad
+h(t)=K\delta(t)+\widetilde{h}(t).
+\]
+If the numerator order equals the denominator order, polynomial division gives an impulse term. This term represents instantaneous feedthrough.
+
+\subsubsection{Step response and impulse response}
+\[
+y_{\mathrm{step}}(t)=h(t)*u(t)=\int_{-\infty}^{t}h(\tau)\,d\tau,
+\qquad
+h(t)=\frac{d}{dt}y_{\mathrm{step}}(t).
+\]
+The unit step response is the time integral of the impulse response. Differentiating the step response gives the impulse response, including possible impulse terms.
+
+\subsubsection{Ramp response}
+\[
+y_{\mathrm{ramp}}(t)=h(t)*r(t)=\int_{-\infty}^{t}y_{\mathrm{step}}(\tau)\,d\tau.
+\]
+The unit ramp response is the integral of the step response for causal LTIC systems.
+
+\subsection{Stability}
+
+\subsubsection{BIBO stability from impulse response}
+\[
+\int_{-\infty}^{\infty}|h(t)|\,dt<\infty.
+\]
+Bounded-input bounded-output stability requires an absolutely integrable impulse response.
+
+\subsubsection{Pole locations and stability}
+\[
+\Re\{p_k\}<0 \ \forall k \quad \Rightarrow \quad \text{asymptotically stable}.
+\]
+For rational causal LTIC systems, poles in the open left half-plane give decaying natural modes. Poles on the imaginary axis give marginal behavior only if simple, and right-half-plane poles are unstable.

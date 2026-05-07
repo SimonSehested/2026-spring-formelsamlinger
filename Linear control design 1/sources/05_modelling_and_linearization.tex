@@ -1,0 +1,80 @@
+\section{Modelling and linearization}
+
+\subsection{White-box modelling}
+
+\subsubsection{Newton's second law}
+\[
+\sum F=m\ddot{x}
+\]
+Mechanical translation models are obtained by summing forces and applying acceleration relations.
+
+\subsubsection{Mass-spring-damper model}
+\[
+m\ddot{x}+b\dot{x}+kx=F
+\]
+The mass gives inertia, the damper gives velocity-proportional force, and the spring gives displacement-proportional force.
+
+\subsubsection{Mass-spring-damper transfer function}
+\[
+\frac{X(s)}{F(s)}=\frac{1}{ms^2+bs+k}
+\]
+With zero initial conditions, the transfer function follows directly from the Laplace transform.
+
+\subsubsection{Electrical impedance in Laplace domain}
+\[
+Z_R=R,\qquad Z_L=sL,\qquad Z_C=\frac{1}{sC}
+\]
+RLC circuits can be modelled algebraically in the \(s\)-domain using impedances.
+
+\subsubsection{Voltage divider in Laplace domain}
+\[
+\frac{V_2(s)}{V_{\mathrm{in}}(s)}=\frac{Z_2(s)}{Z_1(s)+Z_2(s)}
+\]
+The voltage divider converts circuit topology into a transfer function.
+
+\subsection{Nonlinear systems}
+
+\subsubsection{State-space nonlinear model}
+\[
+\dot{x}=f(x,u,t),\qquad y=g(x,u,t)
+\]
+Nonlinear models must be linearized before transfer-function and Bode design methods apply.
+
+\subsubsection{Equilibrium point}
+\[
+0=f(x_0,u_0),\qquad y_0=g(x_0,u_0)
+\]
+The operating point must make the state derivative zero for constant inputs.
+
+\subsubsection{First-order Taylor linearization}
+\[
+\Delta\dot{x}=A\Delta x+B\Delta u,\qquad
+\Delta y=C\Delta x+D\Delta u
+\]
+\[
+A=\left.\frac{\partial f}{\partial x}\right|_{x_0,u_0},\quad
+B=\left.\frac{\partial f}{\partial u}\right|_{x_0,u_0},\quad
+C=\left.\frac{\partial g}{\partial x}\right|_{x_0,u_0},\quad
+D=\left.\frac{\partial g}{\partial u}\right|_{x_0,u_0}
+\]
+The variables \(\Delta x=x-x_0\), \(\Delta u=u-u_0\), and \(\Delta y=y-y_0\) describe deviations around the operating point.
+
+\subsubsection{State-space to transfer function}
+\[
+G(s)=C(sI-A)^{-1}B+D
+\]
+This formula maps a linearized state-space model to an input-output transfer function.
+
+\subsection{Black-box modelling}
+
+\subsubsection{Step-response static gain estimate}
+\[
+K_{\mathrm{ss}}\approx \frac{y_{\mathrm{ss}}-y_0}{u_{\mathrm{ss}}-u_0}
+\]
+The static gain can be estimated from steady-state input and output changes.
+
+\subsubsection{First-order time constant from data}
+\[
+y(t_0+\tau)=y_0+0.632\,(y_{\mathrm{ss}}-y_0)
+\]
+For a first-order response, the time constant is the time to reach \(63.2\%\) of the total step change.

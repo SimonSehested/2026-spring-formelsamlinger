@@ -1,0 +1,97 @@
+\section{Butterworth Filter Design and Sensitivity}
+
+\subsection{Butterworth Prototypes}
+
+\subsubsection{Butterworth magnitude response}
+\[
+|H(j\omega)|^2=\frac{1}{1+\left(\frac{\omega}{\omega_c}\right)^{2N}}.
+\]
+A Butterworth filter is maximally flat in the passband. At \(\omega=\omega_c\), the magnitude is \(1/\sqrt{2}\), or \(-3\) dB.
+
+\subsubsection{Butterworth pole angles}
+\[
+p_k=\omega_c e^{j\left(\frac{\pi}{2}+\frac{(2k-1)\pi}{2N}\right)},\qquad k=1,\ldots,N.
+\]
+The stable Butterworth poles lie on a circle of radius \(\omega_c\) in the left half-plane.
+
+\subsubsection{Butterworth second-order stage}
+\[
+H_k(s)=\frac{\omega_c^2}{s^2+a_k\omega_c s+\omega_c^2},
+\qquad
+a_k=2\zeta_k.
+\]
+Even-order Butterworth filters are cascades of second-order sections. The stage coefficient \(a_k\) sets damping and quality factor.
+
+\subsubsection{Common Butterworth coefficients}
+\[
+\begin{array}{c|c}
+N & \text{second-order }a_k\text{ values}\\ \hline
+2 & 1.4142\\
+4 & 0.7654,\ 1.8478\\
+6 & 0.5176,\ 1.4142,\ 1.9319\\
+8 & 0.3902,\ 1.1111,\ 1.6629,\ 1.9616
+\end{array}
+\]
+These coefficients are used when decomposing normalized Butterworth filters into cascaded second-order stages.
+
+\subsection{Sallen-Key Lowpass}
+
+\subsubsection{Sallen-Key lowpass transfer function}
+\[
+H_{\mathrm{SK,LP}}(s)=
+\frac{K}{s^2R_1R_2C_1C_2+s\left(R_1C_1+R_1C_2+R_2C_2(1-K)\right)+1}.
+\]
+The Sallen-Key lowpass realizes a second-order denominator using two resistors, two capacitors, and an amplifier gain \(K\).
+
+\subsubsection{Sallen-Key natural frequency and damping coefficient}
+\[
+\omega_n=\frac{1}{\sqrt{R_1R_2C_1C_2}},
+\]
+\[
+a=2\zeta=\frac{R_1C_1+R_1C_2+R_2C_2(1-K)}{\sqrt{R_1R_2C_1C_2}}.
+\]
+Component products set the natural frequency. Component ratios and gain set damping.
+
+\subsubsection{Unity-gain Sallen-Key lowpass}
+\[
+K=1 \quad \Rightarrow \quad
+a=\frac{R_1C_1+R_1C_2}{\sqrt{R_1R_2C_1C_2}}.
+\]
+Unity-gain design removes the \(R_2C_2(1-K)\) term and is used in the low-sensitivity design slides.
+
+\subsection{Sensitivity}
+
+\subsubsection{Relative sensitivity}
+\[
+S_x^y=\frac{\partial y/y}{\partial x/x}=\frac{x}{y}\frac{\partial y}{\partial x}.
+\]
+Sensitivity measures fractional output change per fractional component change.
+
+\subsubsection{Sensitivity of products and powers}
+\[
+y=Kx_1^{\alpha_1}x_2^{\alpha_2}
+\quad \Rightarrow \quad
+S_{x_i}^{y}=\alpha_i.
+\]
+Power-law expressions give sensitivities directly from exponents.
+
+\subsubsection{Monte Carlo component tolerance}
+\[
+x_i=x_{i,\mathrm{nom}}(1+\epsilon_i).
+\]
+Monte Carlo analysis perturbs component values within their tolerance ranges to estimate spread in cutoff frequency, gain, and damping.
+
+\subsection{Scaling}
+
+\subsubsection{Frequency scaling of RC filters}
+\[
+\omega_n' = K_F\omega_n,\qquad
+R'C'=\frac{RC}{K_F}.
+\]
+Increasing cutoff frequency requires reducing the relevant \(RC\) products.
+
+\subsubsection{Impedance scaling}
+\[
+R'=K_ZR,\qquad C'=\frac{C}{K_Z}.
+\]
+Impedance scaling changes practical component values while preserving the same \(RC\) products and transfer function.

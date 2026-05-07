@@ -1,0 +1,67 @@
+\section{Sampling and Applications of Fourier Transformation}
+
+\subsection{Sampling}
+
+\subsubsection{Impulse-train sampling}
+\[
+x_s(t)=x(t)\sum_{n=-\infty}^{\infty}\delta(t-nT_s)
+=\sum_{n=-\infty}^{\infty}x(nT_s)\delta(t-nT_s).
+\]
+Ideal sampling multiplies the signal by a periodic impulse train with sampling period \(T_s\).
+
+\subsubsection{Sampling frequency and Nyquist frequency}
+\[
+f_s=\frac{1}{T_s},\qquad \omega_s=\frac{2\pi}{T_s},\qquad
+f_N=\frac{f_s}{2},\qquad \omega_N=\frac{\omega_s}{2}.
+\]
+The Nyquist frequency is half the sampling frequency. It is the largest frequency that can be represented without aliasing for a bandlimited signal.
+
+\subsubsection{Spectrum of sampled signal}
+\[
+X_s(\omega)=\frac{1}{T_s}\sum_{k=-\infty}^{\infty}X(\omega-k\omega_s).
+\]
+Sampling repeats the continuous-time spectrum at integer multiples of the sampling angular frequency.
+
+\subsubsection{Sampling theorem}
+\[
+\omega_s>2\omega_{\max}.
+\]
+A bandlimited signal with no content above \(\omega_{\max}\) can be reconstructed from ideal samples if the sampling angular frequency exceeds twice the signal bandwidth.
+
+\subsubsection{Aliasing frequency}
+\[
+f_{\mathrm{alias}}=\left|f-kf_s\right|,\qquad
+\text{choose }k\in\mathbb{Z}\text{ so }0\leq f_{\mathrm{alias}}\leq \frac{f_s}{2}.
+\]
+Frequencies separated by integer multiples of \(f_s\) produce the same sampled sequence.
+
+\subsubsection{Ideal reconstruction}
+\[
+x(t)=\sum_{n=-\infty}^{\infty}x(nT_s)\,
+\operatorname{sinc}\!\left(\frac{t-nT_s}{T_s}\right),
+\qquad
+\operatorname{sinc}(x)=\frac{\sin(\pi x)}{\pi x}.
+\]
+Ideal bandlimited reconstruction uses sinc interpolation from the sample values.
+
+\subsection{Fourier Applications}
+
+\subsubsection{Amplitude modulation}
+\[
+x(t)\cos\omega_ct
+\ \longleftrightarrow\
+\frac{1}{2}\left[X(\omega-\omega_c)+X(\omega+\omega_c)\right].
+\]
+Multiplication by a carrier shifts copies of the baseband spectrum to \(\pm\omega_c\).
+
+\subsubsection{System response in Fourier domain}
+\[
+Y(\omega)=H(j\omega)X(\omega).
+\]
+For stable LTIC systems, the output spectrum is the input spectrum multiplied by the frequency response.
+
+\subsubsection{Magnitude in decibel}
+\[
+A_{\mathrm{dB}}=20\log_{10}|H(j\omega)|.
+\]
+Voltage and transfer-function magnitudes use \(20\log_{10}\). Power ratios use \(10\log_{10}\).

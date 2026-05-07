@@ -1,0 +1,44 @@
+\section{Unstable systems}
+
+\subsection{Open-loop unstable plants}
+
+\subsubsection{Unstable pole condition}
+\[
+G(s)\ \text{unstable}\quad\Longleftrightarrow\quad
+\exists p_k:\operatorname{Re}(p_k)>0
+\]
+Open-loop unstable plants cannot be assessed by the stable-plant Bode criterion alone.
+
+\subsubsection{Closed-loop stabilization}
+\[
+T(s)=\frac{C(s)G(s)}{1+C(s)G(s)},\qquad 1+C(s)G(s)=0
+\]
+Controller design must move all closed-loop poles to the open left half-plane.
+
+\subsubsection{Nyquist requirement for unstable open loop}
+\[
+Z=P+N=0
+\]
+If the open loop has \(P\) right-half-plane poles, the Nyquist encirclement count must give zero unstable closed-loop poles. % TODO: verify sign convention from source
+
+\subsection{Unstable-system controller design}
+
+\subsubsection{Stabilizing PI block}
+\[
+C_{PI,\mathrm{post}}(s)=K_P\frac{\tau_i s+1}{\tau_i s}
+\]
+The slides use additional PI action in open loop to stabilize some linearized unstable REGBOT transfer functions.
+
+\subsubsection{Lead part for unstable systems}
+\[
+C_{\mathrm{lead}}(s)=\frac{\tau_d s+1}{\alpha\tau_d s+1},\qquad
+\tau_d=\frac{1}{\omega_c\sqrt{\alpha}}
+\]
+Lead compensation can increase phase margin or shift crossover when stabilization requires extra phase.
+
+\subsubsection{Inner-loop and outer-loop structure}
+\[
+L_{\mathrm{inner}}(s)=C_{\mathrm{inner}}(s)G_{\mathrm{inner}}(s),\qquad
+G_{\mathrm{outer}}(s)=\frac{L_{\mathrm{inner}}(s)}{1+L_{\mathrm{inner}}(s)}
+\]
+Nested controller design stabilizes a fast inner loop before designing the outer loop.

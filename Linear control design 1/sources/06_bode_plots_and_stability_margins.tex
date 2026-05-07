@@ -1,0 +1,116 @@
+\section{Bode plots and stability margins}
+
+\subsection{Bode magnitude and phase}
+
+\subsubsection{Magnitude in decibels}
+\[
+|G(j\omega)|_{\mathrm{dB}}=20\log_{10}|G(j\omega)|
+\]
+Magnitude in decibels converts products of transfer-function factors into sums of asymptotic contributions.
+
+\subsubsection{Phase angle}
+\[
+\phi(\omega)=\angle G(j\omega)
+\]
+The phase curve is the sum of phase contributions from gain, poles, zeros, integrators, and delays.
+
+\subsubsection{Bode form}
+\[
+G(s)=K\frac{\prod_i(1+s/\omega_{z_i})}{s^q\prod_k(1+s/\omega_{p_k})}
+\]
+Break frequencies \(\omega_{z_i}\) and \(\omega_{p_k}\) determine where slopes and phases change.
+
+\subsection{Asymptotic Bode rules}
+
+\subsubsection{Real left-half-plane pole}
+\[
+\frac{1}{1+s/\omega_p}:\qquad
+\Delta M=-20\ \mathrm{dB/dec},\quad
+\Delta\phi=-90^\circ
+\]
+A stable real pole lowers the high-frequency magnitude slope and adds negative phase.
+
+\subsubsection{Real left-half-plane zero}
+\[
+1+s/\omega_z:\qquad
+\Delta M=+20\ \mathrm{dB/dec},\quad
+\Delta\phi=+90^\circ
+\]
+A stable real zero raises the high-frequency magnitude slope and adds positive phase.
+
+\subsubsection{Integrator}
+\[
+\frac{1}{s}:\qquad
+M_{\mathrm{dB}}=-20\log_{10}\omega,\quad \phi=-90^\circ
+\]
+An integrator gives infinite DC gain and contributes \(-20\ \mathrm{dB/dec}\) at all frequencies.
+
+\subsubsection{Right-half-plane zero}
+\[
+1-\frac{s}{\omega_z}:\qquad
+\Delta M=+20\ \mathrm{dB/dec},\quad
+\Delta\phi=-90^\circ
+\]
+A right-half-plane zero has the magnitude effect of a left-half-plane zero but the phase effect of a pole.
+
+\subsubsection{Right-half-plane pole}
+\[
+\frac{1}{1-s/\omega_p}:\qquad
+\Delta M=-20\ \mathrm{dB/dec},\quad
+\Delta\phi=+90^\circ
+\]
+Right-half-plane poles make the open-loop plant unstable and require Nyquist reasoning for closed-loop stability.
+
+\subsection{Second-order Bode factors}
+
+\subsubsection{Second-order factor}
+\[
+G_2(s)=\frac{\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2}
+\]
+At high frequency, a second-order pole pair contributes \(-40\ \mathrm{dB/dec}\) and \(-180^\circ\).
+
+\subsubsection{Resonance peak}
+\[
+M_r=\frac{1}{2\zeta\sqrt{1-\zeta^2}}, \qquad 0<\zeta<\frac{1}{\sqrt{2}}
+\]
+A resonance peak indicates low damping and can create multiple crossover frequencies.
+
+\subsection{Stability margins}
+
+\subsubsection{Crossover frequency}
+\[
+|L(j\omega_c)|=1
+\]
+The crossover frequency is where the open-loop magnitude is \(0\ \mathrm{dB}\).
+
+\subsubsection{Phase margin}
+\[
+\gamma_M=180^\circ+\angle L(j\omega_c)
+\]
+Positive phase margin indicates distance from the critical phase \(-180^\circ\) at crossover.
+
+\subsubsection{Phase crossover frequency}
+\[
+\angle L(j\omega_\pi)=-180^\circ
+\]
+The phase crossover frequency is used to compute gain margin.
+
+\subsubsection{Gain margin}
+\[
+A_M=\frac{1}{|L(j\omega_\pi)|},\qquad
+A_{M,\mathrm{dB}}=-20\log_{10}|L(j\omega_\pi)|
+\]
+The gain margin is the multiplicative gain increase allowed before reaching the critical point.
+
+\subsubsection{Bode stability criterion}
+\[
+\gamma_M>0,\qquad A_M>1
+\]
+For stable minimum-phase open-loop systems with a unique crossover, positive phase and gain margins indicate closed-loop stability.
+
+\subsubsection{P-controller gain shift}
+\[
+L(s)=K_PG(s),\qquad
+20\log_{10}|L(j\omega)|=20\log_{10}K_P+20\log_{10}|G(j\omega)|
+\]
+A positive proportional gain shifts only the magnitude curve and does not change the phase curve.

@@ -1,0 +1,105 @@
+\section{Fourier Transformation}
+
+\subsection{Definition and Inverse}
+
+\subsubsection{Continuous-time Fourier transform}
+\[
+X(\omega)=\int_{-\infty}^{\infty}x(t)e^{-j\omega t}\,dt.
+\]
+The Fourier transform maps a continuous-time signal to angular frequency in rad/s.
+
+\subsubsection{Inverse Fourier transform}
+\[
+x(t)=\frac{1}{2\pi}\int_{-\infty}^{\infty}X(\omega)e^{j\omega t}\,d\omega.
+\]
+The inverse transform reconstructs the time signal from the complete frequency spectrum.
+
+\subsubsection{Magnitude and phase spectrum}
+\[
+X(\omega)=|X(\omega)|e^{j\angle X(\omega)}.
+\]
+Magnitude describes frequency content amplitude. Phase describes time alignment of the frequency components.
+
+\subsection{Fourier Transform Pairs}
+
+\subsubsection{Impulse and constant}
+\[
+\delta(t)\ \longleftrightarrow\ 1,
+\qquad
+1\ \longleftrightarrow\ 2\pi\delta(\omega).
+\]
+An impulse contains equal weight at all frequencies. A constant signal has all spectral mass at zero frequency.
+
+\subsubsection{Complex exponential and sinusoid}
+\[
+e^{j\omega_0t}\ \longleftrightarrow\ 2\pi\delta(\omega-\omega_0),
+\]
+\[
+\cos\omega_0t\ \longleftrightarrow\ \pi[\delta(\omega-\omega_0)+\delta(\omega+\omega_0)].
+\]
+Periodic sinusoids transform into impulses at their positive and negative angular frequencies.
+
+\subsubsection{Causal exponential}
+\[
+e^{-at}u(t)\ \longleftrightarrow\ \frac{1}{a+j\omega},\qquad a>0.
+\]
+The one-sided decaying exponential produces a first-order frequency response.
+
+\subsubsection{Rectangular pulse and sinc spectrum}
+\[
+x(t)=
+\begin{cases}
+1, & |t|<T/2,\\
+0, & |t|>T/2,
+\end{cases}
+\qquad
+X(\omega)=\frac{2\sin(\omega T/2)}{\omega}.
+\]
+A finite rectangular pulse has a sinc-shaped spectrum with zeros at multiples of \(2\pi/T\).
+
+\subsection{Properties}
+
+\subsubsection{Fourier transform linearity}
+\[
+a x_1(t)+b x_2(t)\ \longleftrightarrow\ aX_1(\omega)+bX_2(\omega).
+\]
+Linearity allows spectra to be built from simpler transform pairs.
+
+\subsubsection{Fourier transform time shift}
+\[
+x(t-t_0)\ \longleftrightarrow\ e^{-j\omega t_0}X(\omega).
+\]
+A time delay adds a linear phase term and does not change the magnitude spectrum.
+
+\subsubsection{Fourier transform frequency shift}
+\[
+e^{j\omega_0t}x(t)\ \longleftrightarrow\ X(\omega-\omega_0).
+\]
+Multiplication by a complex sinusoid shifts the spectrum in frequency.
+
+\subsubsection{Fourier transform differentiation}
+\[
+\frac{d^n x(t)}{dt^n}\ \longleftrightarrow\ (j\omega)^n X(\omega).
+\]
+Differentiation in time multiplies the spectrum by powers of \(j\omega\).
+
+\subsubsection{Fourier transform convolution property}
+\[
+x(t)*h(t)\ \longleftrightarrow\ X(\omega)H(\omega).
+\]
+Convolution in time becomes multiplication in the Fourier domain.
+
+\subsubsection{Fourier transform symmetry for real signals}
+\[
+x(t)\in\mathbb{R}\quad \Rightarrow\quad X(-\omega)=X^*(\omega).
+\]
+Real signals have conjugate-symmetric spectra. The magnitude is even and the phase is odd where the phase is defined.
+
+\subsubsection{Fourier transform symmetry for even and odd signals}
+\[
+\begin{aligned}
+x(t)\ \text{real and even} &\Rightarrow X(\omega)\ \text{real and even},\\
+x(t)\ \text{real and odd} &\Rightarrow X(\omega)\ \text{imaginary and odd}.
+\end{aligned}
+\]
+Signal symmetry strongly restricts the spectrum and is useful for true-false exam questions.

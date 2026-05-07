@@ -1,0 +1,1915 @@
+SOURCE: input\lectures\22050 L09 Applications of Laplace 260406-0801.pdf
+PAGES: 77
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Application of Laplace Transformation
+-Differential equations
+-Circuit analysis
+22050 Continuous-Time Signals and Linear Systems
+Kaj-Åge Henneberg
+L09
+1
+
+-- 1 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Copyright © 2020 – current year. Kaj-Åge Henneberg. All rights reserved.
+The reader of this document is granted permission to:
+• 	Read the document in a PDF reader.
+• 	Make annotations in a private copy of the document.
+• 	Store local copies for private use.
+The reader is not permitted to:
+• 	Change the document other than adding annotations for personal use.
+• 	Reproduce content in any ways or means.
+• 	Redistribute the document.
+Direct consequences:
+• 	The reader is not permitted to make screen dumps of content and insert it in other documents.
+• 	In course assignments, the reader is permitted to write the same equations and draw the same diagrams,
+but should do this using their own tools.
+2
+
+-- 2 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Course overview
+Stability
+System
+response
+System model
+ODE
+Stability
+System
+response
+System model
+s-analysis
+Time
+domain
+Frequency
+domain
+Laplace
+domain
+Bode Plot
+Fourier
+Analysis
+System model
+jw-analysis
+Filters
+3
+
+-- 3 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Lecture plan
+Lathi: Chapter 6.3 – 6.4
+6.3 Solutions to differential equation using Laplace transform
+6.4 Analysis of electrical circuits using the Laplace transform
+4
+
+-- 4 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Review: Laplace Theorems
+𝑥𝑥 	𝑎𝑎𝑎𝑎 1
+𝑎𝑎 𝑋𝑋 𝑠𝑠
+𝑎𝑎 , 𝑎𝑎 > 0	Time scaling:
+𝑥𝑥 	𝑎𝑎 − 𝑎𝑎0 	𝑒𝑒 −𝑠𝑠𝑡𝑡0 𝑋𝑋 	𝑠𝑠 	, 𝑎𝑎0 ≥ 0	Time shift:
+𝑥𝑥 	𝑎𝑎 	𝑒𝑒 𝑠𝑠0 𝑡𝑡 𝑋𝑋 	𝑠𝑠 − 𝑠𝑠0	Frequency shift theorem:
+𝑥𝑥1 	𝑎𝑎 	∗ 𝑥𝑥2 	𝑎𝑎 	𝑋𝑋1 	𝑠𝑠 	⋅ 𝑋𝑋2 	𝑠𝑠	Convolution theorem:
+𝑑𝑑 2𝑥𝑥
+𝑑𝑑𝑎𝑎2 𝑠𝑠 2𝑋𝑋 	𝑠𝑠 	− 𝑠𝑠𝑥𝑥 	0− 	−	̇	 𝑥𝑥 	0−
+Differentiation theorem:
+�
+0 −
+𝑡𝑡
+𝑥𝑥 	𝜏𝜏 𝑑𝑑𝜏𝜏 𝑋𝑋 	𝑠𝑠
+𝑠𝑠
+Integration theorem: �
+−∞
+𝑡𝑡
+𝑥𝑥 	𝜏𝜏 𝑑𝑑𝜏𝜏 𝑋𝑋 	𝑠𝑠
+𝑠𝑠 + ∫−∞
+0 − 𝑥𝑥 	𝜏𝜏 𝑑𝑑𝜏𝜏
+𝑠𝑠
+𝑑𝑑𝑥𝑥
+𝑑𝑑𝑎𝑎 𝑠𝑠𝑋𝑋 	𝑠𝑠 	− 𝑥𝑥 	0−
+5
+
+-- 5 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Next topic
+Video 1
+Solving differential equations
+using Laplace transformation
+Lathi 6.3
+6
+
+-- 6 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+̈
+	𝑦𝑦 + 4	̇𝑦𝑦	 + 4𝑦𝑦 = 2	̈	𝑥𝑥, 	𝑦𝑦 	0− 	= 1,	̇	 𝑦𝑦 	0− 	= −1
+𝑥𝑥 	𝑎𝑎 	= 𝑢𝑢 	𝑎𝑎
+𝑦𝑦 	𝑎𝑎 	𝑌𝑌 𝑠𝑠 	and	̇	 	𝑦𝑦 	𝑎𝑎 	𝑠𝑠𝑌𝑌 	𝑠𝑠 	− 𝑦𝑦 	0−̈
+𝑦𝑦 	𝑎𝑎 	𝑠𝑠 2 𝑌𝑌 𝑠𝑠 	− 𝑠𝑠𝑦𝑦 	0− 	−̇ 𝑦𝑦 	0−̈
+𝑥𝑥 	𝑎𝑎 	𝑠𝑠 2 𝑋𝑋 𝑠𝑠 	and	 ̇	 	𝑥𝑥 	0− 	=	̈	 𝑥𝑥 	0− 	= 0 ∶ 𝑐𝑐𝑎𝑎𝑢𝑢𝑠𝑠𝑎𝑎𝑐𝑐 𝑠𝑠𝑠𝑠𝑠𝑠𝑠𝑠𝑎𝑎𝑐𝑐
+Transform pairs:
+𝑠𝑠 2 + 4𝑠𝑠 + 4 𝑌𝑌 𝑠𝑠 	= 2𝑠𝑠 2 𝑋𝑋 𝑠𝑠 	+ 𝑠𝑠𝑦𝑦 	0− 	+	̇	 𝑦𝑦 	0− 	+ 4𝑦𝑦 	0−
+𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡𝑖𝑖𝑖𝑖𝑖𝑖 𝑐𝑐𝑐𝑐𝑖𝑖𝑐𝑐𝑖𝑖𝑡𝑡𝑖𝑖𝑐𝑐𝑖𝑖 𝑡𝑡𝑡𝑡𝑡𝑡𝑡𝑡𝑠𝑠
+𝑌𝑌 𝑠𝑠 	= 2𝑠𝑠 2
+𝑠𝑠 2 + 4𝑠𝑠 + 4 ⋅ 𝑋𝑋 𝑠𝑠 	+ 𝑠𝑠𝑦𝑦 	0− 	+	̇	 𝑦𝑦 	0− 	+ 4𝑦𝑦 	0−
+𝑠𝑠 2 + 4𝑠𝑠 + 4
+𝑌𝑌 𝑠𝑠 	= 𝑃𝑃 𝑠𝑠
+𝑄𝑄 𝑠𝑠 ⋅ 𝑋𝑋 𝑠𝑠
+zero−state
++ �
+𝐼𝐼 𝑠𝑠
+𝑄𝑄 𝑠𝑠
+zero−input
+Solve for the zero-input response
+and the zero-state response and
+add them together to get the total
+solution.
+7
+Generic form:
+
+-- 7 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+𝑌𝑌𝑧𝑧𝑖𝑖 	𝑠𝑠 	= 𝐼𝐼 𝑠𝑠
+𝑄𝑄 𝑠𝑠 = 𝑠𝑠𝑦𝑦 0− 	+	̇	 𝑦𝑦 0− 	+ 4𝑦𝑦 0−
+𝑠𝑠 2 + 4𝑠𝑠 + 4 = 𝑠𝑠 + 4 − 1
+𝑠𝑠 2 + 4𝑠𝑠 + 4 = 𝑠𝑠 + 3
+𝑠𝑠 + 2 2
+Zero-input response
+using Laplace
+Transformation
+Before going any
+further we will use the
+initial and final value
+theorems to predict
+𝑦𝑦𝑧𝑧𝑖𝑖 	0+ 	and 𝑦𝑦𝑧𝑧𝑖𝑖 (𝑎𝑎 → ∞).
+𝑦𝑦𝑧𝑧𝑖𝑖 	0+ 	= 	lim
+𝑠𝑠→∞ 𝑠𝑠 𝑌𝑌𝑧𝑧𝑖𝑖 	𝑠𝑠 	= 	lim
+𝑠𝑠→∞ 𝑠𝑠 𝑠𝑠 + 3
+𝑠𝑠 + 2 2 = 𝑠𝑠 2
+𝑠𝑠 2 = 1
+lim
+𝑡𝑡→∞ 𝑦𝑦𝑧𝑧𝑖𝑖 	𝑎𝑎 	= lim
+𝑠𝑠→0 𝑠𝑠 𝑌𝑌𝑧𝑧𝑖𝑖 	𝑠𝑠 	= lim
+𝑠𝑠→0 𝑠𝑠 𝑠𝑠 + 3
+𝑠𝑠 + 2 2 = 0
+4 = 0
+8
+
+-- 8 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+𝑌𝑌𝑧𝑧𝑖𝑖 	𝑠𝑠 	= 𝑠𝑠 + 3
+𝑠𝑠 + 2 2 = 𝑘𝑘1
+𝑠𝑠 + 2 2 + 𝑘𝑘 2
+𝑠𝑠 + 2
+𝑘𝑘1 = 	�	𝑠𝑠 + 2 2 𝑠𝑠 + 3
+𝑠𝑠 + 2 2
+𝑠𝑠=−2
+− 	�	𝑠𝑠 + 2 2 𝑘𝑘2
+𝑠𝑠 + 2 𝑠𝑠=−2
+= 	�	𝑠𝑠 + 3 𝑠𝑠=−2 = 1
+𝑠𝑠 + 3
+𝑠𝑠 + 2 2 = 1
+𝑠𝑠 + 2 2 + 𝑘𝑘2
+𝑠𝑠 + 2
+Pick an arbitrary value
+for 𝑠𝑠 not used before. 	𝑠𝑠 = 0 3
+4 = 1
+4 + 𝑘𝑘2
+2 ⇒ 𝑘𝑘2 = 1
+𝑌𝑌𝑧𝑧𝑖𝑖 	𝑠𝑠 	= 𝑠𝑠 + 3
+𝑠𝑠 + 2 2 = 1
+𝑠𝑠 + 2 2 + 1
+𝑠𝑠 + 2
+𝑦𝑦𝑧𝑧𝑖𝑖 	𝑎𝑎 	= 𝑎𝑎𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎 	+ 𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎 	= 	1 + 𝑎𝑎 	𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎
+Zero-input response
+using Laplace
+Transformation
+Partial fraction expansion
+𝑦𝑦𝑧𝑧𝑖𝑖 	0+ 	= 1	Checking with our predictions:
+Zero-input response:
+lim
+𝑡𝑡→∞ 𝑦𝑦𝑧𝑧𝑖𝑖 	𝑎𝑎 	= 0
+9
+
+-- 9 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+Zero-state response
+using Laplace
+Transformation:
+𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= 𝑃𝑃 𝑠𝑠
+𝑄𝑄 𝑠𝑠 ⋅ 𝑋𝑋 𝑠𝑠 	= 𝐻𝐻 𝑠𝑠 𝑋𝑋 𝑠𝑠 	𝑥𝑥 	𝑎𝑎 	= 𝑢𝑢 	𝑎𝑎 	𝑋𝑋 𝑠𝑠 	= 1
+𝑠𝑠
+𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= 2𝑠𝑠 2
+𝑠𝑠 + 2 2 ⋅ 1
+𝑠𝑠 = 2𝑠𝑠
+𝑠𝑠 + 2 2
+Before going any further
+we will use the initial and
+final value theorems to
+predict 𝑦𝑦𝑧𝑧𝑠𝑠 	0+ 	and 𝑦𝑦𝑧𝑧𝑠𝑠(𝑎𝑎 →
+∞).
+𝑦𝑦𝑧𝑧𝑠𝑠 	0+ 	= 	lim
+𝑠𝑠→∞ 𝑠𝑠 𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= 	lim
+𝑠𝑠→∞ 𝑠𝑠 2𝑠𝑠
+𝑠𝑠 + 2 2 = 2𝑠𝑠 2
+𝑠𝑠 2 = 2
+lim
+𝑡𝑡→∞ 𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= lim
+𝑠𝑠→0 𝑠𝑠 𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= lim
+𝑠𝑠→0 𝑠𝑠 2𝑠𝑠
+𝑠𝑠 + 2 2 = 0
+4 = 0
+10
+
+-- 10 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= 2𝑠𝑠 2
+𝑠𝑠 + 2 2 ⋅ 1
+𝑠𝑠 = 2𝑠𝑠
+𝑠𝑠 + 2 2 = 𝑘𝑘1
+𝑠𝑠 + 2 2 + 𝑘𝑘2
+𝑠𝑠 + 2
+𝑘𝑘1 = 	�	2𝑠𝑠 𝑠𝑠=−2 = −4 	𝑘𝑘 2: 𝑠𝑠 ≝ 0 ⇒ 0 = −4
+4 + 𝑘𝑘2
+2 ⇒ 𝑘𝑘2 = 2
+𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= 2𝑠𝑠
+𝑠𝑠 + 2 2 = −4
+𝑠𝑠 + 2 2 + 2
+𝑠𝑠 + 2
+𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= −4𝑎𝑎𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎 	+ 2𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎
+𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= 	2 − 4𝑎𝑎 	𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎
+Partial fraction expansion
+𝑦𝑦𝑧𝑧𝑠𝑠 	0+ 	= 2 	lim
+𝑡𝑡→∞ 𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= 0	Checking with our predictions:
+Zero-state response:
+11
+
+-- 11 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+𝑦𝑦𝑧𝑧𝑖𝑖 	𝑎𝑎 	= 	1 + 𝑎𝑎 	𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎
+𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= 	2 − 4𝑎𝑎 	𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎
+𝑦𝑦 	𝑎𝑎 	= 𝑦𝑦𝑧𝑧𝑖𝑖 	𝑎𝑎 	+ 𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎
+= 	1 + 𝑎𝑎 	𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡
++ 	2 − 4𝑎𝑎 	𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑠𝑠𝑡𝑡𝑖𝑖𝑡𝑡𝑡𝑡
+𝑦𝑦 	𝑎𝑎 	= 	3 − 3𝑎𝑎 	𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎
+Using the ”Signals and Linear Systems
+approach”, we obtain separate expressions
+for:
+• 	Zero-input response
+• 	Zero-state response
+This way we can state precisely how the
+input signal contributes to the output signal.
+If we had used the classical approach
+where the initial conditions are given at
+0+, then we would not be able to
+distinguish the two responses.
+Zero-input response:
+Zero-state response:
+12
+
+-- 12 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impulse Response using Laplace Transformation
+𝐻𝐻 𝑠𝑠 	= 2𝑠𝑠 2
+𝑠𝑠 + 2 2
+Example:
+2𝑠𝑠 2
+𝑠𝑠 + 2 2 = 2 − 8 𝑠𝑠 + 1
+𝑠𝑠 + 2 2
+2
+𝑠𝑠 + 2 2 2𝑠𝑠 2
+2𝑠𝑠 2 + 8𝑠𝑠 + 8
+−8𝑠𝑠 − 8
+𝐻𝐻(𝑠𝑠) = 2𝑠𝑠 2
+𝑠𝑠 + 2 2 = 2 − 8 𝑠𝑠 + 1
+𝑠𝑠 + 2 2
+Polynomial division
+13
+This example is a challenge to
+partial fraction expansion.
+We need to simplify the
+expression by using
+polynomial division.
+Now we have two terms. We
+only need to do partial fraction
+expansion on the latter.
+
+-- 13 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impulse Response using Laplace Transformation
+𝐻𝐻(𝑠𝑠) = 2𝑠𝑠 2
+𝑠𝑠 + 2 2 = 2 − 8 𝑠𝑠 + 1
+𝑠𝑠 + 2 2
+lim
+𝑡𝑡→∞ ℎ 	𝑎𝑎 	= lim
+𝑠𝑠→0 𝑠𝑠 𝐻𝐻 𝑠𝑠 	= lim
+𝑠𝑠→0 2𝑠𝑠 − lim
+𝑠𝑠→0 8𝑠𝑠 𝑠𝑠 + 1
+𝑠𝑠 + 2 2 = 0
+If the limit on the right-hand side exists.
+lim
+𝑠𝑠→∞ 8𝑠𝑠 𝑠𝑠 + 1
+𝑠𝑠 + 2 2 = −8 lim
+𝑠𝑠→∞
+𝑠𝑠 2
+𝑠𝑠 2 = −8	Predicting initial value:
+14
+Predicting final value:
+
+-- 14 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impulse Response using Laplace Transformation
+ℎ 	𝑎𝑎 	= 2𝛿𝛿 	𝑎𝑎 	+ 8𝑎𝑎𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎 	− 8𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎
+ℎ 	𝑎𝑎 	= 2𝛿𝛿 	𝑎𝑎 	+ 8 	𝑎𝑎 − 1 	𝑒𝑒 −2𝑡𝑡 𝑢𝑢 	𝑎𝑎
+Looking up the inverse
+transforms in table 6.1:
+Observe:
+The power of 𝑠𝑠 in the numerator is equal to the power of 𝑠𝑠 in the denominator. A clear sign that
+this is a high-pass filter. And we got the 𝛿𝛿(𝑎𝑎) function we expected.
+The initial value theorem predicts the value at 0+. At 𝑎𝑎 = 0+ the impulse has vanished.
+𝐻𝐻 𝑠𝑠 	= 2𝑠𝑠 2
+𝑠𝑠 + 2 2 = 2 − 8 𝑠𝑠 + 1
+𝑠𝑠 + 2 2
+= 2 + 8
+𝑠𝑠 + 2 2 − 8
+𝑠𝑠 + 2
+Partial fraction expansion:
+ℎ 	0+ 	= −8 	lim
+𝑡𝑡→∞ ℎ 	𝑎𝑎 	= 0	Checking with our predictions:
+15
+
+-- 15 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+̈
+	𝑦𝑦 + 4	̇𝑦𝑦	 + 3𝑦𝑦 = 2	̇	𝑥𝑥 + 𝑥𝑥, 	𝑦𝑦 	0− 	= 1,	̇	 𝑦𝑦 	0− 	= 2
+𝑥𝑥 	𝑎𝑎 	= 𝑢𝑢 	𝑎𝑎
+𝑦𝑦 	𝑎𝑎 	𝑌𝑌 𝑠𝑠 	and	̇	 	𝑦𝑦 	𝑎𝑎 	𝑠𝑠𝑌𝑌 	𝑠𝑠 	− 𝑦𝑦 	0−̈
+𝑦𝑦 	𝑎𝑎 	𝑠𝑠 2 𝑌𝑌 𝑠𝑠 	− 𝑠𝑠𝑦𝑦 	0− 	−̇ 𝑦𝑦 	0−̇
+𝑥𝑥 	𝑎𝑎 	𝑠𝑠𝑋𝑋 	𝑠𝑠 	and	 ̇	 	𝑥𝑥 	0− 	=	̈	 𝑥𝑥 	0− 	= 0 ∶ 𝑐𝑐𝑎𝑎𝑢𝑢𝑠𝑠𝑎𝑎𝑐𝑐 𝑠𝑠𝑠𝑠𝑠𝑠𝑠𝑠𝑎𝑎𝑐𝑐
+Transform pairs:
+𝑠𝑠 2 + 4𝑠𝑠 + 3 𝑌𝑌 𝑠𝑠 	= 	2𝑠𝑠 + 1 	𝑋𝑋 𝑠𝑠 	+ 𝑠𝑠𝑦𝑦 	0− 	+	̇	 𝑦𝑦 	0− 	+ 4𝑦𝑦 	0−
+𝑌𝑌 𝑠𝑠 	= 2𝑠𝑠 + 1
+𝑠𝑠 2 + 4𝑠𝑠 + 3 ⋅ 𝑋𝑋 𝑠𝑠 	+ 𝑠𝑠𝑦𝑦 	0− 	+	̇	 𝑦𝑦 	0− 	+ 4𝑦𝑦 	0−
+𝑠𝑠 2 + 4𝑠𝑠 + 3
+𝑌𝑌 𝑠𝑠 	= 𝑃𝑃 𝑠𝑠
+𝑄𝑄 𝑠𝑠 ⋅ 𝑋𝑋 𝑠𝑠
+zero−state
++ �
+𝐼𝐼 𝑠𝑠
+𝑄𝑄 𝑠𝑠
+zero−input
+Solve for the zero-input response
+and the zero-state response and
+add them together to get the total
+solution.
+16
+Another example.
+Generic form:
+
+-- 16 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+𝑌𝑌𝑧𝑧𝑖𝑖 	𝑠𝑠 	= 𝐼𝐼 𝑠𝑠
+𝑄𝑄 𝑠𝑠 = 𝑠𝑠 + 6
+𝑠𝑠 2 + 4𝑠𝑠 + 3
+Before going any
+further we will use the
+initial and final value
+theorems to predict
+𝑦𝑦𝑧𝑧𝑖𝑖 	0+ 	and 𝑦𝑦𝑧𝑧𝑖𝑖 (𝑎𝑎 → ∞).
+𝑦𝑦𝑧𝑧𝑖𝑖 	0+ 	=
+lim
+𝑡𝑡→∞ 𝑦𝑦𝑧𝑧𝑖𝑖 	𝑎𝑎 	=
+= 𝑠𝑠 2
+𝑠𝑠 2 = 1	= 	lim
+𝑠𝑠→∞ 𝑠𝑠 𝑠𝑠 + 6
+𝑠𝑠 2 + 4𝑠𝑠 + 3
+lim
+𝑠𝑠→∞ 𝑠𝑠 𝑌𝑌𝑧𝑧𝑖𝑖 	𝑠𝑠
+lim
+𝑠𝑠→0 𝑠𝑠 𝑌𝑌𝑧𝑧𝑖𝑖 	𝑠𝑠 	= lim
+𝑠𝑠→0 𝑠𝑠 𝑠𝑠 + 6
+𝑠𝑠 2 + 4𝑠𝑠 + 3 = 0
+3 = 0
+17
+Initial value:
+Final value:
+
+-- 17 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+𝑌𝑌𝑧𝑧𝑖𝑖 	𝑠𝑠 	= 𝐼𝐼 𝑠𝑠
+𝑄𝑄 𝑠𝑠 = 𝑠𝑠 + 6
+𝑠𝑠 2 + 4𝑠𝑠 + 3
+𝑦𝑦𝑧𝑧𝑖𝑖 	𝑎𝑎 	= 5
+2 𝑒𝑒 −𝑡𝑡 − 3
+2 𝑒𝑒 −3𝑡𝑡 𝑢𝑢 	𝑎𝑎
+𝑘𝑘1 = 	�
+𝑠𝑠 + 6
+𝑠𝑠 + 3 𝑠𝑠=−1
+= 5
+2 𝑘𝑘 2 = 	�
+𝑠𝑠 + 6
+𝑠𝑠 + 1 𝑠𝑠=−3
+= − 3
+2
+𝑌𝑌𝑧𝑧𝑖𝑖 	𝑠𝑠 	= 1
+2
+5
+𝑠𝑠 + 1 − 3
+𝑠𝑠 + 3
+Zero-input response: 	= 𝑘𝑘1
+𝑠𝑠 + 1 + 𝑘𝑘 2
+𝑠𝑠 + 3
+= 𝑠𝑠 + 6
+𝑠𝑠 + 1 	𝑠𝑠 + 3
+18
+Partial fraction expansion:
+Inverse Laplace transform:
+
+-- 18 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= 𝑃𝑃 𝑠𝑠
+𝑄𝑄 𝑠𝑠 ⋅ 𝑋𝑋 𝑠𝑠 	= 𝐻𝐻 𝑠𝑠 𝑋𝑋 𝑠𝑠 	𝑥𝑥 	𝑎𝑎 	= 𝑢𝑢 	𝑎𝑎 	𝑋𝑋 𝑠𝑠 	= 1
+𝑠𝑠
+𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= 2𝑠𝑠 + 1
+𝑠𝑠 2 + 4𝑠𝑠 + 3 ⋅ 1
+𝑠𝑠
+𝑘𝑘1 = 	�
+2𝑠𝑠 + 1
+𝑠𝑠 + 1 	𝑠𝑠 + 3 𝑠𝑠=0
+= 1
+3
+𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= 1
+3 + 1
+2 𝑒𝑒 −𝑡𝑡 − 5
+6 𝑒𝑒 −3𝑡𝑡 𝑢𝑢 	𝑎𝑎
+𝑘𝑘 2 = 	�
+2𝑠𝑠 + 1
+𝑠𝑠 𝑠𝑠 + 3 𝑠𝑠=−1
+= 1
+2 𝑘𝑘 3 = 	�
+2𝑠𝑠 + 1
+𝑠𝑠 𝑠𝑠 + 1 𝑠𝑠=−3
+= −5
+6
+𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= 1/3
+𝑠𝑠 + 1/2
+𝑠𝑠 + 1 − 5/6
+𝑠𝑠 + 3
+Zero-state response:
+= 𝑘𝑘1
+𝑠𝑠 + 𝑘𝑘 2
+𝑠𝑠 + 1 + 𝑘𝑘 3
+𝑠𝑠 + 3
+= 2𝑠𝑠 + 1
+𝑠𝑠 𝑠𝑠 + 1 	𝑠𝑠 + 3
+19
+Partial fraction expansion:
+Inverse Laplace transform:
+
+-- 19 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Solving Differential Equations using Laplace Transformation
+𝑦𝑦 	𝑎𝑎 	= 𝑦𝑦𝑧𝑧𝑖𝑖 	𝑎𝑎 	+ 𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎
+= 5
+2 𝑒𝑒 −𝑡𝑡 − 3
+2 𝑒𝑒 −3𝑡𝑡 𝑢𝑢 	𝑎𝑎
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡
++ 1
+3 + 1
+2 𝑒𝑒 −𝑡𝑡 − 5
+6 𝑒𝑒 −3𝑡𝑡 𝑢𝑢 	𝑎𝑎
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑠𝑠𝑡𝑡𝑖𝑖𝑡𝑡𝑡𝑡
+= 1
+3 + 3𝑒𝑒 −𝑡𝑡 − 7
+3 𝑒𝑒 −3𝑡𝑡 𝑢𝑢 	𝑎𝑎
+𝑐𝑐𝑖𝑖𝑖𝑖𝑠𝑠𝑠𝑠𝑖𝑖𝑐𝑐𝑖𝑖𝑖𝑖
+Total solution:
+20
+Again, we see that the principle of
+splitting the total response into a zero-
+input and a zero-state response enables
+us to distinguish the impact of the input
+signal from the response to release of
+internal energy (zero-input response).
+
+-- 20 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Summary
+𝑄𝑄 𝑠𝑠 	𝑌𝑌 	𝑠𝑠 	= 𝑃𝑃 𝑠𝑠 	𝑋𝑋 𝑠𝑠 	+ 𝐼𝐼(𝑠𝑠)
+By Laplace transformation of differential
+equations, we have shown:
+𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= 𝑃𝑃 𝑠𝑠
+𝑄𝑄 𝑠𝑠 ⋅ 𝑋𝑋 𝑠𝑠
+𝑄𝑄 	𝐷𝐷 	𝑦𝑦𝑧𝑧𝑠𝑠(𝑎𝑎) = 𝑃𝑃 	𝐷𝐷 	𝑥𝑥(𝑎𝑎)
+𝐻𝐻 𝑠𝑠 	≝ 𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠
+𝑋𝑋 𝑠𝑠 = 𝑃𝑃 𝑠𝑠
+𝑄𝑄 𝑠𝑠
+We define the transfer function 𝑯𝑯(𝒔𝒔) as the zero-
+state response divided by the input signal:
+The roots of the characteristic equation are the
+poles of the transfer function (only if common
+factors have not been cancelled out): 	𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= ℎ 	𝑎𝑎 	∗ 𝑥𝑥(𝑎𝑎)
+𝑌𝑌𝑧𝑧𝑠𝑠 	𝑠𝑠 	= 𝐻𝐻(𝑠𝑠) ⋅ 𝑋𝑋 𝑠𝑠
+ℎ 	𝑎𝑎 	𝐻𝐻(𝑠𝑠)
+The transfer function is the Laplace
+transform of the impulse response:
+21
+
+-- 21 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Next topic
+Stability analysis using Laplace
+transformation
+Lathi 6.3
+22
+
+-- 22 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Stability
+1. An LTIC system is asymptotically stable if and
+only if all the poles of the transfer function 𝐻𝐻(𝑠𝑠)
+are in the left-half-plane (LHP). Poles in the LHP
+may be repeated or unrepeated.
+2. An LTIC system is unstable if and only if either
+one or both of the following conditions are met:
+(i) at least one pole of 𝐻𝐻(𝑠𝑠) is in the RHP, (ii)
+there are repeated poles of 𝐻𝐻(𝑠𝑠) on the
+imaginary axis.
+3. An LTIC system is marginally stable if and
+only if there are no poles of 𝐻𝐻(𝑠𝑠) in the RHP, and
+there are some unrepeated poles on the
+imaginary axis.
+𝜎𝜎
+𝑗𝑗𝑗𝑗
+RHP	LHP
+1
+𝑠𝑠 + 𝑎𝑎 𝑒𝑒 −𝑖𝑖𝑡𝑡𝑢𝑢(𝑎𝑎)
+1
+𝑠𝑠 + 1 𝑒𝑒 −𝑡𝑡 𝑢𝑢(𝑎𝑎) 1
+𝑠𝑠 − 1 𝑒𝑒 𝑡𝑡 𝑢𝑢(𝑎𝑎)
+× 	×
+Direct quote from Lathi and Green, p. 555.
+We can now state the conditions of stability in
+terms of the poles of the transfer function.
+23
+
+-- 23 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Stability
+𝑌𝑌(𝑠𝑠) = 𝑃𝑃 𝑠𝑠
+𝑄𝑄(𝑠𝑠) 𝑋𝑋 	𝑠𝑠 	+ 𝐼𝐼 𝑠𝑠
+𝑄𝑄(𝑠𝑠)
+Observation:
+A zero may cancel a pole in the
+transfer function.
+𝑌𝑌 	𝑠𝑠 	= (𝑠𝑠 + 1)(𝑠𝑠 − 2)
+𝑠𝑠 + 2 	𝑠𝑠 − 2 𝑋𝑋 	𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑠𝑠𝑡𝑡𝑖𝑖𝑡𝑡𝑡𝑡
+𝑡𝑡𝑡𝑡𝑠𝑠𝑖𝑖𝑐𝑐𝑖𝑖𝑠𝑠𝑡𝑡
++ 𝐼𝐼(𝑠𝑠)
+𝑠𝑠 + 2 	𝑠𝑠 − 2
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐 𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡
+𝑡𝑡𝑡𝑡𝑠𝑠𝑖𝑖𝑐𝑐𝑖𝑖𝑠𝑠𝑡𝑡
+𝑌𝑌 	𝑠𝑠 	= (𝑠𝑠 + 1)
+(𝑠𝑠 + 2) 𝑋𝑋 	𝑠𝑠
+𝑠𝑠𝑡𝑡𝑖𝑖𝑠𝑠𝑖𝑖𝑡𝑡
++ 𝐼𝐼(𝑠𝑠)
+𝑠𝑠 + 2 	𝑠𝑠 − 2
+𝑖𝑖𝑖𝑖𝑠𝑠𝑡𝑡𝑖𝑖𝑠𝑠𝑖𝑖𝑡𝑡
+However, zeros have no impact on
+the zero-input response. A pole in
+the RHP will thus give an
+unbounded response to a non-zero
+initial state, even if there is a
+superimposed zero.
+24
+
+-- 24 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Stability
+𝑋𝑋(𝑠𝑠) 	𝑉𝑉(𝑠𝑠) 	𝑌𝑌(𝑠𝑠)
+𝐻𝐻1(𝑠𝑠) 	𝐻𝐻2(𝑠𝑠)
+𝑉𝑉 	𝑠𝑠 	= 𝑃𝑃1 	𝑠𝑠
+𝑄𝑄1(𝑠𝑠) 𝑋𝑋 	𝑠𝑠 	+ 𝐼𝐼1 	𝑠𝑠
+𝑄𝑄1(𝑠𝑠)
+𝑌𝑌 	𝑠𝑠 	= 𝑃𝑃2 	𝑠𝑠
+𝑄𝑄2(𝑠𝑠) 𝑉𝑉 	𝑠𝑠 	+ 𝐼𝐼2 	𝑠𝑠
+𝑄𝑄2(𝑠𝑠)
+𝑌𝑌 	𝑠𝑠 	= 𝑃𝑃2 	𝑠𝑠
+𝑄𝑄2(𝑠𝑠)
+𝑃𝑃1 	𝑠𝑠
+𝑄𝑄1(𝑠𝑠) 𝑋𝑋 	𝑠𝑠 	+ 𝐼𝐼1 	𝑠𝑠
+𝑄𝑄1(𝑠𝑠) + 𝐼𝐼2 	𝑠𝑠
+𝑄𝑄2(𝑠𝑠)
+𝑌𝑌 	𝑠𝑠 	= 𝑃𝑃2 	𝑠𝑠
+𝑄𝑄2(𝑠𝑠)
+𝑃𝑃1 	𝑠𝑠
+𝑄𝑄1(𝑠𝑠) 𝑋𝑋 	𝑠𝑠 	+ 𝑃𝑃2 	𝑠𝑠
+𝑄𝑄2(𝑠𝑠)
+𝐼𝐼1 	𝑠𝑠
+𝑄𝑄1(𝑠𝑠) + 𝐼𝐼2 	𝑠𝑠
+𝑄𝑄2(𝑠𝑠)
+Here are shown a system, which,
+seen from the outside, appears to
+be one system, but in fact is
+composed of two subsystems in
+series.
+If we monitor the input and output
+signals, we may conclude that the
+signals are bounded in amplitude
+and hence that the system is stable
+in the Bounded Input - Bounded
+Output (BIBO) sense.
+Let us look at an example.
+25
+
+-- 25 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Stability by compensation
+𝑋𝑋(𝑠𝑠) 	𝑉𝑉(𝑠𝑠) 	𝑌𝑌(𝑠𝑠)1
+𝑠𝑠 − 1
+𝑠𝑠 − 1
+𝑠𝑠 + 1
+𝑉𝑉 	𝑠𝑠 	= 1
+𝑠𝑠 − 1 𝑋𝑋 	𝑠𝑠 	+ 𝐼𝐼1 	𝑠𝑠
+𝑠𝑠 − 1
+𝑌𝑌 	𝑠𝑠 	= 𝑠𝑠 − 1
+𝑠𝑠 + 1 𝑉𝑉 	𝑠𝑠 	+ 𝐼𝐼2 	𝑠𝑠
+𝑠𝑠 + 1
+𝑌𝑌 	𝑠𝑠 	= 𝑠𝑠 − 1
+𝑠𝑠 + 1
+1
+𝑠𝑠 − 1 𝑋𝑋 	𝑠𝑠 	+ 𝐼𝐼1 	𝑠𝑠
+𝑠𝑠 − 1 + 𝐼𝐼2 	𝑠𝑠
+𝑠𝑠 + 1
+𝑌𝑌 	𝑠𝑠 	= 𝑠𝑠 − 1
+𝑠𝑠 + 1
+1
+𝑠𝑠 − 1 𝑋𝑋 	𝑠𝑠 	+ 𝑠𝑠 − 1
+𝑠𝑠 + 1
+𝐼𝐼1 	𝑠𝑠
+𝑠𝑠 − 1 + 𝐼𝐼2 	𝑠𝑠
+𝑠𝑠 + 1
+𝑌𝑌 	𝑠𝑠 	= 1
+𝑠𝑠 + 1 𝑋𝑋 	𝑠𝑠 	+ 𝐼𝐼1 	𝑠𝑠
+𝑠𝑠 + 1 + 𝐼𝐼2 	𝑠𝑠
+𝑠𝑠 + 1
+Transfer function 𝐻𝐻1(𝑠𝑠) has a pole
+(𝑠𝑠 − 1) in the right-half plane. Hence
+subsystem 1 is unstable. But what
+about the composite system?
+Subsystem 2 has a zero (𝑠𝑠 − 1) that
+attempts to cancel the troublesome
+pole of subsystem 1.
+Doing the math, we end up with an
+equation which features only a pole
+(𝑠𝑠 + 1) in the left half plane. The
+impulse response of the composite
+system is 𝑒𝑒 −𝑡𝑡 𝑢𝑢(𝑎𝑎), hence the composite
+system appears to be asymptotic
+stable (only poles in the half-plane).
+However, things are much worse
+than they appear.
+26
+
+-- 26 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Stability by compensation
+𝑋𝑋(𝑠𝑠) 	𝑉𝑉(𝑠𝑠) 	𝑌𝑌(𝑠𝑠)1
+𝑠𝑠 − 1
+𝑠𝑠 − 1
+𝑠𝑠 + 1
+𝑉𝑉 	𝑠𝑠 	= 1
+𝑠𝑠 − 1 𝑋𝑋 	𝑠𝑠 	+ 𝐼𝐼1 	𝑠𝑠
+𝑠𝑠 − 1
+Transfer function 𝐻𝐻1(𝑠𝑠) has a pole (𝑠𝑠 − 1) in
+the right-half plane. Hence subsystem 1
+has an impulse response 𝑒𝑒 𝑡𝑡 𝑢𝑢(𝑎𝑎). This
+behavior is independent of subsystem 2.
+Subsystem 2 cannot prevent the internal
+signal 𝑣𝑣 	𝑎𝑎 	from growing exponentially.
+If a system 𝐻𝐻1 	𝑠𝑠 	has an undesired
+performance, adding a compensating
+system 𝐻𝐻2(𝑠𝑠) may in many cases improve
+performance.
+Local internal instability cannot be
+compensated downstream.
+We notice also that 𝑣𝑣(𝑎𝑎) will grow
+exponentially whether stimulated by the
+input signal or simply from the presence of
+internal energy stored in subsystem 1.
+In an electronic system, subsystem 1 would
+enter into a mode of saturation, thus
+clipping 𝑣𝑣(𝑎𝑎) at the supply voltage. Subsystem
+2 cannot rectify this, but it will give the
+erroneous impression of a bounded output.
+If subsystem 1 were a mechanical system, it
+would likely self-destruct.
+27
+
+-- 27 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Next topic
+Video 2
+Analyzing electric circuits using
+Laplace transformation
+Lathi 6.4
+28
+
+-- 28 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impedance Model of Capacitor
+𝑉𝑉𝐶𝐶 	𝑠𝑠 	= 1
+𝑠𝑠𝑠𝑠 𝐼𝐼𝐶𝐶 	𝑠𝑠 	+ 𝑣𝑣𝐶𝐶 	0−
+𝑠𝑠
+𝑣𝑣𝐶𝐶 	𝑎𝑎 	= 1
+𝑠𝑠 �
+0 −
+𝑡𝑡
+𝑠𝑠𝐶𝐶 	𝜏𝜏 𝑑𝑑𝜏𝜏 + 𝑣𝑣𝐶𝐶 	0−
+The capacitor:
+The voltage drop over a
+capacitor is the sum of the
+initial voltage and the voltage
+due to the charging current.
+𝐼𝐼𝐶𝐶 	𝑠𝑠
++ 	𝑉𝑉𝐶𝐶 	𝑠𝑠 	−
+𝑠𝑠𝑣𝑣𝐶𝐶 	0−
+𝑠𝑠𝑠𝑠
+Admittance
+𝑠𝑠𝐶𝐶 	𝑎𝑎 	= 𝑠𝑠 𝑑𝑑𝑣𝑣𝐶𝐶
+𝑑𝑑𝑎𝑎
+𝐼𝐼𝐶𝐶 	𝑠𝑠 	= 𝑠𝑠𝑠𝑠𝑉𝑉𝐶𝐶 	𝑠𝑠 	− 𝑠𝑠𝑣𝑣𝐶𝐶 	0−
+Hence, we obtain a model
+with two components in
+parallel.
+We can think of the current source (green term) as a discharge
+current (or leakage current) reflecting the initial charged state
+of the capacitor. The blue term is the charging current needed
+to change the voltage at a given rate, if there were no initial
+charged state.
+Impedance
+𝐼𝐼𝐶𝐶 	𝑠𝑠
++ 	𝑉𝑉𝐶𝐶 	𝑠𝑠 	−
++𝑣𝑣𝐶𝐶 	0− 	/𝑠𝑠 −1/𝑠𝑠𝑠𝑠
++
+�
+−∞
+𝑡𝑡
+𝑥𝑥 	𝜏𝜏 𝑑𝑑𝜏𝜏 𝑋𝑋 	𝑠𝑠
+𝑠𝑠 + ∫−∞
+0 − 𝑥𝑥 	𝜏𝜏 𝑑𝑑𝜏𝜏
+𝑠𝑠
+Solving for the total current,
+we get a sum of two terms.
+29
+
+-- 29 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Impedance Model of Inductor
+𝑣𝑣𝐿𝐿 	𝑎𝑎 	= 𝐿𝐿 𝑑𝑑𝑠𝑠𝐿𝐿
+𝑑𝑑𝑎𝑎
+𝑉𝑉𝐿𝐿 	𝑠𝑠 	= 𝑠𝑠𝐿𝐿𝐼𝐼𝐿𝐿 	𝑠𝑠 	− 𝐿𝐿𝑠𝑠𝐿𝐿 	0−
+The inductor:
+The voltage drop over an
+inductor is proportional to
+the rate of change in
+current.
+𝐼𝐼𝐿𝐿 	𝑠𝑠
++ 	𝑉𝑉𝐿𝐿 	𝑠𝑠 	−
+𝑠𝑠𝐿𝐿 	0− 	/𝑠𝑠
+1/𝑠𝑠𝐿𝐿 Admittance
+𝑠𝑠𝐿𝐿 	𝑎𝑎 	= 1
+𝐿𝐿 �
+0 −
+𝑡𝑡
+𝑣𝑣𝐿𝐿 	𝜏𝜏 𝑑𝑑𝜏𝜏 + 𝑠𝑠𝐿𝐿 	0−
+𝐼𝐼𝐿𝐿 	𝑠𝑠 	= 1
+𝑠𝑠𝐿𝐿 𝑉𝑉𝐿𝐿 	𝑠𝑠 	+ 𝑠𝑠𝐿𝐿 	0−
+𝑠𝑠
+Solving for the total current,
+we get a sum of two terms.
+The source (green) term represents the initial magnetized
+state of the inductor. An increase in current increases
+magnetic energy. A release of stored magnetic energy
+induces a current. The green source represents the release
+of an initial magnetic energy stored in the inductor.
+−𝐿𝐿𝑠𝑠𝐿𝐿 	0− 	+
+𝑠𝑠𝐿𝐿
+𝐼𝐼𝐿𝐿 	𝑠𝑠
++ 	𝑉𝑉𝐿𝐿 	𝑠𝑠 	−
+Impedance
++
+Hence, we obtain a model
+with two components in
+parallel.
+30
+
+-- 30 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Choice of Laplace transform model
+Observation:
+For both the capacitor and the inductor we have two models (parallel or serial) to choose
+from. They are equally valid, but one may be more convenient to use than the other.
+𝑉𝑉𝐿𝐿 	𝑠𝑠 	= 𝑠𝑠𝐿𝐿𝐼𝐼𝐿𝐿 	𝑠𝑠 	− 𝐿𝐿𝑠𝑠𝐿𝐿 	0−
+𝑉𝑉𝐶𝐶 	𝑠𝑠 	= 1
+𝑠𝑠𝑠𝑠 𝐼𝐼𝐶𝐶 	𝑠𝑠 	+ 𝑣𝑣𝐶𝐶 	0−
+𝑠𝑠
+𝐼𝐼𝐶𝐶 	𝑠𝑠 	= 𝑠𝑠𝑠𝑠𝑉𝑉𝐶𝐶 	𝑠𝑠 	− 𝑠𝑠𝑣𝑣𝐶𝐶 	0−
+𝐼𝐼𝐿𝐿 	𝑠𝑠 	= 1
+𝑠𝑠𝐿𝐿 𝑉𝑉𝐿𝐿 	𝑠𝑠 	+ 𝑠𝑠𝐿𝐿 	0−
+𝑠𝑠
+• 	Mesh analysis: Here we sum up
+voltage change in a loop. In this case
+the series model models may be
+preferred, because it adds voltages.
+• 	Nodal analysis: Here we sum up
+currents. In this case the models
+with parallel components may be
+preferred because the two branches
+in the model are both currents.
+31
+
+-- 31 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Circuit Example 1 (using a series model in a nodal analysis, not the smartest way)
+Laplace transform this circuit:
+𝑉𝑉𝑖𝑖 	𝑠𝑠 	− 𝑣𝑣𝐶𝐶 	0−
+𝑠𝑠 + 𝑉𝑉𝑐𝑐 	𝑠𝑠
+1/𝑠𝑠𝑠𝑠 = 𝑉𝑉𝑐𝑐 	𝑠𝑠
+𝑅𝑅
+𝑠𝑠𝑅𝑅𝑠𝑠𝑉𝑉𝑖𝑖 	𝑠𝑠 	− 𝑅𝑅𝑠𝑠𝑣𝑣𝐶𝐶 	0− 	= 	𝑠𝑠𝑅𝑅𝑠𝑠 + 1 	𝑉𝑉𝑐𝑐 	𝑠𝑠
+𝑉𝑉𝑐𝑐 	𝑠𝑠 	= 𝑠𝑠
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 𝑉𝑉𝑖𝑖 	𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑠𝑠𝑡𝑡𝑖𝑖𝑡𝑡𝑡𝑡
+− 𝑣𝑣𝐶𝐶 	0−
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡
+𝑣𝑣𝑖𝑖 	𝑎𝑎 	𝑣𝑣𝑐𝑐 	𝑎𝑎
+𝑠𝑠
+𝑅𝑅
+Time domain
+𝑅𝑅𝑉𝑉𝑖𝑖 	𝑠𝑠 	𝑉𝑉𝑐𝑐 𝑠𝑠
+1/𝑠𝑠𝑠𝑠 +𝑣𝑣𝑐𝑐 	0− /𝑠𝑠 −
+s domain
+Using Kirchhoff’s current law and
+Ohm’s law for impedances in the
+𝑠𝑠 − domain:
+Simplifying and solving for 𝑉𝑉𝑐𝑐(𝑠𝑠):
+We obtain a first order highpass filter.
+The series model
+adds a voltage
+term.
+32
+Example 1.
+
+-- 32 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Circuit Example 1 (using a parallel model in a nodal analysis, the smartest way)
+𝑣𝑣𝑖𝑖 	𝑎𝑎 	𝑣𝑣𝑐𝑐 	𝑎𝑎
+𝑠𝑠
+𝑅𝑅
+Time domain 	𝐼𝐼𝐶𝐶 	𝑠𝑠
++ 	𝑉𝑉𝐶𝐶 	𝑠𝑠 	−
+𝑠𝑠𝑣𝑣𝐶𝐶 	0−
+𝑠𝑠𝑠𝑠
+𝑉𝑉𝑖𝑖 	𝑠𝑠 	𝑉𝑉𝑐𝑐 𝑠𝑠𝑅𝑅
+𝑠𝑠𝑠𝑠𝑉𝑉𝐶𝐶 	𝑠𝑠 	− 𝑠𝑠𝑣𝑣𝑐𝑐 	0− 	= 𝑉𝑉𝑐𝑐 	𝑠𝑠
+𝑅𝑅
+𝑠𝑠𝑅𝑅𝑠𝑠 𝑉𝑉𝑖𝑖 	𝑠𝑠 	− 𝑉𝑉𝑐𝑐 	𝑠𝑠 	− 𝑅𝑅𝑠𝑠𝑣𝑣𝑐𝑐 	0− 	= 𝑉𝑉𝑐𝑐 	𝑠𝑠
+𝑠𝑠𝑅𝑅𝑠𝑠 + 1 	𝑉𝑉𝑐𝑐 	𝑠𝑠 	= 𝑠𝑠𝑅𝑅𝑠𝑠𝑉𝑉𝑖𝑖 	𝑠𝑠 	− 𝑅𝑅𝑠𝑠𝑣𝑣𝑐𝑐 	0−
+𝑉𝑉𝑐𝑐 	𝑠𝑠 	= 𝑠𝑠
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 𝑉𝑉𝑖𝑖 	𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑠𝑠𝑡𝑡𝑖𝑖𝑡𝑡𝑡𝑡
+− 𝑣𝑣𝐶𝐶 	0−
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡
+Using Kirchhoff’s current law and
+Ohm’s law for impedances in the
+𝑠𝑠 − domain:
+Simplifying and solving for 𝑉𝑉𝑐𝑐(𝑠𝑠):
+We obtain a first order highpass filter.
+𝐼𝐼𝐶𝐶 	𝑠𝑠 	= 𝑠𝑠𝑠𝑠𝑉𝑉𝐶𝐶 	𝑠𝑠 	− 𝑠𝑠𝑣𝑣𝐶𝐶 	0−
+33
+Example 1 (alternative).
+
+-- 33 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Circuit Example 1 continued
+𝑉𝑉𝑐𝑐 	𝑠𝑠 	= 𝑠𝑠
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 ⋅ 2
+𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑠𝑠𝑡𝑡𝑖𝑖𝑡𝑡𝑡𝑡
+− 1
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡
+Setting 	𝑉𝑉𝑖𝑖 	𝑠𝑠 	= 2/𝑠𝑠
+and 	𝑣𝑣𝐶𝐶 	0− 	= 1 V:
+Before computing the inverse
+Laplace transforms of the two
+terms, we would like to use
+the initial and final value
+theorems to predict the
+initial and final values of the
+two terms in the time
+domain:
+Initial values: 	𝑣𝑣𝑐𝑐,𝑍𝑍𝑍𝑍 	0+ 	=
+𝑣𝑣𝑐𝑐,𝑍𝑍𝑍𝑍 	0+ 	=
+Final values: 	lim
+𝑡𝑡→∞ 𝑣𝑣𝑐𝑐,𝑍𝑍𝑍𝑍 	𝑎𝑎 	=
+lim
+𝑡𝑡→∞ 𝑣𝑣𝑐𝑐,𝑍𝑍𝑍𝑍 	𝑎𝑎 	=
+Question:
+How is it possible that the
+output dies away in
+response to a step input?
+lim
+𝑠𝑠→∞ 𝑠𝑠 ⋅ −1
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 = 	−1
+lim
+𝑠𝑠→∞ 𝑠𝑠 ⋅ 2
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 = 	2
+lim
+𝑠𝑠→0 𝑠𝑠 ⋅ −1
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 = 	0
+lim
+𝑠𝑠→0 𝑠𝑠 ⋅ 2
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 = 	0
+34
+
+-- 34 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Circuit Example 1 continued
+𝑉𝑉𝑐𝑐 	𝑠𝑠 	= 2
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑠𝑠𝑡𝑡𝑖𝑖𝑡𝑡𝑡𝑡
+− 1
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡
+𝑣𝑣𝑐𝑐 	𝑎𝑎 	= 2𝑒𝑒 −𝑡𝑡/𝑅𝑅𝐶𝐶 𝑢𝑢 	𝑎𝑎
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑠𝑠𝑡𝑡𝑖𝑖𝑡𝑡𝑡𝑡
+− 𝑒𝑒 −𝑡𝑡/𝑅𝑅𝐶𝐶 𝑢𝑢 	𝑎𝑎
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡
+The results agree with the
+results of the initial and final
+value theorems.
+Initial values: 	𝑣𝑣𝑐𝑐,𝑍𝑍𝑍𝑍 	0+ 	= 	lim
+𝑠𝑠→∞ 𝑠𝑠 ⋅ −1
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 = −1
+𝑣𝑣𝑐𝑐,𝑍𝑍𝑍𝑍 	0+ 	= 	lim
+𝑠𝑠→∞ 𝑠𝑠 ⋅ 2
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 = 2
+Final values: 	lim
+𝑡𝑡→∞ 𝑣𝑣𝑐𝑐,𝑍𝑍𝑍𝑍 	𝑎𝑎 	= lim
+𝑠𝑠→0 𝑠𝑠 ⋅ −1
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 = 0
+lim
+𝑡𝑡→∞ 𝑣𝑣𝑐𝑐,𝑍𝑍𝑍𝑍 	𝑎𝑎 	= lim
+𝑠𝑠→0 𝑠𝑠 ⋅ 2
+𝑠𝑠 + 1/𝑅𝑅𝑠𝑠 = 0
+Question:
+What kind of circuit is this?
+35
+
+-- 35 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Circuit Example 2 (parallel model in nodal analysis, the smart thing to do)
+𝑉𝑉𝑖𝑖 	𝑠𝑠 	− 𝑉𝑉𝑐𝑐 	𝑠𝑠
+𝑅𝑅1
+= 𝑉𝑉𝑐𝑐 	𝑠𝑠
+𝑠𝑠𝐿𝐿 + 𝑠𝑠𝐿𝐿 	0−
+𝑠𝑠 + 𝑉𝑉𝑐𝑐 	𝑠𝑠
+𝑅𝑅2
+𝑉𝑉𝑐𝑐 	𝑠𝑠 	= 𝑠𝑠𝑅𝑅1 𝑅𝑅2 𝐿𝐿
+𝑠𝑠 𝑅𝑅1 + 𝑅𝑅2 	𝐿𝐿 + 𝑅𝑅1 𝑅𝑅2
+⋅ 𝑉𝑉𝑖𝑖 	𝑠𝑠
+𝑅𝑅1
+− 𝑅𝑅1 𝑅𝑅2 𝐿𝐿 ⋅ 𝑠𝑠𝐿𝐿 	0−
+𝑠𝑠 𝑅𝑅1 + 𝑅𝑅2 	𝐿𝐿 + 𝑅𝑅1 𝑅𝑅2
+𝑉𝑉𝑐𝑐 	𝑠𝑠 	= 1
+𝑅𝑅1
+⋅ 𝑠𝑠𝑅𝑅𝑖𝑖
+𝑠𝑠 + 𝑅𝑅𝑖𝑖/𝐿𝐿 ⋅ 𝑉𝑉𝑖𝑖 	𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑠𝑠𝑡𝑡𝑖𝑖𝑡𝑡𝑡𝑡
+− 𝑅𝑅𝑖𝑖 ⋅ 𝑠𝑠𝐿𝐿 	0−
+𝑠𝑠 + 𝑅𝑅𝑖𝑖
+𝐿𝐿
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡
+; 	𝑅𝑅𝑖𝑖 ≝ 𝑅𝑅1 𝑅𝑅2
+𝑅𝑅1 + 𝑅𝑅2
+Here we only derive the input-
+output expression in the s-
+domain.
+𝑣𝑣𝑖𝑖 	𝑎𝑎 	𝑣𝑣𝑐𝑐 	𝑎𝑎
+𝑅𝑅1
+𝑅𝑅2
+𝐿𝐿
+Time domain
+𝑠𝑠𝐿𝐿 	0−
+𝑠𝑠
+𝑠𝑠𝐿𝐿𝑉𝑉𝑖𝑖 	𝑠𝑠 	𝑉𝑉𝑐𝑐 𝑠𝑠
+𝑅𝑅2
+𝑅𝑅1
+s domain
+The parallel model
+gives us a simple
+term to add.
+If we were asked to derive the
+response to a specific input
+signal, we would proceed with
+partial fraction expansion and
+inverse Laplace transform of
+the resulting terms.
+36
+Laplace transform
+this circuit:
+Example 2.
+
+-- 36 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Next topic
+Another example, Notch filter
+Not in Lathi
+37
+
+-- 37 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Twin-T notch filter
+38
+𝑉𝑉𝑠𝑠 = 𝑉𝑉𝑐𝑐 𝑉𝑉𝑐𝑐 = 𝛼𝛼𝑉𝑉𝑐𝑐
+𝑎𝑎: 𝑉𝑉𝑖𝑖
+𝑍𝑍𝑖𝑖
+= 𝑉𝑉𝑍𝑍
+𝑅𝑅1
++ 𝑉𝑉𝑠𝑠
+𝑅𝑅2
++ 𝑉𝑉𝑐𝑐
+𝑍𝑍𝐶𝐶3
+1
+𝑍𝑍𝑖𝑖
+= 1
+𝑅𝑅1
++ 1
+𝑅𝑅2
++ 1
+𝑍𝑍𝐶𝐶3
+𝑐𝑐: 𝑉𝑉𝑐𝑐
+𝑍𝑍𝑐𝑐
+= 1
+𝑍𝑍𝑐𝑐
+=
+𝑏𝑏: 𝑉𝑉𝑠𝑠
+𝑍𝑍𝑠𝑠
+= 1
+𝑍𝑍𝑠𝑠
+=
+Deriving transfer function using the
+current superposition method.
++
+−
++
+𝑉𝑉𝑐𝑐 	𝑠𝑠
+−
+𝑉𝑉𝑍𝑍 	𝑠𝑠
++
+−
+𝑅𝑅1 	𝑅𝑅2
+𝑠𝑠1 	𝑠𝑠2
+𝑅𝑅3 	𝑠𝑠3
+𝑅𝑅4
+𝑉𝑉𝑖𝑖 	𝑉𝑉𝑠𝑠
+𝑉𝑉𝑐𝑐
+𝑉𝑉𝑐𝑐
+𝛼𝛼𝑉𝑉𝑐𝑐
+The left-hand side expresses the
+partial current leaving the node, when
+all neighboring nodes are 0V. Because
+all neighboring nodes are at the same
+voltage, all components to the node
+are virtually in parallel and their
+parallel impedance is called the
+shunt impedance.
+The right-hand side expresses the
+partial current entering the node,
+when the node voltage is zero.
+We intend to use a CAS tool to solve
+the equations, hence we leave them
+in their most basic form, without
+inserting constraints. 	𝑍𝑍𝐶𝐶𝑥𝑥 = 1
+𝑠𝑠𝑠𝑠𝑥𝑥
+Constraints:
+𝑉𝑉𝑖𝑖
+𝑅𝑅2
++ 𝑉𝑉𝑐𝑐
+𝑍𝑍𝐶𝐶2
+1
+𝑅𝑅2
++ 1
+𝑍𝑍𝐶𝐶2
+𝑉𝑉𝑍𝑍
+𝑍𝑍𝐶𝐶1
++ 𝑉𝑉𝑠𝑠
+𝑍𝑍𝐶𝐶2
++ 𝑉𝑉𝑐𝑐
+𝑅𝑅3
+1
+𝑍𝑍𝐶𝐶1
++ 1
+𝑍𝑍𝐶𝐶2
++ 1
+𝑅𝑅3
+
+-- 38 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Twin-T notch filter
+39
+𝐻𝐻 𝑠𝑠 	= 𝑠𝑠1𝑠𝑠2𝑠𝑠3 𝑅𝑅1 𝑅𝑅2 𝑅𝑅3 𝑠𝑠 3 + 	𝑅𝑅1 + 𝑅𝑅2 𝑅𝑅3𝑠𝑠1𝑠𝑠2 𝑠𝑠 2 + 𝑅𝑅3 𝑠𝑠1 + 𝑠𝑠2 𝑠𝑠 + 1
+𝑠𝑠1𝑠𝑠2𝑠𝑠3 𝑅𝑅1 𝑅𝑅2 𝑅𝑅3 𝑠𝑠 3 + 	𝑅𝑅1 + 𝑅𝑅2 𝑅𝑅3𝑠𝑠1𝑠𝑠2 + 	1 − 𝛼𝛼 𝑅𝑅1 𝑅𝑅3 𝑠𝑠1 + 𝑠𝑠2 𝑠𝑠3 + 	1 − 𝛼𝛼 𝑅𝑅1 𝑅𝑅2 𝑠𝑠2𝑠𝑠3 𝑠𝑠 2 + 	𝑅𝑅3 𝑠𝑠1 + 𝑠𝑠2 	+ 	1 − 𝛼𝛼 	𝑅𝑅1 + 𝑅𝑅2 𝑠𝑠2 + 	1 − 𝛼𝛼 𝑅𝑅1𝑠𝑠3 𝑠𝑠 + 1
+𝐻𝐻 𝑠𝑠 	= 𝑉𝑉𝑐𝑐 	𝑠𝑠
+𝑉𝑉𝑍𝑍(𝑠𝑠)
+𝑅𝑅1 = 𝑅𝑅2 = 2𝑅𝑅3 = 2𝑅𝑅
+𝑠𝑠1 = 𝑠𝑠2 = 𝑠𝑠3
+2 = 𝑠𝑠
+2
+𝐻𝐻 𝑠𝑠 	= 𝑅𝑅𝑠𝑠 3 𝑠𝑠 3 + 	𝑅𝑅𝑠𝑠 2 𝑠𝑠 2 + 	𝑅𝑅𝑠𝑠 	𝑠𝑠 + 1
+𝑅𝑅𝑠𝑠 3 𝑠𝑠 3 + 	5 − 4𝛼𝛼 	𝑅𝑅𝑠𝑠 2 𝑠𝑠 2 + 	5 − 4𝛼𝛼 	𝑅𝑅𝑠𝑠 	𝑠𝑠 + 1
+𝐻𝐻 𝑠𝑠 	= 𝑅𝑅𝑠𝑠𝑠𝑠 + 1 	𝑅𝑅𝑠𝑠 2 𝑠𝑠 2 + 1
+𝑅𝑅𝑠𝑠𝑠𝑠 + 1 	𝑅𝑅𝑠𝑠 2 𝑠𝑠 2 + 4 1 − 𝛼𝛼 	𝑅𝑅𝑠𝑠 	𝑠𝑠 + 1
+We can seek common factors
+that cancel out:
+Motivated to simplify the design of
+the Twin-T notch filter, we will make
+some constraints on the component
+values:
+This reduces the expression
+significantly:
+Solving for the transfer function:
+
+-- 39 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Twin-T notch filter
+40
+𝐻𝐻𝐵𝐵𝑍𝑍 	𝑗𝑗𝑗𝑗 	=
+𝑗𝑗𝑗𝑗
+𝑗𝑗0
+2
++ 1
+𝑗𝑗𝑗𝑗
+𝑗𝑗0
+2
++ 𝑗𝑗𝑗𝑗
+𝑗𝑗0 4 1 − 𝛼𝛼 	+ 1
+𝐻𝐻𝐵𝐵𝑍𝑍 	𝑗𝑗𝑗𝑗 	=
+𝑗𝑗𝑗𝑗
+𝑗𝑗0
+2
++ 1
+𝑗𝑗𝑗𝑗
+𝑗𝑗0
+2
++ 𝑗𝑗𝑗𝑗
+𝑗𝑗0
+1
+𝑄𝑄 + 1
+𝑗𝑗0 ≝ 1
+𝑅𝑅𝑠𝑠
+𝑄𝑄 = 1
+4 1 − 𝛼𝛼 ⇒ 𝛼𝛼 = 1 − 1
+4𝑄𝑄
+𝛼𝛼 = 1 ⇒ 𝑄𝑄 = ∞
+𝛼𝛼 = 0 ⇒ 𝑄𝑄 = 0.25 	𝑄𝑄 = 10 ⇒ 𝛼𝛼 = 0.975
+𝐻𝐻𝐵𝐵𝑍𝑍 	𝑠𝑠 	= 𝑅𝑅𝑠𝑠 2 𝑠𝑠 2 + 1
+𝑅𝑅𝑠𝑠 2 𝑠𝑠 2 + 4 1 − 𝛼𝛼 	𝑅𝑅𝑠𝑠 	𝑠𝑠 + 1	We have obtained the transfer
+function of a band-stop filter.
+It will have a notch at 𝑗𝑗0.
+A notch filter is required to have
+a narrow notch. The narrowness
+of the notch can be controlled
+by a parameter 𝑄𝑄 referred to as
+the Quality factor (DK:
+godhedsfaktor).
+The parameter 𝛼𝛼 represents a
+voltage divider in the form of a
+potentiometer 	𝑅𝑅4 	. Hence the 𝑄𝑄
+factor can be adjusted by
+turning 𝑅𝑅4.
+Full feedback:
+0 feedback:
+
+-- 40 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Twin-T notch filter
+𝑗𝑗0 = 1
+𝑅𝑅𝑠𝑠 𝑅𝑅 = 1
+2𝜋𝜋 50 × 𝑠𝑠
+C 	R 	R1 	R2 	R3 	C1 	C2 	C3
+nF 	kOhm 	kOhm 	kOhm 	kOhm 	nF 	nF 	nF
+10,00 	318,3 	636,6 	636,6 	318,3 	5,0 	5,0 	10,0
+12,00 	265,3 	530,5 	530,5 	265,3 	6,0 	6,0 	12,0
+15,00 	212,2 	424,4 	424,4 	212,2 	7,5 	7,5 	15,0
+18,00 	176,8 	353,7 	353,7 	176,8 	9,0 	9,0 	18,0
+22,00 	144,7 	289,4 	289,4 	144,7 	11,0 	11,0 	22,0
+27,00 	117,9 	235,8 	235,8 	117,9 	13,5 	13,5 	27,0
+33,00 	96,5 	192,9 	192,9 	96,5 	16,5 	16,5 	33,0
+39,00 	81,6 	163,2 	163,2 	81,6 	19,5 	19,5 	39,0
+47,00 	67,7 	135,5 	135,5 	67,7 	23,5 	23,5 	47,0
+56,00 	56,8 	113,7 	113,7 	56,8 	28,0 	28,0 	56,0
+68,00 	46,8 	93,6 	93,6 	46,8 	34,0 	34,0 	68,0
+82,00 	38,8 	77,6 	77,6 	38,8 	41,0 	41,0 	82,0
+𝑠𝑠 = 47𝑠𝑠𝑛𝑛 ⇒ 	𝑅𝑅 = 68𝑘𝑘Ω	Choosing:
+41
+
+-- 41 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Twin-T notch filter
++
+−
++
+𝑉𝑉𝑐𝑐 𝑗𝑗
+−
+𝑉𝑉𝑍𝑍 𝑗𝑗
++
+−
+2 × 68𝑘𝑘Ω
+47𝑠𝑠𝑛𝑛
+2
+47𝑠𝑠𝑛𝑛
+2
+68𝑘𝑘Ω 	47𝑠𝑠𝑛𝑛
+𝑅𝑅4
+2 × 68𝑘𝑘Ω 𝑄𝑄 = 2
+𝑄𝑄 = 4
+𝑄𝑄 = 10
+𝑄𝑄 = 2
+𝑄𝑄 = 4
+𝑄𝑄 = 10
+The Twin-T notch filter is a decent notch filter. However,
+placing the notch precisely at the desired frequency
+requires very precise component values, and the narrower
+the notch, the more precise component values need to be.
+An attenuation in the range 30 – 40 dB is a realistic goal.
+We will return to this filter later and then investigate the
+relationship between the pole/zero positions and the
+behavior of the amplitude and phase spectra.
+42
+
+-- 42 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem set
+Problems
+43
+
+-- 43 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 1
+Question 1.
+The circuit diagram is in a form suitable for
+time-domain analysis. We want to redraw the
+circuit, so it is suitable for s-domain analysis.
+Laplace transform the frequency dependent
+components and the time-varying functions.
+Include the initial value generators for the filter
+capacitors.
+𝑣𝑣𝐶𝐶1 (0−) = 1𝑉𝑉, 𝑣𝑣𝐶𝐶2 (0−) = −1𝑉𝑉.
+A + sign indicates the positive side of the
+capacitor with respect to their voltage at 𝑎𝑎 = 0−.
+It is not an electrolytic capacitor.
++
++
+44
+
+-- 44 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 2
+Question 2.
+Derive the system response: 𝑌𝑌 𝑠𝑠 	= 𝑃𝑃 𝑠𝑠
+𝑄𝑄 𝑠𝑠 𝑋𝑋 𝑠𝑠 	+ 𝐼𝐼 𝑠𝑠
+𝑄𝑄 𝑠𝑠
+Set up nodal equations and eliminate internal variables.
+Answer: 	𝑌𝑌 𝑠𝑠 	= 𝑏𝑏0
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎0
+𝑋𝑋 𝑠𝑠 	+
+𝐾𝐾
+𝑅𝑅2𝑠𝑠1 𝑣𝑣𝐶𝐶2 0− 	+ 𝐾𝐾 	𝑠𝑠 + 1
+𝑅𝑅2𝑠𝑠2 + 1
+𝑅𝑅1𝑠𝑠2 𝑣𝑣𝐶𝐶1 (0−)
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎0
+45
+
+-- 45 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 3
+Question 3
+Solve for the zero-input response using
+partial fraction expansion and Laplace
+transform. Use Maple/Python.
+46
+
+-- 46 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 4
+Question 4
+Solve for the zero-state response to the input
+𝑥𝑥 𝑎𝑎 	= 2𝑢𝑢(𝑎𝑎), using partial fraction expansion and
+Laplace transform. Use Maple/Python.
+𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= 	4 + 0.23 𝑒𝑒 −2680.2 𝑡𝑡 − 4.23 𝑒𝑒 −147.25 𝑡𝑡 𝑢𝑢(𝑎𝑎)	Answer:
+47
+
+-- 47 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 13: Highpass filter - Question 1
+Laplace transform the differential
+equation for the Sallen-Key highpass
+filter and derive 𝐻𝐻(𝑠𝑠). Look up the
+solutions to the problems on the first
+day of the course.
+Answer: 	𝐻𝐻 𝑠𝑠 	= 𝑏𝑏2 𝑠𝑠 2
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎0
+𝐻𝐻 𝑠𝑠 	= 𝑏𝑏2 𝑠𝑠 2
+𝑠𝑠 2 + 2𝜁𝜁𝑗𝑗𝑖𝑖𝑠𝑠 + 𝑗𝑗𝑖𝑖
+2
+̈
+	𝑦𝑦 𝑎𝑎 	+ 1
+𝑅𝑅2𝑠𝑠2
++ 1
+𝑅𝑅2𝑠𝑠1
++ 1 − 𝐾𝐾
+𝑅𝑅1𝑠𝑠1̇
+𝑦𝑦 𝑎𝑎 	+ 1
+𝑅𝑅1 𝑅𝑅2𝑠𝑠1𝑠𝑠2
+𝑦𝑦 = 𝐾𝐾̈𝑥𝑥(𝑎𝑎)
+48
+
+-- 48 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 13: Highpass filter - Question 2
+Calculate the impulse response
+ℎ(𝑎𝑎) by inverse Laplace
+transformation of 𝐻𝐻(𝑠𝑠).
+Answer: 	ℎ 𝑎𝑎 	= 2𝛿𝛿 𝑎𝑎 	− 0.6283 2 − 0.31415 𝑎𝑎 𝑒𝑒 −0.31415 𝑡𝑡 𝑢𝑢(𝑎𝑎)
+We remember that this filter is supposed to have a
+double root. Due to numerical rounding errors,
+Maple/Python may not produce a result, that
+indicates this.
+Set the following parameter values and make some
+common sense rewriting of the results.
+𝜁𝜁 = 1 ⇒ 𝐻𝐻 𝑠𝑠 	= 𝑏𝑏2 𝑠𝑠 2
+𝑠𝑠 + 𝑗𝑗𝑖𝑖 2
+Use this form for the inverse
+Laplace transform
+ℎ 	𝑎𝑎 	= 2𝛿𝛿 	𝑎𝑎 	− 2𝜋𝜋
+10 2 − 𝜋𝜋
+10 𝑎𝑎 	𝑒𝑒 − 𝜋𝜋
+10𝑡𝑡 Using precise coefficients
+49
+
+-- 49 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 13: Highpass filter - Question 3
+Calculate the zero-state response to 𝑥𝑥 𝑎𝑎 	= 2 𝑢𝑢(𝑎𝑎) by
+calculating the inverse Laplace transform of 𝑌𝑌 𝑠𝑠 	=
+𝐻𝐻 𝑠𝑠 𝑋𝑋(𝑠𝑠).
+Answer: 	𝑦𝑦𝑧𝑧𝑠𝑠 𝑎𝑎 	= 4 1 − 0.31415 𝑎𝑎 𝑒𝑒 −031415 𝑡𝑡 𝑢𝑢(𝑎𝑎)
+50
+
+-- 50 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 14: Bandpass filter - Question 1
+Laplace transform the differential equation for the Sallen-
+Key bandpass filter and derive 𝐻𝐻(𝑠𝑠). Look up the
+solutions to the problems on the first day of the course.
+Answer: 	𝐻𝐻 𝑠𝑠 	= 𝑏𝑏1 𝑠𝑠
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎0
+̈
+	𝑦𝑦 + 1
+𝑅𝑅1𝑠𝑠1
++ 1
+𝑅𝑅3𝑠𝑠2
++ 1
+𝑅𝑅3𝑠𝑠1
++ 1 − 𝐾𝐾
+𝑅𝑅2𝑠𝑠1̇
+𝑦𝑦 + 1
+𝑅𝑅1
++ 1
+𝑅𝑅2
+1
+𝑅𝑅3𝑠𝑠1𝑠𝑠2
+𝑦𝑦 = 𝐾𝐾̇ 𝑥𝑥
+𝑅𝑅1𝑠𝑠1
+51
+
+-- 51 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 14: Bandpass filter - Question 2
+Calculate the impulse response ℎ(𝑎𝑎) by inverse Laplace
+transformation of 𝐻𝐻(𝑠𝑠).
+Answer: 	ℎ 𝑎𝑎 	= 629.1𝑒𝑒 −15.7 𝑡𝑡 cos(314 𝑎𝑎 + 0.05) 𝑢𝑢(𝑎𝑎)
+ℎ 	𝑎𝑎 	= 628.3 e−15.7 𝑡𝑡 cos 314 𝑎𝑎 	𝑢𝑢 	𝑎𝑎 	− 31.4𝑒𝑒 −15.7 𝑡𝑡 sin 	314 𝑎𝑎 	𝑢𝑢(𝑎𝑎)
+52
+
+-- 52 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 14: Bandpass filter - Question 3
+Calculate the zero-state response to 𝑥𝑥 𝑎𝑎 	= 2 𝑢𝑢(𝑎𝑎) by
+calculating the inverse Laplace transform of 𝑌𝑌 𝑠𝑠 	=
+𝐻𝐻 𝑠𝑠 𝑋𝑋(𝑠𝑠).
+Answer: 	𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= 4𝑒𝑒 −15.7 𝑡𝑡 sin 313.76 𝑎𝑎 	𝑢𝑢 𝑎𝑎 	= 4𝑒𝑒 −15.7 𝑡𝑡 cos 	313.76 𝑎𝑎 + 𝜋𝜋
+2 𝑢𝑢 𝑎𝑎
+53
+
+-- 53 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Problem set
+Solutions
+54
+
+-- 54 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 1
+Question 1.
+The circuit diagram is in a form suitable for
+time-domain analysis. We want to redraw the
+circuit, so it is suitable for s-domain analysis.
+Laplace transform the frequency dependent
+components and the time-varying functions.
+Include the initial value generators for the filter
+capacitors.
+𝑣𝑣𝐶𝐶1 (0−) = 1𝑉𝑉, 𝑣𝑣𝐶𝐶2 (0−) = −1𝑉𝑉.
+A + sign indicates the positive side of the
+capacitor with respect to their voltage at 𝑎𝑎 = 0−.
+It is not an electrolytic capacitor.
++
++
+55
+
+-- 55 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 1 (sol)
+Question 1.
+The circuit diagram is in a form suitable for time-
+domain analysis. We want to redraw the circuit, so it
+is suitable for s-domain analysis.
+Laplace transform the frequency dependent
+components and the time-varying functions.
+Include the initial value generators for the filter
+capacitors.
+𝑉𝑉𝐶𝐶1 = 1𝑉𝑉, 𝑉𝑉𝐶𝐶2 = −1𝑉𝑉.
+1/𝑠𝑠𝑠𝑠𝑠𝑠
+1/𝑠𝑠𝑠𝑠1
+𝑠𝑠1 𝑣𝑣𝐶𝐶1 (0−)
+𝑠𝑠2 𝑣𝑣𝐶𝐶2 (0−)
+𝑋𝑋(𝑠𝑠) 	𝑉𝑉𝐴𝐴(𝑠𝑠)
+𝑉𝑉𝐵𝐵(𝑠𝑠)
+𝑌𝑌(𝑠𝑠)
+I have chosen the parallel component model,
+because it is a sum of currents. This is most
+practical when we are writing nodal equations,
+where we sum up currents.
+Series models are more convenient when we are
+using mesh analysis.
++
++
+56
+
+-- 56 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 2
+Question 2.
+Derive the system response: 𝑌𝑌 𝑠𝑠 	= 𝑃𝑃 𝑠𝑠
+𝑄𝑄 𝑠𝑠 𝑋𝑋 𝑠𝑠 	+ 𝐼𝐼 𝑠𝑠
+𝑄𝑄 𝑠𝑠
+Set up nodal equations and eliminate internal variables.
+Answer: 𝑌𝑌 𝑠𝑠 	= 𝑏𝑏0
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎 0
+𝑋𝑋 𝑠𝑠
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑠𝑠𝑡𝑡𝑖𝑖𝑡𝑡𝑡𝑡
++
+𝐾𝐾
+𝑅𝑅2𝑠𝑠1 𝑣𝑣𝐶𝐶2 0− 	+ 𝐾𝐾 	𝑠𝑠 + 1
+𝑅𝑅2𝑠𝑠2 + 1
+𝑅𝑅1𝑠𝑠2 𝑣𝑣𝐶𝐶1 (0−)
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎 0
+𝑧𝑧𝑡𝑡𝑡𝑡𝑐𝑐−𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑡𝑡
+57
+
+-- 57 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 2 (sol)
+1/𝑠𝑠𝑠𝑠𝑠𝑠
+1/𝑠𝑠𝑠𝑠1
+𝑠𝑠1 𝑣𝑣𝐶𝐶1 (0−)
+𝑠𝑠2 𝑣𝑣𝐶𝐶2 (0−)
+𝑋𝑋(𝑠𝑠) 	𝑉𝑉𝐴𝐴(𝑠𝑠)
+𝑉𝑉𝐵𝐵(𝑠𝑠)
+𝑌𝑌(𝑠𝑠)
+𝐴𝐴1: − 𝑋𝑋 𝑠𝑠 	− 𝑉𝑉𝐴𝐴 	𝑠𝑠
+𝑅𝑅1
++ 𝑠𝑠 𝑠𝑠2 	𝑉𝑉𝐴𝐴 	𝑠𝑠 	− 𝑌𝑌 𝑠𝑠 	− 𝑠𝑠2 𝑣𝑣𝐶𝐶2 0− 	+ 𝑉𝑉𝐴𝐴 	𝑠𝑠 	− 𝑉𝑉𝐵𝐵 	𝑠𝑠
+𝑅𝑅2
+= 0
+𝐵𝐵1: − 𝑉𝑉𝐴𝐴 	𝑠𝑠 	− 𝑉𝑉𝐵𝐵 	𝑠𝑠
+𝑅𝑅2
++ 𝑠𝑠 𝑠𝑠1 𝑉𝑉𝐵𝐵 	𝑠𝑠 	− 𝑠𝑠1 𝑣𝑣𝐶𝐶1 0− 	= 0
+𝑉𝑉𝐵𝐵 	𝑠𝑠 	= 1
+𝐾𝐾 𝑌𝑌 𝑠𝑠
+Constraint:
+𝑉𝑉𝐵𝐵(𝑠𝑠) is not an unknown. We should not solve for 𝑉𝑉𝐵𝐵(𝑠𝑠).
+58
+
+-- 58 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 2 (sol)
+Setting up the nodal equations,
+remembering to add the initial
+conditions:
+Insert the impedances in the
+Laplace domain:
+𝐴𝐴1: − 𝑋𝑋 𝑠𝑠 	− 𝑉𝑉𝐴𝐴 	𝑠𝑠
+𝑅𝑅1
++ 𝑠𝑠 𝑠𝑠2 	𝑉𝑉𝐴𝐴 	𝑠𝑠 	− 𝑌𝑌 𝑠𝑠
+−𝑠𝑠2 𝑣𝑣𝐶𝐶2 0− 	+ 𝑉𝑉𝐴𝐴 	𝑠𝑠 	− 𝑉𝑉𝐵𝐵 	𝑠𝑠
+𝑅𝑅2
+= 0
+𝐵𝐵1: − 𝑉𝑉𝐴𝐴 	𝑠𝑠 	− 𝑉𝑉𝐵𝐵 	𝑠𝑠
+𝑅𝑅2
++ 𝑠𝑠 𝑠𝑠1 𝑉𝑉𝐵𝐵 	𝑠𝑠 	− 𝑠𝑠1 𝑣𝑣𝐶𝐶1 0− 	= 0
+59
+
+-- 59 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 2 (sol)
+Using various Maple tools to
+manipulate the expression:
+numer()
+denom()
+sort()
+collect()
+Zero-state response:
+Zero-input response:
+60
+
+-- 60 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 3
+Question 3
+Solve for the zero-input response using
+partial fraction expansion and Laplace
+transform. Use Maple.
+61
+
+-- 61 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 3 (sol)
+Solve for the zero-input response using
+partial fraction expansion and Laplace
+transform. Use Maple.
+62
+
+-- 62 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 4
+Question 4
+Solve for the zero-state response to the input
+𝑥𝑥 𝑎𝑎 	= 2𝑢𝑢(𝑎𝑎), using partial fraction expansion and
+Laplace transform. Use Maple.
+𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= 	4 + 0.23 𝑒𝑒 −2680.2 𝑡𝑡 − 4.23 𝑒𝑒 −147.25 𝑡𝑡 𝑢𝑢(𝑎𝑎)	Answer:
+63
+
+-- 63 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 12: Lowpass filter – Question 4 (sol)
+Solve for the zero-state response to the input 𝑥𝑥 𝑎𝑎 	= 2𝑢𝑢(𝑎𝑎),
+using partial fraction expansion and Laplace transform. Use
+Maple.
+𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= 	4 + 0.23 𝑒𝑒 −2680.2 𝑡𝑡 − 4.23 𝑒𝑒 −147.25 𝑡𝑡 𝑢𝑢(𝑎𝑎)	Answer:
+𝑌𝑌𝑧𝑧𝑠𝑠 𝑠𝑠 	= 𝐻𝐻 𝑠𝑠 𝑋𝑋(𝑠𝑠)
+𝑌𝑌𝑧𝑧𝑠𝑠 𝑠𝑠 	= 𝐻𝐻 𝑠𝑠 2
+𝑠𝑠
+64
+
+-- 64 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 13: Highpass filter - Question 1
+Laplace transform the differential
+equation for the Sallen-Key highpass
+filter and derive 𝐻𝐻(𝑠𝑠). Look up the
+solutions to the problems on the first
+day of the course.
+Answer: 	𝐻𝐻 𝑠𝑠 	= 𝑏𝑏2 𝑠𝑠 2
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎0
+𝐻𝐻 𝑠𝑠 	= 𝑏𝑏2 𝑠𝑠 2
+𝑠𝑠 2 + 2𝜁𝜁𝑗𝑗𝑖𝑖𝑠𝑠 + 𝑗𝑗𝑖𝑖
+2
+̈
+	𝑦𝑦 𝑎𝑎 	+ 1
+𝑅𝑅2𝑠𝑠2
++ 1
+𝑅𝑅2𝑠𝑠1
++ 1 − 𝐾𝐾
+𝑅𝑅1𝑠𝑠1̇
+𝑦𝑦 𝑎𝑎 	+ 1
+𝑅𝑅1 𝑅𝑅2𝑠𝑠1𝑠𝑠2
+𝑦𝑦 = 𝐾𝐾̈𝑥𝑥(𝑎𝑎)
+65
+
+-- 65 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 13: Highpass filter - Question 1 (sol)
+Answer:
+𝐻𝐻 𝑠𝑠 	= 𝑌𝑌𝑧𝑧𝑠𝑠 𝑠𝑠
+𝑋𝑋(𝑠𝑠) = 𝑏𝑏2 𝑠𝑠 2
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎0
+̈
+	𝑦𝑦 + 𝑎𝑎1̇ 𝑦𝑦 + 𝑎𝑎 0 𝑦𝑦 = 𝑏𝑏2̈ 𝑥𝑥
+𝐻𝐻 𝑠𝑠 	= 𝑏𝑏2 𝑠𝑠 2
+𝑠𝑠 2 + 2𝜁𝜁𝑗𝑗𝑖𝑖𝑠𝑠 + 𝑗𝑗𝑖𝑖
+2
+Laplace transform the differential
+equation for the Sallen-Key highpass
+filter and derive 𝐻𝐻(𝑠𝑠). Look up the
+solutions to the problems on the first
+day of the course.
+̈
+	𝑦𝑦 𝑎𝑎 	+ 1
+𝑅𝑅2𝑠𝑠2
++ 1
+𝑅𝑅2𝑠𝑠1
++ 1 − 𝐾𝐾
+𝑅𝑅1𝑠𝑠1̇
+𝑦𝑦 𝑎𝑎 	+ 1
+𝑅𝑅1 𝑅𝑅2𝑠𝑠1𝑠𝑠2
+𝑦𝑦 = 𝐾𝐾̈𝑥𝑥(𝑎𝑎)
+𝑠𝑠 2 𝑌𝑌 𝑠𝑠 	+ 𝑎𝑎1 𝑠𝑠𝑌𝑌 𝑠𝑠 	+ 𝑎𝑎 0 𝑌𝑌 𝑠𝑠 	= 𝑏𝑏2 𝑠𝑠 2 𝑋𝑋(𝑠𝑠)
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎 0 	𝑌𝑌 𝑠𝑠 	= 𝑏𝑏2 𝑠𝑠 2 𝑋𝑋(𝑠𝑠)
+We are only asked to find 𝐻𝐻(𝑠𝑠).
+We do not need to include the
+initial values because they do not
+multiply with 𝐻𝐻(𝑠𝑠).
+66
+
+-- 66 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 13: Highpass filter - Question 2
+Calculate the impulse response
+ℎ(𝑎𝑎) by inverse Laplace
+transformation of 𝐻𝐻(𝑠𝑠).
+Answer: 	ℎ 𝑎𝑎 	= 2𝛿𝛿 𝑎𝑎 	− 0.6283 2 − 0.31415 𝑎𝑎 𝑒𝑒 −0.31415 𝑡𝑡 𝑢𝑢(𝑎𝑎)
+We remember that this filter is supposed to have a
+double root. Due to numerical rounding errors, Maple
+will not produce a result, that indicates this.
+Set the following parameter values and make some
+common sense rewriting of the results.
+𝜍𝜍 = 1 ⇒ 𝐻𝐻 𝑠𝑠 	= 𝑏𝑏2 𝑠𝑠 2
+𝑠𝑠 + 𝑗𝑗𝑖𝑖 2
+Use this form for the inverse
+Laplace transform
+ℎ 	𝑎𝑎 	= 2𝛿𝛿 	𝑎𝑎 	− 2𝜋𝜋
+10 2 − 𝜋𝜋
+10 𝑎𝑎 	𝑒𝑒 − 𝜋𝜋
+10𝑡𝑡 Using precise coefficients
+When 𝜍𝜍 = 1, 𝑠𝑠 2 + 2𝜍𝜍𝑗𝑗𝑖𝑖𝑠𝑠 + 𝑗𝑗𝑖𝑖
+2 = 	𝑠𝑠 + 𝑗𝑗𝑖𝑖 2
+Only in this form will Maple give us
+an inverse Laplace transform of the
+form 𝑎𝑎 𝑒𝑒 −𝑖𝑖 𝑡𝑡. This is the form we
+associate with a repeated root.
+67
+
+-- 67 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 13: Highpass filter - Question 2 (sol)
+Calculate the impulse response ℎ(𝑎𝑎) by inverse Laplace
+transformation of 𝐻𝐻(𝑠𝑠).
+Answer: 	ℎ 𝑎𝑎 	= 2𝛿𝛿 𝑎𝑎 	− 0.6283 2 − 0.31415 𝑎𝑎 𝑒𝑒 −0.31415 𝑡𝑡 𝑢𝑢(𝑎𝑎)
+We remember that this filter is supposed to
+have a double root. Due to numerical rounding
+errors, Maple will not produce a result, that
+indicates this.
+Set the following parameter values and make
+some common sense rewriting of the results.
+𝜍𝜍 = 1 ⇒ 𝐻𝐻 𝑠𝑠 	= 𝑏𝑏2 𝑠𝑠 2
+𝑠𝑠 + 𝑗𝑗𝑖𝑖 2
+Use this form for the inverse
+Laplace transform
+68
+
+-- 68 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 13: Highpass filter - Question 3
+Calculate the zero-state response to 𝑥𝑥 𝑎𝑎 	= 2 𝑢𝑢(𝑎𝑎) by
+calculating the inverse Laplace transform of 𝑌𝑌 𝑠𝑠 	=
+𝐻𝐻 𝑠𝑠 𝑋𝑋(𝑠𝑠).
+Answer: 	𝑦𝑦𝑧𝑧𝑠𝑠 𝑎𝑎 	= 4 1 − 0.31415 𝑎𝑎 𝑒𝑒 −031415 𝑡𝑡 𝑢𝑢(𝑎𝑎)
+69
+
+-- 69 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 13: Highpass filter - Question 3 (sol)
+Calculate the zero-state response to 𝑥𝑥 𝑎𝑎 	= 2 𝑢𝑢(𝑎𝑎) by
+calculating the inverse Laplace transform of 𝑌𝑌 𝑠𝑠 	=
+𝐻𝐻 𝑠𝑠 𝑋𝑋(𝑠𝑠).
+Answer: 	𝑦𝑦𝑧𝑧𝑠𝑠 𝑎𝑎 	= 4 1 − 0.31415 𝑎𝑎 𝑒𝑒 −031415 𝑡𝑡 𝑢𝑢(𝑎𝑎)
+In this case it is better not to do a
+partial fraction expansion before the
+inverse Laplace transform.
+70
+
+-- 70 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 14: Bandpass filter - Question 1
+Laplace transform the differential equation for the Sallen-
+Key bandpass filter and derive 𝐻𝐻(𝑠𝑠). Look up the
+solutions to the problems on the first day of the course.
+Answer: 	𝐻𝐻 𝑠𝑠 	= 𝑏𝑏1 𝑠𝑠
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎0
+̈
+	𝑦𝑦 + 1
+𝑅𝑅1𝑠𝑠1
++ 1
+𝑅𝑅3𝑠𝑠2
++ 1
+𝑅𝑅3𝑠𝑠1
++ 1 − 𝐾𝐾
+𝑅𝑅2𝑠𝑠1̇
+𝑦𝑦 + 1
+𝑅𝑅1
++ 1
+𝑅𝑅2
+1
+𝑅𝑅3𝑠𝑠1𝑠𝑠2
+𝑦𝑦 = 𝐾𝐾̇ 𝑥𝑥
+𝑅𝑅1𝑠𝑠1
+71
+
+-- 71 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 14: Bandpass filter - Question 1 (sol)
+Laplace transform the differential equation for the Sallen-
+Key bandpass filter and derive 𝐻𝐻(𝑠𝑠). Look up the
+solutions to the problems on the first day of the course.
+Answer: 𝐻𝐻 𝑠𝑠 	= 𝑌𝑌 𝑠𝑠
+𝑋𝑋 𝑠𝑠 = 𝑏𝑏1 𝑠𝑠
+𝑠𝑠 2 + 𝑎𝑎1 𝑠𝑠 + 𝑎𝑎 0
+̈
+	𝑦𝑦 + 1
+𝑅𝑅1𝑠𝑠1
++ 1
+𝑅𝑅3𝑠𝑠2
++ 1
+𝑅𝑅3𝑠𝑠1
++ 1 − 𝐾𝐾
+𝑅𝑅2𝑠𝑠1̇
+𝑦𝑦 + 1
+𝑅𝑅1
++ 1
+𝑅𝑅2
+1
+𝑅𝑅3𝑠𝑠1𝑠𝑠2
+𝑦𝑦 = 𝐾𝐾̇ 𝑥𝑥
+𝑅𝑅1𝑠𝑠1
+̈
+	𝑦𝑦 + 𝑎𝑎1̇ 𝑦𝑦 + 𝑎𝑎 0 𝑦𝑦 = 𝑏𝑏1̇ 𝑥𝑥
+𝑠𝑠 2 𝑌𝑌(𝑠𝑠) + 𝑎𝑎1 𝑠𝑠𝑌𝑌(𝑠𝑠) + +𝑎𝑎0 𝑌𝑌(𝑠𝑠) = 𝑏𝑏1 𝑠𝑠 𝑋𝑋(𝑠𝑠)
+72
+
+-- 72 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 14: Bandpass filter - Question 2
+Calculate the impulse response ℎ(𝑎𝑎) by inverse Laplace
+transformation of 𝐻𝐻(𝑠𝑠).
+Answer: 	ℎ 𝑎𝑎 	= 629.1𝑒𝑒 −15.7 𝑡𝑡 cos(314 𝑎𝑎 + 0.05) 𝑢𝑢(𝑎𝑎)
+ℎ 	𝑎𝑎 	= 628.3 e−15.7 𝑡𝑡 cos 314 𝑎𝑎 	𝑢𝑢 	𝑎𝑎 	− 31.4𝑒𝑒 −15.7 𝑡𝑡 sin 	314 𝑎𝑎 	𝑢𝑢(𝑎𝑎)
+73
+
+-- 73 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 14: Bandpass filter - Question 2 (sol)
+Calculate the impulse response ℎ(𝑎𝑎) by inverse Laplace
+transformation of 𝐻𝐻(𝑠𝑠).
+Answer: 	ℎ 𝑎𝑎 	= 629.1𝑒𝑒 −15.7 𝑡𝑡 cos(314 𝑎𝑎 + 0.05) 𝑢𝑢(𝑎𝑎)
+ℎ 	𝑎𝑎 	= 628.3 e−15.7 𝑡𝑡 cos 314 𝑎𝑎 	𝑢𝑢 	𝑎𝑎 	− 31.4𝑒𝑒 −15.7 𝑡𝑡 sin 	314 𝑎𝑎 	𝑢𝑢(𝑎𝑎)
+74
+
+-- 74 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 14: Bandpass filter - Question 3
+Calculate the zero-state response to 𝑥𝑥 𝑎𝑎 	= 2 𝑢𝑢(𝑎𝑎) by
+calculating the inverse Laplace transform of 𝑌𝑌 𝑠𝑠 	=
+𝐻𝐻 𝑠𝑠 𝑋𝑋(𝑠𝑠).
+Answer: 	𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= 4𝑒𝑒 −15.7 𝑡𝑡 sin 313.76 𝑎𝑎 	𝑢𝑢 𝑎𝑎 	= 4𝑒𝑒 −15.7 𝑡𝑡 cos 	313.76 𝑎𝑎 + 𝜋𝜋
+2 𝑢𝑢 𝑎𝑎
+75
+
+-- 75 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Filter 14: Bandpass filter - Question 3 (sol)
+Calculate the zero-state response to 𝑥𝑥 𝑎𝑎 	= 2 𝑢𝑢(𝑎𝑎) by
+calculating the inverse Laplace transform of 𝑌𝑌 𝑠𝑠 	=
+𝐻𝐻 𝑠𝑠 𝑋𝑋(𝑠𝑠).
+Answer: 	𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= 4𝑒𝑒 −15.7 𝑡𝑡 sin 313.76 𝑎𝑎 	𝑢𝑢 𝑎𝑎 	= 4𝑒𝑒 −15.7 𝑡𝑡 cos 	313.76 𝑎𝑎 + 𝜋𝜋
+2 𝑢𝑢 𝑎𝑎
+76
+
+-- 76 of 77 --
+
+DTU Health Tech/Digital Health 	22050 Signals and Linear Systems in Continuous Time
+Reflections
+𝑌𝑌𝑧𝑧𝑠𝑠 𝑠𝑠 	= 𝐻𝐻 𝑠𝑠 	⋅ 𝑋𝑋(𝑠𝑠)
+When we calculated the step response, we first Laplace transformed the step response: 𝑋𝑋 𝑠𝑠 	= 2
+𝑠𝑠
+Why didn’t we do a similar thing when calculating the impulse response?
+The Laplace transforms of 𝛿𝛿 𝑎𝑎 	is 𝑋𝑋 𝑠𝑠 	= 1. 	𝑌𝑌𝑧𝑧𝑠𝑠 𝑠𝑠 	= 𝐻𝐻 𝑠𝑠 	⋅ 𝑋𝑋 𝑠𝑠 	= 𝐻𝐻 𝑠𝑠 	⋅ 1 = 𝐻𝐻(𝑠𝑠)
+𝑦𝑦𝑧𝑧𝑠𝑠 	𝑎𝑎 	= ℒ −1 𝑌𝑌𝑧𝑧𝑠𝑠 𝑠𝑠 	= ℒ −1 𝐻𝐻(𝑠𝑠) 	= ℎ(𝑎𝑎)
+So, in an implicit way, we did do the same thing. We just didn’t see it.
+77
+
+-- 77 of 77 --
+

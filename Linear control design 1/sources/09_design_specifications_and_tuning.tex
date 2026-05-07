@@ -1,0 +1,85 @@
+\section{Design specifications and tuning}
+
+\subsection{Time-domain specifications}
+
+\subsubsection{Steady-state error}
+\[
+e_{\mathrm{ss}}=\lim_{t\to\infty}e(t)=\lim_{s\to 0}sE(s)
+\]
+Steady-state error is computed with the final value theorem when the closed loop is stable.
+
+\subsubsection{Unit-feedback step error}
+\[
+e_{\mathrm{ss}}=\lim_{s\to 0}\frac{1}{1+L(s)}
+\]
+For a unit step reference and unity feedback, this formula links low-frequency loop gain to tracking error.
+
+\subsubsection{System type}
+\[
+L(s)=\frac{K\prod_i(s-z_i)}{s^q\prod_k(s-p_k)},\qquad q=\text{number of integrators}
+\]
+The system type is the number of poles at the origin in the loop transfer function.
+
+\subsubsection{Step, ramp, and parabolic error constants}
+\[
+K_p=\lim_{s\to0}L(s),\qquad
+K_v=\lim_{s\to0}sL(s),\qquad
+K_a=\lim_{s\to0}s^2L(s)
+\]
+These constants determine steady-state error for polynomial references.
+
+\subsubsection{Reference error table}
+\[
+\begin{array}{c|ccc}
+\text{Type} & \text{step} & \text{ramp} & \text{parabolic}\\ \hline
+0 & 1/(1+K_p) & \infty & \infty\\
+1 & 0 & 1/K_v & \infty\\
+2 & 0 & 0 & 1/K_a
+\end{array}
+\]
+Integral action increases system type and improves low-frequency tracking.
+
+\subsection{Frequency-domain specifications}
+
+\subsubsection{Bandwidth and speed}
+\[
+\omega_c\uparrow \quad\Longrightarrow\quad t_r\downarrow
+\]
+Higher crossover frequency usually gives faster response, limited by phase margin, noise, saturation, and unmodelled dynamics.
+
+\subsubsection{Phase margin and damping}
+\[
+\gamma_M\uparrow \quad\Longrightarrow\quad M_p\downarrow
+\]
+Larger phase margin generally means more damping and less overshoot.
+
+\subsubsection{P-controller stability limit}
+\[
+|K_PG(j\bar{\omega})|=1,\qquad \angle G(j\bar{\omega})=-180^\circ
+\]
+The critical proportional gain is found at the frequency where the plant phase reaches \(-180^\circ\).
+
+\subsection{Ziegler-Nichols and hand tuning}
+
+\subsubsection{Ultimate gain and period}
+\[
+K_u=\text{gain at sustained oscillation},\qquad T_u=\text{oscillation period}
+\]
+The Ziegler-Nichols method uses the stability boundary observed from closed-loop oscillation.
+
+\subsubsection{Ziegler-Nichols closed-loop rules}
+\[
+\begin{array}{c|ccc}
+\text{Controller} & K_P & \tau_i & \tau_d\\ \hline
+P & 0.5K_u & - & -\\
+PI & 0.45K_u & T_u/1.2 & -\\
+PID & 0.6K_u & T_u/2 & T_u/8
+\end{array}
+\]
+These rules give heuristic initial controller parameters for subsequent refinement. % TODO: verify from source
+
+\subsubsection{Magnitude conversion}
+\[
+M_{\mathrm{dB}}=20\log_{10}M,\qquad M=10^{M_{\mathrm{dB}}/20}
+\]
+This conversion is used when selecting \(K_P\) from a Bode magnitude plot.

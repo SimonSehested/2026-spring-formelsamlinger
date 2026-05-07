@@ -1,0 +1,131 @@
+\section{Acids, Bases, Buffers, and Solubility Products}
+
+\subsection{Bronsted Acids and Bases}
+
+\subsubsection{Bronsted definition}
+\[
+\ce{HA + B <=> A- + HB+}
+\]
+A Bronsted acid donates a proton and a Bronsted base accepts a proton. Products are the conjugate base and conjugate acid.
+
+\subsubsection{Autodissociation of water}
+\[
+\ce{2H2O <=> H3O+ + OH-}, \qquad
+K_w=[\ce{H3O+}][\ce{OH-}]=1.0\times 10^{-14}\,\mathrm{M^2}
+\]
+At \(298\,\mathrm K\), neutral water has \([\ce{H3O+}]=[\ce{OH-}]=10^{-7}\,\mathrm M\).
+
+\subsubsection{pH and pOH}
+\[
+\mathrm{pH}=-\log[\ce{H3O+}], \qquad
+\mathrm{pOH}=-\log[\ce{OH-}], \qquad
+\mathrm{pH}+\mathrm{pOH}=14
+\]
+The pH scale is logarithmic. A decrease of one pH unit means ten times larger \([\ce{H3O+}]\).
+
+\subsection{Acid and Base Constants}
+
+\subsubsection{Acid ionization constant}
+\[
+\ce{HA + H2O <=> A- + H3O+}, \qquad
+K_a=\frac{[\ce{A-}][\ce{H3O+}]}{[\ce{HA}]}
+\]
+Larger \(K_a\) means stronger acid. \(pK_a=-\log K_a\).
+
+\subsubsection{Base ionization constant}
+\[
+\ce{B + H2O <=> HB+ + OH-}, \qquad
+K_b=\frac{[\ce{HB+}][\ce{OH-}]}{[\ce{B}]}
+\]
+Larger \(K_b\) means stronger base. \(pK_b=-\log K_b\).
+
+\subsubsection{Conjugate acid-base relation}
+\[
+K_a(\ce{HA})K_b(\ce{A-})=K_w, \qquad
+pK_a+pK_b=pK_w=14
+\]
+Conjugate acid-base strength is linked through water autoionization at \(298\,\mathrm K\).
+
+\subsubsection{Weak acid approximation}
+\[
+[\ce{H3O+}]\approx \sqrt{K_a c_0}, \qquad
+\mathrm{pH}\approx -\log\sqrt{K_a c_0}
+\]
+This approximation applies when dissociation is small compared with the formal acid concentration \(c_0\).
+
+\subsubsection{Weak base approximation}
+\[
+[\ce{OH-}]\approx \sqrt{K_b c_0}, \qquad
+\mathrm{pOH}\approx -\log\sqrt{K_b c_0}
+\]
+This approximation applies when base protonation is small compared with the formal base concentration \(c_0\).
+
+\subsubsection{Strong acid and strong base pH}
+\[
+\text{strong acid: }[\ce{H3O+}]\approx c_{\mathrm{acid}}, \qquad
+\text{strong base: }[\ce{OH-}]\approx \nu_{\ce{OH-}}c_{\mathrm{base}}
+\]
+Strong electrolytes are treated as completely dissociated. Stoichiometry matters for bases such as \(\ce{Ba(OH)2}\).
+
+\subsection{Polyprotic Acids and Buffers}
+
+\subsubsection{Phosphoric acid equilibria}
+\[
+\begin{aligned}
+\ce{H3PO4 + H2O &<=> H2PO4- + H3O+} && pK_{a1}=2.1,\\
+\ce{H2PO4- + H2O &<=> HPO4^2- + H3O+} && pK_{a2}=7.2,\\
+\ce{HPO4^2- + H2O &<=> PO4^3- + H3O+} && pK_{a3}=12.4.
+\end{aligned}
+\]
+The relevant conjugate pair is selected by the pH region.
+
+\subsubsection{Henderson-Hasselbalch equation}
+\[
+\mathrm{pH}=pK_a+\log\left(\frac{[\ce{A-}]}{[\ce{HA}]}\right)
+\]
+Buffers contain a weak acid and its conjugate base. The pH is closest to \(pK_a\) when the two concentrations are comparable.
+
+\subsubsection{Buffer after acid or base addition}
+\[
+\ce{A- + H+ -> HA}, \qquad
+\ce{HA + OH- -> A- + H2O}
+\]
+Small additions are handled first by stoichiometric neutralization, then by Henderson-Hasselbalch with the new amounts.
+
+\subsubsection{Titration equivalence point}
+\[
+n_{\mathrm{acid\ equivalents}}=n_{\mathrm{base\ equivalents}}
+\]
+At equivalence, stoichiometric acid-base equivalents are equal. The pH depends on whether the remaining salt is acidic, basic, or neutral.
+
+\subsection{Solubility Products}
+
+\subsubsection{Solubility product}
+\[
+\mathrm{M}_a\mathrm{X}_b(s)\rightleftharpoons a\,\mathrm{M}^{z+}(aq)+b\,\mathrm{X}^{z-}(aq), \qquad
+K_{sp}=[\mathrm{M}^{z+}]^a[\mathrm{X}^{z-}]^b
+\]
+Pure solid is omitted from the equilibrium expression. \(K_{sp}\) has concentration powers set by stoichiometry.
+
+\subsubsection{Molar solubility from \(K_{sp}\)}
+\[
+\ce{CaCO3(s) <=> Ca^2+ + CO3^2-}, \qquad
+K_{sp}=s^2
+\]
+\[
+\ce{M(OH)2(s) <=> M^2+ + 2OH-}, \qquad
+K_{sp}=s(2s)^2=4s^3
+\]
+The molar solubility \(s\) is converted to ion concentrations using the dissolution stoichiometry.
+
+\subsubsection{Ion product and precipitation}
+\[
+Q_{sp}=[\mathrm{M}^{z+}]^a[\mathrm{X}^{z-}]^b
+\]
+If \(Q_{sp}>K_{sp}\), precipitation is favored. If \(Q_{sp}<K_{sp}\), more solid can dissolve.
+
+\subsubsection{Common-ion effect on solubility}
+\[
+K_{sp}=[\mathrm{M}^{z+}][\mathrm{X}^{z-}]
+\]
+Adding an ion already present in the dissolution equilibrium lowers the molar solubility by shifting the equilibrium toward the solid.

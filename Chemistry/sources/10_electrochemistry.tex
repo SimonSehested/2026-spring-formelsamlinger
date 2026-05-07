@@ -1,0 +1,105 @@
+\section{Electrochemistry}
+
+\subsection{Oxidation States and Redox}
+
+\subsubsection{Oxidation state rules}
+\[
+\begin{array}{l l}
+\toprule
+\text{free element} & 0\\
+\text{monoatomic ion} & \text{ion charge}\\
+\text{oxygen in most compounds} & -II\\
+\text{hydrogen in most compounds} & +I\\
+\text{halogens in binary salts} & -I\\
+\text{sum in molecule or ion} & \text{overall charge}\\
+\bottomrule
+\end{array}
+\]
+Oxidation states are bookkeeping numbers used to identify oxidation and reduction.
+
+\subsubsection{Oxidation and reduction}
+\[
+\text{oxidation: loss of electrons}, \qquad
+\text{reduction: gain of electrons}
+\]
+Oxidation state increases during oxidation and decreases during reduction.
+
+\subsubsection{Basic-solution redox balancing}
+\[
+\ce{3SO3^2- + 2MnO4- + H2O -> 3SO4^2- + 2MnO2 + 2OH-}
+\]
+This lecture example conserves atoms and charge in basic solution. It is a reusable check for half-reaction balancing.
+
+\subsection{Galvanic Cells}
+
+\subsubsection{Anode and cathode}
+\[
+\text{anode: oxidation}, \qquad \text{cathode: reduction}
+\]
+In a galvanic cell, electrons flow from anode to cathode through the external circuit.
+
+\subsubsection{Cell diagram notation}
+\[
+\ce{Zn(s) | Zn^2+(aq) || Cu^2+(aq) | Cu(s)}
+\]
+A single vertical line denotes a phase boundary and the double line denotes a salt bridge.
+
+\subsubsection{Standard cell potential}
+\[
+E^\circ_{\mathrm{cell}}=E^\circ_{\mathrm{cathode}}-E^\circ_{\mathrm{anode}}
+=E^\circ_{\mathrm{red}}(\text{reduction})-E^\circ_{\mathrm{red}}(\text{oxidation})
+\]
+Standard reduction potentials are used as tabulated. The more positive reduction potential is reduced in a spontaneous galvanic cell.
+
+\subsubsection{Daniell cell potential}
+\[
+\ce{Zn^2+ + 2e- -> Zn}\quad E^\circ=-0.76\,\mathrm V
+\]
+\[
+\ce{Cu^2+ + 2e- -> Cu}\quad E^\circ=+0.34\,\mathrm V
+\]
+\[
+E^\circ_{\mathrm{cell}}=0.34-(-0.76)=1.10\,\mathrm V
+\]
+Zinc is oxidized and copper(II) is reduced in the Daniell cell.
+
+\subsection{Free Energy and Equilibrium}
+
+\subsubsection{Electrical work and Gibbs free energy}
+\[
+\Delta G^\circ=-nFE^\circ_{\mathrm{cell}}
+\]
+\(n\) is moles of electrons transferred and \(F=9.647\times 10^4\,\mathrm{C\,mol^{-1}}\). Positive \(E^\circ_{\mathrm{cell}}\) gives negative \(\Delta G^\circ\).
+
+\subsubsection{Cell potential and equilibrium constant}
+\[
+nFE^\circ_{\mathrm{cell}}=RT\ln K
+\]
+At \(298\,\mathrm K\), a larger standard cell potential corresponds to a larger equilibrium constant.
+
+\subsection{Nernst Equation}
+
+\subsubsection{Nernst equation}
+\[
+E_{\mathrm{cell}}=E^\circ_{\mathrm{cell}}-\frac{RT}{nF}\ln Q
+\]
+The cell potential changes with reaction quotient \(Q\). Products in \(Q\) lower the potential when they increase.
+
+\subsubsection{Nernst equation at 298 K}
+\[
+E_{\mathrm{cell}}=E^\circ_{\mathrm{cell}}-\frac{0.0592\,\mathrm V}{n}\log Q
+\]
+This base-10 form is used for room-temperature calculations.
+
+\subsubsection{Concentration cell}
+\[
+E_{\mathrm{cell}}=\frac{0.0592\,\mathrm V}{n}\log\left(\frac{c_{\mathrm{high}}}{c_{\mathrm{low}}}\right)
+\]
+% Added from exam coverage
+Identical electrodes give \(E^\circ_{\mathrm{cell}}=0\). The spontaneous direction reduces ions in the more concentrated half-cell and dissolves metal in the dilute half-cell.
+
+\subsubsection{Solubility product from cell potential}
+\[
+\Delta G^\circ=-nFE^\circ_{\mathrm{cell}}=-RT\ln K
+\]
+Electrochemical measurements can determine equilibrium constants, including \(K_{sp}\), when the cell reaction is written for the dissolution or precipitation equilibrium.

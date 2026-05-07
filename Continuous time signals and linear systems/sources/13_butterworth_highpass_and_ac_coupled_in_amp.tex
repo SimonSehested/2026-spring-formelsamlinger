@@ -1,0 +1,71 @@
+\section{Butterworth Highpass and AC-Coupled In-Amp}
+
+\subsection{Butterworth Highpass}
+
+\subsubsection{Second-order Butterworth highpass stage}
+\[
+H_{\mathrm{HP}}(s)=K\frac{s^2}{s^2+a\omega_c s+\omega_c^2}.
+\]
+The highpass numerator places two zeros at the origin. The denominator uses the same Butterworth damping coefficients as the lowpass prototype.
+
+\subsubsection{Lowpass-to-highpass Butterworth transformation}
+\[
+H_{\mathrm{HP}}(s)=H_{\mathrm{LP,n}}\!\left(\frac{\omega_c}{s}\right).
+\]
+This substitution maps the normalized Butterworth lowpass prototype to a highpass cutoff at \(\omega_c\).
+
+\subsubsection{Highpass cutoff conversion}
+\[
+\omega_c=2\pi f_c.
+\]
+Filter design often specifies cutoff frequency in hertz, while transfer functions use angular frequency in rad/s.
+
+\subsection{AC Coupling}
+
+\subsubsection{Single-pole AC-coupling highpass}
+\[
+H_{\mathrm{AC}}(s)=\frac{sRC}{1+sRC}
+=\frac{s}{s+\omega_c},\qquad \omega_c=\frac{1}{RC}.
+\]
+AC coupling rejects electrode offsets and slow baseline drift while passing higher-frequency signal components.
+
+\subsubsection{Cascaded AC-coupling stages}
+\[
+H_{\mathrm{total}}(s)=\prod_{k=1}^{M}\frac{s}{s+\omega_{c,k}}.
+\]
+Multiple coupling stages increase low-frequency attenuation and add phase shift near each cutoff.
+
+\subsection{Instrumentation Amplifier}
+
+\subsubsection{Differential and common-mode signals}
+\[
+v_d=v_2-v_1,\qquad
+v_{\mathrm{cm}}=\frac{v_1+v_2}{2}.
+\]
+Biopotential front ends separate the desired differential signal from common-mode interference.
+
+\subsubsection{Differential gain and common-mode gain}
+\[
+v_o=A_d v_d + A_{\mathrm{cm}}v_{\mathrm{cm}}.
+\]
+An ideal instrumentation amplifier has large differential gain and zero common-mode gain.
+
+\subsubsection{Common-mode rejection ratio}
+\[
+\mathrm{CMRR}=\left|\frac{A_d}{A_{\mathrm{cm}}}\right|,
+\qquad
+\mathrm{CMRR}_{\mathrm{dB}}=20\log_{10}\left|\frac{A_d}{A_{\mathrm{cm}}}\right|.
+\]
+CMRR quantifies rejection of common-mode signals relative to differential signals.
+
+\subsubsection{Three-op-amp instrumentation amplifier gain}
+\[
+A_d=\left(1+\frac{2R}{R_G}\right)\frac{R_3}{R_2}.
+\]
+The gain is set by the input-stage gain resistor \(R_G\) and the output difference-amplifier resistor ratio.
+
+\subsubsection{Resistor mismatch and common-mode leakage}
+\[
+\frac{R_3}{R_2}\neq \frac{R_5}{R_4}\quad \Rightarrow\quad A_{\mathrm{cm}}\neq 0.
+\]
+Balanced resistor ratios are required for common-mode cancellation. Mismatch degrades CMRR.

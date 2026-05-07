@@ -1,0 +1,59 @@
+\section{Fourier Series}
+
+\subsection{Periodic Signal Representation}
+
+\subsubsection{Exponential Fourier series}
+\[
+x(t)=\sum_{n=-\infty}^{\infty}D_n e^{jn\omega_0 t}, \qquad
+D_n=\frac{1}{T_0}\int_{t_0}^{t_0+T_0}x(t)e^{-jn\omega_0 t}\,dt.
+\]
+The exponential Fourier series expands a periodic signal in orthogonal complex exponentials.
+
+\subsubsection{Trigonometric Fourier series}
+\[
+x(t)=a_0+\sum_{n=1}^{\infty}\left(a_n\cos n\omega_0 t+b_n\sin n\omega_0 t\right).
+\]
+The trigonometric series is useful for real periodic signals and separates cosine and sine content.
+
+\subsubsection{Relation between exponential and trigonometric coefficients}
+\[
+D_0=a_0,\qquad
+D_n=\frac{a_n-jb_n}{2},\qquad
+D_{-n}=\frac{a_n+jb_n}{2}.
+\]
+For real signals, \(D_{-n}=D_n^*\). Magnitude and phase follow from the complex coefficients.
+
+\subsubsection{Amplitude-phase Fourier series}
+\[
+x(t)=C_0+\sum_{n=1}^{\infty}C_n\cos(n\omega_0 t+\theta_n),
+\qquad
+C_n=2|D_n|,\quad \theta_n=\angle D_n.
+\]
+The amplitude-phase form describes the spectrum by harmonic amplitudes and phases.
+
+\subsection{Symmetry}
+
+\subsubsection{Fourier series of real even signals}
+\[
+x(t)=x(-t) \quad \Rightarrow \quad D_n\in\mathbb{R},\qquad b_n=0.
+\]
+Real even periodic signals contain only cosine terms in the trigonometric form.
+
+\subsubsection{Fourier series of real odd signals}
+\[
+x(t)=-x(-t) \quad \Rightarrow \quad D_n\in j\mathbb{R},\qquad a_n=0.
+\]
+Real odd periodic signals contain only sine terms in the trigonometric form.
+
+\subsubsection{Parseval relation for Fourier series}
+\[
+\frac{1}{T_0}\int_{t_0}^{t_0+T_0}|x(t)|^2\,dt
+=\sum_{n=-\infty}^{\infty}|D_n|^2.
+\]
+Average signal power equals the sum of powers in all Fourier series coefficients.
+
+\subsubsection{Aperiodic time window reconstructed from Fourier series}
+\[
+x_p(t)=\sum_{k=-\infty}^{\infty}x_a(t-kT_0).
+\]
+A Fourier series computed from a finite time window represents the periodic extension of that window.
