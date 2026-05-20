@@ -1,0 +1,47 @@
+\section*{Exam format and data checks}
+\begin{riskbox}[Multiple choice risk]
+Score in observed exams: correct $=3$, wrong $=-1$, don't know $=0$. Guess only if
+$P(\text{correct})>1/4$. One false clause makes a statement false. Eliminate by units,
+sign, impossible range, wrong dimension, and violated assumptions before computing.
+\end{riskbox}
+
+\subsection*{Data matrix and standardization}
+Use $X\in\R^{N\times M}$: rows observations, columns attributes. Standardized attribute:
+\[
+\tilde x_{ij}=\frac{x_{ij}-\bar x_j}{s_j},\quad
+\bar x_j=\frac1N\sum_i x_{ij},\quad
+s_j^2=\frac1{N-1}\sum_i(x_{ij}-\bar x_j)^2 .
+\]
+\note{Trap} If a problem says standardized, covariance and correlation coincide; diagonal
+variance is $1$. Never standardize labels $y$ unless explicitly stated.
+
+\subsection*{Covariance, correlation, distance}
+\[
+\begin{gathered}
+\hat\Sigma=\frac1{N-1}\tilde X^\top\tilde X,\qquad
+\rho_{jk}=\frac{\Cov(x_j,x_k)}{s_js_k},\\
+d(x_i,x_j)=\sqrt{\sum_{m=1}^M(x_{im}-x_{jm})^2}.
+\end{gathered}
+\]
+\note{Check} Correlation matrix is symmetric, diagonal $1$, entries in $[-1,1]$.
+Euclidean distance is nonnegative, symmetric, diagonal $0$.
+
+\subsection*{Visual/statistical identification}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Question cue & Fast check\\ \midrule
+Histogram vs percentile & Match support, skew, spikes, median and tails; standardized values can still be non-Gaussian.\\
+Boxplot & Median line, IQR box, whiskers/outliers; compare sign after standardization.\\
+Scatter matrix & Sign from slope/cloud tilt; strength from narrowness; density color not class unless stated.\\
+Candidate matrix & Symmetry + diagonal first, then signs from plots, then magnitudes.\\
+\bottomrule
+\end{tabularx}
+
+\subsection*{Losses and simple estimators}
+\[
+\text{MSE}=\frac1N\sum_i(y_i-\hat y_i)^2,\quad
+\text{RMSE}=\sqrt{\text{MSE}},\quad
+\text{SSE}=\sum_i e_i^2.
+\]
+\note{Trap} Training error normally decreases with model flexibility; test error can increase.
+For constant regression predictor use mean of training $y$, not test $y$.

@@ -1,79 +1,103 @@
-\section{Thermodynamics}
+\section{Thermodynamics and Thermochemistry}
 
-\subsection{First Law and Enthalpy}
+\subsection{Ctrl+F keywords: enthalpy, Hess, formation enthalpy, combustion, entropy, Gibbs, spontaneity, ligevaegt}
+Use for heat, work, \(\Delta H\), \(\Delta S\), \(\Delta G\), equilibrium constants from thermodynamics, and temperature-dependent spontaneity.
 
-\subsubsection{First law of thermodynamics}
+\subsection{Core formulas}
+
+\subsubsection{First law, heat, and work}
 \[
-\Delta U=q+w
+\Delta U=q+w, \qquad w=-p_{\mathrm{ext}}\Delta V
 \]
-Internal energy changes by heat \(q\) and work \(w\). Heat absorbed by the system is positive; heat released is negative.
+Heat into the system is positive. Expansion work is negative for the system when \(\Delta V>0\).
 
-\subsubsection{Pressure-volume work}
-\[
-w=-p_{\mathrm{ext}}\Delta V
-\]
-Expansion work is negative for the system when \(\Delta V>0\). The lecture sign convention connects constant-pressure heat to enthalpy.
-
-\subsubsection{Enthalpy}
+\subsubsection{Constant-pressure heat and enthalpy}
 \[
 H=U+pV, \qquad q_p=\Delta H
 \]
-At constant pressure, the heat exchanged equals the enthalpy change. Enthalpy is a state function.
+At constant pressure, measured heat equals the enthalpy change. \(\Delta H<0\) is exothermic and \(\Delta H>0\) is endothermic.
 
-\subsubsection{Reaction enthalpy}
+\subsubsection{Reaction enthalpy from standard formation enthalpies}
 \[
-\Delta H_{\mathrm{rxn}}=H_{\mathrm{products}}-H_{\mathrm{reactants}}
+\boxed{\Delta H^\circ_{\mathrm{rxn}}=
+\sum_{\mathrm{prod}}\nu_i\Delta H^\circ_{\mathrm f,i}
+-\sum_{\mathrm{react}}\nu_i\Delta H^\circ_{\mathrm f,i}}
 \]
-\(\Delta H_{\mathrm{rxn}}<0\) is exothermic and \(\Delta H_{\mathrm{rxn}}>0\) is endothermic.
+Use coefficients from the balanced equation. Elements in their standard state have \(\Delta H^\circ_{\mathrm f}=0\).
 
-\subsubsection{Standard enthalpy of formation}
+\subsubsection{Hess's law and thermochemical scaling}
 \[
-\Delta H^\circ_{\mathrm{rxn}}
-=\sum_i \nu_i\Delta H^\circ_{\mathrm f}(\mathrm{products})
--\sum_i \nu_i\Delta H^\circ_{\mathrm f}(\mathrm{reactants})
+\Delta H^\circ_{\mathrm{overall}}=\sum_k \Delta H^\circ_k, \qquad
+\ce{2A -> 2B}: \Delta H=2\Delta H_{\ce{A -> B}}
 \]
-Elements in their most stable standard state have \(\Delta H^\circ_{\mathrm f}=0\). Coefficients from the balanced reaction multiply formation enthalpies.
+Reversing a reaction changes the sign. Multiplying a reaction multiplies \(\Delta H\), \(\Delta S\), and \(\Delta G\).
 
-\subsubsection{Hess's law}
+\subsubsection{Combustion enthalpy}
 \[
-\Delta H^\circ_{\mathrm{overall}}=\sum_k \Delta H^\circ_k
+\Delta H^\circ_{\mathrm{comb}}
+=\sum\nu\Delta H^\circ_{\mathrm f}(\ce{CO2},\ce{H2O},\ldots)
+-\sum\nu\Delta H^\circ_{\mathrm f}(\text{fuel},\ce{O2})
 \]
-Enthalpy changes add because enthalpy is a state function. Reversing a reaction changes the sign of \(\Delta H\).
+Balance complete combustion to \(\ce{CO2}\) and \(\ce{H2O}\) first. \(\Delta H^\circ_{\mathrm f}(\ce{O2(g)})=0\).
 
-\subsection{Entropy and Gibbs Free Energy}
+\subsubsection{Entropy change from standard molar entropies}
+\[
+\Delta S^\circ_{\mathrm{rxn}}=
+\sum_{\mathrm{prod}}\nu_iS^\circ_i-\sum_{\mathrm{react}}\nu_iS^\circ_i
+\]
+Use \(\mathrm{J\,mol^{-1}K^{-1}}\) for entropy and convert to \(\mathrm{kJ}\) if combining with \(\Delta H\).
 
-\subsubsection{Gibbs free energy}
+\subsubsection{Gibbs free energy and spontaneity}
 \[
 \Delta G=\Delta H-T\Delta S
 \]
-Gibbs free energy combines enthalpy and entropy at temperature \(T\). Use \(T\) in kelvin and consistent energy units.
+\(\Delta G<0\) is spontaneous, \(\Delta G=0\) is equilibrium, and \(\Delta G>0\) is nonspontaneous under the stated conditions.
 
-\subsubsection{Spontaneity criterion}
+\subsubsection{Standard free energy and equilibrium constant}
 \[
-\Delta G<0:\ \text{spontaneous}, \qquad
-\Delta G=0:\ \text{equilibrium}, \qquad
-\Delta G>0:\ \text{nonspontaneous}
+\Delta G^\circ=-RT\ln K, \qquad K=e^{-\Delta G^\circ/RT}
 \]
-The sign of \(\Delta G\) predicts thermodynamic direction under the specified conditions.
+\(K>1\) corresponds to \(\Delta G^\circ<0\). Use kelvin and consistent energy units.
 
-\subsubsection{Temperature dependence of spontaneity}
+\subsubsection{Nonstandard Gibbs free energy}
 \[
-\Delta G(T)=\Delta H-T\Delta S
+\Delta G=\Delta G^\circ+RT\ln Q
 \]
-If \(\Delta H\) and \(\Delta S\) are treated as constant, increasing \(T\) changes \(\Delta G\) through the entropy term.
+The reaction direction under current conditions is determined by \(\Delta G\), not by \(\Delta G^\circ\) alone.
 
-\subsubsection{Standard reaction entropy}
-\[
-\Delta S^\circ_{\mathrm{rxn}}
-=\sum_i \nu_i S^\circ(\mathrm{products})
--\sum_i \nu_i S^\circ(\mathrm{reactants})
-\]
-Entropy changes are calculated from standard molar entropies using the balanced reaction.
+\subsection{Exam recipe: calculate \(\Delta H^\circ\), reaction enthalpy, Hess}
+\textbf{Use when:} tables of formation enthalpies, combustion data, or several thermochemical equations are given.
 
-\subsubsection{Thermochemical equation scaling}
+\textbf{Steps:}
+\begin{enumerate}
+    \item Balance the target reaction exactly as written.
+    \item For formation data, compute products minus reactants with coefficients.
+    \item For Hess data, reverse and multiply given reactions to match the target.
+    \item Add all adjusted enthalpies.
+\end{enumerate}
+
+\textbf{Fast checks:} elements in standard state contribute zero; exothermic combustion should usually be negative.
+
+\subsection{Exam recipe: sign of spontaneity from \(\Delta H\), \(\Delta S\), temperature}
+\textbf{Use when:} the question asks if a process is spontaneous at low/high temperature.
+
 \[
-\ce{A -> B}\quad \Delta H
-\qquad \Rightarrow \qquad
-\ce{2A -> 2B}\quad 2\Delta H
+\begin{array}{c c c}
+\toprule
+\Delta H & \Delta S & \text{spontaneity}\\
+\midrule
+- & + & \text{all }T\\
++ & - & \text{no }T\\
+- & - & \text{low }T\\
++ & + & \text{high }T\\
+\bottomrule
+\end{array}
 \]
-Thermodynamic quantities for a reaction scale with the written chemical equation.
+The switch temperature is \(T=\Delta H/\Delta S\) when signs allow a change. Convert entropy units before division.
+
+\subsection{Common traps and one-line checks}
+\subsubsection{Unit consistency in \(\Delta G=\Delta H-T\Delta S\)}
+\[
+\mathrm{kJ\,mol^{-1}}-\mathrm{K}\cdot\mathrm{kJ\,mol^{-1}K^{-1}}
+\]
+Do not mix \(\Delta H\) in \(\mathrm{kJ}\) with \(\Delta S\) in \(\mathrm J\). Convert one of them first.

@@ -1,0 +1,222 @@
+\section{LTIC systems and time domain, systemklassifikation, tidsdomæne}
+
+\subsection{Multiple-choice strategy, one best answer, sande falske udsagn}
+
+\subsubsection{One-best-answer elimination}
+Each answer option can contain several claims. If one claim in an option is false, the whole option is false.
+
+\textbf{Fast checks:} test limiting cases, signs, pole locations, units, and whether a statement is universal or only true under extra assumptions. If more than one option contains only true statements, the exam may use the special ``more than one'' answer.
+
+\subsection{Signals and elementary functions, signaler, impuls, step, rampe}
+
+\subsubsection{Unit impulse, Dirac impulse, enhedsimpuls}
+\[
+\int_{-\infty}^{\infty}\delta(t-t_0)\,dt=1,\qquad
+x(t)\delta(t-t_0)=x(t_0)\delta(t-t_0)
+\]
+The impulse has area, not ordinary amplitude. Multiplication by a smooth signal samples the signal value at the impulse location.
+
+\subsubsection{Unit step and ramp, enhedstrin, stepfunktion, rampe}
+\[
+u(t)=\begin{cases}0,&t<0\\1,&t>0\end{cases},\qquad r(t)=t\,u(t)
+\]
+\[
+\frac{d}{dt}u(t)=\delta(t),\qquad \frac{d}{dt}r(t)=u(t)
+\]
+Use these relations to move between impulse, step, and ramp responses. The value exactly at \(t=0\) is normally not decisive for these exam tasks.
+
+\subsection{System classification, lineær, tidsinvariant, kausal, stabil}
+
+\subsubsection{Linearity of systems}
+\[
+x_1\mapsto y_1,\quad x_2\mapsto y_2
+\quad\Rightarrow\quad
+a x_1+b x_2\mapsto a y_1+b y_2
+\]
+A differential equation with real constant coefficients and only linear combinations of \(x,y\) and their derivatives is linear. Terms such as \(x^2(t)\), \(y^2(t)\), or products of signals break linearity.
+
+\subsubsection{Time invariance, tidsinvarians}
+\[
+x(t)\mapsto y(t)\quad\Rightarrow\quad x(t-t_0)\mapsto y(t-t_0)
+\]
+Constant coefficients support time invariance. A coefficient such as \(t\,y(t)\) or a component value that changes with time breaks time invariance.
+
+\subsubsection{Causality, kausalitet}
+A system is causal when \(y(t_0)\) depends only on \(x(t)\) for \(t\leq t_0\). A term such as \(x(t+2)\) is non-causal because it uses future input.
+
+\textbf{Fast check:} physical passive/active circuits in this course are causal unless the mathematical expression explicitly uses future input.
+
+\subsubsection{BIBO stability and pole locations, stabilitet}
+\[
+\text{stable causal rational LTIC}\quad\Longleftrightarrow\quad \operatorname{Re}\{p_k\}<0\ \text{for every pole }p_k
+\]
+Positive real-part poles give growing natural modes and instability. Poles on the imaginary axis are not asymptotically stable and require special interpretation.
+
+\subsection{Differential equations and transfer functions, differentialligning, overføringsfunktion}
+
+\subsubsection{Standard LTIC differential equation}
+\[
+\sum_{k=0}^{N}a_k\frac{d^k y}{dt^k}
+=
+\sum_{m=0}^{M}b_m\frac{d^m x}{dt^m}
+\]
+With zero initial conditions,
+\[
+H(s)=\frac{Y(s)}{X(s)}
+=
+\frac{\sum_{m=0}^{M}b_m s^m}{\sum_{k=0}^{N}a_k s^k}.
+\]
+Use exam notation \(x(t)\) for input and \(y(t)\) for output unless the problem states otherwise.
+
+\textbf{Python aid:} Use \texttt{scripts/lti/responses.py} function \texttt{transfer\_from\_ode} when the problem gives numerator and denominator coefficient lists and asks for a quick symbolic transfer function, poles, or zeros. Inputs are coefficient lists in descending powers of \(s\). The script returns \(H(s)\), zeros, and poles. Check manually that initial conditions are zero before interpreting it as a transfer function.
+
+\subsubsection{Filter type from numerator powers}
+\[
+\frac{b_0}{s^2+a_1s+a_0}\text{ lowpass},\qquad
+\frac{b_1s}{s^2+a_1s+a_0}\text{ bandpass},\qquad
+\frac{b_2s^2}{s^2+a_1s+a_0}\text{ highpass}
+\]
+This classification assumes a stable proper second-order denominator. Always confirm by checking the limits \(s\to0\) and \(|s|\to\infty\).
+
+\subsection{Circuit equations, knudepunktsligning, kredsløb}
+
+\subsubsection{Component laws in time domain}
+\[
+i_R=\frac{v_R}{R},\qquad i_C=C\frac{dv_C}{dt},\qquad v_L=L\frac{di_L}{dt}
+\]
+Write KCL at each unknown node with a consistent current direction. Capacitor voltage cannot jump unless an impulse current is present; inductor current cannot jump unless an impulse voltage is present.
+
+\subsubsection{Component laws in phasor domain, vekselstrømskredsløb}
+\[
+Z_R=R,\qquad Z_C=\frac{1}{\jj\omega C},\qquad Z_L=\jj\omega L
+\]
+Use impedance algebra to find \(H(\jj\omega)=Y(\jj\omega)/X(\jj\omega)\). For op-amp circuits, apply ideal input current \(0\) and virtual short only when negative feedback makes the ideal assumption valid.
+
+\subsubsection{Circuit limiting checks, DC and high frequency}
+\[
+\omega\to0:\ C\text{ open},\ L\text{ short};\qquad
+\omega\to\infty:\ C\text{ short},\ L\text{ open}
+\]
+These checks often identify lowpass, highpass, and bandpass behavior before full algebra. They are also useful for eliminating false MCQ options.
+
+\subsection{Impulse, step, ramp response, impulsrespons, steprespons, ramperespons}
+
+\subsubsection{Convolution input-output relation}
+\[
+y_{\mathrm{zs}}(t)=h(t)*x(t)=\int_{-\infty}^{\infty}h(\tau)x(t-\tau)\,d\tau
+\]
+For an LTIC system, the impulse response fully determines the zero-state response. Zero-input response is caused by initial conditions and is not computed from convolution with the input.
+
+\subsubsection{Impulse response from transfer function}
+\[
+h(t)=\mathcal{L}^{-1}\{H(s)\}
+\]
+If \(H(s)\) is improper or has equal numerator and denominator degree, \(h(t)\) may contain direct impulse terms such as \(K\delta(t)\).
+
+\textbf{Python aid:} Use \texttt{scripts/lti/responses.py} function \texttt{impulse\_response\_from\_transfer} when the problem asks for an impulse response from a rational transfer function and the required inputs are numerator and denominator coefficients in descending powers of \(s\). The script returns a symbolic expression for \(h(t)\). Check manually that the coefficient order is correct and whether a direct \(\delta(t)\) term is expected. Do not use it for conceptual statements about causality or zero-input response.
+
+\subsubsection{Step and ramp response relations}
+\[
+y_{\mathrm{step}}(t)=h(t)*u(t),\qquad
+h(t)=\frac{d}{dt}y_{\mathrm{step}}(t)
+\]
+\[
+y_{\mathrm{ramp}}(t)=y_{\mathrm{step}}(t)*u(t)=\int_0^t y_{\mathrm{step}}(\tau)\,d\tau
+\]
+Use differentiation to go from step response to impulse response and integration to go from step response to ramp response. Watch for impulse terms when the step response has a jump at \(0^+\).
+
+\textbf{Python aid:} Use \texttt{scripts/lti/responses.py} function \texttt{step\_response\_from\_transfer} when the problem asks for a zero-state unit-step response and the required inputs are numerator and denominator coefficients of \(H(s)\). Use \texttt{ramp\_response\_from\_transfer} for ramp response from \(H(s)\). Use \texttt{related\_unit\_responses} when one of \(h(t)\), \(y_{\mathrm{step}}(t)\), or \(y_{\mathrm{ramp}}(t)\) is known and the other two are needed. Check manually that initial conditions are zero and that the task is not asking for total response with stored energy.
+
+\subsection{Convolution, foldning, tabelopslag}
+
+\subsubsection{Convolution integral}
+\[
+(x_1*x_2)(t)=\int_{-\infty}^{\infty}x_1(\tau)x_2(t-\tau)\,d\tau
+\]
+Convolution is commutative and associative. In LTIC systems it computes zero-state response from input and impulse response.
+
+\subsubsection{Support interval rule, tidsinterval}
+\[
+x_1(t)=0\text{ outside }(t_1,t_2),\quad x_2(t)=0\text{ outside }(t_3,t_4)
+\]
+\[
+x_1*x_2=0\text{ outside }(t_1+t_3,\ t_2+t_4)
+\]
+This rule answers support questions without calculating the full convolution.
+
+\subsubsection{Causal exponential convolution}
+\[
+\mathcal{L}\{x_1*x_2\}=X_1(s)X_2(s)
+\]
+For causal exponential signals, Laplace multiplication and inverse transformation are usually faster than direct integration.
+
+\textbf{Python aid:} Use \texttt{scripts/transforms/convolution.py} function \texttt{convolve\_causal} when the problem asks for explicit convolution of causal signals such as \(e^{-at}u(t)\) or \(t e^{-at}u(t)\). Inputs are the two SymPy expressions without the final \(u(t)\). The script returns the symbolic causal convolution. Check manually that both signals are causal and that the problem is not only asking for the support interval.
+
+\subsection{Second-order systems, anden orden, damping, Q}
+
+\subsubsection{Standard second-order denominator}
+\[
+s^2+a_1s+a_0=s^2+2\zeta\omega_n s+\omega_n^2
+\]
+\[
+\omega_n=\sqrt{a_0},\qquad
+\zeta=\frac{a_1}{2\sqrt{a_0}},\qquad
+Q=\frac{1}{2\zeta}
+\]
+Use this mapping for second-order ODEs and transfer functions with denominator \(s^2+a_1s+a_0\).
+
+\subsubsection{Pole locations and damping class}
+\[
+s_{1,2}=-\zeta\omega_n\pm \omega_n\sqrt{\zeta^2-1}
+\]
+\begin{tabular}{lll}
+\toprule
+Condition & Pole type & Exam word \\
+\midrule
+\(\zeta>1\) & two real negative poles & overdamped, overdæmpet \\
+\(\zeta=1\) & repeated real pole & critically damped \\
+\(0<\zeta<1\) & complex-conjugate poles & underdamped, underdæmpet \\
+\(\zeta<0\) & growing modes & unstable, ustabil \\
+\bottomrule
+\end{tabular}
+
+\textbf{Python aid:} Use \texttt{scripts/lti/second\_order.py} function \texttt{classify\_second\_order} when the problem gives \(s^2+a_1s+a_0\) and asks for poles, damping, stability, \(Q\), or \(\omega_n\). Inputs are \(a_1,a_0\). The script returns poles, \(\zeta\), \(\omega_n\), \(Q\), stability, and damping class. Check manually that the denominator is normalized with leading coefficient \(1\).
+
+\subsubsection{Underdamped step features, overshoot, peak time}
+\[
+PO=100e^{-\zeta\pi/\sqrt{1-\zeta^2}},\qquad
+t_p=\frac{\pi}{\omega_n\sqrt{1-\zeta^2}},\qquad
+t_s\approx\frac{4}{\zeta\omega_n}
+\]
+\[
+\zeta=\frac{-\ln(PO/100)}{\sqrt{\pi^2+\ln^2(PO/100)}},\qquad
+\omega_d=\frac{\pi}{t_p},\qquad
+\omega_n=\frac{\omega_d}{\sqrt{1-\zeta^2}}
+\]
+Use these only for \(0<\zeta<1\). \(t_s\approx4/(\zeta\omega_n)\) is the usual 2 percent settling-time approximation.
+
+\textbf{Python aid:} Use \texttt{scripts/lti/second\_order.py} function \texttt{step\_features\_from\_zeta\_wn} when \(\zeta\) and \(\omega_n\) are already known and the problem asks for overshoot, peak time, damped frequency, or settling time. Inputs are \(\zeta,\omega_n\). The script returns \(PO,t_p,\omega_d,t_s\). Check manually that \(0<\zeta<1\).
+
+\textbf{Python aid:} Use \texttt{scripts/lti/second\_order.py} function \texttt{estimate\_from\_overshoot\_peak\_time} when a step plot gives percent overshoot and first peak time. Inputs are \(PO\) in percent and \(t_p\). The script returns \(\zeta,\omega_n,\omega_d,t_s\). Check manually that the plotted response is underdamped and second order. Do not use it for overdamped responses.
+
+\subsubsection{Sensitivity of underdamped pole coordinates}
+\[
+\sigma=-\zeta\omega_n,\qquad \omega_d=\omega_n\sqrt{1-\zeta^2},\qquad
+S_x^y=\frac{x}{y}\frac{\partial y}{\partial x}
+\]
+\[
+S_{\zeta}^{\sigma}=1,\qquad S_{\omega_n}^{\sigma}=1,\qquad
+S_{\zeta}^{\omega_d}=-\frac{\zeta^2}{1-\zeta^2},\qquad
+S_{\omega_n}^{\omega_d}=1
+\]
+As \(\zeta\to1^-\), \(\omega_d\to0\) and \(S_{\zeta}^{\omega_d}\to-\infty\). This is a recurring sensitivity MCQ trap: the negative sign in \(\sigma=-\zeta\omega_n\) does not make \(S_{\zeta}^{\sigma}\) negative.
+
+\subsubsection{Second-order lowpass, bandpass, highpass gains}
+\[
+H_{\mathrm{LP}}(s)=K\frac{\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2}
+\]
+\[
+H_{\mathrm{BP}}(s)=K\frac{2\zeta\omega_n s}{s^2+2\zeta\omega_n s+\omega_n^2},\qquad
+H_{\mathrm{HP}}(s)=K\frac{s^2}{s^2+2\zeta\omega_n s+\omega_n^2}
+\]
+For a lowpass, DC gain is \(K\). For a highpass, high-frequency gain is \(K\). A bandpass is zero at DC and at infinite frequency.

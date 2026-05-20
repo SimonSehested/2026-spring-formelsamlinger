@@ -1,0 +1,163 @@
+\section{Laplace-transformation, ensidig Laplace, unilateral Laplace}
+\symref{Xlap}{\(X(s)\)}{Laplace-transformation af input}{signal gange s}
+\symref{Ylap}{\(Y(s)\)}{Laplace-transformation af output}{signal gange s}
+\symref{ROC}{ROC}{konvergensområde for Laplace-transformation}{ikke en fysisk enhed}
+\symref{Yzi}{\(Y_{\mathrm{zi}}(s)\)}{egenrespons i Laplace-domænet}{signal gange s}
+\symref{Yzs}{\(Y_{\mathrm{zs}}(s)\)}{nul-start-respons i Laplace-domænet}{signal gange s}
+\symref{y0}{\(y(0^-)\)}{outputværdi lige før \(t=0\)}{samme som output}
+\symref{v0}{\(\dot y(0^-)\)}{outputhastighed lige før \(t=0\)}{output/s}
+
+\subsection{Definitioner og konvergensområde, ROC}
+
+\subsubsection{Ensidig Laplace-transformation}
+\[
+X(s)=\int_{0^-}^{\infty}x(t)e^{-st}\,dt
+\]
+Eksamenerne angiver, at Laplace-transformationer er ensidige, medmindre andet er sagt. Nedre grænse \(0^-\) medtager impulser eller begyndelsesbetingelseseffekter ved omskiftningstidspunktet.
+\textbf{Symboler:} \(s=\sigma+\jj\omega\) er kompleks frekvens; \(X(s)\) er ikke det samme som \(X(\omega)\).
+
+\subsubsection{Kausal eksponentialfunktion og ROC}
+\[
+e^{at}u(t)\leftrightarrow \frac{1}{s-a},\qquad \operatorname{Re}\{s\}>a
+\]
+For et kausalt signal ligger ROC til højre for højre pol. For et stabilt kausalt system skal imaginæraksen ligge i ROC.
+\textbf{Symboler:} \(a\) er polplaceringen for \(e^{at}u(t)\); ROC angiver hvor integralet konvergerer.
+
+\subsection{Afledningsregler og begyndelsesbetingelser}
+
+\subsubsection{Ensidige afledningsregler}
+\[
+\mathcal{L}\{\dot y(t)\}=sY(s)-y(0^-)
+\]
+\[
+\mathcal{L}\{\ddot y(t)\}=s^2Y(s)-s y(0^-)-\dot y(0^-)
+\]
+Disse led er grunden til, at ensidig Laplace kan medtage begyndelsesbetingelser. Brug værdier ved \(0^-\), medmindre opgaven eksplicit giver \(0^+\).
+\textbf{Typisk fælde:} ved ikke-nul begyndelsesbetingelser må afledte ikke bare erstattes af \(sY(s)\).
+
+\subsubsection{Overføringsfunktion fra differentialligning}
+\[
+y''+a_1y'+a_0y=b_2x''+b_1x'+b_0x
+\]
+\[
+H(s)=\frac{Y(s)}{X(s)}=\frac{b_2s^2+b_1s+b_0}{s^2+a_1s+a_0}
+\quad\text{når alle begyndelsesbetingelser er nul.}
+\]
+Hvis begyndelsesbetingelserne ikke er nul, indeholder \(Y(s)\) både \(H(s)X(s)\) og et egenresponsled.
+\textbf{Symboler:} \(a_0,a_1,b_0,b_1,b_2\) er konstante ODE-koefficienter; \(H(s)\) kræver nul begyndelsesbetingelser.
+
+\subsection{Egenrespons og nul-start-respons, zero-input, zero-state}
+
+\subsubsection{Responsopdeling}
+\[
+y(t)=y_{\mathrm{zi}}(t)+y_{\mathrm{zs}}(t),\qquad
+Y(s)=Y_{\mathrm{zi}}(s)+H(s)X(s)
+\]
+Egenrespons skyldes lagret energi eller begyndelsesbetingelser. Nul-start-respons skyldes inputtet med nul begyndelsesbetingelser.
+\textbf{Symboler:} \(y_{\mathrm{zi}}\) betyder zero-input/egenrespons; \(y_{\mathrm{zs}}\) betyder zero-state/nul-start-respons.
+
+\subsubsection{Andenordens egenrespons i Laplace-domænet}
+For
+\[
+y''+a_1y'+a_0y=0,\qquad y(0^-)=y_0,\quad \dot y(0^-)=v_0,
+\]
+\[
+Y_{\mathrm{zi}}(s)=\frac{s y_0+v_0+a_1y_0}{s^2+a_1s+a_0}.
+\]
+Formlen optræder direkte i flere MCQ-svarmuligheder om egenrespons.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/lti/responses.py}, funktionen \texttt{zero\_input\_laplace\_second\_order}, når opgaven giver \(a_1,a_0,y(0^-),\dot y(0^-)\) og spørger efter \(Y_{\mathrm{zi}}(s)\). Scriptet returnerer det rationale Laplace-udtryk. Tjek manuelt, at ODE'en er normeret til \(y''+a_1y'+a_0y=0\). Brug det ikke til højereordenssystemer.
+
+\subsubsection{Opskrift: vælg total, egenrespons eller nul-start-respons}
+\textbf{Brug når:} opgaven nævner initial conditions, begyndelsesbetingelser, stored energy, zero-input, zero-state eller total response.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Nul-start-respons: sæt alle begyndelsesbetingelser til nul og brug \(Y_{\mathrm{zs}}(s)=H(s)X(s)\).
+    \item Egenrespons: sæt input til nul og behold begyndelsesbetingelsesled fra ensidig Laplace.
+    \item Total respons: læg de to bidrag sammen.
+    \item Hvis opgaven spørger efter transferfunktion, må begyndelsesbetingelser ikke indgå.
+\end{enumerate}
+
+\textbf{Hurtigtjek:} inputtet bestemmer nul-start-responsen; begyndelsesbetingelser bestemmer egenresponsen; begge dele kan have samme poler, men forskellig tæller.
+
+\subsection{Invers Laplace og partialbrøker, partial fractions}
+
+\subsubsection{Almindelige inverse par}
+\[
+\frac{1}{s+a}\leftrightarrow e^{-at}u(t),\qquad
+\frac{1}{(s+a)^2}\leftrightarrow t e^{-at}u(t)
+\]
+\[
+\frac{\omega}{(s+a)^2+\omega^2}\leftrightarrow e^{-at}\sin(\omega t)u(t)
+\]
+\[
+\frac{s+a}{(s+a)^2+\omega^2}\leftrightarrow e^{-at}\cos(\omega t)u(t)
+\]
+Kvadratkompletter når nævneren har kompleks-konjugerede poler.
+
+\subsubsection{Partialbrøksopløsning}
+\[
+\frac{1}{s(s+a)}=\frac{1}{a}\left(\frac{1}{s}-\frac{1}{s+a}\right)
+\]
+Gentagne poler giver polynomielle faktorer i tidsdomænet. Simplificer altid før sammenligning med MCQ-svar, fordi ækvivalente udtryk kan være skrevet forskelligt.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/transforms/laplace.py}, funktionen \texttt{inverse\_laplace\_rational}, når opgaven beder om invers Laplace-transformation af et rationalt udtryk, og tæller- og nævnerkoefficienterne er klare. Scriptet returnerer et symbolsk tidsdomæneudtryk. Tjek manuelt for gentagne poler, direkte led, og om opgaven kræver bevis eller kun slutudtryk.
+
+\subsubsection{Opskrift: invers Laplace i eksamenssvar}
+\textbf{Brug når:} du har \(Y(s)\) og skal finde \(y(t)\), eller når svarmulighederne er tidsfunktioner.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Faktoriser nævneren eller find polerne.
+    \item Lav partialbrøker, så hvert led matcher et kendt invers-par.
+    \item Ved kompleks-konjugerede poler: kvadratkompletter til sinus/cosinus-form.
+    \item Ved gentagne poler: forvent \(t e^{-at}\)-led.
+    \item Gang med \(u(t)\), hvis signalet er kausalt.
+\end{enumerate}
+
+\textbf{Typiske fælder:} simplificer \(Y(s)\) før partialbrøker; et konstant direkte led i \(s\)-domænet kan give \(\delta(t)\); sammenlign ækvivalente sinus/cosinusformer forsigtigt.
+
+\subsection{Værdisætninger, begyndelsesværdi, slutværdi}
+
+\subsubsection{Begyndelsesværdisætningen}
+\[
+y(0^+)=\lim_{s\to\infty}sY(s)
+\]
+Brug kun sætningen, når grænsen findes. Den er nyttig til at tjekke, om en trinrespons har et begyndelsesspring.
+
+\subsubsection{Slutværdisætningen}
+\[
+\lim_{t\to\infty}y(t)=\lim_{s\to0}sY(s)
+\]
+Sætningen er kun gyldig, hvis alle poler i \(sY(s)\) ligger i den åbne venstre halvplan, bortset fra eventuelt en simpel pol i origo.
+
+\textbf{Typisk fælde:} brug af slutværdisætningen på en ustabil eller oscillerende respons giver falske konklusioner.
+
+\subsubsection{Opskrift: brug begyndelses- og slutværdi som tjek}
+\textbf{Brug når:} opgaven spørger efter \(y(0^+)\), \(y(\infty)\), steady state eller når du vil kontrollere en respons.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item For begyndelsesværdi: beregn \(\lim_{s\to\infty}sY(s)\).
+    \item For slutværdi: tjek først polerne i \(sY(s)\).
+    \item Brug kun slutværdisætningen hvis alle relevante poler ligger i venstre halvplan, bortset fra eventuelt en simpel pol i \(0\).
+    \item Sammenlign resultatet med filtertypen: lavpas holder DC, højpas fjerner DC.
+\end{enumerate}
+
+\textbf{Hurtigtjek:} en stabil højpasrespons på et trin skal ende ved nul; en ustabil respons har ingen almindelig slutværdi.
+
+\subsection{Eksamensopskrift: responsopgave med Laplace}
+
+\subsubsection{Arbejdsgang for Laplace-respons}
+\textbf{Brug når:} en LTIC-opgave spørger efter overføringsfunktion, impulsrespons, trinrespons, egenrespons, nul-start-respons eller slutværdi.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Omskriv differentialligningen med ensidige afledningsregler.
+    \item Adskil begyndelsesbetingelsesled fra \(H(s)X(s)\).
+    \item Brug partialbrøker til invers Laplace.
+    \item Tjek poler før brug af slutværdisætningen.
+\end{enumerate}
+
+\textbf{Hurtige tjek:} nævnerens rødder er egenmoder; nul-start-respons med \(x(t)=u(t)\) bruger \(X(s)=1/s\); en højpas-trinrespons bør ende i nul.

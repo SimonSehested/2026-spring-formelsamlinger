@@ -1,0 +1,24 @@
+\section{Validerede Python-hjælpere, Python-funktioner, kode}
+
+\subsection{Brug af scripts under eksamen}
+
+\subsubsection{Regel for scriptbrug}
+Brug først scripts, når formel, antagelser og opgavetype er identificeret fra formelsamlingen. Scripts er regnehjælpemidler; de afgør ikke, om et konceptuelt udsagn er sandt.
+
+\subsubsection{Valideret scriptopslag}
+\begin{description}
+    \item[Andenordenspoler:] \texttt{scripts/lti/second\_order.py}, \texttt{classify\_second\_order}. Tjek nævner \(s^2+a_1s+a_0\).
+    \item[Trinresponsmål fra parametre:] \texttt{scripts/lti/second\_order.py}, \texttt{step\_features\_from\_zeta\_wn}. Tjek \(0<\zeta<1\).
+    \item[Estimater fra trinplot:] \texttt{scripts/lti/second\_order.py}, \texttt{estimate\_from\_overshoot\_peak\_time}. Tjek underdæmpet andenordensplot.
+    \item[Impuls-, trin- og ramperespons:] \texttt{scripts/lti/responses.py}, \texttt{impulse\_response\_from\_transfer}, \texttt{step\_response\_from\_transfer}, \texttt{ramp\_response\_from\_transfer}, \texttt{related\_unit\_responses}. Tjek nul-start-overføringsfunktion og kausal LTIC-antagelse.
+    \item[ODE til overføringsfunktion:] \texttt{scripts/lti/responses.py}, \texttt{transfer\_from\_ode}. Tjek nul begyndelsesbetingelser.
+    \item[Egenrespons i Laplace:] \texttt{scripts/lti/responses.py}, \texttt{zero\_input\_laplace\_second\_order}. Tjek normeret andenordens-ODE.
+    \item[Foldning:] \texttt{scripts/transforms/convolution.py}, \texttt{convolve\_causal}. Tjek at begge signaler er kausale.
+    \item[Invers Laplace:] \texttt{scripts/transforms/laplace.py}, \texttt{inverse\_laplace\_rational}. Tjek rationale koefficienter.
+    \item[Fourierkoefficienter:] \texttt{scripts/fourier/series.py}, \texttt{complex\_fourier\_coefficients}. Tjek én fuld periode.
+    \item[Fourier-egenskab:] \texttt{scripts/fourier/properties.py}, \texttt{exponential\_transform\_variant}. Tjek kun skalering eller modulation.
+    \item[Bode og pol-nul:] \texttt{scripts/frequency/bode.py}, \texttt{bode\_values}, \texttt{classify\_filter\_limits}, \texttt{transfer\_from\_poles\_zeros}. Tjek rad/s og konjugerede par.
+    \item[Butterworth og RC-skalering:] \texttt{scripts/filters/butterworth.py}, \texttt{butterworth\_lowpass\_order}, \texttt{butterworth\_highpass\_order}, \texttt{butterworth\_poles\_q}, \texttt{frequency\_scale\_rc}. Tjek pasbånd/stopbånd og rad/s-konvertering.
+    \item[ADC og sampling:] \texttt{scripts/sampling/adc.py}, \texttt{adc\_lsb}, \texttt{alias\_frequency}, \texttt{required\_sampling\_rate\_for\_lsb}. Tjek ADC-konvention og enkelttones/asymptote-antagelser.
+    \item[Instrumenteringsforstærker:] \texttt{scripts/circuits/instrumentation.py}, \texttt{instrumentation\_gains}. Tjek single-\(\alpha\)-mismatchmodel.
+\end{description}

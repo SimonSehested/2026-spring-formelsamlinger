@@ -1,0 +1,60 @@
+\section*{Decision trees, ensembles and ANN}
+\subsection*{Decision tree splits}
+Classification impurity examples:
+\[
+\begin{gathered}
+\text{class. error}=1-\max_c p_c,\qquad
+\text{Gini}=1-\sum_c p_c^2,\\
+\text{entropy}=-\sum_c p_c\log_2p_c.
+\end{gathered}
+\]
+\[
+\text{gain}=I(\text{parent})-\sum_v\frac{N_v}{N}I(\text{child }v).
+\]
+\note{Recipe} For a candidate split: count classes in each branch, compute weighted child impurity, choose largest gain.
+\note{Trap} Use branch weights $N_v/N$; pure child impurity is $0$.
+
+\subsection*{Tree prediction and pruning}
+\note{Recipe} Follow threshold tests from root to leaf; predict majority class or leaf mean.
+\note{Trap} Axis-aligned splits compare one attribute at a time; depth/leaf count controls complexity.
+
+\subsection*{AdaBoost}
+\[
+\epsilon_t=\sum_i w_i^{(t)}\ind[h_t(x_i)\ne y_i],\quad
+\alpha_t=\frac12\ln\frac{1-\epsilon_t}{\epsilon_t},
+\]
+\[
+w_i^{(t+1)}\propto w_i^{(t)}\exp\!\big(\alpha_t\ind[h_t(x_i)\ne y_i]\big),
+\quad H(x)=\operatorname{sign}\sum_t\alpha_t h_t(x).
+\]
+\note{Trap} Misclassified observations get larger weight. Need $\epsilon_t<0.5$ for positive $\alpha_t$.
+
+\subsection*{Neural network forward pass}
+Two-layer regression/classification template:
+\[
+h_j=g(w_{0j}^{(1)}+\sum_m w_{mj}^{(1)}x_m),\quad
+\hat y=w_0^{(2)}+\sum_j w_j^{(2)}h_j.
+\]
+\[
+\begin{gathered}
+\text{ReLU}(a)=\max(0,a),\quad \tanh(a)\in[-1,1],\\
+\sigma(a)\in(0,1).
+\end{gathered}
+\]
+\note{Recipe} Compute hidden pre-activations, apply activation, then output layer. Include bias terms if listed.
+\note{Trap} For classification, final activation/threshold may differ from regression output.
+
+\subsection*{ANN and regularization checks}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Cue & Rule\\ \midrule
+More hidden units/layers & More flexible; more overfit risk.\\
+Weight decay/regularization & Shrinks weights; smoother boundary.\\
+Nonlinear activation absent & Network collapses to linear model.\\
+\bottomrule
+\end{tabularx}
+
+\subsection*{Model statement traps}
+\begin{riskbox}[Common false statements]
+Regularization does not make a linear-in-parameters model nonlinear. K-means/GMM are unsupervised; logistic regression/ANN/trees are supervised when trained with labels. A method can have lower test error without being uniformly better on every observation.
+\end{riskbox}

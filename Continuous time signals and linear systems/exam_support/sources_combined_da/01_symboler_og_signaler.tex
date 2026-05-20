@@ -1,0 +1,69 @@
+\section{Symboler, enheder og signalregler, notation, units}
+\symref{t}{\(t\)}{tid}{s}
+\symref{f}{\(f\)}{frekvens i cykler per sekund}{Hz}
+\symref{omega}{\(\omega\)}{vinkelfrekvens}{rad/s}
+\symref{s}{\(s=\sigma+\jj\omega\)}{kompleks frekvens i Laplace-domænet}{1/s}
+\symref{x}{\(x(t)\)}{inputsignal}{afhænger af signal}
+\symref{y}{\(y(t)\)}{outputsignal}{afhænger af signal}
+\symref{u}{\(u(t)\)}{enhedstrin}{dimensionsløs}
+\symref{delta}{\(\delta(t)\)}{Dirac-impuls med areal 1}{1/s}
+\symref{j}{\(\jj\)}{imaginær enhed, \(\jj^2=-1\)}{dimensionsløs}
+
+\subsection{Læs først: symboler, enheder, Hz og rad/s}
+\[
+\omega = 2\pi f,\qquad f=\frac{\omega}{2\pi}
+\]
+\textbf{Brug når:} opgaven blander Bodeplot, sampling, sinusser eller filtergrænser.
+\textbf{Symboler:} \(f\) er frekvens i Hz; \(\omega\) er vinkelfrekvens i rad/s.
+\textbf{Hurtigtjek:} Hz bruges ofte i sampling og ADC; rad/s bruges i \(H(\jj\omega)\), Laplace og Bodeformler.
+\textbf{Typisk fælde:} at sætte \(f=\omega\). Det giver en faktor \(2\pi\) forkert.
+
+\subsection{Eksamenstjek: hvad betyder en formel?}
+\begin{tabular}{p{0.24\linewidth}p{0.34\linewidth}p{0.34\linewidth}}
+\toprule
+Spørgsmål & Hurtigt svar & Fælde\\
+\midrule
+Er signalet i tid? & Kig efter \(x(t)\), \(y(t)\), \(h(t)\). & Brug ikke Bode-regler direkte på tidsfunktioner.\\
+Er signalet i frekvens? & Kig efter \(X(\omega)\), \(H(\jj\omega)\), spektrum. & Husk fase, ikke kun amplitude.\\
+Er signalet i Laplace? & Kig efter \(X(s)\), \(H(s)\), poler og begyndelsesbetingelser. & \(H(s)=Y(s)/X(s)\) kræver nul begyndelsesbetingelser.\\
+Er opgaven sandt/falsk? & Prøv at falsificere med grænser, enheder eller specialtilfælde. & Et næsten rigtigt udsagn er forkert, hvis én betingelse mangler.\\
+\bottomrule
+\end{tabular}
+
+\subsection{Elementære signaler, impuls, trin, rampe}
+\symref{r}{\(r(t)=t u(t)\)}{enhedsrampe}{s}
+\[
+u(t)=
+\begin{cases}
+0, & t<0\\
+1, & t>0
+\end{cases},
+\qquad
+\frac{\diff u(t)}{\diff t}=\delta(t),
+\qquad
+r(t)=t u(t)
+\]
+\textbf{Brug når:} opgaven kobler impulsrespons, trinrespons og ramperespons.
+\textbf{Symboler:} \(u(t)\) tænder signalet ved \(t=0\); \(\delta(t)\) har areal 1; \(r(t)\) er en lineært voksende rampe efter \(t=0\).
+\textbf{Hurtigtjek:} differentiering flytter trin til impuls; integration flytter impuls til trin.
+\textbf{Typisk fælde:} værdien præcis i \(t=0\) afgør normalt ikke disse eksamenssvar.
+
+\subsection{Dirac-impuls som sampleregel}
+\[
+\int_{-\infty}^{\infty}x(t)\delta(t-t_0)\,\diff t=x(t_0),
+\qquad
+x(t)\delta(t-t_0)=x(t_0)\delta(t-t_0)
+\]
+\textbf{Brug når:} et signal ganges med eller integreres mod en impuls.
+\textbf{Symboler:} \(t_0\) er impulsens placering i sekunder.
+\textbf{Enheder:} \(\delta(t)\) har enhed \(1/\mathrm{s}\), så integralet får samme enhed som \(x(t)\).
+\textbf{Typisk fælde:} impulsen har areal, ikke almindelig amplitude.
+
+\subsection{Generel sandt/falsk-regel for hele faget}
+\begin{enumerate}
+    \item Del svarmuligheden op i små påstande.
+    \item Test først den letteste: enhed, fortegn, grænseværdi, stabilitet, kausalitet eller nul begyndelsesbetingelser.
+    \item Hvis én delpåstand er falsk, er hele svarmuligheden falsk.
+    \item Hvis to svar virker rigtige, find den skjulte antagelse: stabil, kausal, lineær, tidsinvariant, nul-start, Hz/rad/s.
+\end{enumerate}
+\textbf{Hurtigtjek:} et universelt udsagn kan ofte falsificeres med ét specialtilfælde.

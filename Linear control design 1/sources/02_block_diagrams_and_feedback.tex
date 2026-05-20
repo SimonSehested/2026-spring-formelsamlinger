@@ -1,77 +1,83 @@
 \section{Block diagrams and feedback}
 
-\subsection{Block diagram algebra}
+\subsection{Ctrl+F keywords}
 
-\subsubsection{Series connection}
+\subsubsection{Block diagram, blokdiagram, feedback, tilbagekobling, summing junction}
 \[
-G_{\mathrm{series}}(s)=G_1(s)G_2(s)
+\text{series, parallel, feedback, nested loop, non-unity feedback, error, folgefejl}
 \]
-Series blocks multiply because the output of the first block is the input of the next block.
+Use this section when a problem shows a block diagram or asks for \(Y/R\), \(E/R\), or steady-state error from a diagram.
 
-\subsubsection{Parallel connection}
+\subsection{Core block reductions}
+
+\subsubsection{Series and parallel blocks}
 \[
-G_{\mathrm{parallel}}(s)=G_1(s)+G_2(s)
+G_{\mathrm{series}}=G_1G_2,\qquad G_{\mathrm{parallel}}=G_1+G_2
 \]
-Parallel paths with the same input and summed outputs add their transfer functions.
+Series paths multiply. Parallel paths with the same input and summed output add with the signs shown at the summing junction.
 
-\subsubsection{Negative feedback reduction}
+\subsubsection{Negative feedback with measurement block}
 \[
-\frac{Y(s)}{R(s)}=\frac{C(s)G(s)}{1+C(s)G(s)H(s)}
+\frac{Y(s)}{R(s)}=\frac{C(s)G(s)}{1+C(s)G(s)H(s)},\qquad
+\frac{E(s)}{R(s)}=\frac{1}{1+C(s)G(s)H(s)}
 \]
-For negative feedback, the loop transfer function \(C(s)G(s)H(s)\) appears in the characteristic denominator.
+The feedback denominator is \(1+L(s)\) for negative feedback with \(L=CGH\).
 
-\subsubsection{Positive feedback reduction}
+\subsubsection{Positive feedback sign trap}
 \[
 \frac{Y(s)}{R(s)}=\frac{G(s)}{1-G(s)H(s)}
 \]
-Positive feedback changes the sign in the characteristic denominator and can reduce stability margins.
+Change only the sign required by the summing junction. Many wrong options use \(1+GH\) where the diagram requires \(1-GH\).
 
-\subsubsection{Unity feedback closed loop}
+\subsubsection{Unity feedback}
 \[
-T(s)=\frac{Y(s)}{R(s)}=\frac{L(s)}{1+L(s)}, \qquad L(s)=C(s)G(s)
+T(s)=\frac{Y}{R}=\frac{L}{1+L},\qquad
+S(s)=\frac{E}{R}=\frac{1}{1+L}
 \]
-The loop transfer function \(L(s)\) determines both closed-loop stability and frequency-domain robustness.
+For unity feedback \(L=CG\). These two formulas also identify tracking and sensitivity paths.
 
-\subsection{Error and sensitivity in feedback}
+\subsection{Exam recipe: reduce a block diagram}
 
-\subsubsection{Reference-to-error transfer function}
+\textbf{Use when:} the problem asks for equivalent transfer function, closed-loop transfer, or block diagram answer option.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Label each summing junction equation before simplifying.
+\item Collapse obvious series and parallel blocks.
+\item Reduce innermost feedback loops first.
+\item Keep signs from the summing junctions, not from memory.
+\item Check the final denominator for the expected \(1\pm L\) structure.
+\end{enumerate}
+
+\textbf{Fast checks:} set one block equal to zero or one and verify the simplified diagram still makes sense.
+
+\textbf{Common traps:} moving a summing junction across a block without multiplying or dividing by that block; losing measurement block \(H(s)\).
+
+\subsection{Exam recipe: non-unity feedback steady-state error}
+
+\textbf{Use when:} the problem includes a feedback branch gain/filter and asks for final error.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Derive \(E(s)/R(s)\) directly from the diagram.
+\item Insert the reference input, usually \(R(s)=1/s\) for a unit step.
+\item Use \(e_{\mathrm{ss}}=\lim_{s\to0}sE(s)\) only after checking closed-loop stability.
+\item Evaluate all stable transfer functions at \(s=0\).
+\end{enumerate}
+
+\textbf{Fast checks:} if \(L(0)\) is large, error should be small; if a non-unity sensor has DC gain \(H(0)\neq 1\), the controlled output may not equal the reference.
+
+\textbf{Common traps:} using \(1/(1+CG)\) when the diagram has \(H(s)\), extra branches, or nested loops.
+
+\subsection{Controller blocks from diagrams}
+
+\subsubsection{P, PI, PD, PID in time and Laplace form}
 \[
-\frac{E(s)}{R(s)}=\frac{1}{1+C(s)G(s)H(s)}
+\begin{aligned}
+C_P(s)&=K_P,\\
+C_{PI}(s)&=K_P\frac{\tau_i s+1}{\tau_i s},\\
+C_{PD}(s)&=K_P(1+\tau_d s),\\
+C_{PID}(s)&=K_P\left(1+\frac{1}{\tau_i s}+\tau_d s\right).
+\end{aligned}
 \]
-Large loop gain reduces tracking error where the feedback model is valid.
-
-\subsubsection{Measured feedback signal}
-\[
-Y_m(s)=H(s)Y(s)
-\]
-The measurement block represents sensors, filters, encoders, or camera-based measurements used by the controller.
-
-\subsection{Hand tuning controllers}
-
-\subsubsection{P controller}
-\[
-u(t)=K_P e(t), \qquad C_P(s)=K_P
-\]
-Increasing \(K_P\) usually increases speed and reduces static error, but it can reduce damping and robustness.
-
-\subsubsection{PI controller}
-\[
-u(t)=K_P\left(e(t)+\frac{1}{\tau_i}\int_0^t e(\xi)\,d\xi\right),
-\qquad
-C_{PI}(s)=K_P\frac{\tau_i s+1}{\tau_i s}
-\]
-Integral action increases low-frequency loop gain and can remove step reference error for stable type-0 plants.
-
-\subsubsection{PD controller}
-\[
-u(t)=K_P\left(e(t)+\tau_d\frac{de(t)}{dt}\right),
-\qquad
-C_{PD}(s)=K_P(1+\tau_d s)
-\]
-Derivative action reacts to fast error changes and can add damping, but it amplifies high-frequency noise.
-
-\subsubsection{PID controller}
-\[
-C_{PID}(s)=K_P\frac{\tau_i\tau_d s^2+\tau_i s+1}{\tau_i s}
-\]
-The PID controller combines low-frequency integral action with phase-shaping derivative action.
+Use the controller form exactly as shown in the block diagram or problem statement.

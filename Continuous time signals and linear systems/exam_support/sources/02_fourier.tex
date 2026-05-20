@@ -1,0 +1,99 @@
+\section{Fourier series and Fourier transform, Fourierrække, Fourier-transformation}
+
+\subsection{Fourier series, Fourierrække, periodisk signal}
+
+\subsubsection{Complex exponential Fourier series}
+\[
+x(t)=\sum_{n=-\infty}^{\infty}D_n e^{\jj n\omega_0t},\qquad
+D_n=\frac{1}{T_0}\int_{t_1}^{t_1+T_0}x(t)e^{-\jj n\omega_0t}\,dt
+\]
+\[
+\omega_0=\frac{2\pi}{T_0}
+\]
+The complex exponentials are orthogonal over one period. Expanding a finite time window of an aperiodic signal creates a periodic reconstruction with period \(T_0\).
+
+\textbf{Python aid:} Use \texttt{scripts/fourier/series.py} function \texttt{complex\_fourier\_coefficients} when the problem asks for symbolic \(D_n\) coefficients over a known interval. Inputs are the SymPy expression, time symbol, period, requested integer indices, and interval start. The script returns a dictionary of coefficients. Check manually that the chosen interval is one full period and that the signal is integrable over it.
+
+\subsubsection{Trigonometric Fourier series}
+\[
+x(t)=a_0+\sum_{n=1}^{\infty}\left(a_n\cos(n\omega_0t)+b_n\sin(n\omega_0t)\right)
+\]
+\[
+a_n=\frac{2}{T_0}\int_{t_1}^{t_1+T_0}x(t)\cos(n\omega_0t)\,dt,\qquad
+b_n=\frac{2}{T_0}\int_{t_1}^{t_1+T_0}x(t)\sin(n\omega_0t)\,dt
+\]
+Use cosine terms for even parts and sine terms for odd parts. Confirm the convention for \(a_0\) if comparing with a source using \(a_0/2\).
+
+\subsubsection{Fourier series symmetry, lige ulige}
+\[
+x(t)\text{ real}\quad\Rightarrow\quad D_{-n}=D_n^*
+\]
+\[
+x(t)\text{ real and even}\quad\Rightarrow\quad D_n=D_{-n}\in\mathbb{R}
+\]
+\[
+x(t)\text{ real and odd}\quad\Rightarrow\quad D_n=-D_{-n}\text{ and }D_n\text{ is imaginary}
+\]
+Magnitude \(|D_n|\) cannot be negative. This is a common false-statement trap.
+
+\subsection{Fourier transform, transformation, spectrum}
+
+\subsubsection{Fourier transform definition}
+\[
+X(\omega)=\int_{-\infty}^{\infty}x(t)e^{-\jj\omega t}\,dt,\qquad
+x(t)=\frac{1}{2\pi}\int_{-\infty}^{\infty}X(\omega)e^{\jj\omega t}\,d\omega
+\]
+The exam uses angular frequency \(\omega\) in rad/s. Some periodic signals are handled with generalized transforms, so avoid claiming that Fourier transforms are only for aperiodic signals.
+
+\subsubsection{Basic transform pairs}
+\[
+\delta(t)\leftrightarrow 1,\qquad
+u(t)e^{-at}\leftrightarrow \frac{1}{a+\jj\omega},\quad a>0
+\]
+\[
+\cos(\omega_0t)\leftrightarrow \pi\left[\delta(\omega-\omega_0)+\delta(\omega+\omega_0)\right]
+\]
+\[
+\sin(\omega_0t)\leftrightarrow \frac{\pi}{\jj}\left[\delta(\omega-\omega_0)-\delta(\omega+\omega_0)\right]
+\]
+For \(e^{-at}u(t)\), the sign of \(a\) determines convergence. The transform exists as an ordinary decaying signal transform for \(a>0\).
+
+\subsubsection{Fourier transform properties, skalering, modulation, tidsforskydning}
+\[
+x(t-t_0)\leftrightarrow e^{-\jj\omega t_0}X(\omega)
+\]
+\[
+x(at)\leftrightarrow \frac{1}{|a|}X\left(\frac{\omega}{a}\right),\qquad
+x(t)e^{\jj\omega_ct}\leftrightarrow X(\omega-\omega_c)
+\]
+\[
+\frac{dx}{dt}\leftrightarrow \jj\omega X(\omega),\qquad
+x_1(t)x_2(t)\leftrightarrow \frac{1}{2\pi}X_1(\omega)*X_2(\omega)
+\]
+Time compression broadens the spectrum. Time shift changes phase but not magnitude.
+
+\textbf{Python aid:} Use \texttt{scripts/fourier/properties.py} function \texttt{exponential\_transform\_variant} when the problem starts from \(e^{-at}u(t)\) and asks for a scaled or modulated transform pair. Inputs are \(a\), positive time scale, and modulation frequency. The script returns the transformed expression. Check manually that the operation is scaling or modulation, not time shifting or a conceptual existence question.
+
+\subsubsection{Even and odd transform symmetry}
+\[
+x(t)=x_e(t)+x_o(t),\qquad
+x_e(t)=\frac{x(t)+x(-t)}{2},\quad x_o(t)=\frac{x(t)-x(-t)}{2}
+\]
+For real even \(x(t)\), \(X(\omega)\) is real and even. For real odd \(x(t)\), \(X(\omega)\) is imaginary and odd.
+
+\subsection{Exam recipe: Fourier statement checking}
+
+\subsubsection{Fourier MCQ checklist}
+\textbf{Use when:} an answer option contains several claims about Fourier series, Fourier transforms, symmetry, or transform properties.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Identify whether the task is series \(D_n\) or transform \(X(\omega)\).
+    \item Check signal symmetry before integrating.
+    \item Apply only one property at a time: scaling, modulation, time shift, or differentiation.
+    \item Check units: \(f\) in Hz and \(\omega=2\pi f\) in rad/s are not interchangeable.
+\end{enumerate}
+
+\textbf{Fast checks:} real even signals have zero imaginary transform part; real odd signals have zero real transform part. Scaling by \(a\) must include \(1/|a|\).
+
+\textbf{Common traps:} Fourier transform is not restricted to only aperiodic signals; \(|D_n|\) is never negative; time shift does not change magnitude spectrum.

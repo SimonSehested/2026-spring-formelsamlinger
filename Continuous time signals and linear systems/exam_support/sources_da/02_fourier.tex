@@ -1,0 +1,140 @@
+\section{Fourierrækker og Fourier-transformation, Fourier series, spectrum}
+
+\subsection{Fourierrække, periodisk signal}
+
+\subsubsection{Kompleks eksponentiel Fourierrække}
+\[
+x(t)=\sum_{n=-\infty}^{\infty}D_n e^{\jj n\omega_0t},\qquad
+D_n=\frac{1}{T_0}\int_{t_1}^{t_1+T_0}x(t)e^{-\jj n\omega_0t}\,dt
+\]
+\[
+\omega_0=\frac{2\pi}{T_0}
+\]
+De komplekse eksponentialer er ortogonale over én periode. Udvidelse af et endeligt tidsvindue af et ikke-periodisk signal giver en periodisk rekonstruktion med periode \(T_0\).
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/fourier/series.py}, funktionen \texttt{complex\_fourier\_coefficients}, når opgaven spørger efter symbolske \(D_n\)-koefficienter over et kendt interval. Input er SymPy-udtryk, tidssymbol, periode, ønskede heltalsindekser og intervalstart. Scriptet returnerer en dictionary med koefficienter. Tjek manuelt, at intervallet er én fuld periode, og at signalet er integrerbart over intervallet.
+
+\subsubsection{Opskrift: find Fourierrækkekoefficienter}
+\textbf{Brug når:} opgaven giver et periodisk signal og spørger efter \(D_n\), \(a_n\), \(b_n\), spektrumlinjer eller middelværdi.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Find perioden \(T_0\) og \(\omega_0=2\pi/T_0\).
+    \item Vælg et integrationsinterval på præcis én periode.
+    \item Tjek symmetri: lige signal giver kun cosinus/reelle koefficienter; ulige signal giver kun sinus/imaginære koefficienter.
+    \item Indsæt i koefficientformlen og simplificer kun så meget, at svarmuligheder kan sammenlignes.
+    \item Tjek \(D_0\) som middelværdien over én periode.
+\end{enumerate}
+
+\textbf{Hvis du er i tvivl:} står der periodisk eller \(D_n\), så er det Fourierrække, ikke almindelig Fouriertransformation.
+
+\subsubsection{Trigonometrisk Fourierrække}
+\[
+x(t)=a_0+\sum_{n=1}^{\infty}\left(a_n\cos(n\omega_0t)+b_n\sin(n\omega_0t)\right)
+\]
+\[
+a_n=\frac{2}{T_0}\int_{t_1}^{t_1+T_0}x(t)\cos(n\omega_0t)\,dt,\qquad
+b_n=\frac{2}{T_0}\int_{t_1}^{t_1+T_0}x(t)\sin(n\omega_0t)\,dt
+\]
+Brug cosinusled til lige dele og sinusled til ulige dele. Bekræft konventionen for \(a_0\), hvis der sammenlignes med en kilde, der bruger \(a_0/2\).
+
+\subsubsection{Symmetri i Fourierrække, lige, ulige}
+\[
+x(t)\text{ reel}\quad\Rightarrow\quad D_{-n}=D_n^*
+\]
+\[
+x(t)\text{ reel og lige}\quad\Rightarrow\quad D_n=D_{-n}\in\mathbb{R}
+\]
+\[
+x(t)\text{ reel og ulige}\quad\Rightarrow\quad D_n=-D_{-n}\text{ og }D_n\text{ er imaginær}
+\]
+Størrelsen \(|D_n|\) kan ikke være negativ. Det er en typisk falsk-påstand-fælde.
+
+\subsection{Fourier-transformation, transformation, spektrum}
+
+\subsubsection{Definition af Fourier-transformation}
+\[
+X(\omega)=\int_{-\infty}^{\infty}x(t)e^{-\jj\omega t}\,dt,\qquad
+x(t)=\frac{1}{2\pi}\int_{-\infty}^{\infty}X(\omega)e^{\jj\omega t}\,d\omega
+\]
+Eksamen bruger vinkelfrekvens \(\omega\) i rad/s. Nogle periodiske signaler håndteres med generaliserede transformationer, så undgå påstanden om, at Fourier-transformation kun gælder ikke-periodiske signaler.
+
+\subsubsection{Basale transformationspar}
+\[
+\delta(t)\leftrightarrow 1,\qquad
+u(t)e^{-at}\leftrightarrow \frac{1}{a+\jj\omega},\quad a>0
+\]
+\[
+\cos(\omega_0t)\leftrightarrow \pi\left[\delta(\omega-\omega_0)+\delta(\omega+\omega_0)\right]
+\]
+\[
+\sin(\omega_0t)\leftrightarrow \frac{\pi}{\jj}\left[\delta(\omega-\omega_0)-\delta(\omega+\omega_0)\right]
+\]
+For \(e^{-at}u(t)\) bestemmer fortegnet på \(a\) konvergens. Transformationen findes som almindelig aftagende signaltransformation for \(a>0\).
+
+\subsubsection{Egenskaber for Fourier-transformation, skalering, modulation, tidsforskydning}
+\[
+x(t-t_0)\leftrightarrow e^{-\jj\omega t_0}X(\omega)
+\]
+\[
+x(at)\leftrightarrow \frac{1}{|a|}X\left(\frac{\omega}{a}\right),\qquad
+x(t)e^{\jj\omega_ct}\leftrightarrow X(\omega-\omega_c)
+\]
+\[
+\frac{dx}{dt}\leftrightarrow \jj\omega X(\omega),\qquad
+x_1(t)x_2(t)\leftrightarrow \frac{1}{2\pi}X_1(\omega)*X_2(\omega)
+\]
+Tidskompression udvider spektret. Tidsforskydning ændrer fase, men ikke størrelse.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/fourier/properties.py}, funktionen \texttt{exponential\_transform\_variant}, når opgaven starter fra \(e^{-at}u(t)\) og spørger efter et skaleret eller moduleret transformationspar. Input er \(a\), positiv tidsskalering og modulationsfrekvens. Scriptet returnerer det transformerede udtryk. Tjek manuelt, at operationen er skalering eller modulation, ikke tidsforskydning eller et konceptuelt eksistensspørgsmål.
+
+\subsubsection{Opskrift: brug Fourier-egenskaber uden at integrere}
+\textbf{Brug når:} opgaven starter fra et kendt transformationspar og ændrer signalet med tidsforskydning, skalering, modulation eller differentiation.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Identificer grundsignalet og det kendte \(X(\omega)\).
+    \item Vælg præcis én egenskab ad gangen.
+    \item Tidsforskydning \(x(t-t_0)\): gang med \(e^{-\jj\omega t_0}\).
+    \item Skalering \(x(at)\): husk faktoren \(1/|a|\).
+    \item Modulation \(x(t)e^{\jj\omega_ct}\): forskyd spektret til \(X(\omega-\omega_c)\).
+\end{enumerate}
+
+\textbf{Hurtigtjek:} tidsforskydning ændrer ikke \(|X(\omega)|\); tidskompression gør spektret bredere; differentiation ganger med \(\jj\omega\).
+
+\subsubsection{Lige og ulige transformationssymmetri}
+\[
+x(t)=x_e(t)+x_o(t),\qquad
+x_e(t)=\frac{x(t)+x(-t)}{2},\quad x_o(t)=\frac{x(t)-x(-t)}{2}
+\]
+For reel lige \(x(t)\) er \(X(\omega)\) reel og lige. For reel ulige \(x(t)\) er \(X(\omega)\) imaginær og ulige.
+
+\subsection{Eksamensopskrift: tjek af Fourier-påstande}
+
+\subsubsection{Vælg Fourierrække eller Fouriertransformation}
+\textbf{Brug når:} du ikke ved, om opgaven skal løses med \(D_n\), \(a_n,b_n\) eller \(X(\omega)\).
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Periodisk signal med grundperiode: brug Fourierrække.
+    \item Ikke-periodisk signal med samlet spektrum: brug Fouriertransformation.
+    \item Linjespektrum ved harmoniske \(n\omega_0\): tænk Fourierrække.
+    \item Kontinuert frekvensakse \(\omega\): tænk Fouriertransformation.
+\end{enumerate}
+
+\textbf{Typiske fælder:} et periodisk signal kan stadig beskrives i Fouriertransformationssprog med impulser; men når opgaven spørger efter \(D_n\), skal du bruge rækken.
+
+\subsubsection{Fourier MCQ-tjekliste}
+\textbf{Brug når:} en svarmulighed indeholder flere påstande om Fourierrækker, Fourier-transformationer, symmetri eller transformationsegenskaber.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Afgør om opgaven handler om række \(D_n\) eller transformation \(X(\omega)\).
+    \item Tjek signalsymmetri før integration.
+    \item Brug kun én egenskab ad gangen: skalering, modulation, tidsforskydning eller differentiation.
+    \item Tjek enheder: \(f\) i Hz og \(\omega=2\pi f\) i rad/s kan ikke byttes direkte.
+\end{enumerate}
+
+\textbf{Hurtige tjek:} reelle lige signaler har nul imaginær transformationsdel; reelle ulige signaler har nul reel transformationsdel. Skalering med \(a\) skal indeholde \(1/|a|\).
+
+\textbf{Typiske fælder:} Fourier-transformation er ikke begrænset til kun ikke-periodiske signaler; \(|D_n|\) er aldrig negativ; tidsforskydning ændrer ikke størrelsesspektret.

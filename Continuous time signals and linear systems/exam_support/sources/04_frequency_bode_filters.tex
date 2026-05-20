@@ -1,0 +1,143 @@
+\section{Frequency response, Bode, pole-zero diagrams, filters}
+
+\subsection{Frequency response, frekvenskarakteristik}
+
+\subsubsection{Transfer function on the imaginary axis}
+\[
+H(\jj\omega)=H(s)\big|_{s=\jj\omega},\qquad
+|H|_{\mathrm{dB}}=20\log_{10}|H|,\qquad
+\angle H=\arg H
+\]
+Use \(H(\jj\omega)\), not \(H(\omega)\), when substituting into a transfer function. The complex unit is \(j\) in the course notation.
+
+\textbf{Python aid:} Use \texttt{scripts/frequency/bode.py} function \texttt{bode\_values} when the problem asks for numerical magnitude or phase checks at selected angular frequencies. Inputs are numerator coefficients, denominator coefficients, and \(\omega\) values. The script returns \(H(\jj\omega)\), magnitude in dB, and phase in degrees. Check manually that the frequency axis is in rad/s and that the coefficients are ordered by descending powers of \(s\).
+
+\subsubsection{Magnitude and phase from factors}
+\[
+H(\jj\omega)=K\frac{\prod_i(\jj\omega-z_i)}{\prod_k(\jj\omega-p_k)}
+\]
+\[
+|H|=|K|\frac{\prod_i|\jj\omega-z_i|}{\prod_k|\jj\omega-p_k|},\qquad
+\angle H=\angle K+\sum_i\angle(\jj\omega-z_i)-\sum_k\angle(\jj\omega-p_k)
+\]
+Magnitude is a distance ratio in the pole-zero diagram. Phase is an angle sum from zeros minus poles.
+
+\subsection{Bode plot rules, Bodeplot, asymptoter}
+
+\subsubsection{First-order Bode asymptotes}
+\[
+1+\frac{s}{\omega_c}
+\]
+A zero adds \(+20\) dB/decade after \(\omega_c\) and positive phase. A pole adds \(-20\) dB/decade after \(\omega_c\) and negative phase.
+
+\subsubsection{Origin poles and zeros}
+\[
+s^m\quad\Rightarrow\quad +20m\text{ dB/decade},\quad +90m^\circ
+\]
+\[
+\frac{1}{s^m}\quad\Rightarrow\quad -20m\text{ dB/decade},\quad -90m^\circ
+\]
+Repeated poles or zeros multiply the slope and phase contribution.
+
+\subsubsection{Bode matching recipe}
+\textbf{Use when:} an exam task asks which transfer function matches a Bode plot.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Read low-frequency slope to count poles or zeros at the origin.
+    \item Read break frequencies and slope changes.
+    \item Check high-frequency slope from numerator degree minus denominator degree.
+    \item Use phase start and end as a sign check.
+\end{enumerate}
+
+\textbf{Fast checks:} each real pole changes phase by about \(-90^\circ\); each real zero changes phase by about \(+90^\circ\). A second-order pair changes slope by \(40\) dB/decade.
+
+\subsection{Filter classification, lavpas, højpas, båndpas, båndstop}
+
+\subsubsection{Limit tests for filter type}
+\[
+H(0)=\lim_{s\to0}H(s),\qquad
+H(\infty)=\lim_{|s|\to\infty}H(s)
+\]
+\begin{tabular}{lll}
+\toprule
+Type & \(H(0)\) & \(H(\infty)\) \\
+\midrule
+Lowpass, lavpas & nonzero & zero \\
+Highpass, højpas & zero & nonzero \\
+Bandpass, båndpas & zero & zero \\
+Bandstop/notch, båndstop & nonzero & nonzero with notch \\
+\bottomrule
+\end{tabular}
+
+\textbf{Python aid:} Use \texttt{scripts/frequency/bode.py} function \texttt{classify\_filter\_limits} when the problem gives a rational transfer function and asks for a quick lowpass/highpass/bandpass limit check. Inputs are numerator and denominator coefficients. The script returns DC gain, high-frequency gain, polynomial degrees, and a probable class. Check manually for notches, resonant peaks, and whether the system is stable.
+
+\subsubsection{Pole-zero filter interpretation}
+\[
+H(s)=K\frac{\prod_i(s-z_i)}{\prod_k(s-p_k)}
+\]
+Zeros near the imaginary axis create attenuation dips. Poles near the imaginary axis create peaks. A zero at \(s=0\) blocks DC and pushes the response toward highpass behavior.
+
+\textbf{Phase trap:} mirrored left/right half-plane zeros have the same distance to the imaginary axis and can give the same magnitude contribution, but their phase contribution differs. A right-half-plane zero is non-minimum phase.
+
+\textbf{Python aid:} Use \texttt{scripts/frequency/bode.py} function \texttt{transfer\_from\_poles\_zeros} when a pole-zero diagram gives numeric poles, zeros, and gain and the task asks for a transfer function or Bode check. The script returns numerator and denominator coefficient arrays. Check manually that complex roots occur in conjugate pairs for real systems.
+
+\subsection{Second-order resonance and system identification}
+
+\subsubsection{Damped natural and resonant frequencies}
+\[
+\omega_d=\omega_n\sqrt{1-\zeta^2}
+\]
+\[
+\omega_r=\omega_n\sqrt{1-2\zeta^2}\quad\text{for a 2nd-order lowpass when }0<\zeta<\frac{1}{\sqrt{2}}
+\]
+The damped frequency \(\omega_d\) appears in time-domain oscillation. The resonant peak frequency \(\omega_r\) appears in the magnitude response.
+
+\subsubsection{Step plot to Bode consistency check}
+Use \(PO\) and \(t_p\) from a step plot to estimate \(\zeta\) and \(\omega_n\). Then compare the predicted resonant peak and phase trend with the Bode plot.
+
+\textbf{Fast checks:} \(t_p=\pi/\omega_d\); larger overshoot means smaller \(\zeta\); underdamped poles must be complex conjugates.
+
+\subsection{Butterworth filters, Butterworth filter, Sallen-Key}
+
+\subsubsection{Butterworth magnitude definition}
+\[
+|H(\jj\omega)|=\frac{1}{\sqrt{1+\epsilon^2(\omega/\omega_p)^{2n}}}
+\]
+For the common \(3\) dB cutoff case, \(\epsilon=1\) and \(\omega_p=\omega_c\). Butterworth means maximally flat magnitude, not zero phase distortion.
+
+\subsubsection{Butterworth order inequality}
+\[
+n\ge
+\frac{\log_{10}\left((10^{A_s/10}-1)/(10^{A_p/10}-1)\right)}
+{2\log_{10}(\omega_s/\omega_p)}
+\]
+Use the ceiling of the computed value. For highpass design, transform the frequency ratio so the stopband frequency maps below the passband frequency.
+
+\textbf{Python aid:} Use \texttt{scripts/filters/butterworth.py} function \texttt{butterworth\_lowpass\_order} when the problem asks for minimum lowpass Butterworth order from passband and stopband specifications. Inputs are \(f_p,f_s,A_p,A_s\). The script returns the minimum integer order. Check manually that \(f_s>f_p\) and that attenuation values are positive dB numbers. Use \texttt{butterworth\_highpass\_order} only when \(f_s<f_p\).
+
+\subsubsection{Butterworth poles and Q values}
+\[
+s_k=\omega_c e^{\jj\left(\frac{\pi}{2}+\frac{(2k+1)\pi}{2n}\right)},\qquad k=0,\ldots,n-1
+\]
+Use only the left-half-plane poles for the causal stable filter. Pair complex-conjugate poles into second-order sections; a real pole becomes a first-order section.
+
+The squared Butterworth magnitude can be written as a product \(H(s)H(-s)\). \(H(s)\) is the causal stable filter using left-half-plane poles; \(H(-s)\) is the anti-causal mirror with right-half-plane poles. The zero phase of the product does not mean the causal Butterworth filter has zero phase.
+
+\textbf{Python aid:} Use \texttt{scripts/filters/butterworth.py} function \texttt{butterworth\_poles\_q} when the problem asks for Butterworth poles or second-order section \(Q\) values. Inputs are order and cutoff. The script returns stable poles and \(Q\) values. Check manually how stages are assigned to the actual Sallen-Key circuit.
+
+\subsubsection{Sallen-Key sensitivity and component matching}
+\[
+S_x^y=\frac{\partial y/y}{\partial x/x}=\frac{x}{y}\frac{\partial y}{\partial x}
+\]
+Sensitivity measures percentage change in a dependent quantity caused by a percentage component change. In Sallen-Key design tasks, equal component choices or specific capacitor ratios are used to reduce \(Q\)-sensitivity.
+
+\textbf{Course-specific matching rule:} for the unity-gain Sallen-Key lowpass in L12, matching \(R_1=R_2\) makes \(Q\) insensitive to resistor drift. For the unity-gain Sallen-Key highpass in L13, matching \(C_1=C_2\) gives low \(Q\)-sensitivity. Do not transfer the lowpass conclusion directly to the highpass topology.
+
+\subsubsection{Frequency scaling of RC filters}
+\[
+\hat\omega_c=1\text{ rad/s}\quad\to\quad \omega_c
+\]
+Keeping \(R\) fixed gives \(C_{\mathrm{new}}=\hat C/\omega_c\). Keeping \(C\) fixed gives \(R_{\mathrm{new}}=\hat R/\omega_c\). Do not multiply both \(R\) and \(C\) by \(\omega_c\).
+
+\textbf{Python aid:} Use \texttt{scripts/filters/butterworth.py} function \texttt{frequency\_scale\_rc} when a normalized RC design must be scaled to a target cutoff. Inputs are normalized \(R,C,\omega_c\) and mode \texttt{keep\_R} or \texttt{keep\_C}. The script returns scaled component values. Check manually that the target uses rad/s; convert from Hz using \(\omega_c=2\pi f_c\).

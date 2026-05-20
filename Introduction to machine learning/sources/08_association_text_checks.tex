@@ -1,0 +1,64 @@
+\section*{Association mining, text and final checks}
+\subsection*{Association rules}
+For itemset $X$ and rule $X\to Y$:
+\[
+\operatorname{supp}(X)=\frac{\#(X)}{N},\quad
+\operatorname{conf}(X\to Y)=\frac{\operatorname{supp}(X\cup Y)}{\operatorname{supp}(X)},
+\]
+\[
+\operatorname{lift}(X\to Y)=\frac{\operatorname{conf}(X\to Y)}{\operatorname{supp}(Y)}.
+\]
+\note{Condition} $X$ and $Y$ disjoint. High confidence can be uninteresting if $Y$ is common; use lift.
+\note{Check} Confidence in $[0,1]$; support of larger itemset cannot exceed support of subset.
+
+\subsection*{Apriori}
+\note{Recipe} Generate candidates of size $k$ from frequent $(k-1)$-itemsets; prune any candidate with an infrequent subset; count support; keep those above minimum support.
+\note{Trap} If an itemset is infrequent, every superset is infrequent.
+
+\subsection*{Binary similarity}
+\[
+\begin{array}{c|cc}
+&b=1&b=0\\\hline
+a=1&f_{11}&f_{10}\\
+a=0&f_{01}&f_{00}
+\end{array}
+\]
+\[
+J(a,b)=\frac{f_{11}}{f_{11}+f_{10}+f_{01}},\quad
+\text{SMC}=\frac{f_{11}+f_{00}}{M}.
+\]
+\note{Trap} Jaccard ignores shared zeros; useful for sparse baskets/text.
+
+\subsection*{Text vectors}
+\[
+\text{tf-idf}_{ij}=\text{tf}_{ij}\log\frac{N}{\text{df}_j},\quad
+\cos(x,y)=\frac{x^\top y}{\|x\|\|y\|}.
+\]
+\note{Check} Word absent in both documents should not create Jaccard evidence.
+
+\subsection*{Fast answer plausibility checklist}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Object & Must be true\\ \midrule
+Probability & In $[0,1]$; class probabilities sum to $1$.\\
+Correlation & Symmetric matrix, diagonal $1$, values in $[-1,1]$.\\
+Distance & Nonnegative, diagonal $0$, symmetric.\\
+PCA variance & Ratios nonnegative and sum to $1$.\\
+Confusion metric & Denominator matches row/column meaning.\\
+KDE/GMM density & Nonnegative; can exceed $1$ in continuous 1D.\\
+Regularization & Larger $\lambda$ does not increase weight norm.\\
+\bottomrule
+\end{tabularx}
+
+\subsection*{Recurring exam recipes}
+\begin{enumerate}
+\item \textbf{Match plot to statistic:} remove impossible matrices by symmetry/range, then match signs and only then magnitudes.
+\item \textbf{Compute classifier probability:} write numerator for each class, normalize, compare.
+\item \textbf{Choose hyperparameter:} use validation/CV loss or LOO log density, not training loss.
+\item \textbf{Read boundary plot:} identify linear/axis-aligned/jagged/smooth before reading labels.
+\item \textbf{Outlier question:} compute density/ARD; smallest density or ARD is most suspicious.
+\end{enumerate}
+
+\begin{riskbox}[When in doubt]
+Check dimension first, then sign, then range. In 02450-style options, many wrong answers are dimension mismatches, missing intercepts, using rows instead of columns of $V$, forgetting to normalize Bayes probabilities, or using test data during model selection.
+\end{riskbox}

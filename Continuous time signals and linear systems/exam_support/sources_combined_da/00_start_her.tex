@@ -1,0 +1,62 @@
+\section{Hvis du sidder fast: vælg opgavetype, metodefinder, start her}
+\symref{H}{\(H(s)\)}{overføringsfunktion i Laplace-domænet}{afhænger af system}
+\symref{Hjw}{\(H(\jj\omega)\)}{frekvensrespons}{afhænger af system}
+\symref{Xlap}{\(X(s)\)}{Laplace-transformation af input}{signal gange s}
+\symref{Ylap}{\(Y(s)\)}{Laplace-transformation af output}{signal gange s}
+\symref{Fs}{\(F_s\)}{samplingsfrekvens}{Hz}
+\symref{DeltaV}{\(\Delta V_{\mathrm{LSB}}\)}{ADC-spænding per kode}{V}
+
+\subsection{Hurtig metodefinder, Ctrl+F start, hvad skal jeg gøre?}
+
+\begin{tabular}{p{0.26\linewidth}p{0.33\linewidth}p{0.33\linewidth}}
+\toprule
+Ord i opgaven & Startmetode & Søg videre efter \\
+\midrule
+lineær, tidsinvariant, kausal, stabil & Test definitionerne direkte på systemudtrykket. & systemklassifikation, BIBO, polplaceringer \\
+differentialligning, transferfunktion & Sæt begyndelsesbetingelser til nul og erstat afledte med \(s\)-potenser. & overføringsfunktion fra differentialligning \\
+impulsrespons, \(h(t)\) & Find \(H(s)\), tag invers Laplace. Tjek direkte \(\delta(t)\)-led. & impulsrespons fra overføringsfunktion \\
+trinrespons, step response & Brug \(X(s)=1/s\), beregn \(Y(s)=H(s)/s\). & responsopgave med Laplace \\
+egenrespons, zero-input & Ignorer input og brug begyndelsesbetingelser i ensidig Laplace. & egenrespons og nul-start-respons \\
+foldning, convolution & Brug støtteinterval først; brug Laplace hvis signalerne er kausale eksponentialer. & foldningsintegral, støtteinterval \\
+anden orden, overshoot, peak time & Omskriv nævner til \(s^2+2\zeta\omega_ns+\omega_n^2\). & andenordenssystemer, damping, Q \\
+Fourierrække, \(D_n\), periodisk & Find perioden og integrer over præcis én periode. Tjek symmetri først. & kompleks eksponentiel Fourierrække \\
+Fouriertransformation, spektrum & Vælg transformationspar eller egenskab: skift, skalering, modulation. & Fourier-transformation, transformationsegenskaber \\
+Bodeplot, asymptote & Aflæs start-hældning, knæk og slut-hældning. & match af Bodeplot \\
+pol-nul-diagram & Størrelse er afstande; fase er vinkler fra nulpunkter minus poler. & pol-nul-filter, fasefælde \\
+filtertype, lavpas, højpas & Tjek \(H(0)\) og \(H(\infty)\), før du regner videre. & grænsetest for filtertype \\
+Butterworth, orden & Brug dæmpningsuligheden og rund op. & Butterworth orden-ulighed \\
+Sallen-Key, sensitivitet & Brug kursusreglen for den konkrete topologi, ikke bare ``ens komponenter''. & Sallen-Key følsomhed \\
+sampling, aliasering & Hold dig i Hz og fold frekvensen ind i \([0,F_s/2]\). & aliasfrekvens, Nyquist \\
+ADC, LSB, dB & Beregn \(\Delta V_{\mathrm{LSB}}\) før du sammenligner amplituder. & ADC-kvantisering, dynamic range \\
+instrumenteringsforstærker, CMRR & Find \(G_d\), \(G_c\), derefter \(20\log_{10}|G_d/G_c|\). & differential gain, common mode \\
+\bottomrule
+\end{tabular}
+
+\subsection{Når du ikke ved hvilken formel der passer}
+
+\textbf{Første valg:}
+\begin{enumerate}
+    \item Spørg: er opgaven i tidsdomæne, frekvensdomæne eller \(s\)-domæne?
+    \item Hvis der står differentialligning, begyndelsesbetingelser eller respons: brug Laplace.
+    \item Hvis der står spektrum, periodisk eller Fourier: brug Fourier-sektionen.
+    \item Hvis der står Bode, poler, nulpunkter eller filter: brug frekvensrespons-/filtersektionen.
+    \item Hvis opgaven er multiple choice: prøv at falsificere én påstand ad gangen.
+\end{enumerate}
+
+\textbf{Hvis du stadig er i tvivl:} start med et grænsetjek. Sæt \(s=0\), \(s\to\infty\), \(\omega=0\), \(\omega\to\infty\), \(t=0^+\) eller \(t\to\infty\), alt efter hvad opgaven handler om.
+
+\textbf{Hurtigtjek:} et stabilt kausalt system har venstre-halvplanspoler; et højpas har \(H(0)=0\); et lavpas har \(H(\infty)=0\); tidsforskydning ændrer Fourier-fase men ikke størrelsesspektrum.
+
+\subsection{Multiple choice: sådan angribes svarmuligheder}
+
+\textbf{Brug når:} en svarmulighed blander flere udsagn, og du ikke kan overskue hele opgaven.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Del svarmuligheden op i små påstande.
+    \item Tjek den nemmeste påstand først: fortegn, enhed, grænseværdi, stabilitet eller specialtilfælde.
+    \item Hvis én delpåstand er falsk, er hele svarmuligheden falsk.
+    \item Hvis to svar ser rigtige ud, sammenlign deres antagelser: kausalitet, nul begyndelsesbetingelser, stabilitet, Hz vs rad/s.
+\end{enumerate}
+
+\textbf{Typiske fælder:} \(f\) og \(\omega\) byttes; slutværdisætningen bruges på ustabile systemer; \(H(s)\) bruges med ikke-nul begyndelsesbetingelser; et højre-halvplansnulpunkt har samme amplitudebidrag som det spejlede venstre-halvplansnulpunkt, men ikke samme fase.

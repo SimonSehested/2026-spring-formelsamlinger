@@ -1,8 +1,11 @@
-\section{Chemical Kinetics and Equilibrium}
+\section{Kinetics and Chemical Equilibrium}
 
-\subsection{Reaction Rates}
+\subsection{Ctrl+F keywords: rate law, reaction order, first order, second order, half-life, Arrhenius, catalyst, equilibrium, Le Chatelier, \(K_p\)}
+Use for concentration-time data, identifying order, half-life, activation energy, catalyst statements, equilibrium expressions, \(Q\) versus \(K\), and gas equilibria.
 
-\subsubsection{Stoichiometric reaction rate}
+\subsection{Kinetics formulas}
+
+\subsubsection{Reaction rate from stoichiometry}
 \[
 a\ce{A}+b\ce{B}\rightarrow c\ce{C}+d\ce{D}
 \]
@@ -12,53 +15,39 @@ r=-\frac{1}{a}\frac{d[\ce{A}]}{dt}
 =\frac{1}{c}\frac{d[\ce{C}]}{dt}
 =\frac{1}{d}\frac{d[\ce{D}]}{dt}
 \]
-The reaction rate is normalized by stoichiometric coefficients so all species describe the same reaction progress.
+Divide by coefficients so every species reports the same reaction rate.
 
-\subsubsection{Average and instantaneous rate}
+\subsubsection{Rate law and overall order}
 \[
-r_{\mathrm{avg}}\approx -\frac{\Delta[\ce{A}]}{\Delta t}, \qquad
-r=-\frac{d[\ce{A}]}{dt}
+r=k[\ce{A}]^m[\ce{B}]^n, \qquad \text{overall order}=m+n
 \]
-The instantaneous rate is the slope of the concentration-time curve at a point.
+Orders are found experimentally unless the problem states an elementary step.
 
-\subsection{Rate Laws}
-
-\subsubsection{General rate law}
+\subsubsection{Integrated rate laws}
 \[
-r=k[\ce{A}]^m[\ce{B}]^n
+\begin{array}{c c c}
+\toprule
+\text{order} & \text{linear plot} & \text{slope}\\
+\midrule
+0 & [\ce{A}]_t=-kt+[\ce{A}]_0 & -k\\
+1 & \ln[\ce{A}]_t=-kt+\ln[\ce{A}]_0 & -k\\
+2 & \dfrac{1}{[\ce{A}]_t}=kt+\dfrac{1}{[\ce{A}]_0} & k\\
+\bottomrule
+\end{array}
 \]
-The exponents are experimentally determined reaction orders. The overall order is \(m+n\).
-
-\subsubsection{First-order integrated rate law}
-\[
-[\ce{A}]_t=[\ce{A}]_0e^{-kt}, \qquad
-\ln[\ce{A}]_t=-kt+\ln[\ce{A}]_0
-\]
-A first-order plot of \(\ln[\ce{A}]\) versus \(t\) is linear with slope \(-k\).
-
-\subsubsection{Second-order integrated rate law}
-\[
-\frac{1}{[\ce{A}]_t}=kt+\frac{1}{[\ce{A}]_0}
-\]
-A second-order plot of \(1/[\ce{A}]\) versus \(t\) is linear with slope \(k\).
+Use the plot or transformed data that is linear to identify the order.
 
 \subsubsection{Half-life}
 \[
-t_{1/2}^{(1)}=\frac{\ln 2}{k}, \qquad
+t_{1/2}^{(0)}=\frac{[\ce{A}]_0}{2k}, \qquad
+t_{1/2}^{(1)}=\frac{\ln2}{k}, \qquad
 t_{1/2}^{(2)}=\frac{1}{k[\ce{A}]_0}
 \]
-First-order half-life is independent of initial concentration. Second-order half-life depends on \([\ce{A}]_0\).
-
-\subsection{Temperature and Catalysis}
+Only first-order half-life is independent of initial concentration.
 
 \subsubsection{Arrhenius equation}
 \[
-k=Ae^{-E_{\mathrm a}/RT}
-\]
-\(E_{\mathrm a}\) is activation energy and \(A\) is the frequency factor. Higher temperature increases the fraction of molecules above the activation barrier.
-
-\subsubsection{Linear Arrhenius form}
-\[
+k=Ae^{-E_{\mathrm a}/RT}, \qquad
 \ln k=-\frac{E_{\mathrm a}}{R}\frac{1}{T}+\ln A
 \]
 A plot of \(\ln k\) versus \(1/T\) has slope \(-E_{\mathrm a}/R\).
@@ -68,51 +57,69 @@ A plot of \(\ln k\) versus \(1/T\) has slope \(-E_{\mathrm a}/R\).
 \ln\left(\frac{k_2}{k_1}\right)
 =-\frac{E_{\mathrm a}}{R}\left(\frac{1}{T_2}-\frac{1}{T_1}\right)
 \]
-This relation compares rate constants at two temperatures when \(E_{\mathrm a}\) is constant.
+Use kelvin. If \(T_2>T_1\), then usually \(k_2>k_1\).
 
 \subsubsection{Catalyst effect}
 \[
-E_{\mathrm a,cat}<E_{\mathrm a,uncat}
+E_{\mathrm a,cat}<E_{\mathrm a,uncat}, \qquad K_{\mathrm{eq}}\ \text{unchanged}
 \]
-A catalyst lowers the activation barrier and increases rate. It does not change the thermodynamic equilibrium constant.
+A catalyst speeds forward and reverse reactions by lowering activation barriers. It does not change \(\Delta G^\circ\) or the equilibrium constant.
 
-\subsection{Equilibrium}
+\subsection{Exam recipe: determine reaction order from concentration-time data}
+\textbf{Use when:} a table of concentration versus time is given, or answer options show first/second order.
 
-\subsubsection{Reaction quotient}
+\textbf{Steps:}
+\begin{enumerate}
+    \item Test which transformed quantity is linear: \([\ce{A}]\), \(\ln[\ce{A}]\), or \(1/[\ce{A}]\).
+    \item Select zero, first, or second order from the linear plot.
+    \item Compute \(k\) from the slope with the correct sign.
+    \item Use the matching integrated law for prediction.
+\end{enumerate}
+
+\textbf{Fast checks:} first-order equal time intervals give equal fractional decrease; second-order \(1/[\ce{A}]\) increases linearly.
+
+\subsection{Equilibrium formulas}
+
+\subsubsection{Reaction quotient and equilibrium constant}
 \[
-\alpha\ce{A}+\beta\ce{B}\rightleftharpoons\gamma\ce{C}+\delta\ce{D}
-\]
-\[
+\alpha\ce{A}+\beta\ce{B}\rightleftharpoons\gamma\ce{C}+\delta\ce{D}, \qquad
 Q=\frac{a_{\ce{C}}^\gamma a_{\ce{D}}^\delta}{a_{\ce{A}}^\alpha a_{\ce{B}}^\beta}
 \]
-Activities are usually represented by concentrations for solutes and partial pressures for gases in this course. Pure solids, pure liquids, and solvents are omitted.
+At equilibrium, \(Q=K\). Pure solids, pure liquids, and the solvent are omitted.
 
-\subsubsection{Equilibrium constant}
+\subsubsection{Direction from \(Q\) and \(K\)}
 \[
-K=Q_{\mathrm{eq}}
+Q<K:\ \text{forward}, \qquad Q=K:\ \text{equilibrium}, \qquad Q>K:\ \text{reverse}
 \]
-At equilibrium, forward and reverse rates balance and the reaction quotient equals \(K\).
+The system shifts to make \(Q\) approach \(K\).
 
-\subsubsection{Gibbs free energy and reaction quotient}
-\[
-\Delta G=\Delta G^\circ+RT\ln Q
-\]
-Non-standard spontaneity is determined by \(\Delta G\), not by \(\Delta G^\circ\) alone.
-
-\subsubsection{Standard free energy and equilibrium constant}
-\[
-\Delta G^\circ=-RT\ln K, \qquad K=e^{-\Delta G^\circ/RT}
-\]
-\(K>1\) corresponds to \(\Delta G^\circ<0\) and product-favored equilibrium.
-
-\subsubsection{Le Chatelier's principle}
-\[
-\text{disturbance} \Rightarrow \text{shift opposing the disturbance}
-\]
-Changes in concentration, pressure, volume, or temperature shift an equilibrium to reduce the imposed change.
-
-\subsubsection{Gas equilibrium constant}
+\subsubsection{Gas equilibrium \(K_p\)}
 \[
 K_p=\frac{(p_{\ce{C}})^\gamma(p_{\ce{D}})^\delta}{(p_{\ce{A}})^\alpha(p_{\ce{B}})^\beta}
 \]
-For gas equilibria, partial pressures are used in the same stoichiometric powers as concentration expressions.
+Use partial pressures with stoichiometric powers. Omit pure condensed phases.
+
+\subsubsection{Relation between \(K_p\) and \(K_c\)}
+\[
+K_p=K_c(RT)^{\Delta n_{\mathrm{gas}}}
+\]
+\(\Delta n_{\mathrm{gas}}\) is gaseous product coefficients minus gaseous reactant coefficients.
+
+\subsubsection{Le Chatelier shift rules}
+\[
+\text{disturbance}\Rightarrow\text{shift that reduces the disturbance}
+\]
+Adding reactant shifts toward products; removing product shifts toward products. Decreasing volume favors the side with fewer gas moles.
+
+\subsection{Exam recipe: equilibrium expression and Le Chatelier}
+\textbf{Use when:} the problem asks for \(K\), \(Q\), \(K_p\), direction of shift, or statement validity.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Write products over reactants with coefficients as exponents.
+    \item Omit pure solids, pure liquids, and solvent.
+    \item For gases use partial pressures for \(K_p\).
+    \item Compare \(Q\) with \(K\) for direction, or apply the shift rule for disturbances.
+\end{enumerate}
+
+\textbf{Common traps:} including solids in \(K\); reversing \(Q<K\) direction; treating catalysts as changing equilibrium.

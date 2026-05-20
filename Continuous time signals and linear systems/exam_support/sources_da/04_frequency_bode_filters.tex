@@ -1,0 +1,198 @@
+\section{Frekvensrespons, Bodeplot, pol-nul-diagrammer og filtre}
+
+\subsection{Frekvensrespons, frekvenskarakteristik}
+
+\subsubsection{Overføringsfunktion på imaginæraksen}
+\[
+H(\jj\omega)=H(s)\big|_{s=\jj\omega},\qquad
+|H|_{\mathrm{dB}}=20\log_{10}|H|,\qquad
+\angle H=\arg H
+\]
+Brug \(H(\jj\omega)\), ikke \(H(\omega)\), når der indsættes i en overføringsfunktion. Den komplekse enhed er \(j\) i kursusnotationen.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/frequency/bode.py}, funktionen \texttt{bode\_values}, når opgaven beder om numeriske størrelse- eller fasetjek ved valgte vinkelfrekvenser. Input er tællerkoefficienter, nævnerkoefficienter og \(\omega\)-værdier. Scriptet returnerer \(H(\jj\omega)\), størrelse i dB og fase i grader. Tjek manuelt, at frekvensaksen er i rad/s, og at koefficienterne står i faldende potenser af \(s\).
+
+\subsubsection{Størrelse og fase fra faktorer}
+\[
+H(\jj\omega)=K\frac{\prod_i(\jj\omega-z_i)}{\prod_k(\jj\omega-p_k)}
+\]
+\[
+|H|=|K|\frac{\prod_i|\jj\omega-z_i|}{\prod_k|\jj\omega-p_k|},\qquad
+\angle H=\angle K+\sum_i\angle(\jj\omega-z_i)-\sum_k\angle(\jj\omega-p_k)
+\]
+Størrelse er et afstandsforhold i pol-nul-diagrammet. Fase er vinkelsum fra nulpunkter minus poler.
+
+\subsection{Bodeplot-regler, asymptoter}
+
+\subsubsection{Førsteordens Bode-asymptoter}
+\[
+1+\frac{s}{\omega_c}
+\]
+Et nulpunkt tilføjer \(+20\) dB/dekade efter \(\omega_c\) og positiv fase. En pol tilføjer \(-20\) dB/dekade efter \(\omega_c\) og negativ fase.
+
+\subsubsection{Poler og nulpunkter i origo}
+\[
+s^m\quad\Rightarrow\quad +20m\text{ dB/dekade},\quad +90m^\circ
+\]
+\[
+\frac{1}{s^m}\quad\Rightarrow\quad -20m\text{ dB/dekade},\quad -90m^\circ
+\]
+Gentagne poler eller nulpunkter multiplicerer hældning og fasebidrag.
+
+\subsubsection{Opskrift: match af Bodeplot}
+\textbf{Brug når:} en eksamensopgave spørger, hvilken overføringsfunktion der passer til et Bodeplot.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Aflæs lavfrekvenshældning for at tælle poler eller nulpunkter i origo.
+    \item Aflæs knækfrekvenser og hældningsændringer.
+    \item Tjek højfrekvenshældning ud fra tællergrad minus nævnergrad.
+    \item Brug fasens start og slut som fortegnstjek.
+\end{enumerate}
+
+\textbf{Hurtige tjek:} hver reel pol ændrer fase med cirka \(-90^\circ\); hvert reelt nulpunkt ændrer fase med cirka \(+90^\circ\). Et andenordenspar ændrer hældningen med \(40\) dB/dekade.
+
+\subsubsection{Opskrift: fra overføringsfunktion til Bodeplot}
+\textbf{Brug når:} opgaven giver \(H(s)\) og spørger efter asymptotisk Bodeplot, hældninger, knækfrekvenser eller fase.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Faktoriser \(H(s)\) i konstant, poler/nulpunkter i origo og første-/andenordensfaktorer.
+    \item Start hældningen med origo-faktorer: \(+20\) dB/dekade per nulpunkt og \(-20\) dB/dekade per pol.
+    \item Ved hver knækfrekvens ændres hældningen efter pol-/nulpunktstypen.
+    \item Tjek slut-hældningen med tællergrad minus nævnergrad.
+    \item Brug fase som fortegnstjek: poler trækker ned, nulpunkter trækker op.
+\end{enumerate}
+
+\textbf{Hvis du er i tvivl:} lav først kun hældningerne. Mange MCQ-svar kan elimineres uden præcis dB-værdi.
+
+\subsection{Filterklassifikation, lavpas, højpas, båndpas, båndstop}
+
+\subsubsection{Grænsetest for filtertype}
+\[
+H(0)=\lim_{s\to0}H(s),\qquad
+H(\infty)=\lim_{|s|\to\infty}H(s)
+\]
+\begin{tabular}{lll}
+\toprule
+Type & \(H(0)\) & \(H(\infty)\) \\
+\midrule
+Lavpas, lowpass & ikke nul & nul \\
+Højpas, highpass & nul & ikke nul \\
+Båndpas, bandpass & nul & nul \\
+Båndstop/notch & ikke nul & ikke nul med notch \\
+\bottomrule
+\end{tabular}
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/frequency/bode.py}, funktionen \texttt{classify\_filter\_limits}, når opgaven giver en rational overføringsfunktion og spørger efter et hurtigt lavpas/højpas/båndpas-grænsetjek. Input er tæller- og nævnerkoefficienter. Scriptet returnerer DC-forstærkning, højfrekvensforstærkning, polynomiumsgrader og sandsynlig klasse. Tjek manuelt for notch, resonanspeaks og om systemet er stabilt.
+
+\subsubsection{Fortolkning af pol-nul-filter}
+\[
+H(s)=K\frac{\prod_i(s-z_i)}{\prod_k(s-p_k)}
+\]
+Nulpunkter nær imaginæraksen skaber dæmpningsdyk. Poler nær imaginæraksen skaber peaks. Et nulpunkt i \(s=0\) blokerer DC og trækker responsen mod højpasopførsel.
+
+\textbf{Fasefælde:} spejlede nulpunkter i venstre/højre halvplan har samme afstand til imaginæraksen og kan give samme størrelsesbidrag, men deres fasebidrag er forskelligt. Et højre-halvplansnulpunkt er non-minimum phase.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/frequency/bode.py}, funktionen \texttt{transfer\_from\_poles\_zeros}, når et pol-nul-diagram giver numeriske poler, nulpunkter og forstærkning, og opgaven spørger efter en overføringsfunktion eller et Bode-tjek. Scriptet returnerer tæller- og nævnerkoefficientarrays. Tjek manuelt, at komplekse rødder forekommer som konjugerede par for reelle systemer.
+
+\subsubsection{Opskrift: pol-nul-diagram til filteradfærd}
+\textbf{Brug når:} opgaven viser poler og nulpunkter og spørger efter Bodeplot, filtertype, fase eller transferfunktion.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Skriv \(H(s)=K\prod(s-z_i)/\prod(s-p_k)\).
+    \item Tjek nulpunkter i origo: de blokerer DC og peger mod højpas.
+    \item Tjek poler tæt på imaginæraksen: de giver peaks/resonans.
+    \item Tjek nulpunkter tæt på imaginæraksen: de giver dæmpningsdyk/notch.
+    \item For fase: brug vinkler, ikke kun afstande.
+\end{enumerate}
+
+\textbf{Typiske fælder:} spejlede venstre-/højre-halvplansnulpunkter kan give samme amplitude men forskellig fase; højre-halvplansnulpunkter er non-minimum phase.
+
+\subsection{Andenordensresonans og systemidentifikation}
+
+\subsubsection{Dæmpet egenfrekvens og resonansfrekvens}
+\[
+\omega_d=\omega_n\sqrt{1-\zeta^2}
+\]
+\[
+\omega_r=\omega_n\sqrt{1-2\zeta^2}\quad\text{for et 2.-ordens lavpas når }0<\zeta<\frac{1}{\sqrt{2}}
+\]
+Den dæmpede frekvens \(\omega_d\) ses i tidsdomænets oscillation. Resonanspeak-frekvensen \(\omega_r\) ses i amplituderesponsen.
+
+\subsubsection{Konsistenstjek fra trinplot til Bodeplot}
+Brug \(PO\) og \(t_p\) fra et trinplot til at estimere \(\zeta\) og \(\omega_n\). Sammenlign derefter forventet resonanspeak og fasetrend med Bodeplottet.
+
+\textbf{Hurtige tjek:} \(t_p=\pi/\omega_d\); større overshoot betyder mindre \(\zeta\); underdæmpede poler skal være kompleks-konjugerede.
+
+\subsection{Butterworth-filtre, Sallen-Key}
+
+\subsubsection{Butterworth størrelsesdefinition}
+\[
+|H(\jj\omega)|=\frac{1}{\sqrt{1+\epsilon^2(\omega/\omega_p)^{2n}}}
+\]
+For det almindelige \(3\) dB-knæk er \(\epsilon=1\) og \(\omega_p=\omega_c\). Butterworth betyder maksimalt flad amplituderespons, ikke nul faseforvrængning.
+
+\subsubsection{Butterworth orden-ulighed}
+\[
+n\ge
+\frac{\log_{10}\left((10^{A_s/10}-1)/(10^{A_p/10}-1)\right)}
+{2\log_{10}(\omega_s/\omega_p)}
+\]
+Brug loftet af den beregnede værdi. For højpasdesign transformeres frekvensforholdet, så stopbåndsfrekvensen kortlægges under pasbåndsfrekvensen.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/filters/butterworth.py}, funktionen \texttt{butterworth\_lowpass\_order}, når opgaven spørger efter minimumsorden for et lavpas-Butterworthfilter ud fra pasbånds- og stopbåndsspecifikationer. Input er \(f_p,f_s,A_p,A_s\). Scriptet returnerer minimum heltalsorden. Tjek manuelt, at \(f_s>f_p\), og at dæmpningsværdier er positive dB-tal. Brug \texttt{butterworth\_highpass\_order} kun når \(f_s<f_p\).
+
+\subsubsection{Opskrift: Butterworth-orden fra specifikationer}
+\textbf{Brug når:} opgaven giver pasbånd, stopbånd, \(A_p\), \(A_s\), minimumsorden eller anti-aliasfilterkrav.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Afgør lavpas eller højpas fra placeringen af \(f_p\) og \(f_s\).
+    \item Indsæt dæmpningskrav i orden-uligheden.
+    \item Brug samme frekvensenhed i tæller og nævner; forholdet er vigtigt.
+    \item Rund altid ordenen op til nærmeste heltal.
+    \item Efter ordenen er valgt, brug kun venstre-halvplanspoler til det kausale filter.
+\end{enumerate}
+
+\textbf{Hurtigtjek:} større stopbåndsdæmpning eller smallere overgangsbånd kræver højere orden.
+
+\subsubsection{Butterworth-poler og Q-værdier}
+\[
+s_k=\omega_c e^{\jj\left(\frac{\pi}{2}+\frac{(2k+1)\pi}{2n}\right)},\qquad k=0,\ldots,n-1
+\]
+Brug kun venstre-halvplanspoler til det kausale stabile filter. Par kompleks-konjugerede poler i andenordenssektioner; en reel pol bliver en førsteordenssektion.
+
+Den kvadrerede Butterworth-amplitude kan skrives som produktet \(H(s)H(-s)\). \(H(s)\) er det kausale stabile filter med venstre-halvplanspoler; \(H(-s)\) er den antikausale spejling med højre-halvplanspoler. Produktets nul fase betyder ikke, at det kausale Butterworthfilter har nul fase.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/filters/butterworth.py}, funktionen \texttt{butterworth\_poles\_q}, når opgaven spørger efter Butterworth-poler eller \(Q\)-værdier for andenordenssektioner. Input er orden og knækfrekvens. Scriptet returnerer stabile poler og \(Q\)-værdier. Tjek manuelt, hvordan sektioner tildeles det faktiske Sallen-Key-kredsløb.
+
+\subsubsection{Sallen-Key følsomhed og komponentmatch}
+\[
+S_x^y=\frac{\partial y/y}{\partial x/x}=\frac{x}{y}\frac{\partial y}{\partial x}
+\]
+Følsomhed måler procentvis ændring i en afhængig størrelse forårsaget af en procentvis komponentændring. I Sallen-Key-designopgaver bruges ens komponentvalg eller specifikke kondensatorforhold til at reducere \(Q\)-følsomhed.
+
+\textbf{Kursusspecifik matchregel:} for unity-gain Sallen-Key lavpas i L12 gør \(R_1=R_2\), at \(Q\) bliver ufølsom over for modstandsdrift. For unity-gain Sallen-Key højpas i L13 giver \(C_1=C_2\) lav \(Q\)-følsomhed. Overfør ikke lavpaskonklusionen direkte til højpastopologien.
+
+\subsubsection{Opskrift: Sallen-Key design- og sensitivitetsspørgsmål}
+\textbf{Brug når:} opgaven spørger efter komponentmatch, \(Q\)-følsomhed, lavpas/højpas Sallen-Key eller hvilken komponent der bør matches.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Identificer topologien først: lavpas og højpas har ikke samme matchregel.
+    \item For kursets unity-gain lavpas: vælg \(R_1=R_2\) for lav modstandsfølsomhed i \(Q\).
+    \item For kursets unity-gain højpas: vælg \(C_1=C_2\) for lav \(Q\)-følsomhed.
+    \item Brug \(S_x^y=(x/y)(\partial y/\partial x)\), hvis der spørges efter numerisk sensitivitet.
+\end{enumerate}
+
+\textbf{Typisk fælde:} ``match de samme komponenttyper'' er ikke en universel regel; den afhænger af den konkrete Sallen-Key-topologi.
+
+\subsubsection{Frekvensskalering af RC-filtre}
+\[
+\hat\omega_c=1\text{ rad/s}\quad\to\quad \omega_c
+\]
+Hvis \(R\) holdes fast, fås \(C_{\mathrm{new}}=\hat C/\omega_c\). Hvis \(C\) holdes fast, fås \(R_{\mathrm{new}}=\hat R/\omega_c\). Multiplicer ikke både \(R\) og \(C\) med \(\omega_c\).
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/filters/butterworth.py}, funktionen \texttt{frequency\_scale\_rc}, når et normeret RC-design skal skaleres til en målknækfrekvens. Input er normeret \(R,C,\omega_c\) og mode \texttt{keep\_R} eller \texttt{keep\_C}. Scriptet returnerer skalerede komponentværdier. Tjek manuelt, at målet bruger rad/s; omregn fra Hz med \(\omega_c=2\pi f_c\).

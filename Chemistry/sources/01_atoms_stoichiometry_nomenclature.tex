@@ -1,99 +1,114 @@
 \section{Atoms, Stoichiometry, and Nomenclature}
 
-\subsection{Atoms and Isotopes}
+\subsection{Ctrl+F keywords: isotope, neutron, molar mass, empirical formula, limiting reactant, yield, navngivning, stofmaengde}
+Use for exam tasks asking for isotope particles, formula mass, mass percent, molecular formula, reaction amounts, limiting reagent, theoretical yield, and ionic compound names.
 
-\subsubsection{Atomic number, mass number, and isotope notation}
+\subsection{Core formulas and definitions}
+
+\subsubsection{Isotope notation, mass number, atomic number, neutron count}
 \[
-{}^{A}_{Z}\ce{X}, \qquad A=Z+N
+{}^{A}_{Z}\ce{X}, \qquad A=Z+N, \qquad N=A-Z
 \]
-\(Z\) is the number of protons, \(N\) is the number of neutrons, and \(A\) is the mass number. Isotopes have the same \(Z\) and different \(N\).
+\(Z\) is protons, \(N\) is neutrons, and a neutral atom has \(Z\) electrons. Isotopes have the same \(Z\) but different \(N\).
 
-\subsubsection{Subatomic particles}
+\subsubsection{Mole, Avogadro constant, molar mass}
 \[
-\begin{array}{c c c}
-\text{particle} & \text{relative charge} & \text{approximate mass}\\
-\hline
-\text{electron} & -1 & 9.1\times 10^{-28}\,\mathrm{g}\\
-\text{proton} & +1 & 1.7\times 10^{-24}\,\mathrm{g}\\
-\text{neutron} & 0 & 1.7\times 10^{-24}\,\mathrm{g}
-\end{array}
+N=nN_{\mathrm A}, \qquad N_{\mathrm A}=6.022\times10^{23}\,\mathrm{mol^{-1}}, \qquad n=\frac{m}{M}
 \]
-Atomic charge is determined by proton and electron count. Atomic mass is dominated by protons and neutrons.
+Convert all masses to moles before using reaction coefficients. \(M\) is found by summing atomic molar masses in the formula.
 
-\subsection{Amounts of Substance}
-
-\subsubsection{Avogadro constant and mole}
+\subsubsection{Mass percent and composition}
 \[
-N=nN_{\mathrm A}, \qquad N_{\mathrm A}=6.022\times 10^{23}\,\mathrm{mol^{-1}}
+w_i=\frac{m_i}{m_{\mathrm{total}}}\times100\%, \qquad
+w_{\mathrm{element}}=\frac{n_iM_i}{M_{\mathrm{compound}}}\times100\%
 \]
-The mole converts between a count of particles \(N\) and an amount of substance \(n\).
+Use subscripts in the chemical formula as mole counts of atoms per mole compound.
 
-\subsubsection{Molar mass relation}
+\subsubsection{Empirical formula and molecular formula}
 \[
-n=\frac{m}{M}, \qquad m=nM
+n_i=\frac{m_i}{M_i}, \qquad
+\text{empirical ratio}=\frac{n_i}{\min(n_i)}, \qquad
+M_{\mathrm{molecular}}=kM_{\mathrm{empirical}}
 \]
-\(m\) is mass, \(M\) is molar mass, and \(n\) is amount of substance. This relation is central for converting grams to reaction amounts.
+Round only after checking near-integer ratios such as \(1.5\to3/2\). The molecular formula is \(k\) times the empirical formula.
 
-\subsubsection{Mass percent}
+\subsubsection{Balanced equation stoichiometry}
 \[
-w_i=\frac{m_i}{m_{\mathrm{total}}}\times 100\%
+\nu_A\ce{A}+\nu_B\ce{B}\rightarrow\nu_C\ce{C}, \qquad
+n_C=n_A\frac{\nu_C}{\nu_A}
 \]
-Mass percent gives the mass fraction of a component in a compound or mixture.
+Stoichiometric coefficients are mole ratios, not mass ratios. Balance atoms and charge before calculating.
 
-\subsubsection{Empirical and molecular formula}
+\subsubsection{Limiting reactant and theoretical yield}
 \[
-\text{empirical formula ratio}=\frac{n_i}{\min(n_i)}, \qquad
-\text{molecular formula}=k(\text{empirical formula})
+\xi_i=\frac{n_i}{\nu_i}, \qquad
+\xi_{\max}=\min(\xi_i), \qquad
+n_{\mathrm{product}}=\xi_{\max}\nu_{\mathrm{product}}
 \]
-The empirical formula gives the smallest integer atom ratio. The molecular formula also requires the molar mass.
+The smallest available reaction extent is the limiting reactant. Convert product moles to mass with \(m=nM\).
 
-\subsection{Stoichiometry}
-
-\subsubsection{Balanced reaction coefficients}
+\subsubsection{Percent yield}
 \[
-\nu_A\ce{A}+\nu_B\ce{B}\rightarrow \nu_C\ce{C}+\nu_D\ce{D}
+\%\mathrm{yield}=\frac{\mathrm{actual\ yield}}{\mathrm{theoretical\ yield}}\times100\%
 \]
-Balanced coefficients conserve atoms and charge. Mole ratios in calculations are the ratios of the stoichiometric coefficients.
+Use the same units in numerator and denominator. Percent yield above \(100\%\) usually signals a wrong limiting reactant or unit conversion.
 
-\subsubsection{Limiting reactant}
+\subsection{Exam recipe: stoichiometry, limiting reactant, gas amount, udbytte}
+\textbf{Use when:} the problem gives reactant masses, solution concentrations, or gas data and asks for product mass, amount, excess, or yield.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Write and balance the reaction.
+    \item Convert every given reactant to moles.
+    \item Divide each reactant amount by its coefficient \(\nu_i\).
+    \item The smallest \(n_i/\nu_i\) is limiting.
+    \item Multiply \(\xi_{\max}\) by product coefficient and convert to requested units.
+\end{enumerate}
+
+\textbf{Fast checks:} atoms and charge balance; answer cannot exceed theoretical yield; units must cancel.
+
+\textbf{Common traps:} using grams as mole ratios; forgetting coefficients for \(\ce{H2}\), \(\ce{O2}\), or polyatomic ions; treating excess reactant as limiting.
+
+\subsection{Exam recipe: empirical formula from mass percent, sum formula}
+\textbf{Use when:} percent composition or masses of elements are given.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Assume \(100\,\mathrm g\) sample if percentages are given.
+    \item Convert each element mass to moles.
+    \item Divide all mole amounts by the smallest.
+    \item Multiply all ratios by \(2,3,\ldots\) only if needed to get integers.
+    \item Use molar mass to scale empirical to molecular formula if requested.
+\end{enumerate}
+
+\textbf{Fast checks:} empirical formula mass must divide the molecular molar mass approximately by an integer.
+
+\subsection{Ionic formulas and names}
+
+\subsubsection{Charge neutrality for ionic compounds}
 \[
-\frac{n_i}{\nu_i}
+\sum_i q_in_i=0
 \]
-The smallest value of \(n_i/\nu_i\) identifies the limiting reactant. Product amounts are obtained by multiplying this reaction extent by product coefficients.
+Subscripts are chosen so total positive and negative charge cancel. Use parentheses when a polyatomic ion appears more than once, for example \(\ce{(NH4)2HPO4}\).
 
-\subsubsection{Theoretical yield}
-\[
-n_{\mathrm{product}}=\frac{\nu_{\mathrm{product}}}{\nu_{\mathrm{limiting}}}n_{\mathrm{limiting}}, \qquad
-m_{\mathrm{product}}=n_{\mathrm{product}}M_{\mathrm{product}}
-\]
-The theoretical yield is the maximum product amount allowed by the balanced equation.
-
-\subsection{Chemical Formulae and Names}
-
-\subsubsection{Ionic compound charge neutrality}
-\[
-\sum_i q_i n_i=0
-\]
-The formula of an ionic compound must have total charge zero. Parentheses are used when a polyatomic ion appears more than once, for example \(\ce{Ca(HSO4)2}\).
-
-\subsubsection{Common ion names from lectures and exams}
+\subsubsection{Common ions, Danish/English search names}
 \[
 \begin{array}{c c@{\qquad}c c}
 \toprule
 \text{ion} & \text{name} & \text{ion} & \text{name}\\
 \midrule
-\ce{NH4+} & \text{ammonium} & \ce{NO3-} & \text{nitrate}\\
-\ce{NO2-} & \text{nitrite} & \ce{SO4^2-} & \text{sulfate}\\
-\ce{HSO4-} & \text{hydrogen sulfate} & \ce{SO3^2-} & \text{sulfite}\\
-\ce{CO3^2-} & \text{carbonate} & \ce{PO4^3-} & \text{phosphate}\\
-\ce{H2PO4-} & \text{dihydrogen phosphate} & \ce{HPO4^2-} & \text{hydrogen phosphate}\\
-\ce{CN-} & \text{cyanide} & \ce{OH-} & \text{hydroxide}\\
+\ce{NH4+} & \text{ammonium} & \ce{OH-} & \text{hydroxide}\\
+\ce{NO3-} & \text{nitrate} & \ce{NO2-} & \text{nitrite}\\
+\ce{SO4^2-} & \text{sulfate/sulfat} & \ce{SO3^2-} & \text{sulfite/sulfit}\\
+\ce{HSO4-} & \text{hydrogen sulfate} & \ce{CO3^2-} & \text{carbonate/carbonat}\\
+\ce{PO4^3-} & \text{phosphate/fosfat} & \ce{HPO4^2-} & \text{hydrogen phosphate}\\
+\ce{H2PO4-} & \text{dihydrogen phosphate} & \ce{CN-} & \text{cyanide}\\
 \bottomrule
 \end{array}
 \]
-These ions occur repeatedly in nomenclature, acid--base, redox, and solubility questions.
+These names recur in formula writing, buffers, precipitation, and redox questions.
 
-\subsubsection{Molecular compound Greek prefixes}
+\subsubsection{Binary molecular prefixes}
 \[
 \begin{array}{c c@{\quad}c c@{\quad}c c}
 \toprule
@@ -104,4 +119,4 @@ These ions occur repeatedly in nomenclature, acid--base, redox, and solubility q
 \bottomrule
 \end{array}
 \]
-For binary molecular compounds, the first element is named first and the second receives the ending ``-ide''.
+The second element receives the ending ``-ide''. Omit ``mono'' on the first element in common naming.

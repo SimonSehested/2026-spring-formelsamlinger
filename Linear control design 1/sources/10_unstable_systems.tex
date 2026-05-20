@@ -1,44 +1,63 @@
 \section{Unstable systems}
 
-\subsection{Open-loop unstable plants}
+\subsection{Ctrl+F keywords}
 
-\subsubsection{Unstable pole condition}
+\subsubsection{Unstable system, open-loop unstable, right-half-plane pole, ustabil}
 \[
-G(s)\ \text{unstable}\quad\Longleftrightarrow\quad
+\text{RHP pole, stabilization, inner loop, outer loop, nested loop, Nyquist}
+\]
+Use this section when the plant has a pole with positive real part or the task warns that the open loop is unstable.
+
+\subsection{Unstable plant checks}
+
+\subsubsection{Open-loop unstable pole}
+\[
 \exists p_k:\operatorname{Re}(p_k)>0
+\quad\Longrightarrow\quad
+G(s)\ \text{is open-loop unstable}
 \]
-Open-loop unstable plants cannot be assessed by the stable-plant Bode criterion alone.
+Stable-plant Bode margin shortcuts do not directly decide closed-loop stability.
 
-\subsubsection{Closed-loop stabilization}
+\subsubsection{Closed-loop stabilization target}
 \[
-T(s)=\frac{C(s)G(s)}{1+C(s)G(s)},\qquad 1+C(s)G(s)=0
+T(s)=\frac{C(s)G(s)}{1+C(s)G(s)},\qquad
+1+C(s)G(s)=0
 \]
-Controller design must move all closed-loop poles to the open left half-plane.
+The controller must make all roots of the closed-loop characteristic equation lie in the open left half-plane.
 
-\subsubsection{Nyquist requirement for unstable open loop}
+\subsubsection{Nyquist requirement}
 \[
 Z=P+N=0
 \]
-If the open loop has \(P\) right-half-plane poles, the Nyquist encirclement count must give zero unstable closed-loop poles. % TODO: verify sign convention from source
+For an open-loop unstable plant, encirclements must compensate the \(P\) right-half-plane open-loop poles. % TODO: verify sign convention from source
 
-\subsection{Unstable-system controller design}
+\subsection{Nested-loop design}
 
-\subsubsection{Stabilizing PI block}
+\subsubsection{Inner-loop equivalent plant}
 \[
-C_{PI,\mathrm{post}}(s)=K_P\frac{\tau_i s+1}{\tau_i s}
+G_{\mathrm{inner,cl}}(s)=\frac{C_{\mathrm{inner}}(s)G_{\mathrm{inner}}(s)}
+{1+C_{\mathrm{inner}}(s)G_{\mathrm{inner}}(s)}
 \]
-The slides use additional PI action in open loop to stabilize some linearized unstable REGBOT transfer functions.
+Design and verify the inner loop before treating it as part of the outer-loop plant.
 
-\subsubsection{Lead part for unstable systems}
+\subsubsection{Outer-loop transfer}
 \[
-C_{\mathrm{lead}}(s)=\frac{\tau_d s+1}{\alpha\tau_d s+1},\qquad
-\tau_d=\frac{1}{\omega_c\sqrt{\alpha}}
+L_{\mathrm{outer}}(s)=C_{\mathrm{outer}}(s)G_{\mathrm{outer}}(s)
 \]
-Lead compensation can increase phase margin or shift crossover when stabilization requires extra phase.
+The outer loop uses the stabilized inner closed-loop behavior as its plant model.
 
-\subsubsection{Inner-loop and outer-loop structure}
-\[
-L_{\mathrm{inner}}(s)=C_{\mathrm{inner}}(s)G_{\mathrm{inner}}(s),\qquad
-G_{\mathrm{outer}}(s)=\frac{L_{\mathrm{inner}}(s)}{1+L_{\mathrm{inner}}(s)}
-\]
-Nested controller design stabilizes a fast inner loop before designing the outer loop.
+\subsection{Exam recipe: decide stability for an unstable open-loop plant}
+
+\textbf{Use when:} the task combines a right-half-plane pole with \(K_P\), Bode, or Nyquist information.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Count open-loop right-half-plane poles \(P\).
+\item Use Nyquist encirclements or the characteristic polynomial, not the stable-plant Bode shortcut.
+\item If using \(K_P\), scale the Nyquist curve or insert \(K_P\) in \(1+K_PG(s)=0\).
+\item Require \(Z=0\) or all closed-loop poles in the left half-plane.
+\end{enumerate}
+
+\textbf{Fast checks:} a positive phase margin read from a stable-plant formula is not sufficient when \(P>0\).
+
+\textbf{Common traps:} forgetting an open-loop pole at the origin or in the right half-plane.

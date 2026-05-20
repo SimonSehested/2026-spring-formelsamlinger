@@ -1,116 +1,115 @@
 \section{Bode plots and stability margins}
 
-\subsection{Bode magnitude and phase}
+\subsection{Ctrl+F keywords}
+
+\subsubsection{Bode plot, bodeplot, gain margin, phase margin, crossover, stability margin}
+\[
+\text{magnitude, dB, slope, poles, zeros, }K_P,\omega_c,\omega_\pi,\gamma_M,A_M
+\]
+Use this section for the most common F21 tasks: read a Bode plot, infer \(G(s)\), choose \(K_P\), and check stability margins.
+
+\subsection{Bode basics}
 
 \subsubsection{Magnitude in decibels}
 \[
-|G(j\omega)|_{\mathrm{dB}}=20\log_{10}|G(j\omega)|
+M_{\mathrm{dB}}=20\log_{10}|G(j\omega)|,\qquad |G(j\omega)|=10^{M_{\mathrm{dB}}/20}
 \]
-Magnitude in decibels converts products of transfer-function factors into sums of asymptotic contributions.
+Products become sums in dB. A proportional gain shifts only the magnitude curve.
 
-\subsubsection{Phase angle}
-\[
-\phi(\omega)=\angle G(j\omega)
-\]
-The phase curve is the sum of phase contributions from gain, poles, zeros, integrators, and delays.
-
-\subsubsection{Bode form}
+\subsubsection{Bode factor form}
 \[
 G(s)=K\frac{\prod_i(1+s/\omega_{z_i})}{s^q\prod_k(1+s/\omega_{p_k})}
 \]
-Break frequencies \(\omega_{z_i}\) and \(\omega_{p_k}\) determine where slopes and phases change.
+Break frequencies are visible as slope changes in the magnitude plot.
 
-\subsection{Asymptotic Bode rules}
-
-\subsubsection{Real left-half-plane pole}
+\subsubsection{Real pole, real zero, integrator rules}
 \[
-\frac{1}{1+s/\omega_p}:\qquad
-\Delta M=-20\ \mathrm{dB/dec},\quad
-\Delta\phi=-90^\circ
+\begin{array}{c|c|c}
+\text{factor} & \Delta\text{slope} & \Delta\text{phase}\\ \hline
+1/(1+s/\omega_p) & -20\,\mathrm{dB/dec} & -90^\circ\\
+1+s/\omega_z & +20\,\mathrm{dB/dec} & +90^\circ\\
+1/s & -20\,\mathrm{dB/dec} & -90^\circ
+\end{array}
 \]
-A stable real pole lowers the high-frequency magnitude slope and adds negative phase.
+Use slope changes to count poles and zeros.
 
-\subsubsection{Real left-half-plane zero}
+\subsubsection{Right-half-plane zero and pole phase trap}
 \[
-1+s/\omega_z:\qquad
-\Delta M=+20\ \mathrm{dB/dec},\quad
-\Delta\phi=+90^\circ
+\begin{aligned}
+1-\frac{s}{\omega_z}&:\quad \Delta M=+20\,\mathrm{dB/dec},\quad \Delta\phi=-90^\circ,\\
+\frac{1}{1-s/\omega_p}&:\quad \Delta M=-20\,\mathrm{dB/dec},\quad \Delta\phi=+90^\circ.
+\end{aligned}
 \]
-A stable real zero raises the high-frequency magnitude slope and adds positive phase.
-
-\subsubsection{Integrator}
-\[
-\frac{1}{s}:\qquad
-M_{\mathrm{dB}}=-20\log_{10}\omega,\quad \phi=-90^\circ
-\]
-An integrator gives infinite DC gain and contributes \(-20\ \mathrm{dB/dec}\) at all frequencies.
-
-\subsubsection{Right-half-plane zero}
-\[
-1-\frac{s}{\omega_z}:\qquad
-\Delta M=+20\ \mathrm{dB/dec},\quad
-\Delta\phi=-90^\circ
-\]
-A right-half-plane zero has the magnitude effect of a left-half-plane zero but the phase effect of a pole.
-
-\subsubsection{Right-half-plane pole}
-\[
-\frac{1}{1-s/\omega_p}:\qquad
-\Delta M=-20\ \mathrm{dB/dec},\quad
-\Delta\phi=+90^\circ
-\]
-Right-half-plane poles make the open-loop plant unstable and require Nyquist reasoning for closed-loop stability.
-
-\subsection{Second-order Bode factors}
-
-\subsubsection{Second-order factor}
-\[
-G_2(s)=\frac{\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2}
-\]
-At high frequency, a second-order pole pair contributes \(-40\ \mathrm{dB/dec}\) and \(-180^\circ\).
-
-\subsubsection{Resonance peak}
-\[
-M_r=\frac{1}{2\zeta\sqrt{1-\zeta^2}}, \qquad 0<\zeta<\frac{1}{\sqrt{2}}
-\]
-A resonance peak indicates low damping and can create multiple crossover frequencies.
+Right-half-plane factors have the usual magnitude slope. Their phase contribution is reversed compared with stable factors.
 
 \subsection{Stability margins}
 
-\subsubsection{Crossover frequency}
+\subsubsection{Gain crossover and phase margin}
 \[
-|L(j\omega_c)|=1
+|L(j\omega_c)|=1,\qquad \gamma_M=180^\circ+\angle L(j\omega_c)
 \]
-The crossover frequency is where the open-loop magnitude is \(0\ \mathrm{dB}\).
+\(\omega_c\) is where the open-loop magnitude crosses \(0\,\mathrm{dB}\).
 
-\subsubsection{Phase margin}
+\subsubsection{Phase crossover and gain margin}
 \[
-\gamma_M=180^\circ+\angle L(j\omega_c)
-\]
-Positive phase margin indicates distance from the critical phase \(-180^\circ\) at crossover.
-
-\subsubsection{Phase crossover frequency}
-\[
-\angle L(j\omega_\pi)=-180^\circ
-\]
-The phase crossover frequency is used to compute gain margin.
-
-\subsubsection{Gain margin}
-\[
+\angle L(j\omega_\pi)=-180^\circ,\qquad
 A_M=\frac{1}{|L(j\omega_\pi)|},\qquad
 A_{M,\mathrm{dB}}=-20\log_{10}|L(j\omega_\pi)|
 \]
-The gain margin is the multiplicative gain increase allowed before reaching the critical point.
-
-\subsubsection{Bode stability criterion}
-\[
-\gamma_M>0,\qquad A_M>1
-\]
-For stable minimum-phase open-loop systems with a unique crossover, positive phase and gain margins indicate closed-loop stability.
+Gain margin is read at the \(-180^\circ\) phase crossing.
 
 \subsubsection{P-controller gain shift}
 \[
 L(s)=K_PG(s),\qquad
-20\log_{10}|L(j\omega)|=20\log_{10}K_P+20\log_{10}|G(j\omega)|
+20\log_{10}|L|=20\log_{10}K_P+20\log_{10}|G|
 \]
-A positive proportional gain shifts only the magnitude curve and does not change the phase curve.
+Positive \(K_P\) shifts magnitude but does not change phase.
+
+\subsection{Exam recipe: infer transfer function from Bode plot}
+
+\textbf{Use when:} the problem gives magnitude/phase plots and answer options for \(G(s)\).
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Read initial low-frequency slope to count integrators.
+\item Mark each break frequency where slope changes.
+\item Slope change \(+20\) means one zero; \(-20\) means one pole.
+\item Use phase to distinguish stable, unstable, and right-half-plane factors.
+\item Use one magnitude point, often DC gain or \(\omega=1\), to find \(K\).
+\end{enumerate}
+
+\textbf{Fast checks:} denominator order minus numerator order equals final negative slope divided by \(20\,\mathrm{dB/dec}\).
+
+\textbf{Common traps:} missing double poles/zeros; ignoring phase when a right-half-plane zero has the same magnitude as a left-half-plane zero.
+
+\subsection{Exam recipe: choose \(K_P\) for desired phase margin}
+
+\textbf{Use when:} the problem asks for proportional gain that gives a specified \(\gamma_M\).
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Find the frequency where \(\angle G(j\omega)=-180^\circ+\gamma_M\).
+\item Read \(M_{\mathrm{dB}}=20\log_{10}|G(j\omega)|\) at that frequency.
+\item Choose \(20\log_{10}K_P=-M_{\mathrm{dB}}\).
+\item Convert \(K_P=10^{-M_{\mathrm{dB}}/20}\).
+\end{enumerate}
+
+\textbf{Fast checks:} if the plant magnitude is below \(0\,\mathrm{dB}\), \(K_P>1\); if it is above \(0\,\mathrm{dB}\), \(K_P<1\).
+
+\textbf{Common traps:} using the current \(0\,\mathrm{dB}\) crossing instead of the frequency set by the desired phase.
+
+\subsection{Exam recipe: P-controller stability range from Bode plot}
+
+\textbf{Use when:} the problem asks for the range of \(K_P\) giving closed-loop stability.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Find \(\omega_\pi\) where \(\angle G(j\omega_\pi)=-180^\circ\).
+\item Read \(|G(j\omega_\pi)|\) or dB magnitude.
+\item Critical gain is \(K_{\mathrm{crit}}=1/|G(j\omega_\pi)|\).
+\item For stable minimum-phase open-loop cases, require \(0<K_P<K_{\mathrm{crit}}\).
+\end{enumerate}
+
+\textbf{Fast checks:} at \(K_P=K_{\mathrm{crit}}\), the Nyquist curve passes through \(-1\) and the Bode phase margin is zero.
+
+\textbf{Common traps:} applying this stable-plant Bode rule to an open-loop unstable plant; use Nyquist instead.

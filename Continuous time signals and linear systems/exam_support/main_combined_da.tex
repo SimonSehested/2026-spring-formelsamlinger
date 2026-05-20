@@ -1,0 +1,56 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.35cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{makeidx}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\setcounter{tocdepth}{2}
+\newcommand{\jj}{\mathrm{j}}
+\newcommand{\uu}{u(t)}
+\newcommand{\dd}{\delta(t)}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\symref}[4]{\index{#1@#2 & #3 & #4}}
+\newcommand{\SymbolRow}[2]{#1 & #2\\}
+\makeindex
+
+\begin{document}
+\small
+\sloppy
+\begin{center}
+{\Large 22050 Signaler og lineære systemer i kontinuert tid}\\
+{\normalsize Samlet dansk eksamensformelsamling: hurtige regler, symboler og validerede Python-hjælpere}
+\end{center}
+\tableofcontents
+
+\section*{Symboloversigt}
+\addcontentsline{toc}{section}{Symboloversigt}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.16\linewidth}
+                  >{\raggedright\arraybackslash}p{0.43\linewidth}
+                  >{\raggedright\arraybackslash}p{0.18\linewidth}
+                  >{\raggedright\arraybackslash}p{0.12\linewidth}}
+\toprule
+Symbol & Navn og betydning & Enhed & Sider\\
+\midrule
+\endhead
+\IfFileExists{main_combined_da.ind}{\input{main_combined_da.ind}}{-- & Kør LaTeX, makeindex og LaTeX igen for sidehenvisninger. & -- & --\\}
+\end{longtable}
+
+\input{sources_combined_da/00_start_her.tex}
+\input{sources_combined_da/01_symboler_og_signaler.tex}
+\input{sources_combined_da/02_ltic_tidsdomaene.tex}
+\input{sources_combined_da/03_fourier.tex}
+\input{sources_combined_da/04_laplace.tex}
+\input{sources_combined_da/05_bode_filtre_butterworth.tex}
+\input{sources_combined_da/06_sampling_adc_inamp.tex}
+\input{sources_combined_da/99_python_hjaelpere.tex}
+\end{document}

@@ -1,131 +1,146 @@
-\section{Acids, Bases, Buffers, and Solubility Products}
+\section{Acids, Bases, Buffers, Titration, and Solubility Products}
 
-\subsection{Bronsted Acids and Bases}
+\subsection{Ctrl+F keywords: pH, pOH, weak acid, \(K_a\), \(pK_a\), buffer, Henderson, phosphate, titration, \(K_{sp}\), common ion, oploeselighed}
+Use for acid strength, pH calculations, buffers, phosphate systems, titration equivalence, solubility, precipitation, and common-ion tasks.
 
-\subsubsection{Bronsted definition}
+\subsection{pH and acid-base constants}
+
+\subsubsection{Water, pH, and pOH}
 \[
-\ce{HA + B <=> A- + HB+}
-\]
-A Bronsted acid donates a proton and a Bronsted base accepts a proton. Products are the conjugate base and conjugate acid.
-
-\subsubsection{Autodissociation of water}
-\[
-\ce{2H2O <=> H3O+ + OH-}, \qquad
-K_w=[\ce{H3O+}][\ce{OH-}]=1.0\times 10^{-14}\,\mathrm{M^2}
-\]
-At \(298\,\mathrm K\), neutral water has \([\ce{H3O+}]=[\ce{OH-}]=10^{-7}\,\mathrm M\).
-
-\subsubsection{pH and pOH}
-\[
+K_w=[\ce{H3O+}][\ce{OH-}]=1.0\times10^{-14}, \qquad
 \mathrm{pH}=-\log[\ce{H3O+}], \qquad
-\mathrm{pOH}=-\log[\ce{OH-}], \qquad
 \mathrm{pH}+\mathrm{pOH}=14
 \]
-The pH scale is logarithmic. A decrease of one pH unit means ten times larger \([\ce{H3O+}]\).
-
-\subsection{Acid and Base Constants}
-
-\subsubsection{Acid ionization constant}
-\[
-\ce{HA + H2O <=> A- + H3O+}, \qquad
-K_a=\frac{[\ce{A-}][\ce{H3O+}]}{[\ce{HA}]}
-\]
-Larger \(K_a\) means stronger acid. \(pK_a=-\log K_a\).
-
-\subsubsection{Base ionization constant}
-\[
-\ce{B + H2O <=> HB+ + OH-}, \qquad
-K_b=\frac{[\ce{HB+}][\ce{OH-}]}{[\ce{B}]}
-\]
-Larger \(K_b\) means stronger base. \(pK_b=-\log K_b\).
-
-\subsubsection{Conjugate acid-base relation}
-\[
-K_a(\ce{HA})K_b(\ce{A-})=K_w, \qquad
-pK_a+pK_b=pK_w=14
-\]
-Conjugate acid-base strength is linked through water autoionization at \(298\,\mathrm K\).
-
-\subsubsection{Weak acid approximation}
-\[
-[\ce{H3O+}]\approx \sqrt{K_a c_0}, \qquad
-\mathrm{pH}\approx -\log\sqrt{K_a c_0}
-\]
-This approximation applies when dissociation is small compared with the formal acid concentration \(c_0\).
-
-\subsubsection{Weak base approximation}
-\[
-[\ce{OH-}]\approx \sqrt{K_b c_0}, \qquad
-\mathrm{pOH}\approx -\log\sqrt{K_b c_0}
-\]
-This approximation applies when base protonation is small compared with the formal base concentration \(c_0\).
+At \(298\,\mathrm K\), neutral water has pH \(7\). A decrease of one pH unit means ten times larger \([\ce{H3O+}]\).
 
 \subsubsection{Strong acid and strong base pH}
 \[
-\text{strong acid: }[\ce{H3O+}]\approx c_{\mathrm{acid}}, \qquad
-\text{strong base: }[\ce{OH-}]\approx \nu_{\ce{OH-}}c_{\mathrm{base}}
+[\ce{H3O+}]\approx \nu_{\ce{H+}}c_{\mathrm{acid}}, \qquad
+[\ce{OH-}]\approx \nu_{\ce{OH-}}c_{\mathrm{base}}
 \]
-Strong electrolytes are treated as completely dissociated. Stoichiometry matters for bases such as \(\ce{Ba(OH)2}\).
+Strong acids and bases are treated as fully dissociated. Include stoichiometric coefficients, for example \(\ce{Ba(OH)2}\) gives \(2\ce{OH-}\).
 
-\subsection{Polyprotic Acids and Buffers}
-
-\subsubsection{Phosphoric acid equilibria}
+\subsubsection{Weak acid and weak base constants}
 \[
-\begin{aligned}
-\ce{H3PO4 + H2O &<=> H2PO4- + H3O+} && pK_{a1}=2.1,\\
-\ce{H2PO4- + H2O &<=> HPO4^2- + H3O+} && pK_{a2}=7.2,\\
-\ce{HPO4^2- + H2O &<=> PO4^3- + H3O+} && pK_{a3}=12.4.
-\end{aligned}
+K_a=\frac{[\ce{A-}][\ce{H3O+}]}{[\ce{HA}]}, \qquad
+K_b=\frac{[\ce{HB+}][\ce{OH-}]}{[\ce{B}]}
 \]
-The relevant conjugate pair is selected by the pH region.
+Larger \(K_a\) or smaller \(pK_a\) means stronger acid. Larger \(K_b\) or smaller \(pK_b\) means stronger base.
 
-\subsubsection{Henderson-Hasselbalch equation}
+\subsubsection{Conjugate acid-base relation}
+\[
+K_aK_b=K_w, \qquad pK_a+pK_b=14
+\]
+Use this for conjugate acid/base pairs at \(298\,\mathrm K\).
+
+\subsubsection{Weak acid and weak base approximations}
+\[
+[\ce{H3O+}]\approx\sqrt{K_ac_0}, \qquad
+[\ce{OH-}]\approx\sqrt{K_bc_0}
+\]
+The approximation is valid when \(x/c_0\lesssim5\%\). Otherwise solve the quadratic.
+
+\subsection{Exam recipe: pH of weak acid or weak base}
+\textbf{Use when:} a weak acid/base concentration and \(K_a\), \(K_b\), \(pK_a\), or \(pK_b\) are given.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Write the equilibrium and initial concentration \(c_0\).
+    \item Convert \(pK\) to \(K\) if needed: \(K=10^{-pK}\).
+    \item Use \(x\approx\sqrt{Kc_0}\) for \([\ce{H3O+}]\) or \([\ce{OH-}]\).
+    \item Convert to pH or pOH.
+    \item Check \(x/c_0\); solve exactly if too large.
+\end{enumerate}
+
+\textbf{Common traps:} reporting pOH as pH for weak bases; forgetting \(pH=14-pOH\).
+
+\subsection{Buffers and titration}
+
+\subsubsection{Henderson-Hasselbalch buffer equation}
 \[
 \mathrm{pH}=pK_a+\log\left(\frac{[\ce{A-}]}{[\ce{HA}]}\right)
 \]
-Buffers contain a weak acid and its conjugate base. The pH is closest to \(pK_a\) when the two concentrations are comparable.
+Use mole ratios instead of concentrations when acid and base are in the same final volume.
 
-\subsubsection{Buffer after acid or base addition}
+\subsubsection{Buffer after adding strong acid or base}
 \[
 \ce{A- + H+ -> HA}, \qquad
 \ce{HA + OH- -> A- + H2O}
 \]
-Small additions are handled first by stoichiometric neutralization, then by Henderson-Hasselbalch with the new amounts.
+Do stoichiometric neutralization first, then apply Henderson-Hasselbalch to the remaining conjugate pair.
+
+\subsubsection{Phosphoric acid phosphate system}
+\[
+\begin{aligned}
+\ce{H3PO4 &<=> H+ + H2PO4-} && pK_{a1}\approx2.1,\\
+\ce{H2PO4- &<=> H+ + HPO4^2-} && pK_{a2}\approx7.2,\\
+\ce{HPO4^2- &<=> H+ + PO4^3-} && pK_{a3}\approx12.4.
+\end{aligned}
+\]
+Choose the conjugate pair whose \(pK_a\) is closest to the target or observed pH.
 
 \subsubsection{Titration equivalence point}
 \[
 n_{\mathrm{acid\ equivalents}}=n_{\mathrm{base\ equivalents}}
 \]
-At equivalence, stoichiometric acid-base equivalents are equal. The pH depends on whether the remaining salt is acidic, basic, or neutral.
+At equivalence, stoichiometric acid-base equivalents have reacted. The pH depends on the salt left after neutralization.
 
-\subsection{Solubility Products}
+\subsection{Exam recipe: buffer pH, phosphate buffer, Henderson}
+\textbf{Use when:} both weak acid and conjugate base are present, or a buffer receives added strong acid/base.
 
-\subsubsection{Solubility product}
-\[
-\mathrm{M}_a\mathrm{X}_b(s)\rightleftharpoons a\,\mathrm{M}^{z+}(aq)+b\,\mathrm{X}^{z-}(aq), \qquad
-K_{sp}=[\mathrm{M}^{z+}]^a[\mathrm{X}^{z-}]^b
-\]
-Pure solid is omitted from the equilibrium expression. \(K_{sp}\) has concentration powers set by stoichiometry.
+\textbf{Steps:}
+\begin{enumerate}
+    \item Identify the conjugate pair and the relevant \(pK_a\).
+    \item Convert all given concentrations/volumes to moles.
+    \item If strong acid/base is added, neutralize stoichiometrically first.
+    \item Insert remaining \(n_{\ce{A-}}/n_{\ce{HA}}\) into Henderson-Hasselbalch.
+\end{enumerate}
 
-\subsubsection{Molar solubility from \(K_{sp}\)}
+\textbf{Fast checks:} when acid and base amounts are equal, \(\mathrm{pH}=pK_a\); buffer pH should be near \(pK_a\).
+
+\subsection{Solubility products}
+
+\subsubsection{Solubility product expression}
 \[
-\ce{CaCO3(s) <=> Ca^2+ + CO3^2-}, \qquad
-K_{sp}=s^2
+\mathrm{M}_a\mathrm{X}_b(s)\rightleftharpoons a\,\mathrm{M}^{m+}+b\,\mathrm{X}^{x-}, \qquad
+K_{sp}=[\mathrm{M}^{m+}]^a[\mathrm{X}^{x-}]^b
+\]
+The pure solid is omitted. Powers come from dissolution stoichiometry.
+
+\subsubsection{Molar solubility patterns}
+\[
+\mathrm{MX}(s)\rightleftharpoons \mathrm{M}^{+}+\mathrm{X}^{-}: \qquad K_{sp}=s^2
 \]
 \[
-\ce{M(OH)2(s) <=> M^2+ + 2OH-}, \qquad
-K_{sp}=s(2s)^2=4s^3
+\mathrm{MX_2}(s)\rightleftharpoons \mathrm{M}^{2+}+2\mathrm{X}^{-}: \qquad K_{sp}=s(2s)^2=4s^3
 \]
-The molar solubility \(s\) is converted to ion concentrations using the dissolution stoichiometry.
+\[
+\mathrm{M(OH)_2}(s)\rightleftharpoons \mathrm{M}^{2+}+2\ce{OH-}: \qquad K_{sp}=s(2s)^2=4s^3
+\]
+Convert molar solubility \(s\) to ion concentrations using coefficients.
 
 \subsubsection{Ion product and precipitation}
 \[
-Q_{sp}=[\mathrm{M}^{z+}]^a[\mathrm{X}^{z-}]^b
+Q_{sp}=[\mathrm{M}^{m+}]^a[\mathrm{X}^{x-}]^b
 \]
-If \(Q_{sp}>K_{sp}\), precipitation is favored. If \(Q_{sp}<K_{sp}\), more solid can dissolve.
+\(Q_{sp}>K_{sp}\) means precipitation; \(Q_{sp}<K_{sp}\) means unsaturated; \(Q_{sp}=K_{sp}\) means saturated.
 
-\subsubsection{Common-ion effect on solubility}
+\subsubsection{Common-ion solubility}
 \[
-K_{sp}=[\mathrm{M}^{z+}][\mathrm{X}^{z-}]
+K_{sp}=[\mathrm{M}^{m+}][\mathrm{X}^{x-}], \qquad [\mathrm{X}^{x-}]_{\mathrm{initial}}\gg s \Rightarrow s\approx\frac{K_{sp}}{[\mathrm{X}^{x-}]_{\mathrm{initial}}}
 \]
-Adding an ion already present in the dissolution equilibrium lowers the molar solubility by shifting the equilibrium toward the solid.
+A common ion lowers solubility by shifting dissolution toward the solid.
+
+\subsection{Exam recipe: \(K_{sp}\), molar solubility, common ion, hydroxide pH}
+\textbf{Use when:} the problem asks for solubility, precipitation, saturated solution pH, or common-ion effect.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Write the dissolution reaction.
+    \item Write \(K_{sp}\) with coefficient powers.
+    \item Let \(s\) be molar solubility and express ion concentrations.
+    \item Include any initial common-ion concentration before adding \(s\).
+    \item For hydroxides, convert \([\ce{OH-}]\) to pOH and pH.
+\end{enumerate}
+
+\textbf{Common traps:} forgetting the square/cube from coefficients; using \(s\) instead of \(2s\) for hydroxide concentration.

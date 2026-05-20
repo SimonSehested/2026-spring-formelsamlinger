@@ -1,74 +1,87 @@
 \section{PI-Lead controller design}
 
-\subsection{PI controller}
+\subsection{Ctrl+F keywords}
+
+\subsubsection{PI-Lead, PI Lead, lead compensator, phase boost, alpha, tau d, Ni}
+\[
+\text{PI zero, lead zero, lead pole, desired crossover, phase margin, }K_P,\alpha,\tau_i,\tau_d,N_i
+\]
+Use this section when the task specifies desired \(\omega_c\) and \(\gamma_M\) for a PI-Lead controller.
+
+\subsection{PI part}
 
 \subsubsection{PI transfer function}
 \[
 C_{PI}(s)=K_P\frac{\tau_i s+1}{\tau_i s}
 \]
-The PI controller adds one zero at \(-1/\tau_i\) and one pole at the origin.
+PI adds an integrator for zero step error and a zero at \(-1/\tau_i\).
 
-\subsubsection{PI phase contribution}
+\subsubsection{PI phase at crossover}
 \[
-\phi_{PI}(\omega)=\arctan(\omega\tau_i)-90^\circ
+\phi_{PI}(\omega_c)=\arctan(\omega_c\tau_i)-90^\circ
 \]
-The PI part increases low-frequency gain but contributes negative phase near crossover.
+With \(N_i=\omega_c\tau_i\), the PI phase contribution is \(\arctan(N_i)-90^\circ\).
 
-\subsubsection{PI design ratio}
-\[
-N_i=\omega_c\tau_i
-\]
-The ratio \(N_i\) places the PI zero relative to the desired crossover frequency.
-
-\subsection{Lead controller}
+\subsection{Lead part}
 
 \subsubsection{Lead transfer function}
 \[
 C_{\mathrm{lead}}(s)=\frac{\tau_d s+1}{\alpha\tau_d s+1},\qquad 0<\alpha<1
 \]
-The lead part adds positive phase and increases high-frequency gain by approximately \(1/\alpha\).
+The lead zero is lower in frequency than the lead pole and adds positive phase.
 
-\subsubsection{Lead maximum phase}
+\subsubsection{Lead maximum phase and alpha}
 \[
-\phi_{\max}=\sin^{-1}\left(\frac{1-\alpha}{1+\alpha}\right)
+\phi_{\max}=\sin^{-1}\left(\frac{1-\alpha}{1+\alpha}\right),\qquad
+\alpha=\frac{1-\sin\phi_{\max}}{1+\sin\phi_{\max}}
 \]
-Smaller \(\alpha\) gives more phase lead but also more high-frequency amplification.
+Smaller \(\alpha\) gives more phase lead and more high-frequency gain.
 
-\subsubsection{Lead center frequency}
+\subsubsection{Lead centered at desired crossover}
 \[
-\omega_{\max}=\frac{1}{\tau_d\sqrt{\alpha}}
-\]
-The lead part should be centered near the desired crossover frequency.
-
-\subsubsection{Lead time constant from crossover}
-\[
+\omega_{\max}=\frac{1}{\tau_d\sqrt{\alpha}},\qquad
 \tau_d=\frac{1}{\omega_c\sqrt{\alpha}}
 \]
-This selection places the maximum phase contribution at \(\omega_c\).
+Center the lead phase boost at the desired crossover frequency.
 
-\subsection{PI-Lead controller}
+\subsection{PI-Lead design equations}
 
-\subsubsection{PI-Lead transfer function}
+\subsubsection{PI-Lead controller}
 \[
 C(s)=K_P\frac{\tau_i s+1}{\tau_i s}\frac{\tau_d s+1}{\alpha\tau_d s+1}
 \]
-PI-Lead design combines zero steady-state step error with phase-margin improvement.
-
-\subsubsection{Crossover gain condition}
-\[
-|C(j\omega_c)G(j\omega_c)|=1
-\]
-The proportional gain is selected after the dynamic PI and lead parts are placed.
-
-\subsubsection{Proportional gain from magnitude}
-\[
-K_P=\frac{1}{|G(j\omega_c)|\,|C_{PI,0}(j\omega_c)|\,|C_{\mathrm{lead}}(j\omega_c)|}
-\]
-Here \(C_{PI,0}\) excludes \(K_P\). This formula enforces the desired crossover frequency.
+This is the recurring controller form in the PI-Lead exam task.
 
 \subsubsection{Phase-margin design equation}
 \[
 \angle G(j\omega_c)+\phi_{PI}(\omega_c)+\phi_{\mathrm{lead}}(\omega_c)
 =-180^\circ+\gamma_M
 \]
-The controller phase contributions must lift the open-loop phase to the desired phase margin.
+Use this to compute the required lead phase after choosing the PI zero location.
+
+\subsubsection{Crossover magnitude condition}
+\[
+|K_PC_{PI,0}(j\omega_c)C_{\mathrm{lead}}(j\omega_c)G(j\omega_c)|=1
+\]
+\[
+K_P=\frac{1}{|C_{PI,0}(j\omega_c)|\,|C_{\mathrm{lead}}(j\omega_c)|\,|G(j\omega_c)|}
+\]
+\(C_{PI,0}\) excludes \(K_P\).
+
+\subsection{Exam recipe: PI-Lead design from \(\omega_c\) and phase margin}
+
+\textbf{Use when:} the problem asks for \(\alpha\), \(\tau_d\), \(\tau_i\), or \(K_P\) in a PI-Lead design.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Choose or read \(N_i=\omega_c\tau_i\), then set \(\tau_i=N_i/\omega_c\).
+\item Compute \(\phi_{PI}=\arctan(N_i)-90^\circ\).
+\item Compute required lead phase from the phase-margin equation.
+\item Convert required lead phase to \(\alpha\).
+\item Set \(\tau_d=1/(\omega_c\sqrt{\alpha})\).
+\item Use the magnitude condition to solve \(K_P\).
+\end{enumerate}
+
+\textbf{Fast checks:} \(\alpha\) must satisfy \(0<\alpha<1\); \(\tau_i,\tau_d,K_P\) must be positive.
+
+\textbf{Common traps:} forgetting the negative phase from the PI part; using degrees in a calculator set to radians.

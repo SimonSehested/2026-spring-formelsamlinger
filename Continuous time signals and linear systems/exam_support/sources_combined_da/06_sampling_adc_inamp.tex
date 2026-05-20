@@ -1,0 +1,184 @@
+\section{Sampling, ADC og instrumenteringsforstærker}
+\symref{xs}{\(x_s(t)\)}{samplet signal}{samme som signal}
+\symref{Xs}{\(X_s(\omega)\)}{spektrum af samplet signal}{signal gange s}
+\symref{T}{\(T\)}{samplingstid eller samplingperiode}{s}
+\symref{Fs}{\(F_s\)}{samplingsfrekvens}{Hz}
+\symref{omegas}{\(\omega_s\)}{samplingsvinkelfrekvens}{rad/s}
+\symref{Fmax}{\(F_{\max}\)}{højeste signalfrekvens}{Hz}
+\symref{falias}{\(f_{\mathrm{alias}}\)}{observeret aliasfrekvens}{Hz}
+\symref{Nbits}{\(N\)}{antal ADC-bit}{dimensionsløs}
+\symref{Vmax}{\(V_{\max}\)}{øverste ADC-indgangsspænding}{V}
+\symref{Vmin}{\(V_{\min}\)}{nederste ADC-indgangsspænding}{V}
+\symref{DeltaV}{\(\Delta V_{\mathrm{LSB}}\)}{ADC-spænding per kode}{V}
+\symref{Gd}{\(G_d\)}{differentialforstærkning}{V/V}
+\symref{Gc}{\(G_c\)}{common-mode-forstærkning}{V/V}
+\symref{CMRR}{\(CMRR\)}{common-mode rejection ratio}{dimensionsløs eller dB}
+
+\subsection{Sampling og aliasering, Nyquist, aliasing}
+
+\subsubsection{Spektrum ved impulstogssampling}
+\[
+x_s(t)=x(t)\sum_{n=-\infty}^{\infty}\delta(t-nT)
+\]
+\[
+X_s(\omega)=\frac{1}{T}\sum_{n=-\infty}^{\infty}X(\omega-n\omega_s),\qquad
+\omega_s=\frac{2\pi}{T}=2\pi F_s
+\]
+Sampling gentager spektret for hver \(\omega_s\). De gentagne spektre er kontinuerte forskudte kopier, ikke diskrete frekvenskomponenter, medmindre det oprindelige signal er diskret i frekvens.
+\textbf{Symboler:} \(T\) er samplingperioden; \(F_s=1/T\); \(\omega_s=2\pi F_s\).
+
+\subsubsection{Nyquist-betingelse}
+\[
+F_s>2F_{\max}
+\]
+Dette forhindrer overlap for et båndbegrænset lavpassignal uden indhold over \(F_{\max}\). Hvis signalet kan indeholde højere frekvenskomponenter, kræves et anti-aliasfilter.
+\textbf{Symboler:} \(F_{\max}\) er højeste frekvens efter eventuel filtrering, ikke nødvendigvis før.
+
+\subsubsection{Aliasfrekvens for en sinus}
+\[
+f_{\mathrm{alias}}=\left|f-kF_s\right|\quad\text{valgt så }0\leq f_{\mathrm{alias}}\leq F_s/2
+\]
+En 4 Hz tone samplet ved 6 Hz aliaserer til 2 Hz. Brug Hz til denne foldningsformel; brug først rad/s efter multiplikation med \(2\pi\).
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/sampling/adc.py}, funktionen \texttt{alias\_frequency}, når opgaven spørger efter den observerede alias for én sinusfrekvens. Input er signalfrekvens og samplingsrate i samme enhed. Scriptet returnerer den foldede aliasfrekvens. Tjek manuelt, at opgaven er et enkelttones aliasproblem og ikke en fuld spektrumrekonstruktion.
+
+\subsubsection{Opskrift: sampling og aliasering}
+\textbf{Brug når:} opgaven spørger efter Nyquist, aliasfrekvens, spektrumkopier, sampling rate eller anti-aliasing.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Brug Hz til praktiske aliasfrekvenser: \(F_s\), \(f\), \(F_s/2\).
+    \item Tjek først Nyquist: er højeste relevante frekvens under \(F_s/2\)?
+    \item For én sinus: fold frekvensen ind i intervallet \(0\le f_{\mathrm{alias}}\le F_s/2\).
+    \item For et spektrum: tegn kopier forskudt med \(F_s\) eller \(\omega_s\), og tjek overlap.
+    \item Hvis der er anti-aliasfilter: vurder signalet efter filtrering, ikke før filtrering.
+\end{enumerate}
+
+\textbf{Typiske fælder:} \(\omega_s=2\pi F_s\); en samplet kontinuert spektrumkopi bliver ikke automatisk til enkelte linjer; Nyquist kræver båndbegrænsning.
+
+\subsection{ADC-kvantisering, LSB, dynamic range}
+
+\subsubsection{Ideel ADC LSB-størrelse}
+\[
+\Delta V_{\mathrm{LSB}}=\frac{V_{\max}-V_{\min}}{2^N}
+\]
+For en ideel \(N\)-bit ADC er én LSB spændingsområdet divideret med antal koder. Nogle konventioner bruger \(2^N-1\) til endpoint-afstand; brug den konvention, som opgaven antyder.
+\textbf{Symboler:} \(V_{\max}-V_{\min}\) er fuldt inputområde; \(N\) er bitantal; \(\Delta V_{\mathrm{LSB}}\) er mindste kodeafstand.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/sampling/adc.py}, funktionen \texttt{adc\_lsb}, når opgaven spørger efter ideel ADC-opløsning fra bitantal og spændingsområde. Input er bits, \(V_{\min}\) og \(V_{\max}\). Scriptet returnerer \(\Delta V_{\mathrm{LSB}}\). Tjek manuelt, om opgaven bruger \(2^N\)- eller \(2^N-1\)-konventionen.
+
+\subsubsection{Kvantiseringsstøj og afrunding}
+\[
+e_q\sim U\left[-\frac{\Delta V}{2},\frac{\Delta V}{2}\right]\quad\text{ved afrunding til nærmeste}
+\]
+\[
+\sigma_q^2=\frac{\Delta V^2}{12}
+\]
+Altid-nedad-kvantisering har biased fejl over et ensidigt interval. Midling reducerer nulmiddelværdi tilfældig kvantiseringsstøj mere effektivt end biased kvantiseringsfejl.
+
+\subsubsection{Ideelt dynamikområde}
+\[
+DR_{\mathrm{ideal}}\approx 6.02N\ \mathrm{dB}
+\]
+Dette er en hurtig bit-til-dB-regel. Seks bits svarer til cirka \(36\) dB, og tolv bits svarer til cirka \(72\) dB.
+\textbf{Symboler:} \(DR_{\mathrm{ideal}}\) er ideelt dynamikområde uden ekstra støj og ikke-linearitet.
+
+\subsubsection{Opskrift: ADC-opløsning og kvantiseringsstøj}
+\textbf{Brug når:} opgaven nævner bits, LSB, quantization noise, dynamic range, SNR, afrunding eller koder.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Find spændingsområdet og bitantallet \(N\).
+    \item Beregn \(\Delta V_{\mathrm{LSB}}\) før du sammenligner med støj eller signalamplituder.
+    \item Ved afrunding til nærmeste: brug støjinterval \(\pm\Delta V/2\) og varians \(\Delta V^2/12\).
+    \item Ved dynamikområde: brug cirka \(6.02N\) dB som hurtigt tjek.
+    \item Tjek om opgaven bruger \(2^N\) eller \(2^N-1\)-konvention.
+\end{enumerate}
+
+\textbf{Hurtigtjek:} flere bits giver mindre LSB og højere dynamikområde; biased kvantisering kan ikke behandles som nulmiddelværdi-støj uden videre.
+
+\subsection{Dimensionering af anti-aliasfilter, ADC og Butterworth}
+
+\subsubsection{Højfrekvent Butterworth-asymptote}
+\[
+|H_{\mathrm{LP}}(f)|\approx \frac{1}{(f/f_{3dB})^n}\qquad f\gg f_{3dB}
+\]
+Ved Nyquist-frekvensen \(F_s/2\) skal uønsket højfrekvent indhold dæmpes nok til at undgå synlig aliasering eller komme under én LSB, afhængigt af kravet.
+
+\subsubsection{Samplingsrate for LSB-niveau-dæmpning}
+\[
+A_{\max}\left(\frac{f_{3dB}}{F_s/2}\right)^n<\Delta V_{\mathrm{LSB}}
+\]
+\[
+F_s>2f_{3dB}\left(\frac{A_{\max}}{\Delta V_{\mathrm{LSB}}}\right)^{1/n}
+\]
+Brug dette, når eksamen siger, at den filtrerede amplitude ved halvdelen af samplingsfrekvensen skal være for lille til at påvirke LSB.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/sampling/adc.py}, funktionen \texttt{required\_sampling\_rate\_for\_lsb}, når opgaven kombinerer ADC-opløsning med et Butterworth-anti-aliasfilter og spørger efter minimum samplingsrate. Input er bitantal, spændingsområde, filterorden, \(f_{3dB}\) og worst-case-amplitude, hvis den ikke er lig området. Scriptet returnerer minimum \(F_s\). Tjek manuelt, at højfrekvensasymptoten må bruges, og at \(f_{3dB}\) er i Hz.
+
+\subsubsection{Opskrift: anti-aliasfilter koblet til ADC}
+\textbf{Brug når:} opgaven kombinerer Butterworthfilter, samplingsrate, Nyquist og et krav om at alias ligger under LSB.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Beregn først \(\Delta V_{\mathrm{LSB}}\).
+    \item Find filterorden \(n\), \(f_{3dB}\) og worst-case-amplitude \(A_{\max}\).
+    \item Brug højfrekvensasymptoten ved \(F_s/2\), hvis \(F_s/2\gg f_{3dB}\).
+    \item Sæt filtreret amplitude mindre end \(\Delta V_{\mathrm{LSB}}\).
+    \item Løs uligheden for \(F_s\), og husk faktoren \(2\) fra Nyquistfrekvensen.
+\end{enumerate}
+
+\textbf{Hurtigtjek:} højere filterorden eller lavere \(f_{3dB}\) kan reducere nødvendig \(F_s\); strengere LSB-krav øger nødvendig \(F_s\).
+
+\subsection{Instrumenteringsforstærker, differential gain, common mode, CMRR}
+
+\subsubsection{Differentialforstærkning}
+\[
+G_d=1+\frac{2R_2}{R_G}
+\]
+Dette er den ideelle forstærkningsformel for kursets tre-op-amp-instrumenteringsforstærkermodel under matchede modstandsantagelser.
+\textbf{Symboler:} \(R_2\) og \(R_G\) er modstande i ohm; \(G_d\) er et spændingsforhold.
+
+\subsubsection{Common-mode-forstærkning fra mismatch}
+\[
+G_c=\frac{1-\alpha}{2}
+\]
+Dette forenklede udtryk gælder for mismatchmodellen, hvor \(R_{4b}=\alpha R_{4a}\). Det bør ikke bruges til vilkårlige samtidige modstandsmismatches.
+
+\subsubsection{Common-mode rejection ratio}
+\[
+CMRR=\left|\frac{G_d}{G_c}\right|,\qquad
+CMRR_{\mathrm{dB}}=20\log_{10}(CMRR)
+\]
+Hvis \(G_c=0\), er den ideelle CMRR uendelig. I eksamensudsagn sammenlignes common-mode-outputfejl med differential-outputsignalet i dB.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/circuits/instrumentation.py}, funktionen \texttt{instrumentation\_gains}, når opgaven giver \(R_2,R_G,\alpha\) og spørger efter \(G_d\), \(G_c\) eller CMRR. Scriptet returnerer en dictionary med disse forstærkninger. Tjek manuelt, at mismatch passer til single-\(\alpha\)-modellen, og at op-amp-antagelserne er ideelle.
+
+\subsubsection{Opskrift: instrumenteringsforstærker og CMRR}
+\textbf{Brug når:} opgaven spørger efter differential gain, common-mode gain, CMRR, mismatch eller outputfejl.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Beregn differentialforstærkningen \(G_d\).
+    \item Beregn common-mode-forstærkningen \(G_c\) fra den mismatchmodel, opgaven bruger.
+    \item Beregn \(CMRR=|G_d/G_c|\).
+    \item Omregn til dB med \(20\log_{10}(CMRR)\), ikke \(10\log_{10}\).
+    \item Hvis \(G_c=0\), er modellen ideelt common-mode-afvisende.
+\end{enumerate}
+
+\textbf{Typiske fælder:} brug ikke single-\(\alpha\)-formlen til en anden mismatchmodel; CMRR er et amplitudeforhold og bruger derfor \(20\log_{10}\).
+
+\subsection{Eksamensopskrift: ADC- og instrumenterings-MCQ-tjek}
+
+\subsubsection{Sampling og ADC-tjekliste}
+\textbf{Brug når:} en svarmulighed blander sampling, aliasering, ADC-opløsning, kvantiseringsstøj og anti-aliasfilterpåstande.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Omregn mellem \(f\) og \(\omega\) kun når det er nødvendigt.
+    \item Tjek Nyquist med den højeste signalfrekvens efter filtrering.
+    \item Beregn \(\Delta V_{\mathrm{LSB}}\) før amplituder sammenlignes.
+    \item Skeln mellem afrunding til nærmeste og altid-nedad-kvantisering.
+\end{enumerate}
+
+\textbf{Hurtige tjek:} \(N\) bits giver cirka \(6.02N\) dB; en fjerdeordens højfrekvensasymptote giver \(-24\) dB/oktav.

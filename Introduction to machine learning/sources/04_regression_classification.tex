@@ -1,0 +1,61 @@
+\section*{Regression and classification models}
+\subsection*{Linear and ridge regression}
+Augment with intercept: $\tilde x=[1,x_1,\ldots,x_M]$.
+\[
+\hat y=\tilde x^\top w,\quad
+w_{\text{LS}}=(X^\top X)^{-1}X^\top y,\quad
+w_{\lambda}=(X^\top X+\lambda I)^{-1}X^\top y.
+\]
+\note{Trap} Usually do not regularize intercept. Larger $\lambda$ shrinks weights; predictions move toward intercept/mean.
+\note{Check} Weight vector length must match augmented input dimension.
+
+\subsection*{Regularization and feature selection}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Method & Exam rule\\ \midrule
+Ridge & Penalizes $\sum_{j>0}w_j^2$; keeps all features but shrinks.\\
+Forward selection & Start empty, add feature giving best validation error.\\
+Backward selection & Start full, remove feature giving best validation error.\\
+Polynomial/log features & Still linear in weights, nonlinear in original inputs.\\
+\bottomrule
+\end{tabularx}
+\note{Trap} Selection must be inside validation loop when estimating generalization.
+
+\subsection*{Logistic regression}
+\[
+\hat p=P(y=1|x)=\sigma(\tilde x^\top w)=\frac{1}{1+e^{-\tilde x^\top w}},
+\quad \hat y=\ind[\hat p\ge \tau].
+\]
+\[
+\log\frac{\hat p}{1-\hat p}=\tilde x^\top w .
+\]
+\note{Boundary} At $\tau=0.5$, decision boundary is $\tilde x^\top w=0$.
+\note{Trap} Positive class depends on problem statement, e.g. $y=2$ may be positive.
+
+\subsection*{K-nearest neighbours}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Task & Prediction\\ \midrule
+Classification & Majority vote among $K$ nearest; ties require stated rule.\\
+Regression & Mean of neighbours' $y$ values.\\
+Complexity & Small $K$: flexible/high variance. Large $K$: smoother/high bias.\\
+\bottomrule
+\end{tabularx}
+\note{Trap} Distance is computed in input space only; standardization can change neighbours.
+
+\subsection*{Multiclass and one-vs-all}
+\[
+\hat p_c=\frac{e^{a_c}}{\sum_j e^{a_j}},\quad \hat y=\argmax_c \hat p_c.
+\]
+\note{Check} Softmax probabilities sum to $1$. Binary logistic is the two-class special case.
+
+\subsection*{Model recognition from decision boundary}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Boundary/behavior & Likely model\\ \midrule
+Straight line/plane & Logistic or linear classifier.\\
+Axis-aligned steps & Decision tree.\\
+Voronoi-like jagged regions & KNN, especially small $K$.\\
+Smooth curved boundary & Feature transform, ANN, kernel/GMM.\\
+\bottomrule
+\end{tabularx}

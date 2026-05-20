@@ -1,0 +1,51 @@
+\section*{Probability, Bayes and Naive Bayes}
+\subsection*{Probability rules}
+\[
+\begin{gathered}
+P(A|B)=\frac{P(A,B)}{P(B)},\qquad P(A,B)=P(A|B)P(B),\\
+P(A)=\sum_cP(A|c)P(c).
+\end{gathered}
+\]
+\[
+P(y=c|x)=\frac{P(x|y=c)P(y=c)}{\sum_{c'}P(x|y=c')P(y=c')}.
+\]
+\note{Trap} Normalize over classes after computing unnormalized scores. Probabilities must sum to $1$.
+
+\subsection*{Bayes classifier from counts}
+\[
+\hat P(y=c|x=a)=\frac{\#\{i:y_i=c,x_i=a\}}{\#\{i:x_i=a\}},\quad
+\hat y=\argmax_c \hat P(y=c|x).
+\]
+\note{Use} For exam tables with binary attributes and no independence assumption.
+\note{Trap} Condition on exactly the attributes named in the question.
+
+\subsection*{Naive Bayes}
+\[
+\hat y=\argmax_c P(y=c)\prod_{m=1}^M P(x_m|y=c).
+\]
+For binary attributes:
+\[
+\hat P(x_m=a|y=c)=\frac{\#\{i:x_{im}=a,y_i=c\}}{\#\{i:y_i=c\}}.
+\]
+\note{Condition} Assumes conditional independence of attributes given class.
+\note{Trap} If any factor is zero, the product becomes zero unless smoothing is specified.
+
+\subsection*{Gaussian class density}
+\[
+p(x|c)=\frac{1}{(2\pi)^{M/2}|\Sigma_c|^{1/2}}
+\exp\!\left[-\frac12(x-\mu_c)^\top\Sigma_c^{-1}(x-\mu_c)\right].
+\]
+\note{Decision} Use largest $p(x|c)P(c)$; equal priors reduce to largest density.
+\note{Check} In 1D, larger variance gives wider/lower peak; far from mean gives smaller density.
+
+\subsection*{Log and numerical stability}
+\[
+\log P(y=c|x)\propto \log P(y=c)+\sum_m\log P(x_m|y=c).
+\]
+\note{Use} Products of many probabilities are easier to compare as log-sums.
+
+\subsection*{Distributions recurring in density questions}
+\[
+\mathcal N(x|\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp\!\left[-\frac{(x-\mu)^2}{2\sigma^2}\right].
+\]
+\note{Trap} Kernel width $\sigma$ vs variance $\sigma^2$; exams may state ``variance $\sigma^2$''.

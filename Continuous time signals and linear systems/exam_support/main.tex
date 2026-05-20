@@ -1,0 +1,35 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.55cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\setcounter{tocdepth}{2}
+\newcommand{\jj}{\mathrm{j}}
+\newcommand{\uu}{u(t)}
+\newcommand{\dd}{\delta(t)}
+\newcommand{\diff}{\mathrm{d}}
+
+\begin{document}
+\small
+\sloppy
+\begin{center}
+{\Large 22050 Signals and Linear Systems in Continuous Time}\\
+{\normalsize Searchable exam formula collection with validated Python aids}
+\end{center}
+\tableofcontents
+\input{sources/01_ltic_time_domain.tex}
+\input{sources/02_fourier.tex}
+\input{sources/03_laplace.tex}
+\input{sources/04_frequency_bode_filters.tex}
+\input{sources/05_sampling_adc_inamp.tex}
+\input{sources/99_python_script_index.tex}
+\end{document}

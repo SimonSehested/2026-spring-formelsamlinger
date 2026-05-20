@@ -1,104 +1,114 @@
-\section{Chemical Bonds, Lewis Structures, and VSEPR}
+\section{Bonding, Lewis Structures, Formal Charge, and VSEPR}
 
-\subsection{Bond Types}
+\subsection{Ctrl+F keywords: Lewis, formal charge, resonance, VSEPR, bond angle, planar, polarity, dipole, hybridization}
+Use for drawing or checking Lewis structures, choosing resonance forms, molecular geometry, bond angles, polarity, and planar/non-planar questions.
 
-\subsubsection{Ionic bonding and Coulomb stabilization}
-\[
-E\propto \frac{q_1q_2}{r}
-\]
-Ionic solids are stabilized by electrostatic attraction between oppositely charged ions. Lattice enthalpy can make salt formation strongly favorable.
-
-\subsubsection{Born-Haber cycle}
-\[
-\Delta H^\circ_{\mathrm f}=\sum \Delta H^\circ_{\mathrm{atomization/ionization/electron\ affinity}}+\Delta H^\circ_{\mathrm{lattice}}
-\]
-A Born-Haber cycle applies Hess's law to ionic solid formation. Large negative lattice enthalpy stabilizes the crystal.
-
-\subsubsection{Covalent bond polarity}
-\[
-\Delta \chi=|\chi_A-\chi_B|
-\]
-Greater electronegativity difference gives a more polar bond. Molecular polarity also depends on geometry.
-
-\subsubsection{Molecular orbital bond order}
-\[
-\text{bond order}=\frac{N_{\mathrm{bonding}}-N_{\mathrm{antibonding}}}{2}
-\]
-Bond order estimates bond strength and whether a simple diatomic molecule is stabilized.
-
-\subsection{Lewis Structures}
+\subsection{Lewis structures}
 
 \subsubsection{Valence electron count}
 \[
 N_{\mathrm{val}}=\sum_i N_{\mathrm{val},i}-q
 \]
-For an ion, subtract positive charge and add negative charge. The total electron count controls the Lewis structure.
+For an ion, subtract positive charge and add negative charge. Total Lewis electrons must equal \(N_{\mathrm{val}}\).
 
 \subsubsection{Formal charge}
 \[
-\mathrm{FC}=V-\left(N_{\mathrm{nonbonding}}+\frac{1}{2}N_{\mathrm{bonding}}\right)
+\mathrm{FC}=V-\left(N_{\mathrm{nonbonding}}+\frac12N_{\mathrm{bonding}}\right)
 \]
-Formal charge compares assigned electrons to neutral valence electrons. Favored resonance forms usually minimize charge and place negative charge on electronegative atoms.
-
-\subsubsection{Octet rule and expanded octet}
-\[
-\text{second-period atoms normally obey an octet}
-\]
-Atoms from period 3 and below may appear with expanded octets in course examples such as \(\ce{SF6}\). Electron-deficient molecules such as \(\ce{BH3}\) are exceptions.
+Preferred structures usually minimize formal charges and place negative formal charge on more electronegative atoms.
 
 \subsubsection{Resonance structures}
 \[
-\text{real structure}=\text{resonance hybrid of valid Lewis forms}
+\text{resonance forms differ in electron placement, not atom placement}
 \]
-Resonance forms differ only in electron placement, not atom positions. Equivalent resonance forms imply delocalized bonding and equalized bond lengths.
+Equivalent resonance forms indicate delocalization and equalized bond lengths. Do not move nuclei when drawing resonance.
 
-\subsection{VSEPR Geometry}
-
-\subsubsection{Electron-density domains}
+\subsubsection{Octet, expanded octet, electron-deficient exceptions}
 \[
-\text{steric number}=\text{number of bonded atoms}+\text{number of lone pairs}
+\text{period 2 atoms normally obey octet}, \qquad
+\text{period }3+\text{ may expand octet}
 \]
-VSEPR arranges electron domains to maximize separation around the central atom.
+Hydrogen has a duet. Boron can be electron deficient; sulfur, phosphorus, iodine, and xenon can appear hypervalent in course examples.
 
-\subsubsection{Common VSEPR geometries}
+\subsection{Exam recipe: Lewis structure and formal charge}
+\textbf{Use when:} the problem asks for nitrate, oxalate, resonance, formal charge, or a valid Lewis structure.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Count total valence electrons, including ion charge.
+    \item Choose the least electronegative central atom, never hydrogen.
+    \item Connect atoms with single bonds and complete outer octets.
+    \item Put leftover electrons on the central atom if allowed.
+    \item If the central atom lacks an octet, form multiple bonds.
+    \item Calculate formal charges and choose the best resonance form.
+\end{enumerate}
+
+\textbf{Fast checks:} electron count matches; total formal charge equals ion charge; second-period atoms do not exceed octet.
+
+\subsection{VSEPR geometry}
+
+\subsubsection{Steric number and electron domains}
+\[
+\mathrm{SN}=\#\text{bonded atoms}+\#\text{lone pairs on central atom}
+\]
+Multiple bonds count as one electron domain in VSEPR. Lone pairs compress bond angles.
+
+\subsubsection{Common VSEPR geometries and bond angles}
 \[
 \begin{array}{c c c c}
 \toprule
-\text{steric number} & \text{lone pairs} & \text{molecular geometry} & \text{example}\\
+\mathrm{SN} & \text{lone pairs} & \text{molecular geometry} & \text{angle}\\
 \midrule
-2 & 0 & \text{linear} & \ce{CO2}\\
-3 & 0 & \text{trigonal planar} & \ce{BH3}\\
-4 & 0 & \text{tetrahedral} & \ce{CH4}\\
-4 & 1 & \text{trigonal pyramidal} & \ce{NH3}\\
-4 & 2 & \text{bent} & \ce{H2O}\\
-5 & 0 & \text{trigonal bipyramidal} & \ce{PCl5}\\
-6 & 0 & \text{octahedral} & \ce{SF6}\\
-6 & 1 & \text{square pyramidal} & \ce{IF5}\\
-5 & 3 & \text{linear} & \ce{XeF2}\\
+2&0&\text{linear}&180^\circ\\
+3&0&\text{trigonal planar}&120^\circ\\
+4&0&\text{tetrahedral}&109.5^\circ\\
+4&1&\text{trigonal pyramidal}&\approx107^\circ\\
+4&2&\text{bent}&\approx105^\circ\\
+5&0&\text{trigonal bipyramidal}&90^\circ,120^\circ\\
+6&0&\text{octahedral}&90^\circ\\
+6&1&\text{square pyramidal}&\approx90^\circ\\
+6&2&\text{square planar}&90^\circ\\
 \bottomrule
 \end{array}
 \]
-The exam wording often asks for planar, bent, pyramidal, tetrahedral, or octahedral geometry.
+Exam wording often asks ``planar'', ``non-planar'', ``bond angle'', ``pyramidal'', or ``bent''.
 
-\subsubsection{Representative bond angles}
+\subsubsection{Planar molecule recognition}
 \[
-\begin{array}{c c}
-\toprule
-\text{geometry} & \text{ideal angle}\\
-\midrule
-\text{linear} & 180^\circ\\
-\text{trigonal planar} & 120^\circ\\
-\text{tetrahedral} & 109.5^\circ\\
-\text{trigonal pyramidal} & \approx 107^\circ\\
-\text{bent water-like} & \approx 105^\circ\\
-\text{octahedral} & 90^\circ\\
-\bottomrule
-\end{array}
+\text{linear, trigonal planar, square planar, and many aromatic rings are planar}
 \]
-Lone pairs compress bonding angles relative to ideal electron-domain angles.
+Tetrahedral and trigonal pyramidal centers are non-planar around that atom. A molecule with all atoms in one plane is planar.
 
-\subsubsection{Molecular polarity from bond dipoles}
+\subsubsection{Molecular polarity}
 \[
-\vec{\mu}_{\mathrm{mol}}=\sum_i \vec{\mu}_i
+\vec{\mu}_{\mathrm{mol}}=\sum_i\vec{\mu}_i
 \]
-Polar bonds can cancel in symmetric molecules. Molecular polarity depends on both electronegativity and molecular shape.
+Polar bonds can cancel in symmetric geometries. Lone pairs often prevent cancellation and make the molecule polar.
+
+\subsection{Exam recipe: molecular geometry, bond angle, polarity}
+\textbf{Use when:} the problem asks for shape, bond angle, planar/non-planar, or dipole.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Draw the Lewis structure and count lone pairs on the central atom.
+    \item Compute steric number.
+    \item Select VSEPR geometry from the table.
+    \item Adjust ideal angle downward if lone pairs are present.
+    \item For polarity, add bond dipoles by symmetry.
+\end{enumerate}
+
+\textbf{Common traps:} counting a double bond as two VSEPR domains; deciding polarity from bond polarity alone; ignoring lone pairs.
+
+\subsection{Bonding formulas}
+
+\subsubsection{Bond polarity from electronegativity}
+\[
+\Delta\chi=|\chi_A-\chi_B|
+\]
+Larger electronegativity difference gives a more polar bond. Geometry decides whether the whole molecule is polar.
+
+\subsubsection{Molecular orbital bond order}
+\[
+\text{bond order}=\frac{N_{\mathrm{bonding}}-N_{\mathrm{antibonding}}}{2}
+\]
+Higher bond order usually means shorter, stronger bonds. Zero bond order predicts no stable bond in simple MO treatment.

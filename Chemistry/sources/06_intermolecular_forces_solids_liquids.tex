@@ -1,18 +1,21 @@
-\section{Intermolecular Forces, Solids, and Liquids}
+\section{Intermolecular Forces, Solids, Liquids, and Colligative Properties}
 
-\subsection{Intermolecular Forces}
+\subsection{Ctrl+F keywords: vapor pressure, hydrogen bonding, boiling point, unit cell, BCC, FCC, density, freezing point depression, Raoult}
+Use for intermolecular force ranking, vapor pressure, crystal unit-cell density, cubic radius relations, and colligative-property calculations.
 
-\subsubsection{Van der Waals interactions}
-\[
-\text{dispersion and dipole interactions: typically }<10\,\mathrm{kJ\,mol^{-1}}
-\]
-Van der Waals forces act between permanent or induced dipoles. They dominate noble gas liquids and nonpolar molecular substances.
+\subsection{Intermolecular forces and phase behavior}
 
-\subsubsection{Hydrogen bonding}
+\subsubsection{Hydrogen bonding recognition}
 \[
 \mathrm{X{-}H\cdots Y}, \qquad X,Y\in\{\ce{F},\ce{O},\ce{N}\}
 \]
-Hydrogen bonding requires hydrogen bound to \(\ce{F}\), \(\ce{O}\), or \(\ce{N}\) interacting with \(\ce{F}\), \(\ce{O}\), or \(\ce{N}\). It raises boiling points and stabilizes structures such as ice and biomolecules.
+Hydrogen bonding requires \(\ce{H}\) bonded to \(\ce{F}\), \(\ce{O}\), or \(\ce{N}\). It raises boiling points and lowers vapor pressure relative to similar molecules.
+
+\subsubsection{Dispersion and dipole forces}
+\[
+\text{all molecules: dispersion}, \qquad \text{polar molecules: dipole--dipole}
+\]
+Larger molar mass and surface area increase dispersion forces. Stronger intermolecular forces usually mean higher boiling point and lower vapor pressure.
 
 \subsubsection{Like dissolves like}
 \[
@@ -20,85 +23,114 @@ Hydrogen bonding requires hydrogen bound to \(\ce{F}\), \(\ce{O}\), or \(\ce{N}\
 \]
 Solubility is favored when solute-solvent interactions can replace solute-solute and solvent-solvent interactions.
 
-\subsection{Crystals and Unit Cells}
-
-\subsubsection{Crystal lattice and unit cell}
-\[
-\text{crystal}=\text{periodic translations of a unit cell}
-\]
-A unit cell is the smallest repeating volume used to describe a crystalline lattice.
-
-\subsubsection{Atoms per cubic unit cell}
-\[
-\begin{array}{c c c}
-\toprule
-\text{cell type} & \text{atoms per cell} & \text{packing fraction}\\
-\midrule
-\text{simple cubic} & 1 & 0.52\\
-\text{body-centered cubic} & 2 & 0.68\\
-\text{face-centered cubic} & 4 & 0.74\\
-\bottomrule
-\end{array}
-\]
-Corner atoms contribute \(1/8\), face atoms \(1/2\), and body-center atoms \(1\) to one unit cell.
-
-\subsubsection{Density of a unit cell}
-\[
-\rho=\frac{Z M}{N_{\mathrm A}a^3}
-\]
-\(Z\) is atoms or formula units per unit cell and \(a\) is the cubic cell edge length. Use consistent units for \(a^3\).
-
-\subsubsection{Cubic cell radius relations}
-\[
-\begin{array}{c c}
-\toprule
-\text{cell type} & \text{radius relation}\\
-\midrule
-\text{simple cubic} & a=2r\\
-\text{body-centered cubic} & \sqrt{3}a=4r\\
-\text{face-centered cubic} & \sqrt{2}a=4r\\
-\bottomrule
-\end{array}
-\]
-These relations connect atomic radius and cell edge length for packed spheres.
-
-\subsection{Phase Changes and Vapor Pressure}
-
-\subsubsection{Phase transition enthalpies}
-\[
-\Delta H_{\mathrm{sub}}=\Delta H_{\mathrm{fus}}+\Delta H_{\mathrm{vap}}
-\]
-Sublimation can be viewed as fusion followed by vaporization. Fusion and vaporization enthalpies are positive for the forward phase changes.
+\subsection{Vapor pressure and phase changes}
 
 \subsubsection{Clausius-Clapeyron equation}
 \[
 \ln P=-\frac{\Delta H_{\mathrm{vap}}}{RT}+C
 \]
-Vapor pressure increases with temperature. A plot of \(\ln P\) versus \(1/T\) has slope \(-\Delta H_{\mathrm{vap}}/R\).
+A plot of \(\ln P\) versus \(1/T\) has slope \(-\Delta H_{\mathrm{vap}}/R\). Vapor pressure increases with temperature.
 
-\subsubsection{Two-point Clausius-Clapeyron equation}
+\subsubsection{Two-point vapor pressure equation}
 \[
 \ln\left(\frac{P_2}{P_1}\right)
 =-\frac{\Delta H_{\mathrm{vap}}}{R}\left(\frac{1}{T_2}-\frac{1}{T_1}\right)
 \]
-This form eliminates the constant \(C\) and is used to calculate vapor pressure or boiling point.
+Use kelvin. This form calculates \(P_2\), \(T_2\), or \(\Delta H_{\mathrm{vap}}\) from two states.
 
-\subsection{Colligative Properties}
-
-\subsubsection{Raoult's law}
+\subsubsection{Phase transition enthalpies}
 \[
-P_1=X_1P_1^\circ=(1-X_2)P_1^\circ
+\Delta H_{\mathrm{sub}}=\Delta H_{\mathrm{fus}}+\Delta H_{\mathrm{vap}}
 \]
-A nonvolatile solute lowers the solvent vapor pressure. \(X_1\) is the solvent mole fraction.
+Fusion, vaporization, and sublimation are endothermic in the forward direction.
 
-\subsubsection{Molality}
+\subsection{Exam recipe: vapor pressure, boiling point, intermolecular force ranking}
+\textbf{Use when:} molecules are compared by vapor pressure, boiling point, volatility, or hydrogen bonding.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Identify whether hydrogen bonding is possible.
+    \item Identify molecular polarity and approximate molar mass.
+    \item Stronger forces imply higher boiling point and lower vapor pressure.
+    \item If numerical \(P,T,\Delta H_{\mathrm{vap}}\) data are given, use Clausius-Clapeyron.
+\end{enumerate}
+
+\textbf{Common traps:} assuming any molecule containing oxygen hydrogen-bonds; the H must be bonded to \(\ce{O}\), \(\ce{N}\), or \(\ce{F}\).
+
+\subsection{Crystals and unit cells}
+
+\subsubsection{Atoms per cubic unit cell}
 \[
-m=\frac{n_{\mathrm{solute}}}{m_{\mathrm{solvent}}(\mathrm{kg})}
+\begin{array}{c c c}
+\toprule
+\text{cell type} & Z & \text{packing fraction}\\
+\midrule
+\text{simple cubic} & 1 & 0.52\\
+\text{body-centered cubic, BCC} & 2 & 0.68\\
+\text{face-centered cubic, FCC} & 4 & 0.74\\
+\bottomrule
+\end{array}
 \]
-Molality is independent of temperature because it uses solvent mass, not solution volume.
+Corner atoms contribute \(1/8\), face atoms \(1/2\), and body-center atoms \(1\).
 
-\subsubsection{Freezing point depression and boiling point elevation}
+\subsubsection{Unit-cell density}
 \[
+\rho=\frac{ZM}{N_{\mathrm A}a^3}
+\]
+\(Z\) is atoms or formula units per cell and \(a\) is cubic edge length. Convert \(a\) to centimeters if \(\rho\) is in \(\mathrm{g\,cm^{-3}}\).
+
+\subsubsection{Cubic radius relations}
+\[
+\begin{array}{c c}
+\toprule
+\text{cell} & \text{edge-radius relation}\\
+\midrule
+\text{simple cubic} & a=2r\\
+\text{BCC} & \sqrt{3}a=4r\\
+\text{FCC} & \sqrt{2}a=4r\\
+\bottomrule
+\end{array}
+\]
+Use the diagonal that actually touches atoms: edge for simple cubic, body diagonal for BCC, face diagonal for FCC.
+
+\subsection{Exam recipe: unit cell density, volume, radius}
+\textbf{Use when:} the problem gives BCC/FCC/simple cubic, density, atom radius, molar mass, or unit-cell volume.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Identify \(Z\) from the cell type.
+    \item Use the radius relation to find \(a\), or use \(a^3=V_{\mathrm{cell}}\).
+    \item Insert into \(\rho=ZM/(N_{\mathrm A}a^3)\).
+    \item Convert units carefully.
+\end{enumerate}
+
+\textbf{Fast checks:} \(1\,\mathrm{pm}=10^{-10}\,\mathrm{cm}\); \(1\,\mathrm{nm}=10^{-7}\,\mathrm{cm}\).
+
+\subsection{Colligative properties}
+
+\subsubsection{Raoult's law and vapor-pressure lowering}
+\[
+P_{\mathrm{solvent}}=X_{\mathrm{solvent}}P^\circ_{\mathrm{solvent}}, \qquad
+\Delta P=X_{\mathrm{solute}}P^\circ_{\mathrm{solvent}}
+\]
+A nonvolatile solute lowers solvent vapor pressure in proportion to solvent mole fraction.
+
+\subsubsection{Molality and freezing point depression}
+\[
+m=\frac{n_{\mathrm{solute}}}{m_{\mathrm{solvent}}(\mathrm{kg})}, \qquad
 \Delta T_f=iK_fm, \qquad \Delta T_b=iK_bm
 \]
-\(K_f\) and \(K_b\) are solvent constants. The van't Hoff factor \(i\) accounts for dissolved particles when dissociation is relevant.
+\(i\) is the van't Hoff factor, approximately the number of dissolved ions for complete dissociation.
+
+\subsection{Exam recipe: freezing point depression, boiling point elevation}
+\textbf{Use when:} the problem gives salt mass, solvent mass, \(K_f\), \(K_b\), or asks for freezing/boiling temperature.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Convert solute mass to moles.
+    \item Convert solvent mass to kilograms and compute molality.
+    \item Choose \(i\) from dissociation stoichiometry if relevant.
+    \item Compute \(\Delta T\) and apply the sign: freezing decreases, boiling increases.
+\end{enumerate}
+
+\textbf{Common traps:} using solution mass instead of solvent mass; forgetting \(i\) for salts such as \(\ce{NaBr}\).

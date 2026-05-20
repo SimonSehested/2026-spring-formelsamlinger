@@ -1,32 +1,35 @@
 \section{Design specifications and tuning}
 
-\subsection{Time-domain specifications}
+\subsection{Ctrl+F keywords}
 
-\subsubsection{Steady-state error}
+\subsubsection{Steady-state error, stationaer fejl, system type, tuning, specification}
 \[
-e_{\mathrm{ss}}=\lim_{t\to\infty}e(t)=\lim_{s\to 0}sE(s)
+\text{step error, ramp error, }K_p,K_v,K_a,\omega_c,\gamma_M,M_p,t_s,K_u,T_u
 \]
-Steady-state error is computed with the final value theorem when the closed loop is stable.
+Use this section when the task gives a performance specification instead of a controller formula.
 
-\subsubsection{Unit-feedback step error}
-\[
-e_{\mathrm{ss}}=\lim_{s\to 0}\frac{1}{1+L(s)}
-\]
-For a unit step reference and unity feedback, this formula links low-frequency loop gain to tracking error.
+\subsection{Steady-state error}
 
-\subsubsection{System type}
+\subsubsection{Final value error formula}
 \[
-L(s)=\frac{K\prod_i(s-z_i)}{s^q\prod_k(s-p_k)},\qquad q=\text{number of integrators}
+e_{\mathrm{ss}}=\lim_{t\to\infty}e(t)=\lim_{s\to0}sE(s)
 \]
-The system type is the number of poles at the origin in the loop transfer function.
+The closed loop must be stable before this formula is valid.
 
-\subsubsection{Step, ramp, and parabolic error constants}
+\subsubsection{Unity-feedback step error}
 \[
-K_p=\lim_{s\to0}L(s),\qquad
-K_v=\lim_{s\to0}sL(s),\qquad
-K_a=\lim_{s\to0}s^2L(s)
+e_{\mathrm{ss}}=\lim_{s\to0}\frac{1}{1+L(s)}
 \]
-These constants determine steady-state error for polynomial references.
+For a unit step and unity feedback, low-frequency loop gain directly sets tracking error.
+
+\subsubsection{System type and error constants}
+\[
+L(s)=\frac{K\prod_i(s-z_i)}{s^q\prod_k(s-p_k)}
+\]
+\[
+K_p=\lim_{s\to0}L(s),\qquad K_v=\lim_{s\to0}sL(s),\qquad K_a=\lim_{s\to0}s^2L(s)
+\]
+The system type \(q\) is the number of loop integrators.
 
 \subsubsection{Reference error table}
 \[
@@ -37,49 +40,63 @@ These constants determine steady-state error for polynomial references.
 2 & 0 & 0 & 1/K_a
 \end{array}
 \]
-Integral action increases system type and improves low-frequency tracking.
+Integral action raises system type and improves polynomial reference tracking.
 
-\subsection{Frequency-domain specifications}
+\subsection{Frequency specifications}
 
-\subsubsection{Bandwidth and speed}
+\subsubsection{Crossover speed rule}
 \[
-\omega_c\uparrow \quad\Longrightarrow\quad t_r\downarrow
+\omega_c\uparrow\quad\Longrightarrow\quad t_r\downarrow
 \]
-Higher crossover frequency usually gives faster response, limited by phase margin, noise, saturation, and unmodelled dynamics.
+Higher crossover usually gives faster tracking, until limited by phase margin, noise, saturation, and unmodelled dynamics.
 
-\subsubsection{Phase margin and damping}
+\subsubsection{Phase margin damping rule}
 \[
-\gamma_M\uparrow \quad\Longrightarrow\quad M_p\downarrow
+\gamma_M\uparrow\quad\Longrightarrow\quad M_p\downarrow
 \]
-Larger phase margin generally means more damping and less overshoot.
+Larger phase margin normally means more damping and lower overshoot.
 
-\subsubsection{P-controller stability limit}
+\subsection{P-controller tuning from stability boundary}
+
+\subsubsection{Critical proportional gain}
 \[
-|K_PG(j\bar{\omega})|=1,\qquad \angle G(j\bar{\omega})=-180^\circ
+|K_PG(j\omega_\pi)|=1,\qquad \angle G(j\omega_\pi)=-180^\circ
 \]
-The critical proportional gain is found at the frequency where the plant phase reaches \(-180^\circ\).
+At the stability boundary, the loop crosses the critical point.
 
-\subsection{Ziegler-Nichols and hand tuning}
-
-\subsubsection{Ultimate gain and period}
-\[
-K_u=\text{gain at sustained oscillation},\qquad T_u=\text{oscillation period}
-\]
-The Ziegler-Nichols method uses the stability boundary observed from closed-loop oscillation.
-
-\subsubsection{Ziegler-Nichols closed-loop rules}
-\[
-\begin{array}{c|ccc}
-\text{Controller} & K_P & \tau_i & \tau_d\\ \hline
-P & 0.5K_u & - & -\\
-PI & 0.45K_u & T_u/1.2 & -\\
-PID & 0.6K_u & T_u/2 & T_u/8
-\end{array}
-\]
-These rules give heuristic initial controller parameters for subsequent refinement. % TODO: verify from source
-
-\subsubsection{Magnitude conversion}
+\subsubsection{Magnitude conversion for tuning}
 \[
 M_{\mathrm{dB}}=20\log_{10}M,\qquad M=10^{M_{\mathrm{dB}}/20}
 \]
-This conversion is used when selecting \(K_P\) from a Bode magnitude plot.
+Use this conversion when reading Bode plots and choosing controller gains.
+
+\subsection{Exam recipe: steady-state error from diagram or Bode DC gain}
+
+\textbf{Use when:} the problem asks for final tracking error, static error, or DC sensitivity.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Derive \(E(s)/R(s)\) or use \(S(s)=1/(1+L(s))\) for unity feedback.
+\item Insert \(R(s)=1/s\) for a unit step.
+\item Check closed-loop stability.
+\item Compute \(e_{\mathrm{ss}}=\lim_{s\to0}sE(s)\).
+\item If only a Bode plot is given, convert low-frequency dB gain to linear gain first.
+\end{enumerate}
+
+\textbf{Fast checks:} type 0 gives finite nonzero step error; type 1 gives zero step error if stable.
+
+\textbf{Common traps:} using the reference-error table for non-unity feedback without deriving the actual \(E/R\).
+
+\subsection{Exam recipe: select answer from design specifications}
+
+\textbf{Use when:} answer options differ by speed, overshoot, or stability margins.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Translate time-domain wording to \(M_p,t_s,t_r,e_{\mathrm{ss}}\).
+\item Translate frequency-domain wording to \(\omega_c,\gamma_M,A_M\).
+\item Use \(\omega_c\) for speed and \(\gamma_M\) for damping.
+\item Reject options with unstable poles, negative time constants, or impossible margins.
+\end{enumerate}
+
+\textbf{Fast checks:} high \(K_P\) normally increases speed but reduces phase margin.

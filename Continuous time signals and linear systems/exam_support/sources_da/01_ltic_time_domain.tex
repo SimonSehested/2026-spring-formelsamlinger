@@ -1,0 +1,291 @@
+\section{LTIC-systemer og tidsdomæne, systemklassifikation, time domain}
+
+\subsection{Multiple-choice strategi, one best answer, sande/falske udsagn}
+
+\subsubsection{Eliminering ved one-best-answer}
+Et svar kan indeholde flere påstande. Hvis én påstand i svarmuligheden er falsk, er hele svarmuligheden falsk.
+
+\textbf{Hurtige tjek:} prøv grænsetilfælde, fortegn, polplaceringer, enheder og om påstanden er universel eller kun gælder under ekstra antagelser. Hvis mere end én svarmulighed kun indeholder sande påstande, kan eksamen bruge den særlige mulighed ``mere end én''.
+
+\subsubsection{Opskrift: klassificer et ukendt system}
+\textbf{Brug når:} opgaven spørger om lineært, tidsinvariant, kausalt, stabilt eller memoryless.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Test linearitet ved at lede efter potenser, produkter, absolutværdi eller signalafhængige koefficienter.
+    \item Test tidsinvarians ved at lede efter eksplicit \(t\) uden for signalargumenter.
+    \item Test kausalitet ved at lede efter fremtidig input som \(x(t+a)\), \(a>0\).
+    \item Test stabilitet med poler for LTIC-systemer; ellers brug om begrænset input kan give ubegrænset output.
+    \item Test memoryless ved at se om \(y(t)\) kun bruger \(x(t)\), ikke \(x(t-a)\), integraler eller afledte.
+\end{enumerate}
+
+\textbf{Hurtigtjek:} en konstant forsinkelse \(x(t-2)\) er kausal og tidsinvariant; en fremrykning \(x(t+2)\) er ikke kausal; et led \(t x(t)\) bryder tidsinvarians.
+
+\subsection{Signaler og elementære funktioner, impuls, trin, rampe}
+
+\subsubsection{Enhedsimpuls, Dirac-impuls, unit impulse}
+\[
+\int_{-\infty}^{\infty}\delta(t-t_0)\,dt=1,\qquad
+x(t)\delta(t-t_0)=x(t_0)\delta(t-t_0)
+\]
+Impulsen har areal, ikke almindelig amplitude. Multiplikation med et glat signal udtager signalværdien i impulsens placering.
+
+\subsubsection{Enhedstrin og rampe, stepfunktion, unit step}
+\[
+u(t)=\begin{cases}0,&t<0\\1,&t>0\end{cases},\qquad r(t)=t\,u(t)
+\]
+\[
+\frac{d}{dt}u(t)=\delta(t),\qquad \frac{d}{dt}r(t)=u(t)
+\]
+Brug relationerne til at skifte mellem impuls-, trin- og ramperespons. Værdien præcis i \(t=0\) er normalt ikke afgørende i disse eksamensopgaver.
+
+\subsection{Systemklassifikation, lineær, tidsinvariant, kausal, stabil}
+
+\subsubsection{Linearitet}
+\[
+x_1\mapsto y_1,\quad x_2\mapsto y_2
+\quad\Rightarrow\quad
+a x_1+b x_2\mapsto a y_1+b y_2
+\]
+En differentialligning med reelle konstante koefficienter og kun lineære kombinationer af \(x,y\) og deres afledte er lineær. Led som \(x^2(t)\), \(y^2(t)\) eller produkter af signaler bryder linearitet.
+
+\subsubsection{Tidsinvarians, time invariance}
+\[
+x(t)\mapsto y(t)\quad\Rightarrow\quad x(t-t_0)\mapsto y(t-t_0)
+\]
+Konstante koefficienter understøtter tidsinvarians. En koefficient som \(t\,y(t)\) eller en komponentværdi, der ændrer sig med tiden, bryder tidsinvarians.
+
+\subsubsection{Kausalitet}
+Et system er kausalt, når \(y(t_0)\) kun afhænger af \(x(t)\) for \(t\leq t_0\). Et led som \(x(t+2)\) er ikke-kausalt, fordi det bruger fremtidig input.
+
+\textbf{Hurtigt tjek:} fysiske passive/aktive kredsløb i kurset er kausale, medmindre det matematiske udtryk eksplicit bruger fremtidig input.
+
+\subsubsection{BIBO-stabilitet og polplaceringer}
+\[
+\text{stabilt kausalt rationalt LTIC-system}\quad\Longleftrightarrow\quad \operatorname{Re}\{p_k\}<0\ \text{for alle poler }p_k
+\]
+Poler med positiv realdel giver voksende egenmoder og ustabilitet. Poler på imaginæraksen er ikke asymptotisk stabile og kræver særlig fortolkning.
+
+\subsection{Differentialligninger og overføringsfunktion, transfer function}
+
+\subsubsection{Standard LTIC-differentialligning}
+\[
+\sum_{k=0}^{N}a_k\frac{d^k y}{dt^k}
+=
+\sum_{m=0}^{M}b_m\frac{d^m x}{dt^m}
+\]
+Med nul begyndelsesbetingelser,
+\[
+H(s)=\frac{Y(s)}{X(s)}
+=
+\frac{\sum_{m=0}^{M}b_m s^m}{\sum_{k=0}^{N}a_k s^k}.
+\]
+Brug eksamensnotationen \(x(t)\) for input og \(y(t)\) for output, medmindre opgaven siger noget andet.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/lti/responses.py}, funktionen \texttt{transfer\_from\_ode}, når opgaven giver tæller- og nævnerkoefficienter og beder om en hurtig symbolsk overføringsfunktion, poler eller nulpunkter. Input er koefficientlister i faldende potenser af \(s\). Scriptet returnerer \(H(s)\), nulpunkter og poler. Tjek manuelt, at begyndelsesbetingelserne er nul, før resultatet fortolkes som en overføringsfunktion.
+
+\subsubsection{Opskrift: differentialligning til overføringsfunktion}
+\textbf{Brug når:} opgaven giver en lineær differentialligning og spørger efter \(H(s)\), poler, nulpunkter eller filtertype.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Flyt alle \(y\)-led til venstre og alle \(x\)-led til højre.
+    \item Sæt begyndelsesbetingelser til nul, hvis der spørges efter overføringsfunktion.
+    \item Erstat \(\frac{d^k}{dt^k}\) med \(s^k\).
+    \item Saml \(Y(s)\) og \(X(s)\), og beregn \(H(s)=Y(s)/X(s)\).
+    \item Brug nævnerens rødder som poler og tællerens rødder som nulpunkter.
+\end{enumerate}
+
+\textbf{Typiske fælder:} \(H(s)\) defineres kun med nul begyndelsesbetingelser; glem ikke led som \(x''(t)\), der giver \(s^2X(s)\); normer nævneren før andenordensparametre aflæses.
+
+\subsubsection{Filtertype fra tællerens potenser}
+\[
+\frac{b_0}{s^2+a_1s+a_0}\text{ lavpas},\qquad
+\frac{b_1s}{s^2+a_1s+a_0}\text{ båndpas},\qquad
+\frac{b_2s^2}{s^2+a_1s+a_0}\text{ højpas}
+\]
+Klassifikationen antager en stabil proper andenordensnævner. Bekræft altid ved at tjekke grænserne \(s\to0\) og \(|s|\to\infty\).
+
+\subsection{Kredsløbsligninger, knudepunktsligning, circuits}
+
+\subsubsection{Komponentlove i tidsdomænet}
+\[
+i_R=\frac{v_R}{R},\qquad i_C=C\frac{dv_C}{dt},\qquad v_L=L\frac{di_L}{dt}
+\]
+Skriv KCL i hver ukendt knude med konsekvent strømretning. Kondensatorspænding kan ikke springe uden impulsstrøm; spolestrøm kan ikke springe uden impulsspænding.
+
+\subsubsection{Komponentlove i fasordomænet, vekselstrømskredsløb}
+\[
+Z_R=R,\qquad Z_C=\frac{1}{\jj\omega C},\qquad Z_L=\jj\omega L
+\]
+Brug impedansalgebra til at finde \(H(\jj\omega)=Y(\jj\omega)/X(\jj\omega)\). For op-amp-kredsløb bruges ideal indgangsstrøm \(0\) og virtuel kortslutning kun når negativ feedback gør idealantagelsen gyldig.
+
+\subsubsection{Grænsetjek for kredsløb, DC og høj frekvens}
+\[
+\omega\to0:\ C\text{ åben},\ L\text{ kortsluttet};\qquad
+\omega\to\infty:\ C\text{ kortsluttet},\ L\text{ åben}
+\]
+Disse tjek identificerer ofte lavpas-, højpas- og båndpasopførsel før fuld algebra. De er også nyttige til at eliminere falske MCQ-svar.
+
+\subsection{Impuls-, trin- og ramperespons, impulse response, step response}
+
+\subsubsection{Input-output relation ved foldning}
+\[
+y_{\mathrm{zs}}(t)=h(t)*x(t)=\int_{-\infty}^{\infty}h(\tau)x(t-\tau)\,d\tau
+\]
+For et LTIC-system bestemmer impulsresponsen hele nul-start-responsen. Egenresponsen skyldes begyndelsesbetingelser og beregnes ikke ved foldning med inputtet.
+
+\subsubsection{Impulsrespons fra overføringsfunktion}
+\[
+h(t)=\mathcal{L}^{-1}\{H(s)\}
+\]
+Hvis \(H(s)\) er improper eller har samme tæller- og nævnergrad, kan \(h(t)\) indeholde direkte impulsled som \(K\delta(t)\).
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/lti/responses.py}, funktionen \texttt{impulse\_response\_from\_transfer}, når opgaven beder om impulsrespons fra en rational overføringsfunktion, og input er tæller- og nævnerkoefficienter i faldende potenser af \(s\). Scriptet returnerer et symbolsk udtryk for \(h(t)\). Tjek manuelt koefficientrækkefølgen og om et direkte \(\delta(t)\)-led forventes. Brug det ikke til konceptuelle udsagn om kausalitet eller egenrespons.
+
+\subsubsection{Relationer for trin- og ramperespons}
+\[
+y_{\mathrm{step}}(t)=h(t)*u(t),\qquad
+h(t)=\frac{d}{dt}y_{\mathrm{step}}(t)
+\]
+\[
+y_{\mathrm{ramp}}(t)=y_{\mathrm{step}}(t)*u(t)=\int_0^t y_{\mathrm{step}}(\tau)\,d\tau
+\]
+Differentier for at gå fra trinrespons til impulsrespons, og integrer for at gå fra trinrespons til ramperespons. Hold øje med impulsled, når trinresponsen har et spring ved \(0^+\).
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/lti/responses.py}, funktionen \texttt{step\_response\_from\_transfer}, når opgaven beder om nul-start-enhedstrinrespons, og input er tæller- og nævnerkoefficienter for \(H(s)\). Brug \texttt{ramp\_response\_from\_transfer} for ramperespons fra \(H(s)\). Brug \texttt{related\_unit\_responses}, når én af \(h(t)\), \(y_{\mathrm{step}}(t)\) eller \(y_{\mathrm{ramp}}(t)\) er kendt, og de to andre skal findes. Tjek manuelt, at begyndelsesbetingelserne er nul, og at opgaven ikke spørger efter total respons med lagret energi.
+
+\subsubsection{Opskrift: impuls-, trin- eller ramperespons}
+\textbf{Brug når:} opgaven spørger efter \(h(t)\), step response, trinrespons, ramp response eller sammenhængen mellem dem.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Find først \(H(s)\), hvis den ikke allerede er givet.
+    \item Impulsrespons: \(h(t)=\mathcal{L}^{-1}\{H(s)\}\).
+    \item Trinrespons: brug \(Y(s)=H(s)/s\), fordi \(X(s)=1/s\).
+    \item Ramperespons: brug \(X(s)=1/s^2\) eller integrer trinresponsen.
+    \item Tjek start- og slutværdi med værdisætninger, hvis systemet er stabilt.
+\end{enumerate}
+
+\textbf{Hvis du er i tvivl:} spørg om inputtet er \(\delta(t)\), \(u(t)\) eller \(t u(t)\). Det bestemmer \(X(s)\).
+
+\subsection{Foldning, convolution, tabelopslag}
+
+\subsubsection{Foldningsintegral}
+\[
+(x_1*x_2)(t)=\int_{-\infty}^{\infty}x_1(\tau)x_2(t-\tau)\,d\tau
+\]
+Foldning er kommutativ og associativ. I LTIC-systemer beregner den nul-start-responsen fra input og impulsrespons.
+
+\subsubsection{Regel for støtteinterval, tidsinterval}
+\[
+x_1(t)=0\text{ uden for }(t_1,t_2),\quad x_2(t)=0\text{ uden for }(t_3,t_4)
+\]
+\[
+x_1*x_2=0\text{ uden for }(t_1+t_3,\ t_2+t_4)
+\]
+Reglen besvarer støtteintervalspørgsmål uden at beregne hele foldningen.
+
+\subsubsection{Foldning af kausale eksponentialer}
+\[
+\mathcal{L}\{x_1*x_2\}=X_1(s)X_2(s)
+\]
+For kausale eksponentialsignaler er Laplace-multiplikation og invers transformation normalt hurtigere end direkte integration.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/transforms/convolution.py}, funktionen \texttt{convolve\_causal}, når opgaven beder om eksplicit foldning af kausale signaler som \(e^{-at}u(t)\) eller \(t e^{-at}u(t)\). Input er de to SymPy-udtryk uden det afsluttende \(u(t)\). Scriptet returnerer den symbolske kausale foldning. Tjek manuelt, at begge signaler er kausale, og at opgaven ikke kun spørger efter støtteintervallet.
+
+\subsubsection{Opskrift: vælg foldningsmetode}
+\textbf{Brug når:} opgaven indeholder \(x*h\), areal under overlap, støtteinterval eller nul-start-respons fra impulsrespons.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Hvis opgaven kun spørger hvor foldningen er nul, brug støtteintervalreglen.
+    \item Hvis begge signaler er kausale eksponentialer eller polynomium gange eksponential, brug Laplace-produkt.
+    \item Hvis signalerne er rektangler/trekanter, tegn overlap og beregn arealet stykvist.
+    \item Hvis det er et LTIC-system, husk at foldning kun giver nul-start-responsen.
+\end{enumerate}
+
+\textbf{Hurtigtjek:} starttidspunkt for foldningen er summen af starttidspunkterne; sluttidspunktet er summen af sluttidspunkterne.
+
+\subsection{Andenordenssystemer, damping, Q}
+
+\subsubsection{Standard andenordensnævner}
+\[
+s^2+a_1s+a_0=s^2+2\zeta\omega_n s+\omega_n^2
+\]
+\[
+\omega_n=\sqrt{a_0},\qquad
+\zeta=\frac{a_1}{2\sqrt{a_0}},\qquad
+Q=\frac{1}{2\zeta}
+\]
+Brug denne omskrivning for andenordens-ODE'er og overføringsfunktioner med nævner \(s^2+a_1s+a_0\).
+
+\subsubsection{Polplaceringer og dæmpningsklasse}
+\[
+s_{1,2}=-\zeta\omega_n\pm \omega_n\sqrt{\zeta^2-1}
+\]
+\begin{tabular}{lll}
+\toprule
+Betingelse & Poltype & Eksamensord \\
+\midrule
+\(\zeta>1\) & to reelle negative poler & overdæmpet, overdamped \\
+\(\zeta=1\) & dobbelt reel pol & kritisk dæmpet \\
+\(0<\zeta<1\) & kompleks-konjugerede poler & underdæmpet, underdamped \\
+\(\zeta<0\) & voksende moder & ustabil \\
+\bottomrule
+\end{tabular}
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/lti/second\_order.py}, funktionen \texttt{classify\_second\_order}, når opgaven giver \(s^2+a_1s+a_0\) og spørger efter poler, dæmpning, stabilitet, \(Q\) eller \(\omega_n\). Input er \(a_1,a_0\). Scriptet returnerer poler, \(\zeta\), \(\omega_n\), \(Q\), stabilitet og dæmpningsklasse. Tjek manuelt, at nævneren er normeret med ledende koefficient \(1\).
+
+\subsubsection{Underdæmpede trinresponsmål, overshoot, peak time}
+\[
+PO=100e^{-\zeta\pi/\sqrt{1-\zeta^2}},\qquad
+t_p=\frac{\pi}{\omega_n\sqrt{1-\zeta^2}},\qquad
+t_s\approx\frac{4}{\zeta\omega_n}
+\]
+\[
+\zeta=\frac{-\ln(PO/100)}{\sqrt{\pi^2+\ln^2(PO/100)}},\qquad
+\omega_d=\frac{\pi}{t_p},\qquad
+\omega_n=\frac{\omega_d}{\sqrt{1-\zeta^2}}
+\]
+Brug kun disse for \(0<\zeta<1\). \(t_s\approx4/(\zeta\omega_n)\) er den sædvanlige 2-procents indsvingsapproksimation.
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/lti/second\_order.py}, funktionen \texttt{step\_features\_from\_zeta\_wn}, når \(\zeta\) og \(\omega_n\) allerede er kendt, og opgaven spørger efter overshoot, top-tid, dæmpet frekvens eller indsvingstid. Input er \(\zeta,\omega_n\). Scriptet returnerer \(PO,t_p,\omega_d,t_s\). Tjek manuelt, at \(0<\zeta<1\).
+
+\textbf{Python-hjælp:} Brug \texttt{scripts/lti/second\_order.py}, funktionen \texttt{estimate\_from\_overshoot\_peak\_time}, når et trinresponsplot giver procentvist overshoot og første top-tid. Input er \(PO\) i procent og \(t_p\). Scriptet returnerer \(\zeta,\omega_n,\omega_d,t_s\). Tjek manuelt, at responsen er underdæmpet og anden orden. Brug det ikke til overdæmpede responser.
+
+\subsubsection{Opskrift: andenordensopgave fra nævner eller plot}
+\textbf{Brug når:} opgaven nævner overshoot, peak time, settling time, \(\zeta\), \(\omega_n\), \(Q\), damping eller underdæmpning.
+
+\textbf{Trin:}
+\begin{enumerate}
+    \item Fra nævner: match \(s^2+a_1s+a_0\) med \(s^2+2\zeta\omega_ns+\omega_n^2\).
+    \item Beregn \(\omega_n=\sqrt{a_0}\), \(\zeta=a_1/(2\sqrt{a_0})\) og \(Q=1/(2\zeta)\).
+    \item Fra trinplot: aflæs \(PO\) og \(t_p\), og brug formlerne for \(\zeta\) og \(\omega_d\).
+    \item Brug kun overshoot- og peak-time-formlerne hvis \(0<\zeta<1\).
+    \item Tjek polerne: underdæmpede systemer har kompleks-konjugerede poler.
+\end{enumerate}
+
+\textbf{Typiske fælder:} \(t_p\) bruger \(\omega_d\), ikke direkte \(\omega_n\); større overshoot betyder mindre \(\zeta\); en ikke-normeret nævner skal divideres med den ledende koefficient først.
+
+\subsubsection{Sensitivitet for underdæmpede polkoordinater}
+\[
+\sigma=-\zeta\omega_n,\qquad \omega_d=\omega_n\sqrt{1-\zeta^2},\qquad
+S_x^y=\frac{x}{y}\frac{\partial y}{\partial x}
+\]
+\[
+S_{\zeta}^{\sigma}=1,\qquad S_{\omega_n}^{\sigma}=1,\qquad
+S_{\zeta}^{\omega_d}=-\frac{\zeta^2}{1-\zeta^2},\qquad
+S_{\omega_n}^{\omega_d}=1
+\]
+Når \(\zeta\to1^-\), går \(\omega_d\to0\) og \(S_{\zeta}^{\omega_d}\to-\infty\). Typisk MCQ-fælde: minustegnet i \(\sigma=-\zeta\omega_n\) gør ikke \(S_{\zeta}^{\sigma}\) negativ.
+
+\subsubsection{Andenordens lavpas-, båndpas- og højpasforstærkning}
+\[
+H_{\mathrm{LP}}(s)=K\frac{\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2}
+\]
+\[
+H_{\mathrm{BP}}(s)=K\frac{2\zeta\omega_n s}{s^2+2\zeta\omega_n s+\omega_n^2},\qquad
+H_{\mathrm{HP}}(s)=K\frac{s^2}{s^2+2\zeta\omega_n s+\omega_n^2}
+\]
+For lavpas er DC-forstærkningen \(K\). For højpas er højfrekvensforstærkningen \(K\). Et båndpas er nul ved DC og ved uendelig frekvens.

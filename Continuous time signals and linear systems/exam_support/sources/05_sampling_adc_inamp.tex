@@ -1,0 +1,109 @@
+\section{Sampling, ADC, instrumentation amplifier, instrumenteringsforstærker}
+
+\subsection{Sampling and aliasing, sampling, aliasering, Nyquist}
+
+\subsubsection{Impulse-train sampling spectrum}
+\[
+x_s(t)=x(t)\sum_{n=-\infty}^{\infty}\delta(t-nT)
+\]
+\[
+X_s(\omega)=\frac{1}{T}\sum_{n=-\infty}^{\infty}X(\omega-n\omega_s),\qquad
+\omega_s=\frac{2\pi}{T}=2\pi F_s
+\]
+Sampling repeats the spectrum every \(\omega_s\). The repeated spectra are continuous shifted copies, not discrete frequency components unless the original signal is discrete in frequency.
+
+\subsubsection{Nyquist condition}
+\[
+F_s>2F_{\max}
+\]
+This prevents overlap for a bandlimited lowpass signal with no content above \(F_{\max}\). If the signal may contain higher-frequency components, an anti-aliasing filter is needed.
+
+\subsubsection{Alias frequency for a sinusoid}
+\[
+f_{\mathrm{alias}}=\left|f-kF_s\right|\quad\text{chosen in }0\leq f_{\mathrm{alias}}\leq F_s/2
+\]
+A 4 Hz tone sampled at 6 Hz aliases to 2 Hz. Use Hz for this folding formula; use rad/s only after multiplying by \(2\pi\).
+
+\textbf{Python aid:} Use \texttt{scripts/sampling/adc.py} function \texttt{alias\_frequency} when the problem asks for the observed alias of a single sinusoidal frequency. Inputs are signal frequency and sample rate in the same units. The script returns the folded alias frequency. Check manually that the task is a single-tone alias problem and not a full spectrum reconstruction question.
+
+\subsection{ADC quantization, LSB, kvantisering, dynamic range}
+
+\subsubsection{Ideal ADC LSB size}
+\[
+\Delta V_{\mathrm{LSB}}=\frac{V_{\max}-V_{\min}}{2^N}
+\]
+For an ideal \(N\)-bit ADC, one LSB is the voltage range divided by the number of codes. Some conventions use \(2^N-1\) for endpoint spacing; use the convention implied by the exam statement.
+
+\textbf{Python aid:} Use \texttt{scripts/sampling/adc.py} function \texttt{adc\_lsb} when the problem asks for ideal ADC resolution from bit count and voltage range. Inputs are bits, \(V_{\min}\), and \(V_{\max}\). The script returns \(\Delta V_{\mathrm{LSB}}\). Check manually whether the problem uses a \(2^N\) or \(2^N-1\) convention.
+
+\subsubsection{Quantization noise and rounding}
+\[
+e_q\sim U\left[-\frac{\Delta V}{2},\frac{\Delta V}{2}\right]\quad\text{for rounding to nearest}
+\]
+\[
+\sigma_q^2=\frac{\Delta V^2}{12}
+\]
+Always-round-down quantization has biased error over a one-sided interval. Averaging reduces zero-mean random quantization noise more effectively than biased quantization error.
+
+\subsubsection{Ideal dynamic range}
+\[
+DR_{\mathrm{ideal}}\approx 6.02N\ \mathrm{dB}
+\]
+This is a fast bit-to-dB rule. Six bits correspond to about \(36\) dB and twelve bits to about \(72\) dB.
+
+\subsection{Anti-alias filter sizing, ADC and Butterworth}
+
+\subsubsection{High-frequency Butterworth asymptote}
+\[
+|H_{\mathrm{LP}}(f)|\approx \frac{1}{(f/f_{3dB})^n}\qquad f\gg f_{3dB}
+\]
+At the Nyquist frequency \(F_s/2\), unwanted high-frequency content should be attenuated enough to avoid visible aliasing or to fall below one LSB, depending on the requirement.
+
+\subsubsection{Sampling rate for LSB-level attenuation}
+\[
+A_{\max}\left(\frac{f_{3dB}}{F_s/2}\right)^n<\Delta V_{\mathrm{LSB}}
+\]
+\[
+F_s>2f_{3dB}\left(\frac{A_{\max}}{\Delta V_{\mathrm{LSB}}}\right)^{1/n}
+\]
+Use this when the exam states that the filtered amplitude at half the sampling frequency must be too small to toggle the LSB.
+
+\textbf{Python aid:} Use \texttt{scripts/sampling/adc.py} function \texttt{required\_sampling\_rate\_for\_lsb} when the problem combines ADC resolution with a Butterworth anti-aliasing filter and asks for a minimum sampling rate. Inputs are bit count, voltage range, filter order, \(f_{3dB}\), and worst-case amplitude if not equal to the range. The script returns minimum \(F_s\). Check manually that the high-frequency asymptote is allowed and that \(f_{3dB}\) is in Hz.
+
+\subsection{Instrumentation amplifier, differential gain, common mode, CMRR}
+
+\subsubsection{Differential gain}
+\[
+G_d=1+\frac{2R_2}{R_G}
+\]
+This is the ideal gain formula for the course's three-op-amp instrumentation-amplifier model under matched-resistor assumptions.
+
+\subsubsection{Common-mode gain from mismatch}
+\[
+G_c=\frac{1-\alpha}{2}
+\]
+This simplified expression applies to the mismatch model where \(R_{4b}=\alpha R_{4a}\). It should not be used for arbitrary simultaneous resistor mismatches.
+
+\subsubsection{Common-mode rejection ratio}
+\[
+CMRR=\left|\frac{G_d}{G_c}\right|,\qquad
+CMRR_{\mathrm{dB}}=20\log_{10}(CMRR)
+\]
+If \(G_c=0\), the ideal CMRR is infinite. In exam statements, compare common-mode output error to the differential output signal in dB.
+
+\textbf{Python aid:} Use \texttt{scripts/circuits/instrumentation.py} function \texttt{instrumentation\_gains} when the problem gives \(R_2,R_G,\alpha\) and asks for \(G_d\), \(G_c\), or CMRR. The script returns a dictionary with these gains. Check manually that the mismatch matches the single-\(\alpha\) model and that the op-amp assumptions are ideal.
+
+\subsection{Exam recipe: ADC and instrumentation MCQ checks}
+
+\subsubsection{Sampling and ADC checklist}
+\textbf{Use when:} an option mixes sampling, aliasing, ADC resolution, quantization noise, and anti-alias filter claims.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Convert between \(f\) and \(\omega\) only when needed.
+    \item Check Nyquist using the highest signal frequency after filtering.
+    \item Compute \(\Delta V_{\mathrm{LSB}}\) before comparing amplitudes.
+    \item Distinguish rounding-to-nearest from always-round-down quantization.
+\end{enumerate}
+
+\textbf{Fast checks:} \(N\) bits gives about \(6.02N\) dB; a 4th-order high-frequency asymptote gives \(-24\) dB/octave.

@@ -2,74 +2,60 @@
 
 ## Detected source files
 
-Expected `source_material/` was not present in this checkout. The available course material was found under `input/` and used as the source tree.
+`source_material/` is not present in this checkout. The available course material is under `input/`.
 
 ### Lectures
 
 | File | Inferred topic |
 |---|---|
-| `input/lectures/1_Welcome_Lecture.pdf` | Introduction, course overview, feedback control, PID-based design |
-| `input/lectures/2_block_control_concept.pdf` | Block diagrams, control concepts, hand tuning |
-| `input/lectures/3_Laplace_TF.pdf` | Laplace transform, transfer functions, block diagram manipulation |
-| `input/lectures/4_Frequency_and_Time_Analysis_WSol.pdf` | Frequency response, steady-state gain, time-domain response, pole stability |
-| `input/lectures/5_Modelling.pdf` | White-box and black-box modelling, linearization, transfer function from data |
-| `input/lectures/6_Bode_plot&Stability.pdf` | Bode plots, poles and zeros, stability margins, P design |
-| `input/lectures/Lecture_07_Nyquist plot and stability.pdf` | Nyquist plot, stability criterion, margins from Nyquist |
-| `input/lectures/Lecture_08_PI_LEAD_design.pdf` | PI and Lead design |
-| `input/lectures/Lecture_09_PI_LEAD_design_specifications.pdf` | Design specifications, phase margin, crossover, tuning |
-| `input/lectures/Lecture_10_Unstable_systems (1).pdf` | Open-loop unstable systems, stabilization, nested loops |
-| `input/lectures/Lecture_11_Limited_systems (1).pdf` | Rate-limited and amplitude-limited systems, P-Lead-Lag design |
-| `input/lectures/Lecture_12_Disturbances_sensitivity_prefilters.pdf` | Disturbances, sensitivity functions, prefilters |
-| `input/lectures/Lecture_13_Feed_forward.pdf` | Feed-forward control and disturbance rejection |
+| `input/lectures/1_Welcome_Lecture.pdf` | Course overview, feedback control, PID-based design |
+| `input/lectures/2_block_control_concept.pdf` | Block diagrams, feedback concepts, hand tuning |
+| `input/lectures/3_Laplace_TF.pdf` | Laplace transform, transfer functions, characteristic equations |
+| `input/lectures/4_Frequency_and_Time_Analysis_WSol.pdf` | Frequency response, time response, poles, stability |
+| `input/lectures/5_Modelling.pdf` | Mechanical/electrical modelling, linearization |
+| `input/lectures/6_Bode_plot&Stability.pdf` | Bode plots, stability margins, P-controller design |
+| `input/lectures/Lecture_07_Nyquist plot and stability.pdf` | Nyquist plots and stability criterion |
+| `input/lectures/Lecture_08_PI_LEAD_design.pdf` | PI and Lead controller design |
+| `input/lectures/Lecture_09_PI_LEAD_design_specifications.pdf` | Design specifications and PI-Lead tuning |
+| `input/lectures/Lecture_10_Unstable_systems (1).pdf` | Open-loop unstable systems and nested loops |
+| `input/lectures/Lecture_11_Limited_systems (1).pdf` | Limited systems, actuator limits, P-Lead-Lag |
+| `input/lectures/Lecture_12_Disturbances_sensitivity_prefilters.pdf` | Disturbances, sensitivity, prefilters |
+| `input/lectures/Lecture_13_Feed_forward.pdf` | Feed-forward control and disturbance cancellation |
 
 ### Exams
 
 | File | Notes |
 |---|---|
-| `input/exams/F21.pdf` | Questions Q1-Q20 with answers/solutions in extracted text |
-| `input/exams/Exam_F21_LCD1 Part 2 - no answers.pdf` | Questions 11-20 without answers |
+| `input/exams/F21.pdf` | F21 exam, Q1-Q20, recurring controller-design and analysis tasks |
+| `input/exams/Exam_F21_LCD1 Part 2 - no answers.pdf` | F21 part 2, Q11-Q20, no answers |
 
 ### Exercises
 
-No `source_material/exercises/` or `input/exercises/` directory was present.
+No `input/exercises/` or `source_material/exercises/` directory was present.
 
 ## Inferred course title
 
 `34721/34722 Linear Control Design 1`, Spring 2026.
 
-## Inferred topic structure
+## Inferred formula-collection structure
 
-1. Course overview and control concepts
-2. Block diagrams and feedback
-3. Laplace transform and transfer functions
-4. Frequency and time-domain analysis
-5. Modelling and linearization
-6. Bode plots and stability margins
-7. Nyquist plot and stability
-8. PI-Lead controller design
-9. Design specifications and tuning
-10. Unstable systems
-11. Limited systems and Lag control
-12. Disturbances, sensitivity, and prefilters
-13. Feed-forward control
+The existing lecture-aligned modular structure was preserved because the lecture PDFs are numbered and the exam tasks map cleanly to those topics. The content was rewritten to be exam-friendly: short formulas, recognition keywords, recipes, fast checks, and common traps.
 
-## Generated source files
-
-| File | Source basis |
+| File | Primary exam use |
 |---|---|
-| `sources/01_course_overview_and_control_concepts.tex` | Lecture 1 |
-| `sources/02_block_diagrams_and_feedback.tex` | Lecture 2 and exam Q1, Q16, Q19 |
-| `sources/03_laplace_transform_and_transfer_functions.tex` | Lecture 3 and exam Q2, Q8, Q12 |
-| `sources/04_frequency_and_time_domain_analysis.tex` | Lecture 4 and exam Q9 |
-| `sources/05_modelling_and_linearization.tex` | Lecture 5 and exam Q2, Q7 |
-| `sources/06_bode_plots_and_stability_margins.tex` | Lecture 6 and exam Q3-Q6, Q10, Q11, Q15 |
-| `sources/07_nyquist_plot_and_stability.tex` | Lecture 7 and exam Q13-Q14 |
-| `sources/08_pi_lead_controller_design.tex` | Lecture 8 and exam Q18 |
-| `sources/09_design_specifications_and_tuning.tex` | Lecture 9 and exam Q6, Q9, Q15 |
-| `sources/10_unstable_systems.tex` | Lecture 10 and exam Q13 |
-| `sources/11_limited_systems_and_lag_control.tex` | Lecture 11 and exam Q17 |
-| `sources/12_disturbances_sensitivity_and_prefilters.tex` | Lecture 12 and exam Q16, Q19 |
-| `sources/13_feed_forward_control.tex` | Lecture 13 and exam Q20 |
+| `sources/01_course_overview_and_control_concepts.tex` | Exam map, notation, controller templates, answer-option checks |
+| `sources/02_block_diagrams_and_feedback.tex` | Block reduction, feedback signs, non-unity feedback error |
+| `sources/03_laplace_transform_and_transfer_functions.tex` | ODE to transfer function, characteristic equations, poles/zeros |
+| `sources/04_frequency_and_time_domain_analysis.tex` | Final value, step response, overshoot, pole stability |
+| `sources/05_modelling_and_linearization.tex` | RLC and mechanical modelling, linearization |
+| `sources/06_bode_plots_and_stability_margins.tex` | Bode interpretation, phase margin, gain margin, P gain range |
+| `sources/07_nyquist_plot_and_stability.tex` | Nyquist encirclement, unstable open-loop stability, margins from Nyquist |
+| `sources/08_pi_lead_controller_design.tex` | PI-Lead equations and design recipe |
+| `sources/09_design_specifications_and_tuning.tex` | Steady-state error, system type, design-spec interpretation |
+| `sources/10_unstable_systems.tex` | Open-loop unstable checks, nested loops |
+| `sources/11_limited_systems_and_lag_control.tex` | Saturation/rate limits and P-Lead-Lag beta recipe |
+| `sources/12_disturbances_sensitivity_and_prefilters.tex` | Sensitivity paths, disturbance transfer functions, prefilters |
+| `sources/13_feed_forward_control.tex` | Dynamic/static feed-forward disturbance cancellation |
 
 ## Key notation
 
@@ -77,7 +63,7 @@ No `source_material/exercises/` or `input/exercises/` directory was present.
 |---|---|
 | \(r(t), R(s)\) | reference signal |
 | \(e(t), E(s)\) | control error |
-| \(u(t), U(s)\) | control input |
+| \(u(t), U(s)\) | controller/plant input |
 | \(y(t), Y(s)\) | output |
 | \(y_m(t), Y_m(s)\) | measured output |
 | \(G(s)\) | plant transfer function |
@@ -86,16 +72,20 @@ No `source_material/exercises/` or `input/exercises/` directory was present.
 | \(L(s)=C(s)G(s)H(s)\) | loop transfer function |
 | \(S(s)=1/(1+L(s))\) | sensitivity |
 | \(T(s)=L(s)/(1+L(s))\) | complementary sensitivity |
-| \(\omega_c\) | crossover frequency |
+| \(\omega_c\) | gain crossover frequency |
 | \(\gamma_M\) | phase margin |
 | \(A_M\) | gain margin |
-| \(K_P,\tau_i,\tau_d\) | PID parameters |
+| \(K_P,\tau_i,\tau_d\) | controller parameters |
 | \(\alpha,\beta,N_i\) | Lead/Lag design parameters |
 
 ## Recurring exam concepts
 
-Block diagram reduction; RLC transfer functions; Laplace transform of ODEs; poles, zeros, and stability; Bode plot interpretation; phase margin and gain margin; P-controller stability limits; second-order overshoot; Nyquist encirclement and phase margin; PI-Lead and P-Lead-Lag controller design; steady-state error; disturbance sensitivity; feed-forward disturbance cancellation.
+The recurring exam tasks are block diagram reduction; RLC transfer functions; coupled-mass equations of motion; ODE-to-transfer-function conversion; pole stability; Bode plot to transfer function; proportional gain from phase margin; proportional stability range; second-order overshoot; Nyquist stability for open-loop unstable systems; phase margin from Nyquist; PI-Lead design; P-Lead-Lag beta selection; steady-state error; sensitivity/disturbance transfer functions; and feed-forward disturbance cancellation with diagram-dependent summing-junction sign.
 
-## Build verification
+## Searchability changes
 
-`main.tex` was compiled successfully with a local Node/Tectonic compiler wrapper, producing `build/main.pdf`. A non-fatal Fontconfig warning was emitted by the wrapper, but the PDF was generated successfully. A separate structural check confirmed that all `\input{...}` files exist and that basic brace and environment pairing is balanced.
+Each source file now starts with a `Ctrl+F keywords` subsection. Recipe headings include exam task wording such as `Exam recipe: infer transfer function from Bode plot`, `Exam recipe: choose K_P for desired phase margin`, and `Exam recipe: design dynamic disturbance feed-forward`. Danish aliases were added where useful, including regulering, tilbagekobling, forstyrrelse, maaling, stationaer fejl, bodeplot, and begraensning.
+
+## Known uncertainties
+
+The Nyquist sign convention is marked in the LaTeX with `% TODO: verify sign convention from source` because convention depends on clockwise/counter-clockwise definitions in the slides.

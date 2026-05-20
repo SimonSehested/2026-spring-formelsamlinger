@@ -1,56 +1,85 @@
 \section{Nyquist plot and stability}
 
-\subsection{Nyquist curve}
+\subsection{Ctrl+F keywords}
 
-\subsubsection{Nyquist plot definition}
+\subsubsection{Nyquist, encirclement, critical point, unstable open loop, indkredsning}
+\[
+\text{critical point }-1+j0,\quad P,\ N,\ Z,\quad \text{unit circle, phase margin}
+\]
+Use this section when open-loop instability or a Nyquist plot appears in the problem.
+
+\subsection{Nyquist core formulas}
+
+\subsubsection{Nyquist curve}
 \[
 \Gamma=\{L(j\omega):\omega\in(-\infty,\infty)\}
 \]
-The Nyquist plot maps the open-loop frequency response into the complex plane.
+The plot maps the open-loop frequency response into the complex plane.
 
 \subsubsection{Critical point}
 \[
 -1+j0
 \]
-Closed-loop stability is assessed by the relation between the Nyquist curve and the critical point.
-
-\subsection{Nyquist stability criterion}
+Closed-loop stability depends on encirclements of the critical point.
 
 \subsubsection{Encirclement equation}
 \[
 Z=P+N
 \]
-Here \(P\) is the number of open-loop right-half-plane poles, \(N\) is the net clockwise encirclements of \(-1\), and \(Z\) is the number of closed-loop right-half-plane poles. % TODO: verify sign convention from source
+\(P\) is open-loop right-half-plane poles, \(N\) is net clockwise encirclements of \(-1\), and \(Z\) is closed-loop right-half-plane poles. % TODO: verify sign convention from source
 
 \subsubsection{Closed-loop stability condition}
 \[
 Z=0
 \]
-The closed loop is stable when the Nyquist encirclements compensate the open-loop unstable poles so that no closed-loop right-half-plane poles remain.
-
-\subsubsection{Stable open-loop special case}
-\[
-P=0,\qquad N=0
-\]
-If the open-loop system is stable, the Nyquist curve must not encircle the point \(-1+j0\).
+Choose the encirclement count so no closed-loop poles remain in the right half-plane.
 
 \subsection{Margins from Nyquist}
 
-\subsubsection{Phase margin from unit circle intersection}
+\subsubsection{Phase margin from unit-circle intersection}
 \[
-|L(j\omega_c)|=1,\qquad
-\gamma_M=180^\circ+\arg L(j\omega_c)
+|L(j\omega_c)|=1,\qquad \gamma_M=180^\circ+\arg L(j\omega_c)
 \]
-On a Nyquist plot, \(\omega_c\) is where the curve intersects the unit circle.
+On the Nyquist plot, \(\omega_c\) is where the curve intersects the unit circle.
 
-\subsubsection{Gain margin from negative real-axis intersection}
+\subsubsection{Gain margin from negative real-axis crossing}
 \[
 L(j\omega_\pi)=-a,\qquad A_M=\frac{1}{a}
 \]
-The gain margin is read where the Nyquist curve crosses the negative real axis.
+Read \(a>0\) from the negative real-axis intersection.
 
-\subsubsection{P-controller scaling in Nyquist}
+\subsubsection{P gain scaling}
 \[
-L_K(j\omega)=K_P L(j\omega)
+L_K(j\omega)=K_PL(j\omega)
 \]
-Changing \(K_P\) radially scales the Nyquist curve. The critical gain occurs when the scaled curve passes through \(-1+j0\).
+Changing \(K_P\) scales the curve radially about the origin.
+
+\subsection{Exam recipe: Nyquist stability with unstable open loop}
+
+\textbf{Use when:} the plant or loop has right-half-plane poles and Bode margin rules are not enough.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Count open-loop right-half-plane poles \(P\).
+\item Determine the net clockwise encirclements \(N\) of \(-1+j0\).
+\item Compute \(Z=P+N\).
+\item Closed loop is stable only if \(Z=0\).
+\item For gain changes, scale the Nyquist curve by \(K_P\) and repeat the encirclement check.
+\end{enumerate}
+
+\textbf{Fast checks:} if \(P=0\), the stable closed loop normally requires no encirclement of \(-1\).
+
+\textbf{Common traps:} using the Bode positive phase margin rule for an open-loop unstable plant.
+
+\subsection{Exam recipe: phase margin from Nyquist plot}
+
+\textbf{Use when:} the problem gives a Nyquist curve and asks for phase margin.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Find where the curve crosses the unit circle.
+\item Read the angle \(\arg L(j\omega_c)\) from the positive real axis.
+\item Compute \(\gamma_M=180^\circ+\arg L(j\omega_c)\).
+\end{enumerate}
+
+\textbf{Fast checks:} a point close to \(-1+j0\) has small phase margin.

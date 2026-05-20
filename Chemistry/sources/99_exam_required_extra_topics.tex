@@ -1,27 +1,59 @@
-\section{Exam-Required Extra Topics}
+\section{Exam Strategy and Mixed Task Recipes}
 
-\subsection{Recurring Exam Methods}
+\subsection{Ctrl+F keywords: multiple choice, statement validity, units, limiting case, answer check, traps, Danish keywords}
+Use for cross-topic exam tactics that recur in marked multiple-choice and calculation problems.
+
+\subsection{Multiple-choice statement elimination}
+
+\subsubsection{One false clause makes an option false}
+\[
+\text{valid answer option}=\text{all required clauses true}
+\]
+For statement options, test each clause independently: sign, unit, condition, and exception. Eliminate options with one wrong condition even if the formula name looks right.
+
+\subsubsection{Dimensional and unit check}
+\[
+\text{final unit must match requested quantity}
+\]
+Use units as algebraic factors. Common exam errors are Celsius in gas/Arrhenius equations, entropy in \(\mathrm J\) with enthalpy in \(\mathrm{kJ}\), and cell length units in density.
+
+\subsubsection{Logarithm checks for pH, \(K\), and Nernst}
+\[
+\mathrm{pH}=-\log[\ce{H3O+}], \qquad
+\Delta G^\circ=-RT\ln K, \qquad
+E=E^\circ-\frac{0.0592}{n}\log Q
+\]
+A factor \(10\) in concentration changes pH or Nernst terms by one logarithmic unit. Check whether \(\ln\) or \(\log\) belongs with the numerical constant.
+
+\subsection{Recurring mixed recipes}
 
 \subsubsection{Ideal gas stoichiometry}
 \[
 n_{\mathrm{gas}}=\frac{pV}{RT}
 \]
-% Added from exam coverage
-Gas volumes in exam stoichiometry are converted to moles before applying balanced reaction coefficients.
-
-\subsubsection{Combustion enthalpy from formation enthalpies}
-\[
-\Delta H^\circ_{\mathrm{comb}}
-=\sum \nu\Delta H^\circ_{\mathrm f}(\ce{CO2},\ce{H2O},\ldots)
--\sum \nu\Delta H^\circ_{\mathrm f}(\text{fuel},\ce{O2})
-\]
-% Added from exam coverage
-The standard formation enthalpy of \(\ce{O2(g)}\) is zero. Combustion questions require a balanced combustion reaction first.
+Convert gas data to moles before applying reaction coefficients. This links gas-law questions with limiting-reactant calculations.
 
 \subsubsection{Percent change in hydronium concentration from pH}
 \[
 \frac{[\ce{H3O+}]_2}{[\ce{H3O+}]_1}=10^{\mathrm{pH}_1-\mathrm{pH}_2}, \qquad
-\%\text{ increase}=(\text{ratio}-1)100\%
+\%\text{ change}=(\text{ratio}-1)100\%
 \]
-% Added from exam coverage
-This method follows directly from the logarithmic pH definition and appears in ocean-acidification style questions.
+Use for ocean-acidification or pH-change wording. Lower pH means larger hydronium concentration.
+
+\subsubsection{Recognition keywords, English and Danish}
+\[
+\begin{array}{c c}
+\toprule
+\text{exam wording} & \text{go to}\\
+\midrule
+\text{bundfald, precipitate, sparingly soluble} & K_{sp}, Q_{sp}\\
+\text{puffer, buffer, Henderson} & \text{acid/base buffer}\\
+\text{galvanisk, electrode, concentration cell} & \text{Nernst/electrochemistry}\\
+\text{planar, bond angle, pyramidal} & \text{Lewis/VSEPR}\\
+\text{limiting, excess, yield, udbytte} & \text{stoichiometry}\\
+\text{vapor pressure, boiling point} & \text{intermolecular forces}\\
+\text{rate law, half-life, Arrhenius} & \text{kinetics}\\
+\bottomrule
+\end{array}
+\]
+Use the wording to jump to the relevant recipe before doing algebra.

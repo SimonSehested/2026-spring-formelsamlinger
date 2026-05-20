@@ -1,0 +1,12 @@
+preamble ""
+postamble ""
+headings_flag 0
+item_0 "\\SymbolRow{"
+delim_0 "}{"
+delim_1 "}{"
+delim_2 "}{"
+delim_n ", "
+delim_r "--"
+delim_t "}\n"
+line_max 1000
+group_skip ""

@@ -1,0 +1,24 @@
+\section{Validated Python aids, Python-funktioner, kode}
+
+\subsection{How to use scripts during the exam}
+
+\subsubsection{Script use rule}
+Use scripts only after the formula, assumptions, and task type are identified from the notes. Scripts are calculation aids; they do not decide whether a conceptual statement is true.
+
+\subsubsection{Validated script lookup}
+\begin{description}
+    \item[Second-order poles:] \texttt{scripts/lti/second\_order.py}, \texttt{classify\_second\_order}. Check denominator \(s^2+a_1s+a_0\).
+    \item[Step features from parameters:] \texttt{scripts/lti/second\_order.py}, \texttt{step\_features\_from\_zeta\_wn}. Check \(0<\zeta<1\).
+    \item[Step plot estimates:] \texttt{scripts/lti/second\_order.py}, \texttt{estimate\_from\_overshoot\_peak\_time}. Check underdamped second-order plot.
+    \item[Impulse, step, and ramp response:] \texttt{scripts/lti/responses.py}, \texttt{impulse\_response\_from\_transfer}, \texttt{step\_response\_from\_transfer}, \texttt{ramp\_response\_from\_transfer}, \texttt{related\_unit\_responses}. Check zero-state transfer function and causal LTIC assumption.
+    \item[ODE to transfer function:] \texttt{scripts/lti/responses.py}, \texttt{transfer\_from\_ode}. Check zero initial conditions.
+    \item[Zero-input Laplace:] \texttt{scripts/lti/responses.py}, \texttt{zero\_input\_laplace\_second\_order}. Check normalized second-order ODE.
+    \item[Convolution:] \texttt{scripts/transforms/convolution.py}, \texttt{convolve\_causal}. Check both signals are causal.
+    \item[Inverse Laplace:] \texttt{scripts/transforms/laplace.py}, \texttt{inverse\_laplace\_rational}. Check rational coefficients.
+    \item[Fourier coefficients:] \texttt{scripts/fourier/series.py}, \texttt{complex\_fourier\_coefficients}. Check one full period.
+    \item[Fourier property:] \texttt{scripts/fourier/properties.py}, \texttt{exponential\_transform\_variant}. Check scaling or modulation only.
+    \item[Bode and pole-zero:] \texttt{scripts/frequency/bode.py}, \texttt{bode\_values}, \texttt{classify\_filter\_limits}, \texttt{transfer\_from\_poles\_zeros}. Check rad/s and conjugate pairs.
+    \item[Butterworth and RC scaling:] \texttt{scripts/filters/butterworth.py}, \texttt{butterworth\_lowpass\_order}, \texttt{butterworth\_highpass\_order}, \texttt{butterworth\_poles\_q}, \texttt{frequency\_scale\_rc}. Check passband/stopband order and rad/s conversion.
+    \item[ADC and sampling:] \texttt{scripts/sampling/adc.py}, \texttt{adc\_lsb}, \texttt{alias\_frequency}, \texttt{required\_sampling\_rate\_for\_lsb}. Check ADC convention and single-tone/asymptote assumptions.
+    \item[Instrumentation amplifier:] \texttt{scripts/circuits/instrumentation.py}, \texttt{instrumentation\_gains}. Check single-\(\alpha\) mismatch model.
+\end{description}

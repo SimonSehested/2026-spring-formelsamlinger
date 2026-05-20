@@ -1,0 +1,111 @@
+\section{Laplace transform, unilateral Laplace, ensidig Laplace}
+
+\subsection{Definitions and regions of convergence, konvergensområde, ROC}
+
+\subsubsection{Unilateral Laplace transform}
+\[
+X(s)=\int_{0^-}^{\infty}x(t)e^{-st}\,dt
+\]
+The exams state that Laplace transforms are unilateral unless otherwise specified. The lower limit \(0^-\) includes impulses or initial-condition effects at the switching instant.
+
+\subsubsection{Causal exponential and ROC}
+\[
+e^{at}u(t)\leftrightarrow \frac{1}{s-a},\qquad \operatorname{Re}\{s\}>a
+\]
+For a causal signal, the ROC lies to the right of the rightmost pole. For a stable causal system, the imaginary axis must be inside the ROC.
+
+\subsection{Derivative rules and initial conditions, begyndelsesbetingelser}
+
+\subsubsection{Unilateral derivative rules}
+\[
+\mathcal{L}\{\dot y(t)\}=sY(s)-y(0^-)
+\]
+\[
+\mathcal{L}\{\ddot y(t)\}=s^2Y(s)-s y(0^-)-\dot y(0^-)
+\]
+These terms are why unilateral Laplace can include initial conditions. Use the values at \(0^-\) unless the problem explicitly gives \(0^+\).
+
+\subsubsection{Transfer function from differential equation}
+\[
+y''+a_1y'+a_0y=b_2x''+b_1x'+b_0x
+\]
+\[
+H(s)=\frac{Y(s)}{X(s)}=\frac{b_2s^2+b_1s+b_0}{s^2+a_1s+a_0}
+\quad\text{when all initial conditions are zero.}
+\]
+If initial conditions are nonzero, \(Y(s)\) contains both \(H(s)X(s)\) and a zero-input term.
+
+\subsection{Zero-input and zero-state, egenrespons, påtvungen respons}
+
+\subsubsection{Response decomposition}
+\[
+y(t)=y_{\mathrm{zi}}(t)+y_{\mathrm{zs}}(t),\qquad
+Y(s)=Y_{\mathrm{zi}}(s)+H(s)X(s)
+\]
+Zero-input response comes from stored energy or initial conditions. Zero-state response comes from the input with zero initial conditions.
+
+\subsubsection{Second-order zero-input Laplace expression}
+For
+\[
+y''+a_1y'+a_0y=0,\qquad y(0^-)=y_0,\quad \dot y(0^-)=v_0,
+\]
+\[
+Y_{\mathrm{zi}}(s)=\frac{s y_0+v_0+a_1y_0}{s^2+a_1s+a_0}.
+\]
+This formula appears directly in several zero-input MCQ options.
+
+\textbf{Python aid:} Use \texttt{scripts/lti/responses.py} function \texttt{zero\_input\_laplace\_second\_order} when the problem gives \(a_1,a_0,y(0^-),\dot y(0^-)\) and asks for \(Y_{\mathrm{zi}}(s)\). The script returns the rational Laplace expression. Check manually that the ODE is normalized to \(y''+a_1y'+a_0y=0\). Do not use it for higher-order systems.
+
+\subsection{Inverse Laplace and partial fractions, invers Laplace, partialbrøk}
+
+\subsubsection{Common inverse pairs}
+\[
+\frac{1}{s+a}\leftrightarrow e^{-at}u(t),\qquad
+\frac{1}{(s+a)^2}\leftrightarrow t e^{-at}u(t)
+\]
+\[
+\frac{\omega}{(s+a)^2+\omega^2}\leftrightarrow e^{-at}\sin(\omega t)u(t)
+\]
+\[
+\frac{s+a}{(s+a)^2+\omega^2}\leftrightarrow e^{-at}\cos(\omega t)u(t)
+\]
+Complete the square when the denominator has complex-conjugate poles.
+
+\subsubsection{Partial fraction decomposition}
+\[
+\frac{1}{s(s+a)}=\frac{1}{a}\left(\frac{1}{s}-\frac{1}{s+a}\right)
+\]
+Repeated poles produce polynomial factors in time. Always simplify before comparing to MCQ options because equivalent expressions may be written differently.
+
+\textbf{Python aid:} Use \texttt{scripts/transforms/laplace.py} function \texttt{inverse\_laplace\_rational} when the problem asks for an inverse Laplace transform of a rational expression and the numerator and denominator coefficients are clear. The script returns a symbolic time-domain expression. Check manually for repeated poles, direct terms, and whether the problem requires a proof or only a final expression.
+
+\subsection{Value theorems, beginning and final value, begyndelsesværdi, slutværdi}
+
+\subsubsection{Initial value theorem}
+\[
+y(0^+)=\lim_{s\to\infty}sY(s)
+\]
+Use this only when the limit exists. It is useful for checking whether a step response has an initial jump.
+
+\subsubsection{Final value theorem}
+\[
+\lim_{t\to\infty}y(t)=\lim_{s\to0}sY(s)
+\]
+The theorem is valid only if every pole of \(sY(s)\) is in the open left half-plane except possibly a simple pole at the origin.
+
+\textbf{Common trap:} applying the final value theorem to an unstable or oscillatory response gives false conclusions.
+
+\subsection{Exam recipe: Laplace response task}
+
+\subsubsection{Laplace response workflow}
+\textbf{Use when:} an LTIC task asks for transfer function, impulse response, step response, zero-input response, zero-state response, or final value.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Convert the differential equation using unilateral derivative rules.
+    \item Separate initial-condition terms from \(H(s)X(s)\).
+    \item Use partial fractions for inverse Laplace.
+    \item Check poles before using the final value theorem.
+\end{enumerate}
+
+\textbf{Fast checks:} denominator roots are natural modes; zero-state with \(x(t)=u(t)\) uses \(X(s)=1/s\); a highpass step response should settle to zero.

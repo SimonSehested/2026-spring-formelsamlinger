@@ -1,115 +1,107 @@
 \section{Electronic Structure and Periodic Table}
 
-\subsection{Light and Quantization}
+\subsection{Ctrl+F keywords: quantum number, electron configuration, orbital, ionization energy, atomic radius, ionic radius, electronegativity}
+Use for questions about electron configurations, allowed quantum numbers, periodic trends, isoelectronic ions, and light-energy formulas.
 
-\subsubsection{Photon energy}
+\subsection{Light and quantization}
+
+\subsubsection{Photon energy, wavelength, frequency}
 \[
 E=h\nu=\frac{hc}{\lambda}
 \]
-Photon energy is proportional to frequency and inversely proportional to wavelength. \(h\) is Planck's constant.
+Shorter wavelength means higher photon energy. Use SI units unless the data table specifies otherwise.
 
-\subsubsection{Photoelectric effect}
+\subsubsection{Bohr energy levels and transitions}
 \[
-h\nu=E_{\mathrm{kin}}+W
+E_n=-\frac{R_{\mathrm H}}{n^2}, \qquad \Delta E=E_{n_f}-E_{n_i}
 \]
-\(W\) is the work function of the metal. Electrons are emitted only when the photon energy exceeds the threshold.
-
-\subsubsection{Bohr energy levels}
-\[
-E_n=-\frac{R_{\mathrm H}}{n^2}, \qquad n=1,2,3,\ldots
-\]
-Allowed electron energies in hydrogen are discrete. Transitions absorb or emit energy differences between levels.
+Emission releases energy when the electron moves to lower \(n\). Absorption requires positive energy input.
 
 \subsubsection{De Broglie wavelength}
 \[
 \lambda=\frac{h}{p}=\frac{h}{mv}
 \]
-Matter with momentum \(p\) has wave character. This motivates standing-wave orbitals for electrons.
+Use for matter-wave questions involving particle mass and speed.
 
-\subsection{Quantum Numbers and Orbitals}
+\subsection{Quantum numbers and orbitals}
 
-\subsubsection{Quantum numbers}
+\subsubsection{Allowed quantum numbers}
 \[
 \begin{array}{c c c}
 \toprule
 \text{symbol} & \text{allowed values} & \text{meaning}\\
 \midrule
 n & 1,2,3,\ldots & \text{shell}\\
-\ell & 0,1,\ldots,n-1 & \text{subshell shape}\\
-m_\ell & -\ell,\ldots,+\ell & \text{orbital orientation}\\
+\ell & 0,1,\ldots,n-1 & \text{subshell}\\
+m_\ell & -\ell,\ldots,+\ell & \text{orbital}\\
 m_s & \pm \frac12 & \text{spin}\\
 \bottomrule
 \end{array}
 \]
-One electron in an atom is described by a unique set of four quantum numbers.
+Invalid sets usually break one of these allowed-value rules.
 
-\subsubsection{Subshell labels}
+\subsubsection{Subshell labels and capacities}
 \[
-\ell=0,1,2,3 \quad \leftrightarrow \quad s,p,d,f
+\ell=0,1,2,3\leftrightarrow s,p,d,f, \qquad
+\#\text{orbitals}=2\ell+1, \qquad
+\#e^-=2(2\ell+1)
 \]
-For a subshell with angular momentum \(\ell\), there are \(2\ell+1\) orbitals.
+Thus \(s,p,d,f\) hold \(2,6,10,14\) electrons.
 
-\subsubsection{Orbital capacity}
+\subsubsection{Electron configuration filling order}
 \[
-\text{maximum electrons in a subshell}=2(2\ell+1)
+1s,\,2s,\,2p,\,3s,\,3p,\,4s,\,3d,\,4p,\,5s,\,4d,\ldots
 \]
-Each orbital holds at most two electrons with opposite spin.
+Fill lower energy orbitals first, obey Pauli exclusion, and maximize unpaired spins within degenerate orbitals.
 
-\subsection{Electron Configurations}
+\subsection{Exam recipe: write electron configuration or identify ion configuration}
+\textbf{Use when:} the problem asks for electron configuration, valence electrons, or which ion/atom has a given configuration.
 
-\subsubsection{Aufbau ordering}
-\[
-1s,\ 2s,\ 2p,\ 3s,\ 3p,\ 4s,\ 3d,\ 4p,\ 5s,\ 4d,\ldots
-\]
-Electrons occupy lower-energy orbitals first. The \(n+\ell\) rule gives the approximate filling order.
+\textbf{Steps:}
+\begin{enumerate}
+    \item Count electrons: neutral atom \(=Z\), ion \(=Z-\text{charge}\).
+    \item Fill orbitals in Aufbau order.
+    \item For cations of transition metals, remove \(ns\) electrons before \((n-1)d\).
+    \item Check total electron count.
+\end{enumerate}
 
-\subsubsection{Pauli exclusion principle}
-\[
-\text{no two electrons in an atom have the same }(n,\ell,m_\ell,m_s)
-\]
-The Pauli principle limits each orbital to two electrons.
+\textbf{Common traps:} removing \(3d\) before \(4s\) for transition-metal cations; forgetting ion charge sign.
 
-\subsubsection{Hund's rule}
-\[
-\text{within degenerate orbitals, maximize unpaired parallel spins}
-\]
-Hund's rule gives the lowest-energy arrangement before pairing occurs.
-
-\subsection{Periodic Trends}
-
-\subsubsection{Effective nuclear charge}
-\[
-Z_{\mathrm{eff}}\approx Z-S
-\]
-\(Z_{\mathrm{eff}}\) is the nuclear attraction felt after shielding by other electrons. Across a period, \(Z_{\mathrm{eff}}\) generally increases.
+\subsection{Periodic trends}
 
 \subsubsection{Atomic radius trend}
 \[
-\text{across a period: radius decreases}, \qquad
-\text{down a group: radius increases}
+\text{across period: decreases}, \qquad \text{down group: increases}
 \]
-Increasing effective nuclear charge contracts atoms across a period. Additional shells increase radius down a group.
+Increasing effective nuclear charge contracts atoms across a period. New shells dominate down a group.
 
-\subsubsection{Ionization energy}
+\subsubsection{Ionization energy trend}
 \[
 \ce{X(g) -> X+(g) + e-}, \qquad \mathrm{IE}>0
 \]
-Ionization energy is the endothermic energy required to remove an electron from a gaseous atom.
+Ionization energy generally increases across a period and decreases down a group. Filled and half-filled subshells can create exceptions.
 
-\subsubsection{Electron affinity}
+\subsubsection{Electron affinity and electronegativity}
 \[
-\ce{X(g) + e- -> X-(g)}
+\ce{X(g)+e- -> X-(g)}, \qquad \chi\approx\frac{\mathrm{IE}+\mathrm{EA}}{2}
 \]
-Electron affinity describes the energy change when a gaseous atom accepts an electron.
-
-\subsubsection{Mulliken electronegativity}
-\[
-\chi=\frac{\mathrm{IE}+\mathrm{EA}}{2}
-\]
-Electronegativity measures tendency to attract electron density in a bond. Fluorine is the most electronegative element in the lecture material.
+Electronegativity increases toward fluorine. Use it to judge bond polarity and likely formal-charge placement.
 
 \subsubsection{Isoelectronic ionic radius}
 \[
-\text{same electron count: larger }Z \Rightarrow \text{smaller radius}
+\text{same electron count: larger }Z\Rightarrow\text{smaller radius}
 \]
-For isoelectronic species, increasing nuclear charge pulls the same electron cloud closer.
+For \(\ce{N^3-}\), \(\ce{O^2-}\), \(\ce{F-}\), \(\ce{Na+}\), \(\ce{Mg^2+}\), the highest nuclear charge is smallest.
+
+\subsection{Exam recipe: rank atomic or ionic radius, ionization energy}
+\textbf{Use when:} the question asks for largest/smallest radius or highest/lowest ionization energy.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Check whether species are isoelectronic.
+    \item If isoelectronic, rank radius by nuclear charge: larger \(Z\) is smaller.
+    \item If neutral atoms, use period/group trends.
+    \item For ionization energy, highest is usually up and right in the periodic table.
+\end{enumerate}
+
+\textbf{Fast checks:} cations are smaller than their neutral atoms; anions are larger than their neutral atoms.

@@ -1,65 +1,50 @@
 \section{Disturbances, sensitivity, and prefilters}
 
-\subsection{Disturbance transfer functions}
+\subsection{Ctrl+F keywords}
 
-\subsubsection{Superposition for multiple inputs}
+\subsubsection{Disturbance, forstyrrelse, sensitivity, prefilter, measurement noise, maaling}
 \[
-Y(s)=G_{yr}(s)R(s)+G_{yd_1}(s)D_1(s)+G_{yd_2}(s)D_2(s)
+\text{output disturbance, input disturbance, }S,T,G_{yd},G_{ur},F(s),\text{ noise}
 \]
-Linear systems allow each reference or disturbance contribution to be analysed separately.
-
-\subsubsection{Output disturbance after the plant input}
-\[
-Y(s)=\frac{G(s)C(s)}{1+C(s)G(s)}R(s)
-+\frac{1}{1+C(s)G(s)}D(s)
-\]
-For an additive output disturbance, feedback suppresses the disturbance by the sensitivity function.
-
-\subsubsection{Input disturbance before the plant}
-\[
-Y(s)=\frac{G(s)C(s)}{1+C(s)G(s)}R(s)
-+\frac{G(s)}{1+C(s)G(s)}D(s)
-\]
-The plant filters the disturbance before feedback attenuation.
-
-\subsubsection{Measurement disturbance}
-\[
-Y(s)=\frac{G(s)C(s)}{1+C(s)G(s)}R(s)
--\frac{G(s)C(s)}{1+C(s)G(s)}N(s)
-\]
-Measurement noise passes through the complementary sensitivity path.
+Use this section when the problem asks how disturbances, noise, or prefilters affect the closed loop.
 
 \subsection{Sensitivity functions}
 
-\subsubsection{Sensitivity function}
+\subsubsection{Sensitivity and complementary sensitivity}
 \[
-S(s)=\frac{1}{1+L(s)}
-\]
-Sensitivity maps output disturbances and model uncertainty effects in standard unity feedback.
-
-\subsubsection{Complementary sensitivity function}
-\[
+S(s)=\frac{1}{1+L(s)},\qquad
 T(s)=\frac{L(s)}{1+L(s)}
 \]
-Complementary sensitivity maps reference tracking and measurement-noise transmission.
+\(S\) maps output disturbances and tracking error. \(T\) maps reference tracking and measurement-noise transmission.
 
 \subsubsection{Input sensitivity}
 \[
 G_{ur}(s)=\frac{C(s)}{1+C(s)G(s)}
 \]
-The control input can become large near bandwidth limits, resonance peaks, or fast reference commands.
+Use this to estimate control effort and actuator stress.
 
-\subsubsection{Steady-state disturbance error}
-\[
-e_{\mathrm{ss},d}=\lim_{s\to0}sE_d(s)
-\]
-The final value theorem gives constant-disturbance error when the closed-loop poles are stable.
+\subsection{Disturbance paths}
 
-\subsubsection{Disturbance magnitude from Bode plot}
+\subsubsection{Output disturbance after plant}
 \[
-|y_{\mathrm{ss}}|=|G_{yd}(j\omega)|\,|d_{\mathrm{ss}}|
+Y(s)=\frac{G(s)C(s)}{1+C(s)G(s)}R(s)
++\frac{1}{1+C(s)G(s)}D(s)
 \]
-At very low frequency, the Bode magnitude approximates constant disturbance sensitivity.
+Additive output disturbances are attenuated by \(S(s)\).
+
+\subsubsection{Input disturbance before plant}
+\[
+Y(s)=\frac{G(s)C(s)}{1+C(s)G(s)}R(s)
++\frac{G(s)}{1+C(s)G(s)}D(s)
+\]
+The plant shapes the disturbance before feedback attenuation.
+
+\subsubsection{Measurement noise}
+\[
+Y(s)=\frac{G(s)C(s)}{1+C(s)G(s)}R(s)
+-\frac{G(s)C(s)}{1+C(s)G(s)}N(s)
+\]
+Measurement noise is transmitted through the complementary sensitivity path.
 
 \subsection{Prefilters}
 
@@ -67,16 +52,55 @@ At very low frequency, the Bode magnitude approximates constant disturbance sens
 \[
 Y(s)=\frac{F(s)L(s)}{1+L(s)}R(s)
 \]
-A prefilter shapes reference tracking without changing the loop transfer function and stability margins.
+A prefilter shapes reference response without changing \(L(s)\), stability margins, or disturbance rejection.
 
 \subsubsection{First-order prefilter}
 \[
 F(s)=\frac{1}{\tau_f s+1}
 \]
-A first-order prefilter reduces fast reference content and can reduce overshoot or input peaks.
+Low-pass prefilters reduce fast reference commands and actuator peaks.
 
-\subsubsection{Lead prefilter}
-\[
-F_{\mathrm{lead}}(s)=\frac{\tau_f s+1}{\alpha_f\tau_f s+1}
-\]
-The slides use lead-shaped prefilters to improve reference response without changing feedback robustness.
+\subsection{Exam recipe: derive disturbance transfer function}
+
+\textbf{Use when:} the block diagram includes a disturbance input \(d\) or noise \(n\).
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Set all other inputs to zero by superposition.
+\item Write the summing-junction equations.
+\item Solve for \(Y(s)/D(s)\), \(E(s)/D(s)\), or the requested signal.
+\item Express the result using \(S=1/(1+L)\) and \(T=L/(1+L)\) when possible.
+\item Use \(s\to0\) for constant disturbance checks.
+\end{enumerate}
+
+\textbf{Fast checks:} output disturbances usually contain \(S\); measurement noise usually contains \(T\).
+
+\textbf{Common traps:} treating input and output disturbances as the same transfer path.
+
+\subsection{Exam recipe: steady-state disturbance rejection}
+
+\textbf{Use when:} the task asks for final output or error due to a constant disturbance.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Find the disturbance-to-output or disturbance-to-error transfer function.
+\item Insert \(D(s)=d_0/s\).
+\item Check closed-loop stability.
+\item Compute the final value with \(\lim_{s\to0}s(\cdot)\).
+\end{enumerate}
+
+\textbf{Fast checks:} high low-frequency loop gain makes \(S(0)\) small and improves output-disturbance rejection.
+
+\subsection{Exam recipe: prefilter effect}
+
+\textbf{Use when:} a task asks whether a prefilter changes margins or disturbance rejection.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Check whether \(F(s)\) is outside the feedback loop.
+\item If outside, it changes \(R\to Y\) but not \(L(s)\).
+\item Stability margins, \(S\), and disturbance rejection are unchanged.
+\item Reference speed and overshoot can change.
+\end{enumerate}
+
+\textbf{Common traps:} redesigning \(K_P\) because of a prefilter; the loop transfer is unchanged.

@@ -1,0 +1,63 @@
+\section*{Clustering and density/outliers}
+\subsection*{K-means}
+\[
+\min_{\{C_k,\mu_k\}}\sum_{k=1}^K\sum_{i\in C_k}\|x_i-\mu_k\|^2,\quad
+\mu_k=\frac1{|C_k|}\sum_{i\in C_k}x_i.
+\]
+\note{Recipe} Assign to nearest centroid, recompute centroids, repeat until unchanged.
+\note{Trap} Sensitive to initialization and scaling; finds center-based/spherical clusters.
+
+\subsection*{Hierarchical clustering}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Linkage & Distance between clusters\\ \midrule
+Single & $\min d(x_i,x_j)$; chaining/contiguity.\\
+Complete & $\max d(x_i,x_j)$; compact clusters.\\
+Average & Average pairwise distance.\\
+Centroid & Distance between centroids.\\
+\bottomrule
+\end{tabularx}
+\note{Recipe} Merge closest clusters step by step; dendrogram height is merge distance. Cut horizontal line to get clusters.
+
+\subsection*{Clustering comparison}
+Pair counts: $f_{11}$ same in both, $f_{00}$ different in both, $f_{10},f_{01}$ disagreements, $K=N(N-1)/2$.
+\[
+\text{Rand}=\frac{f_{11}+f_{00}}{K},\quad
+\text{Jaccard}=\frac{f_{11}}{f_{11}+f_{10}+f_{01}}.
+\]
+\note{Trap} Rand includes agreements on different-cluster pairs; Jaccard ignores $f_{00}$.
+
+\subsection*{Gaussian mixture model}
+\[
+\begin{gathered}
+p(x)=\sum_{k=1}^K\pi_k\mathcal N(x|\mu_k,\Sigma_k),\qquad \sum_k\pi_k=1,\\
+\gamma_{ik}=\frac{\pi_k\mathcal N(x_i|\mu_k,\Sigma_k)}
+{\sum_j\pi_j\mathcal N(x_i|\mu_j,\Sigma_j)}.
+\end{gathered}
+\]
+\note{Decision} Assign to component with largest responsibility $\gamma_{ik}$.
+\note{Trap} Mixture density is sum of weighted component densities, not max.
+
+\subsection*{Kernel density estimation}
+\[
+\hat p(x)=\frac1N\sum_{i=1}^N \mathcal N(x|x_i,\sigma^2 I).
+\]
+Leave-one-out density for selecting $\sigma$:
+\[
+L(\sigma)=\sum_i\log\left(\frac1{N-1}\sum_{j\ne i}\mathcal N(x_i|x_j,\sigma^2 I)\right).
+\]
+\note{Outlier} Potential outlier has low estimated density.
+\note{Trap} Larger $\sigma$ smooths; smaller $\sigma$ gives spiky density.
+
+\subsection*{KNN density and ARD}
+Let $N_{X\setminus i}(x_i,K)$ be the $K$ nearest neighbours of $x_i$ excluding itself.
+\[
+\text{density}(x_i,K)=\left(\frac1K\sum_{x_j\in N_i}d(x_i,x_j)\right)^{-1},
+\]
+\[
+\text{ARD}(x_i,K)=
+\frac{\text{density}(x_i,K)}
+{\frac1K\sum_{x_j\in N_i}\text{density}(x_j,K)}.
+\]
+\note{Outlier} Low density or low ARD. ARD compares to local neighbourhood density.
+\note{Trap} Recompute each neighbour's density excluding that neighbour itself.

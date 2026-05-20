@@ -1,50 +1,56 @@
 \section{Modelling and linearization}
 
-\subsection{White-box modelling}
+\subsection{Ctrl+F keywords}
+
+\subsubsection{RLC, impedance, mass spring damper, equations of motion, modellering}
+\[
+\text{Newton, force balance, voltage divider, white-box model, linearization, operating point}
+\]
+Use this section when the exam asks for a model before doing control design.
+
+\subsection{Mechanical modelling}
 
 \subsubsection{Newton's second law}
 \[
 \sum F=m\ddot{x}
 \]
-Mechanical translation models are obtained by summing forces and applying acceleration relations.
+Choose a positive direction and keep spring, damper, and external-force signs consistent.
 
-\subsubsection{Mass-spring-damper model}
+\subsubsection{Spring and damper forces}
 \[
-m\ddot{x}+b\dot{x}+kx=F
+F_k=k(x_1-x_2),\qquad F_b=b(\dot{x}_1-\dot{x}_2)
 \]
-The mass gives inertia, the damper gives velocity-proportional force, and the spring gives displacement-proportional force.
+For coupled masses, relative displacement and relative velocity determine internal forces.
 
 \subsubsection{Mass-spring-damper transfer function}
 \[
+m\ddot{x}+b\dot{x}+kx=F
+\quad\Longrightarrow\quad
 \frac{X(s)}{F(s)}=\frac{1}{ms^2+bs+k}
 \]
-With zero initial conditions, the transfer function follows directly from the Laplace transform.
+With zero initial conditions, force-balance equations become algebraic transfer functions.
 
-\subsubsection{Electrical impedance in Laplace domain}
+\subsection{Electrical modelling}
+
+\subsubsection{Laplace impedances}
 \[
 Z_R=R,\qquad Z_L=sL,\qquad Z_C=\frac{1}{sC}
 \]
-RLC circuits can be modelled algebraically in the \(s\)-domain using impedances.
+Use impedances for RLC circuit transfer functions in the \(s\)-domain.
 
-\subsubsection{Voltage divider in Laplace domain}
+\subsubsection{Voltage divider}
 \[
 \frac{V_2(s)}{V_{\mathrm{in}}(s)}=\frac{Z_2(s)}{Z_1(s)+Z_2(s)}
 \]
-The voltage divider converts circuit topology into a transfer function.
+Pick \(Z_2\) as the impedance across the measured output voltage.
 
-\subsection{Nonlinear systems}
-
-\subsubsection{State-space nonlinear model}
-\[
-\dot{x}=f(x,u,t),\qquad y=g(x,u,t)
-\]
-Nonlinear models must be linearized before transfer-function and Bode design methods apply.
+\subsection{Linearization}
 
 \subsubsection{Equilibrium point}
 \[
 0=f(x_0,u_0),\qquad y_0=g(x_0,u_0)
 \]
-The operating point must make the state derivative zero for constant inputs.
+The operating point must satisfy the nonlinear state equation for constant input.
 
 \subsubsection{First-order Taylor linearization}
 \[
@@ -52,29 +58,47 @@ The operating point must make the state derivative zero for constant inputs.
 \Delta y=C\Delta x+D\Delta u
 \]
 \[
-A=\left.\frac{\partial f}{\partial x}\right|_{x_0,u_0},\quad
-B=\left.\frac{\partial f}{\partial u}\right|_{x_0,u_0},\quad
-C=\left.\frac{\partial g}{\partial x}\right|_{x_0,u_0},\quad
-D=\left.\frac{\partial g}{\partial u}\right|_{x_0,u_0}
+A=\left.\frac{\partial f}{\partial x}\right|_0,\quad
+B=\left.\frac{\partial f}{\partial u}\right|_0,\quad
+C=\left.\frac{\partial g}{\partial x}\right|_0,\quad
+D=\left.\frac{\partial g}{\partial u}\right|_0
 \]
-The variables \(\Delta x=x-x_0\), \(\Delta u=u-u_0\), and \(\Delta y=y-y_0\) describe deviations around the operating point.
+The variables are deviations from the operating point.
 
 \subsubsection{State-space to transfer function}
 \[
 G(s)=C(sI-A)^{-1}B+D
 \]
-This formula maps a linearized state-space model to an input-output transfer function.
+Use this only after selecting the correct input and output channels.
 
-\subsection{Black-box modelling}
+\subsection{Exam recipe: RLC circuit transfer function}
 
-\subsubsection{Step-response static gain estimate}
-\[
-K_{\mathrm{ss}}\approx \frac{y_{\mathrm{ss}}-y_0}{u_{\mathrm{ss}}-u_0}
-\]
-The static gain can be estimated from steady-state input and output changes.
+\textbf{Use when:} the problem shows resistors, inductors, capacitors, and asks for \(V_{\mathrm{out}}/V_{\mathrm{in}}\) or a block diagram.
 
-\subsubsection{First-order time constant from data}
-\[
-y(t_0+\tau)=y_0+0.632\,(y_{\mathrm{ss}}-y_0)
-\]
-For a first-order response, the time constant is the time to reach \(63.2\%\) of the total step change.
+\textbf{Steps:}
+\begin{enumerate}
+\item Replace \(R,L,C\) by \(R,sL,1/(sC)\).
+\item Identify series and parallel equivalent impedances.
+\item Use the voltage divider or Kirchhoff equations.
+\item Simplify to a rational function in \(s\).
+\item Check low- and high-frequency limits.
+\end{enumerate}
+
+\textbf{Fast checks:} capacitors are open at DC and short at high frequency; inductors are short at DC and open at high frequency.
+
+\textbf{Common traps:} choosing the wrong output impedance in the voltage divider.
+
+\subsection{Exam recipe: coupled mass equations of motion}
+
+\textbf{Use when:} the problem asks for equations of motion or transfer function of masses, springs, and dampers.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Draw one free-body equation for each mass.
+\item Use relative displacement for springs and relative velocity for dampers.
+\item Apply \(\sum F=m\ddot{x}\) to each mass.
+\item Laplace transform with zero initial conditions.
+\item Solve the algebraic equations for the requested output/input ratio.
+\end{enumerate}
+
+\textbf{Fast checks:} internal spring and damper forces appear with opposite signs on the two connected masses.

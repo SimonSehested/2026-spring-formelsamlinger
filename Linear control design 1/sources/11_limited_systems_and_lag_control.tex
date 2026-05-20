@@ -1,6 +1,14 @@
 \section{Limited systems and Lag control}
 
-\subsection{Rate and amplitude limitations}
+\subsection{Ctrl+F keywords}
+
+\subsubsection{Saturation, rate limit, actuator limit, Lag, P-Lead-Lag, beta, begraensning}
+\[
+\text{amplitude limit, rate limit, windup, lag compensator, } \beta,N_i,\tau_i
+\]
+Use this section when the task includes actuator limits or a P-Lead-Lag controller.
+
+\subsection{Actuator limitations}
 
 \subsubsection{Amplitude saturation}
 \[
@@ -11,60 +19,77 @@ u(t), & u_{\min}\leq u(t)\leq u_{\max},\\
 u_{\min}, & u(t)<u_{\min}
 \end{cases}
 \]
-Amplitude saturation is nonlinear and can invalidate a linear controller design.
+Saturation is nonlinear and can invalidate a linear design.
 
 \subsubsection{Rate limitation}
 \[
 |\dot{u}(t)|\leq R_{\max}
 \]
-Rate limits restrict how quickly the input can change and can create slower or unstable closed-loop behavior.
+Rate limits prevent fast command changes and can reduce effective phase margin.
 
-\subsubsection{Integrator windup risk}
+\subsubsection{Integrator windup recognition}
 \[
 u_I(t)=\frac{K_P}{\tau_i}\int_0^t e(\xi)\,d\xi
 \]
-When the actuator saturates, the integral state can keep growing although the physical input cannot follow.
+If the actuator saturates while the integral state keeps growing, expect overshoot and slow recovery.
 
-\subsection{Mitigation strategies}
-
-\subsubsection{Anti-windup back-calculation}
-\[
-\dot{x}_I=e+\frac{1}{T_t}\bigl(u_{\mathrm{sat}}-u\bigr)
-\]
-Back-calculation reduces integral buildup when saturation separates requested input from applied input. % TODO: verify from source
-
-\subsubsection{Reference filtering for rate limits}
-\[
-F_r(s)=\frac{1}{\tau_f s+1}
-\]
-A prefilter can slow reference changes so that the commanded input respects rate limitations.
-
-\subsection{P-Lead-Lag control}
+\subsection{Lag controller}
 
 \subsubsection{Lag transfer function}
 \[
 C_{\mathrm{lag}}(s)=\frac{\tau_i s+1}{\frac{\tau_i}{\beta}s+1},\qquad \beta>1
 \]
-The lag part increases low-frequency gain relative to high-frequency gain without adding an integrator.
+Lag increases low-frequency gain relative to high-frequency gain without adding an integrator.
 
-\subsubsection{P-Lead-Lag transfer function}
+\subsubsection{P-Lead-Lag controller}
 \[
 C(s)=K_P
 \frac{\tau_d s+1}{\alpha\tau_d s+1}
 \frac{\tau_i s+1}{\frac{\tau_i}{\beta}s+1}
 \]
-P-Lead-Lag design can improve low-frequency accuracy while avoiding unlimited integral buildup.
+This controller combines phase lead with low-frequency gain shaping.
 
-\subsubsection{Lag phase contribution}
+\subsubsection{Lag phase contribution at crossover}
 \[
-\phi_L(\omega_c)=
+\phi_{\mathrm{lag}}(\omega_c)=
 \arctan\left(\frac{N_i(1-\beta)}{1+\beta N_i^2}\right),
 \qquad N_i=\omega_c\tau_i
 \]
-This expression appears in exam and slide design tasks for selecting the lag parameter \(\beta\).
+This formula is directly tied to the recurring P-Lead-Lag design task.
 
-\subsubsection{Non-zero steady-state error with Lag}
+\subsubsection{Lag steady-state error}
 \[
 e_{\mathrm{ss}}=\frac{1}{1+L(0)}
 \]
-A lag controller gives finite low-frequency gain, so zero step error is not guaranteed.
+Lag gives finite low-frequency gain, so zero step error is not automatic.
+
+\subsection{Exam recipe: solve for Lag parameter \(\beta\)}
+
+\textbf{Use when:} the problem gives a P-Lead-Lag controller and asks for \(\beta\) or lag phase.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Read or compute \(N_i=\omega_c\tau_i\).
+\item Determine the allowed or required lag phase \(\phi_{\mathrm{lag}}\).
+\item Insert \(N_i\) and \(\phi_{\mathrm{lag}}\) in the lag phase equation.
+\item Solve for \(\beta>1\).
+\item Check the resulting low-frequency gain and phase-margin loss.
+\end{enumerate}
+
+\textbf{Fast checks:} lag phase is negative; if the result gives \(\beta\leq1\), it is not a lag compensator.
+
+\textbf{Common traps:} treating Lag like PI; Lag has no pole at the origin and does not guarantee zero step error.
+
+\subsection{Exam recipe: recognize limit-induced design problems}
+
+\textbf{Use when:} the task asks why a linear design fails on a real actuator.
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Compare requested \(u(t)\) with amplitude limits.
+\item Compare requested \(\dot{u}(t)\) with rate limits.
+\item Check whether integral action continues during saturation.
+\item Reduce bandwidth, filter reference, or add anti-windup if limits dominate.
+\end{enumerate}
+
+\textbf{Fast checks:} large \(K_P\), derivative action, and fast prefilters tend to increase actuator demand.

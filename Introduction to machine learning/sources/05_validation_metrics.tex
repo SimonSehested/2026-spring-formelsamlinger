@@ -1,0 +1,58 @@
+\section*{Validation, metrics and ROC}
+\subsection*{Hold-out and K-fold}
+\[
+E_{\text{test}}=\frac1{|T|}\sum_{i\in T}L(y_i,\hat f(x_i)),\quad
+E_{\text{CV}}=\frac1K\sum_{k=1}^K E_k .
+\]
+\note{Condition} Preprocessing, feature selection, upsampling and model selection must be fit on training data only.
+\note{Trap} Test set is for final evaluation, not tuning.
+
+\subsection*{One-level vs two-level CV}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Purpose & Correct use\\ \midrule
+Model selection & Inner/one-level CV compares hyperparameters/models.\\
+Performance of selected procedure & Outer test folds in two-level CV.\\
+Train count & Outer folds $\times$ inner candidates/folds plus final fits if requested.\\
+\bottomrule
+\end{tabularx}
+\note{Trap} Reporting the best inner validation error is optimistically biased.
+
+\subsection*{Confusion matrix}
+For positive class:
+\[
+\begin{array}{c|cc}
+&\hat y=+&\hat y=-\\\hline
+y=+&TP&FN\\
+y=-&FP&TN
+\end{array}
+\]
+\[
+\begin{gathered}
+\text{Acc}=\frac{TP+TN}{N},\qquad
+\text{Recall/TPR}=\frac{TP}{TP+FN},\\
+\text{Precision}=\frac{TP}{TP+FP},\qquad
+\text{FPR}=\frac{FP}{FP+TN},\\
+\text{Specificity}=\frac{TN}{TN+FP},\qquad
+F_1=\frac{2PR}{P+R}.
+\end{gathered}
+\]
+\note{Trap} Always identify the positive class from the question. High accuracy can be useless with class imbalance.
+
+\subsection*{ROC and threshold}
+\[
+\text{ROC point at threshold }\tau=(\text{FPR}(\tau),\text{TPR}(\tau)).
+\]
+\note{Recipe} Sort scores high-to-low; lowering threshold adds predicted positives; update $TP$ or $FP$; plot $(FPR,TPR)$.
+\note{Check} Random classifier AUC $\approx0.5$; perfect AUC $=1$. ROC starts $(0,0)$ and ends $(1,1)$.
+
+\subsection*{Comparing regression models}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Statement & Check\\ \midrule
+``Always better'' & Need loss no larger on every relevant test point/fold.\\
+Mean vs median & Squared loss favors mean; absolute loss favors median.\\
+Overfit & Low training error, high validation/test error.\\
+Regularization choice & Pick lowest validation/CV error, not lowest training error.\\
+\bottomrule
+\end{tabularx}
