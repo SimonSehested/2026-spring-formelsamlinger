@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.12)  20 MAY 2026 11:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.12)  20 MAY 2026 17:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -531,34 +531,34 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 7
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [5]
 [6] [7]) (sources_combined_da/03_fourier.tex [8] [9])
-(sources_combined_da/04_laplace.tex [10]
-Underfull \hbox (badness 2393) in paragraph at lines 69--70
+(sources_combined_da/04_laplace.tex [10] [11]
+Underfull \hbox (badness 2393) in paragraph at lines 136--137
 []\T1/lmr/bx/n/9 Python-hjælp: \T1/lmr/m/n/9 Brug \T1/lmtt/m/n/9 scripts/lti/re
 sponses.py\T1/lmr/m/n/9 , funk-tio-nen \T1/lmtt/m/n/9 zero_input_laplace_second
 _order\T1/lmr/m/n/9 , når op-gaven giver
  []
 
-[11] [12]) (sources_combined_da/05_bode_filtre_butterworth.tex [13]
+[12]) (sources_combined_da/05_bode_filtre_butterworth.tex [13] [14]
 Underfull \hbox (badness 1609) in paragraph at lines 123--124
 []\T1/lmr/bx/n/9 Typiske fælder: \T1/lmr/m/n/9 spe-jlede venstre-/højre-halvpla
 nsnulpunkter kan give samme am-pli-tude men forskel-lig fase; højre-
  []
 
-[14]
+[15]
 Underfull \hbox (badness 1325) in paragraph at lines 183--184
 []\T1/lmr/bx/n/9 Python-hjælp: \T1/lmr/m/n/9 Brug \T1/lmtt/m/n/9 scripts/filter
 s/butterworth.py\T1/lmr/m/n/9 , funk-tio-nen \T1/lmtt/m/n/9 butterworth_poles_q
 \T1/lmr/m/n/9 , når op-gaven spørger efter
  []
 
-[15]) (sources_combined_da/06_sampling_adc_inamp.tex [16] [17]
+) (sources_combined_da/06_sampling_adc_inamp.tex [16] [17] [18]
 Underfull \hbox (badness 1603) in paragraph at lines 155--156
 []\T1/lmr/bx/n/9 Python-hjælp: \T1/lmr/m/n/9 Brug \T1/lmtt/m/n/9 scripts/circui
 ts/instrumentation.py\T1/lmr/m/n/9 , funk-tio-nen \T1/lmtt/m/n/9 instrumentatio
 n_gains\T1/lmr/m/n/9 , når op-gaven giver
  []
 
-) (sources_combined_da/99_python_hjaelpere.tex [18]
+) (sources_combined_da/99_python_hjaelpere.tex
 Underfull \hbox (badness 10000) in paragraph at lines 13--14
 []\T1/lmtt/m/n/9 scripts/lti/responses.py\T1/lmr/m/n/9 , \T1/lmtt/m/n/9 impulse
 _response_from_transfer\T1/lmr/m/n/9 ,
@@ -584,14 +584,14 @@ orth_poles_q\T1/lmr/m/n/9 , \T1/lmtt/m/n/9 frequency_scale_rc\T1/lmr/m/n/9 . Tj
 ek pas-bånd/stopbånd og rad/s-
  []
 
-
+[19]
 Underfull \hbox (badness 10000) in paragraph at lines 23--24
 []\T1/lmtt/m/n/9 scripts/circuits/instrumentation.py\T1/lmr/m/n/9 , \T1/lmtt/m/
 n/9 instrumentation_gains\T1/lmr/m/n/9 . Tjek single-$\OML/lmm/m/it/9 $\T1/lmr
 /m/n/9 -
  []
 
-) [19] (main_combined_da.aux)
+) [20] (main_combined_da.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
@@ -600,8 +600,8 @@ Package rerunfilecheck Info: File `main_combined_da.out' has not changed.
 (rerunfilecheck)             Checksum: D0E60CFA6C1AC600D68984B6FD65B908;13009.
  ) 
 Here is how much of TeX's memory you used:
- 10357 strings out of 467871
- 160429 string characters out of 5418376
+ 10362 strings out of 467871
+ 160706 string characters out of 5418376
  615082 words of memory out of 5000000
  38801 multiletter control sequences out of 15000+600000
  670991 words of font info for 68 fonts, out of 8000000 for 9000
@@ -626,9 +626,9 @@ es/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb><C:/Users/sehe
 s/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb>
 <C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbo
 ls/msbm10.pfb>
-Output written on main_combined_da.pdf (19 pages, 498416 bytes).
+Output written on main_combined_da.pdf (20 pages, 504547 bytes).
 PDF statistics:
- 732 PDF objects out of 1000 (max. 8388607)
- 272 named destinations out of 1000 (max. 500000)
+ 744 PDF objects out of 1000 (max. 8388607)
+ 277 named destinations out of 1000 (max. 500000)
  353 words of extra memory for PDF output out of 10000 (max. 10000000)
 

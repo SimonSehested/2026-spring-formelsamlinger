@@ -1,56 +1,56 @@
-\SymbolRow{\(a_n\) & cosinuskoefficient i trigonometrisk Fourierrække & samme som signal}{\hyperpage{8}}
-\SymbolRow{\(A_p\) & tilladt pasbåndsdæmpning & dB}{\hyperpage{12}}
-\SymbolRow{\(A_s\) & krævet stopbåndsdæmpning & dB}{\hyperpage{12}}
-\SymbolRow{\(b_n\) & sinuskoefficient i trigonometrisk Fourierrække & samme som signal}{\hyperpage{8}}
-\SymbolRow{\(CMRR\) & common-mode rejection ratio & dimensionsløs eller dB}{\hyperpage{15}}
-\SymbolRow{\(\delta (t)\) & Dirac-impuls med areal 1 & 1/s}{\hyperpage{3}}
-\SymbolRow{\(\Delta V_{\mathrm  {LSB}}\) & ADC-spænding per kode & V}{\hyperpage{2}, \hyperpage{15}}
-\SymbolRow{\(D_n\) & kompleks Fourierrækkekoefficient & samme som signal}{\hyperpage{8}}
-\SymbolRow{\(f\) & frekvens i cykler per sekund & Hz}{\hyperpage{3}}
-\SymbolRow{\(f_{\mathrm  {alias}}\) & observeret aliasfrekvens & Hz}{\hyperpage{15}}
-\SymbolRow{\(F_{\max }\) & højeste signalfrekvens & Hz}{\hyperpage{15}}
-\SymbolRow{\(f_p\) & pasbåndsfrekvens & Hz}{\hyperpage{12}}
-\SymbolRow{\(F_s\) & samplingsfrekvens & Hz}{\hyperpage{2}, \hyperpage{15}}
-\SymbolRow{\(f_s\) & stopbåndsfrekvens & Hz}{\hyperpage{12}}
-\SymbolRow{\(G_c\) & common-mode-forstærkning & V/V}{\hyperpage{15}}
-\SymbolRow{\(G_d\) & differentialforstærkning & V/V}{\hyperpage{15}}
-\SymbolRow{\(H(s)\) & overføringsfunktion i Laplace-domænet & afhænger af system}{\hyperpage{2}, \hyperpage{4}}
+\SymbolRow{\(a_n\) & cosinuskoefficient i trigonometrisk Fourierrække & samme som signal}{\hyperpage{9}}
+\SymbolRow{\(A_p\) & tilladt pasbåndsdæmpning & dB}{\hyperpage{13}}
+\SymbolRow{\(A_s\) & krævet stopbåndsdæmpning & dB}{\hyperpage{13}}
+\SymbolRow{\(b_n\) & sinuskoefficient i trigonometrisk Fourierrække & samme som signal}{\hyperpage{9}}
+\SymbolRow{\(CMRR\) & common-mode rejection ratio & dimensionsløs eller dB}{\hyperpage{16}}
+\SymbolRow{\(\delta (t)\) & Dirac-impuls med areal 1 & 1/s}{\hyperpage{4}}
+\SymbolRow{\(\Delta V_{\mathrm  {LSB}}\) & ADC-spænding per kode & V}{\hyperpage{3}, \hyperpage{16}}
+\SymbolRow{\(D_n\) & kompleks Fourierrækkekoefficient & samme som signal}{\hyperpage{9}}
+\SymbolRow{\(f\) & frekvens i cykler per sekund & Hz}{\hyperpage{4}}
+\SymbolRow{\(f_{\mathrm  {alias}}\) & observeret aliasfrekvens & Hz}{\hyperpage{16}}
+\SymbolRow{\(F_{\max }\) & højeste signalfrekvens & Hz}{\hyperpage{16}}
+\SymbolRow{\(f_p\) & pasbåndsfrekvens & Hz}{\hyperpage{13}}
+\SymbolRow{\(F_s\) & samplingsfrekvens & Hz}{\hyperpage{3}, \hyperpage{16}}
+\SymbolRow{\(f_s\) & stopbåndsfrekvens & Hz}{\hyperpage{13}}
+\SymbolRow{\(G_c\) & common-mode-forstærkning & V/V}{\hyperpage{16}}
+\SymbolRow{\(G_d\) & differentialforstærkning & V/V}{\hyperpage{16}}
+\SymbolRow{\(H(s)\) & overføringsfunktion i Laplace-domænet & afhænger af system}{\hyperpage{3, 4}}
 \SymbolRow{\(h(t)\) & impulsrespons & outputenhed per inputenhed per s}{\hyperpage{4}}
-\SymbolRow{\(H_{\mathrm  {dB}}\) & amplitudestørrelse i decibel & dB}{\hyperpage{12}}
-\SymbolRow{\(H(\mathrm  {j}\omega )\) & frekvensrespons & afhænger af system}{\hyperpage{2}, \hyperpage{12}}
-\SymbolRow{\(\mathrm  {j}\) & imaginær enhed, \(\mathrm  {j}^2=-1\) & dimensionsløs}{\hyperpage{3}}
-\SymbolRow{\(K\) & statisk eller skalerende forstærkning & afhænger af system}{\hyperpage{12}}
-\SymbolRow{\(n\) & filterorden eller harmonisk indeks efter kontekst & dimensionsløs}{\hyperpage{12}}
-\SymbolRow{\(N\) & antal ADC-bit & dimensionsløs}{\hyperpage{15}}
-\SymbolRow{\(\omega \) & vinkelfrekvens & rad/s}{\hyperpage{3}}
-\SymbolRow{\(\omega _0\) & grundvinkelfrekvens & rad/s}{\hyperpage{8}}
-\SymbolRow{\(\omega _c\) & modulations- eller knæk-vinkelfrekvens & rad/s}{\hyperpage{8}}
+\SymbolRow{\(H_{\mathrm  {dB}}\) & amplitudestørrelse i decibel & dB}{\hyperpage{13}}
+\SymbolRow{\(H(\mathrm  {j}\omega )\) & frekvensrespons & afhænger af system}{\hyperpage{3}, \hyperpage{13}}
+\SymbolRow{\(\mathrm  {j}\) & imaginær enhed, \(\mathrm  {j}^2=-1\) & dimensionsløs}{\hyperpage{4}}
+\SymbolRow{\(K\) & statisk eller skalerende forstærkning & afhænger af system}{\hyperpage{13}}
+\SymbolRow{\(n\) & filterorden eller harmonisk indeks efter kontekst & dimensionsløs}{\hyperpage{13}}
+\SymbolRow{\(N\) & antal ADC-bit & dimensionsløs}{\hyperpage{16}}
+\SymbolRow{\(\omega \) & vinkelfrekvens & rad/s}{\hyperpage{4}}
+\SymbolRow{\(\omega _0\) & grundvinkelfrekvens & rad/s}{\hyperpage{9}}
+\SymbolRow{\(\omega _c\) & modulations- eller knæk-vinkelfrekvens & rad/s}{\hyperpage{9}}
 \SymbolRow{\(\omega _d\) & dæmpet egenvinkelfrekvens & rad/s}{\hyperpage{4}}
 \SymbolRow{\(\omega _n\) & udæmpet egenvinkelfrekvens & rad/s}{\hyperpage{4}}
-\SymbolRow{\(\omega _s\) & samplingsvinkelfrekvens & rad/s}{\hyperpage{15}}
+\SymbolRow{\(\omega _s\) & samplingsvinkelfrekvens & rad/s}{\hyperpage{16}}
 \SymbolRow{\(p_k\) & pol nummer \(k\) & 1/s}{\hyperpage{4}}
-\SymbolRow{\(\angle H\) & fase af frekvensrespons & grader eller rad}{\hyperpage{12}}
+\SymbolRow{\(\angle H\) & fase af frekvensrespons & grader eller rad}{\hyperpage{13}}
 \SymbolRow{\(Q\) & kvalitetsfaktor & dimensionsløs}{\hyperpage{4}}
-\SymbolRow{\(r(t)=t u(t)\) & enhedsrampe & s}{\hyperpage{3}}
-\SymbolRow{ROC & konvergensområde for Laplace-transformation & ikke en fysisk enhed}{\hyperpage{10}}
-\SymbolRow{\(s=\sigma +\mathrm  {j}\omega \) & kompleks frekvens i Laplace-domænet & 1/s}{\hyperpage{3}}
-\SymbolRow{\(T\) & samplingstid eller samplingperiode & s}{\hyperpage{15}}
-\SymbolRow{\(t\) & tid & s}{\hyperpage{3}}
-\SymbolRow{\(T_0\) & grundperiode & s}{\hyperpage{8}}
-\SymbolRow{\(u(t)\) & enhedstrin & dimensionsløs}{\hyperpage{3}}
-\SymbolRow{\(\dot  y(0^-)\) & outputhastighed lige før \(t=0\) & output/s}{\hyperpage{10}}
-\SymbolRow{\(V_{\max }\) & øverste ADC-indgangsspænding & V}{\hyperpage{15}}
-\SymbolRow{\(V_{\min }\) & nederste ADC-indgangsspænding & V}{\hyperpage{15}}
-\SymbolRow{\(\omega _c\) & knæk- eller cutoff-vinkelfrekvens & rad/s}{\hyperpage{12}}
-\SymbolRow{\(x(t)\) & inputsignal & afhænger af signal}{\hyperpage{3}}
-\SymbolRow{\(X(s)\) & Laplace-transformation af input & signal gange s}{\hyperpage{2}, \hyperpage{10}}
-\SymbolRow{\(X(\omega )\) & Fourier-transformation af \(x(t)\) & signal gange s}{\hyperpage{8}}
-\SymbolRow{\(X_s(\omega )\) & spektrum af samplet signal & signal gange s}{\hyperpage{15}}
-\SymbolRow{\(x_s(t)\) & samplet signal & samme som signal}{\hyperpage{15}}
-\SymbolRow{\(y(t)\) & outputsignal & afhænger af signal}{\hyperpage{3}}
-\SymbolRow{\(y(0^-)\) & outputværdi lige før \(t=0\) & samme som output}{\hyperpage{10}}
-\SymbolRow{\(Y(s)\) & Laplace-transformation af output & signal gange s}{\hyperpage{2}, \hyperpage{10}}
-\SymbolRow{\(Y_{\mathrm  {zi}}(s)\) & egenrespons i Laplace-domænet & signal gange s}{\hyperpage{10}}
-\SymbolRow{\(Y_{\mathrm  {zs}}(s)\) & nul-start-respons i Laplace-domænet & signal gange s}{\hyperpage{10}}
+\SymbolRow{\(r(t)=t u(t)\) & enhedsrampe & s}{\hyperpage{4}}
+\SymbolRow{ROC & konvergensområde for Laplace-transformation & ikke en fysisk enhed}{\hyperpage{11}}
+\SymbolRow{\(s=\sigma +\mathrm  {j}\omega \) & kompleks frekvens i Laplace-domænet & 1/s}{\hyperpage{4}}
+\SymbolRow{\(T\) & samplingstid eller samplingperiode & s}{\hyperpage{16}}
+\SymbolRow{\(t\) & tid & s}{\hyperpage{4}}
+\SymbolRow{\(T_0\) & grundperiode & s}{\hyperpage{9}}
+\SymbolRow{\(u(t)\) & enhedstrin & dimensionsløs}{\hyperpage{4}}
+\SymbolRow{\(\dot  y(0^-)\) & outputhastighed lige før \(t=0\) & output/s}{\hyperpage{11}}
+\SymbolRow{\(V_{\max }\) & øverste ADC-indgangsspænding & V}{\hyperpage{16}}
+\SymbolRow{\(V_{\min }\) & nederste ADC-indgangsspænding & V}{\hyperpage{16}}
+\SymbolRow{\(\omega _c\) & knæk- eller cutoff-vinkelfrekvens & rad/s}{\hyperpage{13}}
+\SymbolRow{\(x(t)\) & inputsignal & afhænger af signal}{\hyperpage{4}}
+\SymbolRow{\(X(s)\) & Laplace-transformation af input & signal gange s}{\hyperpage{3}, \hyperpage{11}}
+\SymbolRow{\(X(\omega )\) & Fourier-transformation af \(x(t)\) & signal gange s}{\hyperpage{9}}
+\SymbolRow{\(X_s(\omega )\) & spektrum af samplet signal & signal gange s}{\hyperpage{16}}
+\SymbolRow{\(x_s(t)\) & samplet signal & samme som signal}{\hyperpage{16}}
+\SymbolRow{\(y(t)\) & outputsignal & afhænger af signal}{\hyperpage{4}}
+\SymbolRow{\(y(0^-)\) & outputværdi lige før \(t=0\) & samme som output}{\hyperpage{11}}
+\SymbolRow{\(Y(s)\) & Laplace-transformation af output & signal gange s}{\hyperpage{3}, \hyperpage{11}}
+\SymbolRow{\(Y_{\mathrm  {zi}}(s)\) & egenrespons i Laplace-domænet & signal gange s}{\hyperpage{11}}
+\SymbolRow{\(Y_{\mathrm  {zs}}(s)\) & nul-start-respons i Laplace-domænet & signal gange s}{\hyperpage{11}}
 \SymbolRow{\(z_i\) & nulpunkt nummer \(i\) & 1/s}{\hyperpage{4}}
 \SymbolRow{\(\zeta \) & dæmpningsfaktor & dimensionsløs}{\hyperpage{4}}

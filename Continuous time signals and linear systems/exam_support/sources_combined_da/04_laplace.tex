@@ -48,6 +48,61 @@ Hvis begyndelsesbetingelserne ikke er nul, indeholder \(Y(s)\) både \(H(s)X(s)\
 
 \subsection{Egenrespons og nul-start-respons, zero-input, zero-state}
 
+\subsubsection{Zero-input og zero-state}
+
+\paragraph{Zero-input, egenrespons.}
+Zero-input betyder: inputtet sættes til nul, men begyndelsesbetingelserne beholdes.
+\[
+x(t)=0,\qquad y(0^-)=y_0,\qquad \dot y(0^-)=v_0.
+\]
+Så fås
+\[
+Y_{\mathrm{zi}}(s)
+=
+\frac{s y_0+v_0+a_1y_0}{s^2+a_1s+a_0}.
+\]
+Denne del skyldes kun lagret energi eller begyndelsesbetingelser. Inputtet \(x(t)\) indgår ikke.
+
+\paragraph{Zero-state, nul-start-respons.}
+Zero-state betyder: begyndelsesbetingelserne sættes til nul, men inputtet beholdes.
+\[
+y(0^-)=0,\qquad \dot y(0^-)=0,\qquad x(t)\neq 0.
+\]
+Så fås
+\[
+Y_{\mathrm{zs}}(s)=H(s)X(s),
+\]
+hvor
+\[
+H(s)
+=
+\frac{b_2s^2+b_1s+b_0}{s^2+a_1s+a_0}.
+\]
+Altså:
+\[
+Y_{\mathrm{zs}}(s)
+=
+\frac{b_2s^2+b_1s+b_0}{s^2+a_1s+a_0}X(s).
+\]
+
+\paragraph{Total respons.}
+Den samlede respons er summen:
+\[
+Y(s)
+=
+\underbrace{\frac{s y_0+v_0+a_1y_0}{s^2+a_1s+a_0}}_{\text{zero-input}}
++
+\underbrace{\frac{b_2s^2+b_1s+b_0}{s^2+a_1s+a_0}X(s)}_{\text{zero-state}}.
+\]
+
+\textbf{Huskeregel:}
+\[
+\text{zero-input: input væk, startværdier med}
+\]
+\[
+\text{zero-state: startværdier væk, input med}
+\]
+
 \subsubsection{Responsopdeling}
 \[
 y(t)=y_{\mathrm{zi}}(t)+y_{\mathrm{zs}}(t),\qquad
