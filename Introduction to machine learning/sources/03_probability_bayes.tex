@@ -1,51 +1,53 @@
-\section*{Probability, Bayes and Naive Bayes}
-\subsection*{Probability rules}
+\section*{Probability and Bayes classification}
+\subsection*{Conditional probability and Bayes}
+\textbf{Purpose:} Update class probabilities after seeing attributes.
 \[
-\begin{gathered}
-P(A|B)=\frac{P(A,B)}{P(B)},\qquad P(A,B)=P(A|B)P(B),\\
-P(A)=\sum_cP(A|c)P(c).
-\end{gathered}
+P(A|B)=\frac{P(A,B)}{P(B)},\quad P(A)=\sum_cP(A|c)P(c),
 \]
 \[
-P(y=c|x)=\frac{P(x|y=c)P(y=c)}{\sum_{c'}P(x|y=c')P(y=c')}.
+P(y=c|x)=\frac{P(x|y=c)P(y=c)}
+{\sum_{c'}P(x|y=c')P(y=c')}.
 \]
-\note{Trap} Normalize over classes after computing unnormalized scores. Probabilities must sum to $1$.
+\textbf{Symbols:} $P(A|B)$ = probability of event $A$ given $B$; $x$ = observed attribute vector; $y$ = label; $P(y=c)$ = class prior; $P(x|y=c)$ = likelihood; $P(y=c|x)$ = posterior; $c'$ indexes candidate classes.
 
-\subsection*{Bayes classifier from counts}
-\[
-\hat P(y=c|x=a)=\frac{\#\{i:y_i=c,x_i=a\}}{\#\{i:x_i=a\}},\quad
-\hat y=\argmax_c \hat P(y=c|x).
-\]
-\note{Use} For exam tables with binary attributes and no independence assumption.
-\note{Trap} Condition on exactly the attributes named in the question.
+\textbf{Do this:} compute likelihood times prior for every class; sum scores; divide each score by the sum; select largest posterior.
 
-\subsection*{Naive Bayes}
+\subsection*{Counts and Naive Bayes}
+\textbf{Purpose:} Classify from categorical or binary attribute tables.
 \[
-\hat y=\argmax_c P(y=c)\prod_{m=1}^M P(x_m|y=c).
+\hat P(y=c|x=a)=
+\frac{\#\{i:y_i=c,x_i=a\}}{\#\{i:x_i=a\}},
 \]
-For binary attributes:
 \[
-\hat P(x_m=a|y=c)=\frac{\#\{i:x_{im}=a,y_i=c\}}{\#\{i:y_i=c\}}.
+\operatorname{score}(c)=P(y=c)\prod_{m=1}^MP(x_m|y=c).
 \]
-\note{Condition} Assumes conditional independence of attributes given class.
-\note{Trap} If any factor is zero, the product becomes zero unless smoothing is specified.
+\[
+P(y=c|x)=\frac{\operatorname{score}(c)}{\sum_{c'}\operatorname{score}(c')}.
+\]
+\textbf{Symbols/means:} $\#\{\cdot\}$ = number of matching rows; $a$ = specified attribute value; $x_m$ = attribute $m$; $\operatorname{score}(c)$ = unnormalized posterior. Naive Bayes factorizes the likelihood by conditional independence within class.
 
-\subsection*{Gaussian class density}
-\[
-p(x|c)=\frac{1}{(2\pi)^{M/2}|\Sigma_c|^{1/2}}
-\exp\!\left[-\frac12(x-\mu_c)^\top\Sigma_c^{-1}(x-\mu_c)\right].
-\]
-\note{Decision} Use largest $p(x|c)P(c)$; equal priors reduce to largest density.
-\note{Check} In 1D, larger variance gives wider/lower peak; far from mean gives smaller density.
+\textbf{How to read a probability table:} use the class row/column matching $c$ for each factor; posterior values are normalized class memberships and add to $1$.
 
-\subsection*{Log and numerical stability}
+\subsection*{Gaussian density classifier}
+\textbf{Purpose:} Assign continuous observations using class-specific centres and spreads.
 \[
-\log P(y=c|x)\propto \log P(y=c)+\sum_m\log P(x_m|y=c).
+\mathcal N(x|\mu,\Sigma)=
+\frac{\exp[-\tfrac12(x-\mu)^\top\Sigma^{-1}(x-\mu)]}
+{(2\pi)^{M/2}|\Sigma|^{1/2}},
 \]
-\note{Use} Products of many probabilities are easier to compare as log-sums.
+\[
+\hat y=\argmax_c\{\mathcal N(x|\mu_c,\Sigma_c)P(c)\}.
+\]
+\[
+\mathcal N(x|\mu,\sigma^2)=\frac1{\sqrt{2\pi}\sigma}
+\exp\!\left[-\frac{(x-\mu)^2}{2\sigma^2}\right].
+\]
+\textbf{Symbols:} $\mathcal N$ = Gaussian density; $\mu,\Sigma$ = centre and covariance, with subscript $c$ for a class; $|\Sigma|$ = determinant; $\Sigma^{-1}$ = inverse covariance; $\sigma$ = univariate standard deviation; $\hat y$ = predicted class; $\argmax_c$ selects the largest class score.
 
-\subsection*{Distributions recurring in density questions}
+\textbf{How to read density curves:} points near $\mu$ receive high density; larger variance creates a wider, lower curve. Density is a height, whereas posterior is a class probability.
+
+\subsection*{Log scores}
 \[
-\mathcal N(x|\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp\!\left[-\frac{(x-\mu)^2}{2\sigma^2}\right].
+\log\operatorname{score}(c)=\log P(c)+\sum_m\log P(x_m|c).
 \]
-\note{Trap} Kernel width $\sigma$ vs variance $\sigma^2$; exams may state ``variance $\sigma^2$''.
+\textbf{Symbols/use:} $\log$ = logarithm; $m$ indexes attributes. Use when many small factors are multiplied; the largest log-score gives the same class decision.

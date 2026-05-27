@@ -1,25 +1,23 @@
 # Exam task taxonomy
 
-| Task family | Recurring wording/cue | Required rule | Likely uncertainty | Sheet support | Priority |
+| Task family | Object shown / recurring cue | Calculation core | Interpretation required | Sheet location | Priority |
 |---|---|---|---|---|---|
-| Data/statistic matching | Histogram, boxplot, scatter matrix, correlation/covariance matrix | Standardization, covariance, correlation, visual sign/magnitude checks | Standardized vs raw units; sign and symmetry | `Exam format and data checks` | High |
-| PCA/SVD | SVD of standardized `X`, projection, explained variance, PC direction statements | `X=USV^T`, scores `XV`, EVR from singular values | Column vs row of `V`; PC sign; fewest components | `PCA and linear algebra` | Very high |
-| Bayes from counts | Conditional probability from binary table | Count numerator/denominator; Bayes normalization | Conditioning on wrong attributes; missing normalization | `Probability, Bayes and Naive Bayes` | Very high |
-| Naive Bayes | Binary item attributes, class prediction | Prior times conditional factors | Independence assumption; zero factors | `Probability, Bayes and Naive Bayes` | High |
-| Gaussian density/classifier | Multivariate normal contours/classes | Gaussian density and posterior score | Priors; variance vs standard deviation | `Probability, Bayes and Naive Bayes` | High |
-| Regression | Linear/ridge prediction, RMSE/MSE, regularization plot | Linear model, ridge, validation error | Intercept, standardized inputs, lambda direction | `Regression and classification models` | High |
-| Logistic regression | Probability from weights, boundary plots | Sigmoid, logit, threshold | Positive class, weight dimension, intercept | `Regression and classification models` | Very high |
-| KNN prediction | KNN regression/classification from distance table | Majority vote or mean of neighbours | Standardization and ties | `Regression and classification models` | Medium-high |
-| Validation | Hold-out, K-fold, leave-one-out, two-level CV | CV averaging and nesting | Test leakage; counting models | `Validation, metrics and ROC` | Very high |
-| Confusion/ROC | Compare classifiers, calculate TPR/FPR/precision/AUC | Confusion matrix formulas, ROC threshold update | Positive class and denominators | `Validation, metrics and ROC` | Very high |
-| Decision trees | Hunt split, purity gain, boundary plot | Impurity and weighted gain | Forget branch weights; class majority at leaf | `Decision trees, ensembles and ANN` | High |
-| AdaBoost | Weight update over rounds | Weighted error, alpha, increased weights for mistakes | Sign of alpha; misclassified weights | `Decision trees, ensembles and ANN` | Medium-high |
-| ANN forward pass | Given weights and activation | Hidden pre-activation, activation, output | Bias terms, activation range | `Decision trees, ensembles and ANN` | High |
-| K-means/hierarchical | Distance table, dendrogram, linkage | Assign/centroid update; linkage definitions | Cut height; linkage type | `Clustering and density/outliers` | High |
-| Cluster comparison | Rand/Jaccard from assignments | Pair counts | Including/excluding `f00` | `Clustering and density/outliers` | High |
-| GMM/KDE/outliers | Density plots, likelihood, outlier candidate | Mixture/KDE density, LOO density | Sum vs max; bandwidth; low density | `Clustering and density/outliers` | Very high |
-| KNN density/ARD | Outlier from distance table | Inverse average neighbour distance; ARD ratio | Excluding self; recomputing neighbour densities | `Clustering and density/outliers` | Very high |
-| Association mining | Frequent itemsets, rules, support/confidence/lift | Apriori and rule metrics | Superset pruning; confidence vs lift | `Association mining, text and final checks` | High |
-| Text/similarity | Cosine, Jaccard, sparse binary vectors | Cosine and Jaccard formulas | Shared zeros in sparse data | `Association mining, text and final checks` | Medium |
+| Standardize and identify summaries | Table, histogram, boxplot, scatter/correlation/distance matrix | `z=(x-mean)/s`, covariance/correlation, Euclidean/cityblock/max distance | Above/below mean; sign, spread and named distance | Data, summaries and distances | High |
+| Project with PCA | `S`, `V`, observations or PC plot | `Z=XV`, EVR from `s_k^2` | Columns are loadings; points are scores | PCA and SVD | Very high |
+| Classify from probabilities | Count/probability table or class density curve | Bayes/Naive Bayes/Gaussian score | Prior, likelihood, posterior, density height | Probability and Bayes classification | High |
+| Predict a number/class | Weight vector, new input, boundary diagram | Linear/ridge, sigmoid, KNN | Weight sign, threshold, local boundary | Prediction models and boundaries | Very high |
+| Choose/evaluate procedure | CV table and paired model errors | Fold mean error; McNemar; paired-loss CI | Validation selection, held-out estimate and evidence of difference | Validation and classifier output | Very high |
+| Evaluate binary scores | Confusion matrix or ROC diagram | TPR/FPR/precision/F1, ROC point | Positive class and curve axes | Validation and classifier output | Very high |
+| Calculate tree/ensemble output | Tree split, weighted labels, network diagram | Impurity gain, AdaBoost, ANN pass | Leaf output, observation weight, activation | Trees, ensembles and neural networks | High |
+| Form/read clusters | Centroid table or dendrogram | K-means and linkage, Rand/Jaccard | Cluster profile, merge height, agreement | Clustering, density and outliers | High |
+| Assign soft cluster/find outlier | GMM/KDE plot or distance table | Responsibility, KDE, KNN density, ARD | Membership strength and low local density | Clustering, density and outliers | Very high |
+| Mine sparse items/text | Basket/rule table or word vectors | Support/confidence/lift, Jaccard/cosine | Rule association and sparse similarity | Associations and sparse similarity | Medium-high |
 
-Selection principle used: include compact rules that prevent common multiple-choice traps, rather than rare formulas requiring large space.
+## Source anchoring
+
+- PCA/SVD, regression, validation/ROC and density keywords occur across all inspected solved exam-year groups.
+- Spring 2024 explicitly uses PCA, KDE, KNN density and GMM objects.
+- Fall 2023--Fall 2024 explicitly use logistic/linear regression, ANN/AdaBoost and model-output interpretation.
+- Spring/Fall 2018--2023 include dendrogram/clustering, density and association/similarity tasks.
+- Fall 2018 and related sets state ARD as an average of relative local-density ratios; the sheet follows that notation.
+- Fall 2019--Spring 2024 include McNemar and/or confidence-interval model-comparison objects; both binary and regression paired readings are supported.

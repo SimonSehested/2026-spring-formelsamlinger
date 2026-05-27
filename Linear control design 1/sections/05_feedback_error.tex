@@ -1,0 +1,84 @@
+\section{Feedback og stationær fejl}
+\label{sec:feedback}
+
+\subsection{Blokdiagramreduktion / feedback path, closed-loop transfer}
+
+\paragraph{Brug når}
+Et diagram viser flere forward branches, sensorfeedback eller en controller i
+feedbackgrenen.
+
+\paragraph{Input fra opgaven}
+Alle blokke, summationsfortegn og det præcise input/outputpar der efterspørges.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Sæt ikke-relevante uafhængige input til nul.
+\item Skriv signalrelationer fra summationspunkt til output og tilbage til summationspunkt.
+\item Identificer loopprodukt \(L\) og summer forward contributions i tælleren.
+\item Løs algebraisk for den ønskede ratio; forenkl først derefter.
+\end{enumerate}
+
+\paragraph{Formler}
+For standard negativ feedback med forward branch \(C(s)G(s)\) og sensor \(H(s)\):
+\[
+\frac{Y}{R}=\frac{CG}{1+CGH},\qquad
+\frac{E}{R}=\frac{1}{1+CGH}.
+\]
+
+\paragraph{Symboler}
+\(R,E,U,Y\) er reference, fejl, kontrolsignal og output; \(H\) er måleled.
+
+\paragraph{Antagelser}
+Formlerne gælder kun for det viste negative standardloop; ekstra feed-forward- eller
+disturbancegrene lægges ind som særskilte bidrag.
+
+\paragraph{Hurtigtjek}
+Sæt en sidegren lig nul og kontroller at resultatet reduceres til et kendt enkelt loop.
+
+\paragraph{Typiske fælder}
+At sætte en forward sidegren ind i loopnævneren eller anvende unity-feedbackformlen på
+en figur hvor gain ligger i målegrenen.
+
+\paragraph{Python}
+Ingen parser til diagrammet. Når du selv har reduceret til \(E/R=1/(1+KG)\), kan
+\code{unity\_feedback\_step\_error} kontrollere slutværdien.
+
+\subsection{Stationær referencefejl / final value, system type}
+
+\paragraph{Brug når}
+Der spørges om static/stationary/steady-state error efter step eller om systemtype.
+
+\paragraph{Input fra opgaven}
+Den udledte error transferfunktion, referenceform og bekræftelse af closed-loop-stabilitet.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Udled \(G_{er}(s)=E(s)/R(s)\) fra det konkrete diagram.
+\item Indsæt \(R(s)=1/s\) for unit step.
+\item Kontrollér closed-loop-poler.
+\item Beregn \(e_{\mathrm{ss}}=\lim_{s\to0}sE(s)\).
+\end{enumerate}
+
+\paragraph{Formler}
+\[
+e_{\mathrm{ss}}=\lim_{s\to0}sE(s),\qquad
+G_{er}(s)=S(s)=\frac1{1+L(s)}\quad\text{(negativ unity feedback)}.
+\]
+For stabil unity feedback: type 0 giver endelig normalt ikke-nul stepfejl; type 1
+giver nul stepfejl.
+
+\paragraph{Symboler}
+\(e_{\mathrm{ss}}\) er endelig fejl; systemtype er antal rene integratorer i \(L(s)\).
+
+\paragraph{Antagelser}
+Final value theorem kræver asymptotisk stabilt closed loop for den betragtede respons.
+
+\paragraph{Hurtigtjek}
+F21 Q16: \(G(0)=2\), \(K_P=2\), derfor \(e_{\mathrm{ss}}=1/(1+4)=0.2\).
+
+\paragraph{Typiske fælder}
+At beregne \(Y/R\) når opgaven spørger om \(E/R\), eller at bruge en ikke-endelig DC-gain.
+
+\paragraph{Python}
+\code{unity\_feedback\_step\_error(num,den,proportional\_gain)} kontrollerer
+standardloopet og afviser ustabil slutværdi; signalvejen er stadig manuel.

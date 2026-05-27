@@ -1,61 +1,67 @@
-\section*{Regression and classification models}
+\section*{Prediction models and boundaries}
 \subsection*{Linear and ridge regression}
-Augment with intercept: $\tilde x=[1,x_1,\ldots,x_M]$.
+\textbf{Purpose:} Predict a continuous response as a weighted sum of attributes.
 \[
-\hat y=\tilde x^\top w,\quad
-w_{\text{LS}}=(X^\top X)^{-1}X^\top y,\quad
-w_{\lambda}=(X^\top X+\lambda I)^{-1}X^\top y.
+\bar x=[1,x_1,\ldots,x_M]^\top,\quad X_a=[\mathbf 1,X],\quad
+\hat y=\bar x^\top w,
 \]
-\note{Trap} Usually do not regularize intercept. Larger $\lambda$ shrinks weights; predictions move toward intercept/mean.
-\note{Check} Weight vector length must match augmented input dimension.
+\[
+w_{\rm LS}=(X_a^\top X_a)^{-1}X_a^\top y,\qquad
+D=\operatorname{diag}(0,1,\ldots,1),
+\]
+\[
+w_\lambda=(X_a^\top X_a+\lambda D)^{-1}X_a^\top y .
+\]
+\textbf{Symbols:} $\bar x$ = input with leading constant $1$; $X_a=[\mathbf1,X]$ = design matrix with intercept column; $w$ = coefficient vector; $w_{\rm LS}$ = least-squares fit; $w_\lambda$ = ridge fit; $w_0$ = intercept; $w_j$ = change per unit $x_j$; $y$ = response vector; $D$ excludes the intercept from penalty; $\lambda$ = shrinkage strength.
 
-\subsection*{Regularization and feature selection}
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\toprule
-Method & Exam rule\\ \midrule
-Ridge & Penalizes $\sum_{j>0}w_j^2$; keeps all features but shrinks.\\
-Forward selection & Start empty, add feature giving best validation error.\\
-Backward selection & Start full, remove feature giving best validation error.\\
-Polynomial/log features & Still linear in weights, nonlinear in original inputs.\\
-\bottomrule
-\end{tabularx}
-\note{Trap} Selection must be inside validation loop when estimating generalization.
+\textbf{How to read weights:} for standardized attributes, larger $|w_j|$ indicates stronger linear influence on predictions. Increasing $\lambda$ pulls non-intercept weights toward zero.
+\[
+E_\lambda(w)=\sum_i(y_i-\bar x_i^\top w)^2+
+\lambda\sum_{j=1}^Mw_j^2 .
+\]
+\textbf{Symbols/do this:} $E_\lambda$ = penalized training cost. Compute residual squares; add the penalty from non-intercept coefficients; use validation error to choose $\lambda$.
 
 \subsection*{Logistic regression}
+\textbf{Purpose:} Map a weighted input score to probability of the positive class.
 \[
-\hat p=P(y=1|x)=\sigma(\tilde x^\top w)=\frac{1}{1+e^{-\tilde x^\top w}},
-\quad \hat y=\ind[\hat p\ge \tau].
+a=\bar x^\top w,\qquad
+\hat p=P(y=1|x)=\sigma(a)=\frac1{1+e^{-a}},
 \]
 \[
-\log\frac{\hat p}{1-\hat p}=\tilde x^\top w .
+\hat y=\ind[\hat p\ge\tau],
 \]
-\note{Boundary} At $\tau=0.5$, decision boundary is $\tilde x^\top w=0$.
-\note{Trap} Positive class depends on problem statement, e.g. $y=2$ may be positive.
+\[
+\log\frac{\hat p}{1-\hat p}=\bar x^\top w.
+\]
+\textbf{Symbols:} $a$ = linear score/log-odds; $\hat p$ = predicted positive-class probability; $\sigma$ = sigmoid; $\tau$ = decision threshold; $\ind[\cdot]$ = $1$ when its condition holds and $0$ otherwise.
+\textbf{How to read it:} positive $w_j$ raises the log-odds as $x_j$ increases. At $\tau=0.5$, the decision boundary satisfies $\bar x^\top w=0$.
+
+\textbf{Do this:} insert attributes including intercept; compute $a$; convert with sigmoid; compare with stated threshold and class definition.
 
 \subsection*{K-nearest neighbours}
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\toprule
-Task & Prediction\\ \midrule
-Classification & Majority vote among $K$ nearest; ties require stated rule.\\
-Regression & Mean of neighbours' $y$ values.\\
-Complexity & Small $K$: flexible/high variance. Large $K$: smoother/high bias.\\
-\bottomrule
-\end{tabularx}
-\note{Trap} Distance is computed in input space only; standardization can change neighbours.
-
-\subsection*{Multiclass and one-vs-all}
+\textbf{Purpose:} Predict from nearby training observations in input space.
 \[
-\hat p_c=\frac{e^{a_c}}{\sum_j e^{a_j}},\quad \hat y=\argmax_c \hat p_c.
+\hat y_{\rm reg}(x)=\frac1K\sum_{i\in N_K(x)}y_i,
 \]
-\note{Check} Softmax probabilities sum to $1$. Binary logistic is the two-class special case.
+\[
+\hat y_{\rm class}(x)=\argmax_c\sum_{i\in N_K(x)}\ind[y_i=c].
+\]
+\textbf{Symbols:} $N_K(x)$ = the $K$ closest training points to new input $x$; $\hat y_{\rm reg}$ = neighbour-response mean; $\hat y_{\rm class}$ = class with most neighbour votes; $\ind[y_i=c]$ counts votes for class $c$.
 
-\subsection*{Model recognition from decision boundary}
+\textbf{How to read it:} small $K$ produces local, irregular boundaries; larger $K$ averages more neighbours and yields smoother predictions.
+
+\subsection*{Multiclass scores and boundary plots}
+\[
+p_c=\frac{e^{a_c}}{\sum_je^{a_j}},\qquad \hat y=\argmax_cp_c .
+\]
+\textbf{Symbols:} $a_c$ = score for class $c$; $p_c$ = softmax class probability; $j$ in the denominator runs over classes; $\hat y$ = class with greatest probability.
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-Boundary/behavior & Likely model\\ \midrule
-Straight line/plane & Logistic or linear classifier.\\
-Axis-aligned steps & Decision tree.\\
-Voronoi-like jagged regions & KNN, especially small $K$.\\
-Smooth curved boundary & Feature transform, ANN, kernel/GMM.\\
+\textbf{Boundary appearance} & \textbf{Model reading}\\ \midrule
+Straight line/plane & Linear score, e.g. logistic regression.\\
+Axis-aligned regions & A decision tree splits one attribute per node.\\
+Irregular local cells & KNN prediction follows nearby observations.\\
+Smooth curved region & Nonlinear features or neural network.\\
 \bottomrule
 \end{tabularx}
+\textbf{Means:} softmax converts one score per class to probabilities summing to $1$.

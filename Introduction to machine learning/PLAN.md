@@ -1,14 +1,12 @@
 # PLAN.md
 
-Build or rewrite a universal printed 4-page A4 exam backup sheet in LaTeX.
-
-The plan must work for any course where the project provides exams, lectures, exercises, or similar source material.
-
-Do not assume any specific subject in advance.
+Build or rewrite a universal printed 4-page A4 formula-and-interpretation exam sheet in LaTeX.
 
 The final compiled PDF must be exactly 4 A4 pages.
 
-The sheet is for physical printing, not digital search.
+The sheet must contain formulas, but formulas must be paired with short explanations in words. The student should be able to calculate and also understand what symbols, plots, matrices, axes, probabilities, weights, loadings, scores, clusters, densities, and metrics mean.
+
+This is not a pure formula collection, not lecture notes, and not an exam-strategy sheet.
 
 ## Phase 1: Inspect project structure
 
@@ -35,13 +33,12 @@ From the available source material:
 
 - infer the course title
 - infer the main topics
-- infer the lecture or topic order
 - infer standard notation and terminology
-- infer the exam format
-- infer recurring problem types
-- infer recurring mistakes or ambiguity points
-- infer which formulas are repeatedly needed
-- infer which conditions, assumptions, sign conventions, and checks are high-value
+- infer recurring exam problem types
+- infer recurring objects shown in problems, such as plots, matrices, tables, boundaries, outputs, and diagrams
+- infer which formulas are repeatedly needed for calculation
+- infer which symbol meanings and output interpretations are repeatedly needed
+- infer which short procedures are useful under exam conditions
 
 Write findings to:
 
@@ -51,21 +48,38 @@ If the `reports/` folder does not exist, create it.
 
 Keep this report concise. It is a working note, not part of the 4-page sheet.
 
-## Phase 3: Build exam uncertainty taxonomy
+Do not prioritize exam-format descriptions or guessing strategy.
+
+## Phase 3: Build object-and-task taxonomy
 
 Inspect exam and exercise problems.
 
-Group problems by what the student is likely to become uncertain about during the exam.
+Group problems by the objects and tasks the student must handle, for example:
 
-For each task or uncertainty type, record:
+- read a covariance/correlation matrix
+- match plots to statistics
+- read a PCA loading matrix
+- interpret score/loading/biplot plots
+- compute explained variance
+- compute Bayes or Naive Bayes posterior probabilities
+- interpret Gaussian densities
+- compute regression or logistic predictions
+- read decision boundaries
+- compute confusion-matrix metrics
+- read ROC curves
+- assign clusters with k-means, hierarchical clustering, or GMM
+- compute density/outlier scores
+- compute association-rule measures
+- compute text/vector similarities
+
+For each task type, record:
 
 - recurring problem wording
-- required formula or rule
-- when the formula applies
-- assumptions and conditions
-- sign conventions
-- common traps
-- fast plausibility checks
+- object shown in the problem
+- required formula
+- needed symbol meanings
+- needed interpretation in words
+- shortest calculation procedure
 - source problems that use this task type
 - priority for inclusion on a 4-page sheet
 
@@ -81,31 +95,48 @@ Before writing the sheet, rank candidate content.
 
 Use this priority order:
 
-1. Recurring exam methods and formulas.
-2. Formulas where misuse causes wrong answers.
-3. Conditions, assumptions, domains, signs, units, and boundary cases.
-4. Short exam recipes for common task types.
-5. Fast sanity checks.
-6. Definitions that prevent ambiguity.
+1. Recurring formulas needed for calculation.
+2. Short explanations that make those formulas usable.
+3. Interpretation of recurring plots, matrices, tables, and outputs.
+4. Short procedures for recurring task types.
+5. Symbol explanations for confusing notation.
+6. Compact method-selection cues.
 7. Rare formulas only if there is remaining space.
+
+Explicitly deprioritize:
+
+- `Trap:` sections
+- exam-format descriptions
+- guessing strategies
+- long warnings
+- proofs
+- long derivations
+- generic checklist material
 
 Mark low-value or rare content as excluded rather than forcing it into the sheet.
 
-Do not optimize for complete lecture coverage.
-
-## Phase 5: Propose formula sheet structure
+## Phase 5: Propose sheet structure
 
 Create a proposed list of `.tex` files for the formula sheet.
 
-Use one file per major topic, method group, or recurring task family.
+Use one file per major topic, method group, or recurring object family.
 
-Prefer a structure that makes the printed sheet fast to browse visually.
+Prefer organization by what the student sees in problems, not only by lecture topic.
+
+A useful structure may include:
+
+- data, plots, matrices, standardization
+- PCA/SVD and dimensionality reduction outputs
+- probability, Bayes, densities, regression, classification
+- validation, metrics, ROC, model interpretation
+- trees, ANN, ensembles, decision boundaries
+- clustering, density, outliers, association rules, text similarity
 
 Record the proposed structure in:
 
 - `reports/coverage_report.md`
 
-A good structure should fit naturally into exactly 4 pages.
+The structure must fit naturally into exactly 4 pages.
 
 ## Phase 6: Prepare LaTeX structure
 
@@ -121,7 +152,7 @@ Recommended starting point:
 
 ```tex
 \documentclass[9pt,a4paper]{article}
-\usepackage[a4paper,margin=0.8cm]{geometry}
+\usepackage[a4paper,margin=0.75cm]{geometry}
 \usepackage{multicol}
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{enumitem}
@@ -133,63 +164,55 @@ Recommended starting point:
 \setlength{\parskip}{1pt}
 \setlength{\columnsep}{0.45cm}
 \setlist{nosep,leftmargin=*}
+\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
+\setlength{\abovedisplayshortskip}{1pt}
+\setlength{\belowdisplayshortskip}{1pt}
 ```
 
-Use 2 or 3 columns depending on readability and page count.
+Use 2 or 3 columns depending on readability.
 
 ## Phase 7: Draft the 4-page sheet
 
-For each topic or task family:
+For each topic or task family, include:
 
-- keep formulas needed for solving recurring problems
-- keep definitions needed to avoid ambiguity
-- include when-to-use conditions
-- include assumptions
-- include sign conventions
-- include common traps
-- include one-line plausibility checks
-- include compact exam recipes
-- use terminology from the source material
-- avoid long explanations
+- purpose in one short sentence
+- formulas needed for calculation
+- short word explanation of what each formula does
+- symbol meanings only where needed
+- how to read related plots, matrices, tables, and outputs
+- short procedure for typical exam tasks
 
-The document should read like a printed exam safety net, not like notes.
-
-Use compact labels:
-
-- `Formula`
-- `Use`
-- `Condition`
-- `Trap`
-- `Check`
-- `Units`
-- `Sign`
-- `Boundary`
-- `Recipe`
-
-## Phase 8: Add compact recipes
-
-For every recurring problem type that deserves space, add a compact recipe.
-
-Use this format when useful:
+Use this compact block format when useful:
 
 ```tex
-\subsection*{Task: task name}
-
-\textbf{Use:} recognition cue.
-
-\begin{enumerate}[leftmargin=*,nosep]
-    \item Step 1.
-    \item Step 2.
-    \item Step 3.
-\end{enumerate}
-
-\textbf{Trap:} ...
-\textbf{Check:} ...
+\subsection*{Object or method}
+\textbf{Purpose:} ...
+\textbf{Formulas:} ...
+\textbf{Symbols:} ...
+\textbf{How to read it:} ...
+\textbf{Do this:} ...
 ```
 
-Keep each recipe short and actionable.
+Do not write `Trap:` sections.
 
-Do not add generic recipes that are not supported by the source material.
+Do not include exam-format or guessing-strategy sections.
+
+## Phase 8: Add compact calculation-and-reading recipes
+
+For every recurring task that deserves space, add a recipe that includes both computation and interpretation.
+
+Example structure:
+
+```tex
+\subsection*{Task: read a PCA loading matrix}
+\textbf{Formulas:} $\tilde X=USV^\top$, $Z=\tilde XV$.
+\textbf{Symbols:} column $k$ of $V$ is PC $k$; entries are loadings for original variables.
+\textbf{How to read it:} large absolute values show variables that define the PC; signs show direction along the PC.
+\textbf{Do this:} choose the column; find largest absolute loadings; use signs to describe positive/negative direction.
+```
+
+Keep recipes short, normally 2--4 steps.
 
 ## Phase 9: Add visual navigation layer
 
@@ -198,15 +221,15 @@ Audit the sheet for paper usability.
 Ensure:
 
 - clear topic headings
-- consistent formatting
-- compact tables where useful
+- consistent block labels
+- compact tables for object interpretation
+- formulas are easy to spot
+- explanations sit close to the relevant formulas
+- matrix and plot reading rules are visually findable
 - no dense paragraphs
-- enough visual separation between topics
-- important formulas are easy to spot
-- high-risk traps and conditions stand out
-- the student can quickly flip to the right area
+- no large warning/checklist sections
 
-Do not add keyword-only headings for Ctrl+F.
+Do not optimize for digital search.
 
 ## Phase 10: Compile and measure page count
 
@@ -218,37 +241,39 @@ The PDF must be exactly 4 pages.
 
 If the PDF is longer than 4 pages:
 
-- compress prose
-- merge formulas
-- remove low-priority content
-- replace lists with tables
-- remove repeated explanations
+- shorten word explanations
+- merge related blocks
+- replace lists with compact tables
+- remove low-priority topics
+- remove warning-only content
+- remove exam-format material
+- reduce repeated symbol explanations
 - reduce spacing carefully
-- adjust columns and margins if readability remains acceptable
 
 If the PDF is shorter than 4 pages:
 
-- add high-value exam backup material
-- add traps
-- add checks
-- add conditions
-- add boundary cases
-- add notation reminders
-- add compact recipes
-- add recurring formula variants
+- add high-value formulas
+- add short formula explanations
+- add plot/matrix/output interpretation
+- add symbol meanings
+- add compact task recipes
+
+Do not fill space with traps, guessing, or exam-format strategy.
 
 Repeat until the compiled PDF is exactly 4 pages.
 
-## Phase 11: Exam verification under page budget
+## Phase 11: Verification under page budget
 
 Inspect each exam and exercise set again.
 
 For each problem, map it to:
 
 - problem type
-- required formulas or methods
-- likely uncertainty points
-- whether the sheet supports it
+- object shown
+- required formula
+- required interpretation
+- whether the sheet supports calculation
+- whether the sheet supports reading/interpretation
 - whether missing content is worth including
 - whether missing content is excluded due to page budget
 
@@ -258,10 +283,10 @@ Update:
 
 Suggested table:
 
-| Source | Problem | Required concept | Support on 4-page sheet | Missing? | Include/exclude decision |
-|---|---|---|---|---|---|
+| Source | Problem | Object/method | Formula needed | Interpretation needed | Support on 4-page sheet | Missing? | Include/exclude decision |
+|---|---|---|---|---|---|---|---|
 
-If a recurring high-value uncertainty is missing, add or improve a compact rule, formula, trap, or recipe and recompile.
+If a recurring high-value formula or interpretation is missing, add or improve a compact block and recompile.
 
 If rare content is missing, mark it as excluded.
 
@@ -270,11 +295,14 @@ Do not exceed 4 pages.
 ## Phase 12: Final cleanup
 
 - Remove unnecessary duplication.
-- Ensure notation is consistent with the source material.
+- Ensure notation is consistent with source material.
+- Ensure formulas and explanations are paired.
 - Ensure headings support fast visual lookup.
 - Ensure recipes are short.
 - Ensure the document is readable when printed.
-- Ensure the document is not lecture-note style.
+- Ensure no `Trap:` sections remain.
+- Ensure no exam-format or guessing section remains.
+- Ensure no long derivation remains.
 - Ensure `main.tex` includes all generated files.
 - Compile one final time.
 - Confirm the final PDF is exactly 4 pages.
@@ -296,8 +324,9 @@ Do not stop after planning.
 
 The task is complete only when:
 
-- the formula sheet has been rewritten or generated
+- the formula-and-interpretation sheet has been rewritten or generated
+- formulas and short explanations are both present
 - the LaTeX document compiles
 - the compiled PDF is exactly 4 A4 pages
 - the document is visually usable on paper
-- the exam verification report maps problems to the sheet or explicitly excludes them due to page budget
+- the verification report maps problems to the sheet or explicitly excludes them due to page budget

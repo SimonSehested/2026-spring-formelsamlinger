@@ -1,0 +1,96 @@
+\section{Controllerdesign}
+\label{sec:pilead}
+
+\subsection{PI-Lead design / phase boost, \(\alpha\), \(N_i\)}
+
+\paragraph{Brug når}
+Opgaven angiver PI-Lead-form, ønsket crossover \(\omega_c\), phase margin
+\(\gamma_M\) og enten \(N_i\) eller en tilsvarende placering af PI-zero.
+
+\paragraph{Input fra opgaven}
+Plant \(G(s)\), \(\omega_c\), \(\gamma_M\), \(N_i=\omega_c\tau_i\), og om leadboost
+skal placeres maksimalt ved crossover.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Beregn \(\tau_i=N_i/\omega_c\) og \(\phi_{PI}=\arctan(N_i)-90^\circ\).
+\item Evaluer \(\phi_G=\angle G(\mathrm{j}\omega_c)\).
+\item Løs \(\phi_{\mathrm{lead}}=-180^\circ+\gamma_M-\phi_G-\phi_{PI}\).
+\item Beregn \(\alpha\) og \(\tau_d\) med leadmaksimum ved \(\omega_c\).
+\item Bestem \(K_P\) fra magnitudebalancen og kontrollér loopmålet.
+\end{enumerate}
+
+\paragraph{Formler}
+\[
+C(s)=K_P\frac{\tau_i s+1}{\tau_i s}
+          \frac{\tau_d s+1}{\alpha\tau_d s+1},\qquad 0<\alpha<1,
+\]
+\[
+\phi_{\max}=\sin^{-1}\!\left(\frac{1-\alpha}{1+\alpha}\right),\quad
+\alpha=\frac{1-\sin\phi_{\max}}{1+\sin\phi_{\max}},\quad
+\tau_d=\frac1{\omega_c\sqrt{\alpha}},
+\]
+\[
+\left|C(\mathrm{j}\omega_c)G(\mathrm{j}\omega_c)\right|=1 .
+\]
+
+\paragraph{Symboler}
+\(K_P\) er proportionalgain; \(\tau_i,\tau_d\) [s] er tidskonstanter;
+\(\alpha\) og \(N_i\) er dimensionsløse.
+
+\paragraph{Antagelser}
+PI anvendes fordi integratorens stationære fordel ønskes; leadboostets maximum
+placeres ved ønsket crossover; plantmodellen er gyldig omkring operationen.
+
+\paragraph{Hurtigtjek}
+\(0<\alpha<1\), positive tidskonstanter og gain; det beregnede loop skal have
+magnitude 1 og fase \(-180^\circ+\gamma_M\) ved \(\omega_c\).
+
+\paragraph{Typiske fælder}
+At glemme den negative PI-fase eller at bruge grader som radianer. F21 Q18's
+solutiontekst og direkte TF-evaluering afviger lidt i plantfasen, men begge vælger
+\(\alpha\approx0.08\), \(K_P\approx200\).
+
+\paragraph{Python}
+\code{design\_pi\_lead\_at\_crossover(num,den,omega\_c,phase\_margin\_deg,n\_i)}
+udfører netop ovenstående beregning og returnerer targetchecks. Vælg ikke controllerstruktur
+eller crossover blindt ud fra outputtet.
+
+\subsection{P-gain fra margin / proportional controller design}
+
+\paragraph{Brug når}
+Der skal findes et \(K_P\) ud fra en ønsket phase margin eller stabilitetsgrænse.
+
+\paragraph{Input fra opgaven}
+Plantens magnitude/fase eller analytiske \(G(s)\), samt ønsket margin.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Find frekvensen hvor plantfasen er \(-180^\circ+\gamma_M\).
+\item Aflæs eller beregn magnitude \(M\) dér.
+\item Sæt \(K_P=1/M\), eller brug gain-margininterval ved stabilitetsgrænsen.
+\item Kontrollér closed-loop-stabilitet og stationær fejl.
+\end{enumerate}
+
+\paragraph{Formler}
+\[
+\angle G(\mathrm{j}\omega_c)=-180^\circ+\gamma_M,\qquad
+K_P=\frac1{|G(\mathrm{j}\omega_c)|}.
+\]
+
+\paragraph{Symboler}
+\(K_P\) er dimensionsløs gain i opgavernes normalisering; \(\gamma_M\) måles i grader.
+
+\paragraph{Antagelser}
+Positiv P-gain påvirker kun magnitude, og plantens stabilitetsforudsætninger skal
+stemme med det anvendte Bodeargument.
+
+\paragraph{Hurtigtjek}
+F21 Q6: \(38.9\) dB kræver \(K_P\approx88\), ikke 38.9.
+
+\paragraph{Typiske fælder}
+At acceptere marginal gain som stabilt eller at overse type-0 stationær fejl.
+
+\paragraph{Python}
+\code{evaluate\_transfer\_function} og \code{closed\_loop\_poles} kan kontrollere
+en analytisk beregning, men kan ikke aflæse Bodefiguren.

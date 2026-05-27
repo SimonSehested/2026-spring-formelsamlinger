@@ -1,64 +1,70 @@
-\section*{Association mining, text and final checks}
-\subsection*{Association rules}
-For itemset $X$ and rule $X\to Y$:
+\section*{Associations and sparse similarity}
+\subsection*{Association rules and Apriori}
+\textbf{Purpose:} Quantify which items co-occur and form frequent rules.
 \[
-\operatorname{supp}(X)=\frac{\#(X)}{N},\quad
-\operatorname{conf}(X\to Y)=\frac{\operatorname{supp}(X\cup Y)}{\operatorname{supp}(X)},
+\operatorname{supp}(X)=\frac{\#(X)}N,
 \]
 \[
-\operatorname{lift}(X\to Y)=\frac{\operatorname{conf}(X\to Y)}{\operatorname{supp}(Y)}.
+\operatorname{conf}(X\to Y)=\frac{\operatorname{supp}(X\cup Y)}
+{\operatorname{supp}(X)},
 \]
-\note{Condition} $X$ and $Y$ disjoint. High confidence can be uninteresting if $Y$ is common; use lift.
-\note{Check} Confidence in $[0,1]$; support of larger itemset cannot exceed support of subset.
+\[
+\operatorname{lift}(X\to Y)=\frac{\operatorname{conf}(X\to Y)}
+{\operatorname{supp}(Y)}.
+\]
+\textbf{Symbols:} $X$ = antecedent itemset; $Y$ = consequent itemset; $\#(X)$ = baskets containing $X$; $N$ = number of baskets; $\operatorname{supp}$ = support; $\operatorname{conf}$ = confidence; lift compares observed confidence with baseline support of $Y$. For a rule, $X,Y$ are disjoint.
 
-\subsection*{Apriori}
-\note{Recipe} Generate candidates of size $k$ from frequent $(k-1)$-itemsets; prune any candidate with an infrequent subset; count support; keep those above minimum support.
-\note{Trap} If an itemset is infrequent, every superset is infrequent.
+\textbf{How to read a rule table:} support is prevalence of all rule items; confidence is conditional frequency of $Y$ among baskets with $X$; lift $>1$ indicates more co-occurrence than expected from $Y$'s frequency.
 
-\subsection*{Binary similarity}
+\textbf{Do this:} count $X$, $Y$ and $X\cup Y$; calculate support/confidence/lift; for Apriori, keep itemsets meeting support and extend only retained sets.
+
+\subsection*{Binary attributes and Jaccard}
 \[
 \begin{array}{c|cc}
 &b=1&b=0\\\hline
 a=1&f_{11}&f_{10}\\
 a=0&f_{01}&f_{00}
 \end{array}
+\qquad
+J(a,b)=\frac{f_{11}}{f_{11}+f_{10}+f_{01}},
 \]
 \[
-J(a,b)=\frac{f_{11}}{f_{11}+f_{10}+f_{01}},\quad
-\text{SMC}=\frac{f_{11}+f_{00}}{M}.
+\operatorname{SMC}=\frac{f_{11}+f_{00}}M.
 \]
-\note{Trap} Jaccard ignores shared zeros; useful for sparse baskets/text.
+\textbf{Symbols/means:} $a,b$ = two binary vectors; $f_{rs}$ = number of attributes having values $r$ in $a$ and $s$ in $b$; $M$ = attribute count; $J$ = Jaccard; SMC = simple matching coefficient. Jaccard ignores shared absences; SMC counts both agreements.
 
-\subsection*{Text vectors}
+\textbf{Use when:} Jaccard suits sparse baskets or word-presence vectors where common zeros do not show similarity.
+
+\subsection*{Text vectors and cosine}
+\textbf{Purpose:} Compare documents by weighted word content rather than raw document length.
 \[
-\text{tf-idf}_{ij}=\text{tf}_{ij}\log\frac{N}{\text{df}_j},\quad
-\cos(x,y)=\frac{x^\top y}{\|x\|\|y\|}.
+\operatorname{tfidf}_{ij}=\operatorname{tf}_{ij}\log\frac{N}{\operatorname{df}_j},
+\qquad
+\cos(x,y)=\frac{x^\top y}{\|x\|_2\|y\|_2}.
 \]
-\note{Check} Word absent in both documents should not create Jaccard evidence.
+\textbf{Symbols:} $\operatorname{tf}_{ij}$ = term count/weight for word $j$ in document $i$; $\operatorname{df}_j$ = documents containing word $j$; $N$ = documents; $x,y$ = tf--idf document vectors; $x^\top y$ = dot product; $\|\cdot\|_2$ = vector length.
 
-\subsection*{Fast answer plausibility checklist}
+\textbf{How to read it:} rare terms receive larger inverse-document-frequency weight; cosine near $1$ means documents point in similar word-weight directions.
+
+\subsection*{Choose from the given object}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-Object & Must be true\\ \midrule
-Probability & In $[0,1]$; class probabilities sum to $1$.\\
-Correlation & Symmetric matrix, diagonal $1$, values in $[-1,1]$.\\
-Distance & Nonnegative, diagonal $0$, symmetric.\\
-PCA variance & Ratios nonnegative and sum to $1$.\\
-Confusion metric & Denominator matches row/column meaning.\\
-KDE/GMM density & Nonnegative; can exceed $1$ in continuous 1D.\\
-Regularization & Larger $\lambda$ does not increase weight norm.\\
+\textbf{Given in task} & \textbf{Calculate/read}\\ \midrule
+Label and class score & Posterior/logistic probability; confusion/ROC for performance.\\
+Numeric response and weights & Regression prediction, residual/RMSE and validation error.\\
+No label; centroids/tree of merges & K-means assignment or dendrogram cut.\\
+Density or neighbour table & GMM responsibility, KDE/local density or ARD outlier score.\\
+Item/word table & Association metrics, Jaccard or cosine similarity.\\
 \bottomrule
 \end{tabularx}
 
-\subsection*{Recurring exam recipes}
-\begin{enumerate}
-\item \textbf{Match plot to statistic:} remove impossible matrices by symmetry/range, then match signs and only then magnitudes.
-\item \textbf{Compute classifier probability:} write numerator for each class, normalize, compare.
-\item \textbf{Choose hyperparameter:} use validation/CV loss or LOO log density, not training loss.
-\item \textbf{Read boundary plot:} identify linear/axis-aligned/jagged/smooth before reading labels.
-\item \textbf{Outlier question:} compute density/ARD; smallest density or ARD is most suspicious.
-\end{enumerate}
-
-\begin{riskbox}[When in doubt]
-Check dimension first, then sign, then range. In 02450-style options, many wrong answers are dimension mismatches, missing intercepts, using rows instead of columns of $V$, forgetting to normalize Bayes probabilities, or using test data during model selection.
-\end{riskbox}
+\subsection*{Numerical output meanings}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{Quantity} & \textbf{Reading rule}\\ \midrule
+Probability/responsibility & Between $0$ and $1$; competing class/component values sum to $1$.\\
+EVR/AUC/metric & EVR sums to $1$ across PCs; AUC closer to $1$ means stronger ranking.\\
+Density & Nonnegative local height; compare values to locate low-density observations.\\
+Similarity & Cosine/Jaccard large means more similar under their respective representation.\\
+\bottomrule
+\end{tabularx}

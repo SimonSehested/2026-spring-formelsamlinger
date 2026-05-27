@@ -1,42 +1,31 @@
 # AGENTS.md
 
-You are building or rewriting a LaTeX formula collection for the course described by the project source material.
+You are building or rewriting a LaTeX exam aid for the course described by the project source material.
 
 ## Goal
 
-Create a printed 4-page A4 exam backup sheet.
+Create a printed 4-page A4 formula-and-interpretation sheet.
 
 The final compiled PDF must be exactly 4 A4 pages.
 
-This is not a digital Ctrl+F reference. It is a physical printed aid for use during an exam.
+The sheet must contain formulas needed for calculation, but each important formula must be paired with short explanations in words. The student should be able to use the sheet to calculate answers and understand what symbols, plots, matrices, axes, probabilities, weights, loadings, scores, clusters, densities, and metrics mean.
 
-The document must help the student quickly regain confidence when uncertain about:
+This is not:
 
-- which formula applies
-- which assumptions must hold
-- sign conventions
-- notation
-- boundary cases
-- units and dimensions
-- common traps
-- fast plausibility checks
-- short solution procedures for recurring task types
-
-The document must not become:
-
+- a pure formula sheet
 - lecture notes
 - a textbook summary
 - a proof-based theory document
-- a complete coverage document
-- a long formula catalogue
+- an exam-format or guessing-strategy sheet
+- a list of traps and warnings
 
 The primary user situation is:
 
 - the student is sitting in a physical exam
 - the student cannot search digitally
-- the student needs to visually locate the relevant topic quickly
-- the student needs confirmation, not explanation
-- the student wants confidence that their method, assumptions, signs, and result are reasonable
+- the student must quickly identify the relevant method
+- the student needs formulas for computation
+- the student also needs words explaining how to read plots, matrices, tables, and outputs
 
 ## Source material
 
@@ -50,7 +39,7 @@ Use the source material provided by the project. Typical project inputs may incl
 - `source_material/lectures/`
 - `source_material/exercises/`
 
-First inspect the available folders and infer the actual course title, topics, notation, terminology, exam format, and recurring problem types.
+First inspect the available folders and infer the actual course title, topics, notation, terminology, recurring formulas, recurring plots/matrices, and recurring problem types.
 
 Do not assume a fixed course, topic list, notation system, or exam style in advance.
 
@@ -58,52 +47,212 @@ Do not invent unsupported formulas or topics unless they are standard prerequisi
 
 If something is uncertain, mark it with:
 
-    % TODO: verify from source
+```tex
+% TODO: verify from source
+```
 
 ## Core principle
 
 Every item on the sheet must answer at least one of these questions:
 
-1. What formula or rule do I need right now?
-2. When is this formula allowed?
-3. What sign convention or notation detail might I forget?
-4. What common mistake should I avoid?
-5. How can I quickly check whether my answer is plausible?
-6. What is the shortest reliable method for this recurring task?
+1. What formula do I need to calculate this?
+2. What do the symbols in the formula mean?
+3. What does this plot, matrix, table, or model output represent?
+4. How do I read the numbers, signs, axes, probabilities, weights, scores, loadings, or clusters?
+5. What is the shortest reliable calculation procedure?
+6. How do I interpret the result in words?
 
-If an item does not support one of these questions, remove it.
+If an item does not support calculation or interpretation, remove it.
+
+## Forbidden content
+
+Do not include:
+
+- `Trap:` sections
+- exam-format descriptions
+- guessing strategies
+- multiple-choice score rules
+- long warnings about what not to do
+- long proofs
+- long derivations
+- broad motivational paragraphs
+- generic strategy checklists
+- formula blocks with no word explanation
+- explanations that omit needed formulas
+
+Negative warnings should usually be rewritten as positive reading instructions.
+
+Bad:
+
+```tex
+\textbf{Trap:} PC $k$ is column $k$, not row $k$.
+```
+
+Good:
+
+```tex
+\textbf{How to read }V\textbf{:} column $k$ is PC $k$; read down the column to see which variables define that PC.
+```
+
+## Required block format
+
+Use compact blocks such as:
+
+```tex
+\subsection*{Object or method}
+\textbf{Purpose:} one short sentence.
+
+\textbf{Formulas:}
+\[
+...
+\]
+
+\textbf{Symbols:} explain only the symbols needed to use the formulas.
+
+\textbf{How to read it:} explain how to interpret the relevant plot, matrix, table, boundary, probability, output, or metric.
+
+\textbf{Do this:} 2--4 concrete steps for typical exam tasks.
+```
+
+Do not force every label if it wastes space.
+
+Preferred labels:
+
+- `Purpose`
+- `Formulas`
+- `Symbols`
+- `How to read it`
+- `Do this`
+- `Use when`
+- `Means`
+- `Interpretation`
+- `Decision`
+
+Avoid:
+
+- `Trap`
+- `Exam format`
+- `Guessing`
+
+## Formula requirements
+
+Formulas are mandatory for computational topics.
+
+Each formula should be close to a short explanation of what it does.
+
+Example:
+
+```tex
+\subsection*{Confusion matrix metrics}
+\[
+\text{Accuracy}=\frac{TP+TN}{N},\quad
+\text{Recall}=\frac{TP}{TP+FN},\quad
+\text{Precision}=\frac{TP}{TP+FP},\quad
+F_1=\frac{2PR}{P+R}
+\]
+\textbf{Symbols:} $TP$ = positive cases predicted positive; $FN$ = positive cases missed; $FP$ = negative cases predicted positive; $TN$ = negative cases predicted negative.
+\textbf{How to read it:} recall measures how many true positives were found; precision measures how many predicted positives were actually positive.
+```
+
+## Interpretation requirements
+
+Prioritize recurring objects the student may see in exam questions:
+
+- data matrices
+- standardized values
+- covariance/correlation matrices
+- histograms, boxplots, scatter plots, scatter matrices
+- PCA/SVD matrices
+- explained variance tables
+- score plots
+- loading plots
+- biplots
+- probability tables
+- Gaussian density curves
+- regression and logistic regression outputs
+- decision boundaries
+- confusion matrices
+- ROC curves
+- validation/CV tables
+- decision trees
+- neural-network diagrams or weight tables
+- k-means centroid tables
+- dendrograms
+- GMM component tables and responsibilities
+- density/outlier tables
+- association-rule tables
+- text/vector similarity tables
+
+For each object that appears repeatedly in the source material, include how to read it.
+
+## Tables
+
+Use tables aggressively for compact lookup.
+
+Good table types:
+
+- object to interpretation
+- method to formula
+- model output to meaning
+- metric to formula and meaning
+- clustering method to behavior
+- plot type to reading rule
+- matrix type to reading rule
+
+Example:
+
+```tex
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{Object} & \textbf{How to read it} \\
+\midrule
+Correlation matrix & diagonal is 1; sign gives direction; magnitude gives strength of linear relation \\
+Score plot & each point is an observation in PC coordinates; nearby points have similar profiles \\
+Loading vector & entries show how original variables contribute to one PC \\
+\bottomrule
+\end{tabularx}
+```
+
+Keep table text short.
+
+## Content priority
+
+Prioritize content in this order:
+
+1. Recurring formulas needed to compute exam answers.
+2. Short explanations that make those formulas usable.
+3. Interpretation of recurring plots, matrices, tables, and model outputs.
+4. Short calculation procedures for recurring tasks.
+5. Symbol explanations for confusing notation.
+6. Compact method-selection cues.
+7. Rare formulas only if there is remaining space.
+
+When forced to choose, prefer a formula plus a useful interpretation over several isolated formulas with no explanation.
 
 ## 4-page print constraint
 
 The compiled PDF must be exactly 4 A4 pages.
 
-This is a hard requirement.
-
 If the document is longer than 4 pages:
 
-- remove long prose
-- remove proofs and derivations
-- merge duplicate formulas
-- convert explanations into labels such as `Condition`, `Trap`, `Check`
-- replace long recipes with compact tables
-- remove rare formulas
-- remove low-value definitions
-- remove content included only for completeness
-- reduce vertical whitespace before reducing readability
+- shorten wording
+- merge related formulas
+- combine object explanations in tables
+- remove low-frequency topics
+- remove warning-only content
+- remove exam-format content
+- remove repeated symbol explanations
+- reduce vertical whitespace carefully
 
 If the document is shorter than 4 pages:
 
-- add high-value uncertainty support
-- add common traps
-- add assumptions and conditions
-- add sign/unit/domain checks
-- add edge cases
-- add compact decision rules
-- add recurring task recipes
-- add notation reminders
-- add formula variants that students often confuse
+- add high-value formulas
+- add short formula explanations
+- add symbol explanations
+- add plot/matrix/output reading rules
+- add compact calculation recipes
 
-Do not stop until the compiled PDF is exactly 4 pages.
+Do not fill space with traps, guessing strategies, or exam-format descriptions.
 
 ## Output files
 
@@ -115,219 +264,23 @@ Create or update modular LaTeX source files in the project’s formula-collectio
 
 Use the existing project structure if one exists. If no structure exists, create a `sources/` directory.
 
-Use one `.tex` file per major exam-relevant topic or task family inferred from the source material.
+Use one `.tex` file per major exam-relevant topic, method group, or object family inferred from the source material.
 
 Use clear numbered filenames such as:
 
-    01_topic_name.tex
-    02_topic_name.tex
-    03_topic_name.tex
+```text
+01_data_plots_matrices.tex
+02_pca_svd.tex
+03_probability_regression_classification.tex
+04_validation_metrics_models.tex
+05_clustering_density_association_text.tex
+```
 
 Topic names must be inferred from the provided source material, not hardcoded from another course.
 
 Do not write large amounts of formula content directly in `main.tex`.
 
 Keep `main.tex` modular and use `\input{...}` or `\include{...}`.
-
-## Organization for paper lookup
-
-Organize for visual navigation on printed paper.
-
-Prefer a structure that lets the student quickly flip to the right area:
-
-- broad topic headings
-- compact subsections
-- visually consistent blocks
-- tables for formula families
-- boxed high-risk rules
-- short labels such as `Use`, `Condition`, `Trap`, `Check`
-
-Do not optimize for Ctrl+F.
-
-Do not add keyword-only headings just for searchability.
-
-Use clear, human-readable headings that make sense on paper.
-
-Good headings:
-
-```tex
-\section*{Fourier and Laplace transforms}
-\subsection*{Transform pairs}
-\subsection*{Differentiation and integration rules}
-\subsection*{Initial and final value checks}
-```
-
-Bad headings:
-
-```tex
-\subsection*{misc keywords search terms}
-\subsection*{important theory}
-\subsection*{main result}
-```
-
-## Content priority
-
-Prioritize content in this order:
-
-1. Recurring exam methods and formulas.
-2. Formulas where misuse causes wrong answers.
-3. Conditions, assumptions, domains, signs, units, and boundary cases.
-4. Short exam recipes for common task types.
-5. Fast sanity checks.
-6. Definitions that prevent ambiguity.
-7. Rare formulas only if there is remaining space.
-
-When forced to choose, prefer one compact decision rule that prevents several common mistakes over several isolated rare formulas.
-
-## Recommended block format
-
-Use compact blocks such as:
-
-```tex
-\subsection*{Topic or task}
-
-\textbf{Formula:}
-\[
-...
-\]
-
-\textbf{Use:} ...
-\textbf{Condition:} ...
-\textbf{Trap:} ...
-\textbf{Check:} ...
-```
-
-Do not force all labels if they add noise.
-
-For families of related results, prefer tables:
-
-```tex
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\textbf{Case} & \textbf{Rule / formula} \\
-...
-\end{tabularx}
-```
-
-## Exam recipes
-
-For recurring exam or exercise task types, create compact recipes.
-
-A recipe should usually have this form:
-
-```tex
-\subsection*{Task: name}
-
-\textbf{Use:} short recognition cue.
-
-\begin{enumerate}[leftmargin=*,nosep]
-    \item Step 1.
-    \item Step 2.
-    \item Step 3.
-\end{enumerate}
-
-\textbf{Trap:} ...
-\textbf{Check:} ...
-```
-
-Keep recipes short, normally 2--5 steps.
-
-A recipe is better than a derivation.
-
-## Style
-
-Use concise mathematical reference style:
-
-- no long prose
-- no proofs
-- no long derivations
-- no historical or motivational explanations
-- no lecture-note summaries
-- no large paragraphs
-- no Markdown inside `.tex` files
-- no duplicated formulas unless needed to prevent mistakes
-- no examples unless they prevent a recurring error
-
-Prefer:
-
-- compact formula blocks
-- short tables
-- assumption lists
-- condition labels
-- common-trap labels
-- sanity checks
-- decision rules
-- visual grouping
-
-## Layout
-
-The PDF must be printable and readable.
-
-Prefer:
-
-- A4 paper
-- small but readable font
-- 2 or 3 columns
-- narrow margins
-- compact spacing
-- clear section separators
-- minimal whitespace
-- no decorative graphics
-
-Do not make the text so small that it is uncomfortable to read during an exam.
-
-Recommended starting point:
-
-```tex
-\documentclass[9pt,a4paper]{article}
-\usepackage[a4paper,margin=0.8cm]{geometry}
-\usepackage{multicol}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage[most]{tcolorbox}
-
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{1pt}
-\setlength{\columnsep}{0.45cm}
-\setlist{nosep,leftmargin=*}
-```
-
-Adjust layout only if needed to reach exactly 4 pages while remaining readable.
-
-## Multiple-choice and exam-strategy support
-
-If the exam format includes multiple choice, true/false statements, numerical answer options, or one-best-answer logic, include compact elimination rules and answer-checking strategies.
-
-Examples of useful rules:
-
-- one false clause makes a statement false
-- check limiting cases
-- check units and dimensions
-- check signs and domains
-- check assumptions before using a formula
-- test boundary cases
-- eliminate answers with impossible units or signs
-
-Only include rules supported by the observed exam format.
-
-## Coverage and selection
-
-Inspect exams and exercises to identify recurring problem types.
-
-For each recurring type, determine:
-
-1. problem type
-2. required formulas or definitions
-3. fastest reliable method
-4. common mistakes
-5. whether it deserves space on the 4-page sheet
-
-Do not add material solely because it exists in the lecture slides.
-
-Do not attempt full coverage if full coverage conflicts with the 4-page limit.
-
-If a source item is excluded because of the page budget, that is acceptable.
 
 ## Reports
 
@@ -341,7 +294,9 @@ Reports are working notes. They must not cause the formula sheet to grow beyond 
 
 In the verification report, mark excluded material explicitly, for example:
 
-    Excluded: rare / low exam frequency / derivable / not worth 4-page space
+```text
+Excluded: rare / low exam frequency / derivable / warning-only / exam-format only / not worth 4-page space
+```
 
 ## LaTeX quality
 
@@ -356,9 +311,11 @@ Before finishing:
 - check for broken math syntax
 - check the compiled PDF page count
 - ensure the compiled PDF is exactly 4 pages
-- ensure the document is readable when printed
+- ensure the compiled PDF is readable when printed
+- ensure formulas and short explanations are paired
 - ensure headings support fast visual lookup
-- ensure the document is not lecture-note style
+- ensure no `Trap:` sections remain
+- ensure no exam-format or guessing-strategy section remains
 
 ## Do not
 

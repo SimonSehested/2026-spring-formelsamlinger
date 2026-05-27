@@ -1,0 +1,41 @@
+\section{Python-hjælpere og sluttjek}
+
+\subsection{Validerede funktioner}
+
+Funktionerne importeres fra \code{scripts.control} og demonstreres i
+\code{exam\_toolbox.ipynb}. De er valideret med
+\code{python -m scripts.validate\_scripts}.
+
+\begin{tabularx}{\textwidth}{@{}p{.37\textwidth}Y@{}}
+\toprule
+Funktion & Brug og manuelt ansvar \\
+\midrule
+\code{transfer\_function\_poles} & Poler fra allerede udledt nævner; fortolk stabilitet selv.\\
+\code{find\_stable\_gain\_ranges} & Symbolske marginalgrænser og stabile \(K\)-intervaller for \(p(s,K)\) eller \(1+K G(s)=0\); grænsepunkter er ikke stabile.\\
+\code{closed\_loop\_poles} & Kontrollér P-gain for et verificeret negativt standardloop.\\
+\code{unity\_feedback\_step\_error} & Slutværdi for verificeret unity-errorpath; afviser ustabilt loop.\\
+\code{phase\_margin\_from\_point} & Margin fra manuelt aflæst Nyquist-crossoverpunkt.\\
+\code{second\_order\_characteristics} & Standard andenordensmetrics; kontroller modelmatch.\\
+\code{design\_pi\_lead\_at\_crossover} & PI-Lead-parametre ved valgt specifikation; kontroller limits.\\
+\code{solve\_lag\_beta} & Lag-\(\beta\) fra manuelt udledt lagfase.\\
+\code{ideal\_disturbance\_feedforward} & Nominal ratio/properness efter manuelt disturbancefortegn.\\
+\bottomrule
+\end{tabularx}
+
+\subsection{Svar-tjekliste}
+
+\begin{itemize}
+\item Har jeg skrevet hvilket input/output og hvilken feedbackretning jeg bruger?
+\item Har jeg undersøgt RHP-poler, origo-poler eller Nyquistkrav før stabilitetskonklusion?
+\item Har jeg konverteret dB til lineær magnitude før gainberegning?
+\item Har jeg angivet gyldighedsbetingelser før final value theorem?
+\item Er \(0<\alpha<1\) for Lead og \(\beta>1\) for Lag?
+\item Har jeg undersøgt properness/stabilitet ved en invers feed-forward?
+\item Ved saturation eller rate limit: har jeg undgået at love large-signal-adfærd ud fra linear model?
+\end{itemize}
+
+\subsection{Kendte kildebegrænsninger}
+
+Kun F21-eksamenssættet er tilgængeligt; frekvensen af opgavetyper på tværs af år kan
+ikke bekræftes. Plotbaserede værdier bør altid kontrolleres i original PDF. Matlabfiler,
+datasæt og dokumenterede hjælpemiddelregler er ikke medleveret.

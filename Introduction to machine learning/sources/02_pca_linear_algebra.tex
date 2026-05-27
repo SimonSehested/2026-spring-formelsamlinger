@@ -1,47 +1,47 @@
-\section*{PCA and linear algebra}
-\subsection*{SVD/PCA notation}
-For centered or standardized $\tilde X$:
+\section*{PCA and SVD}
+\subsection*{Components, scores and reconstruction}
+\textbf{Purpose:} Replace correlated attributes by orthogonal directions ordered by variation.
 \[
-\tilde X=U S V^\top,\quad V=[v_1,\ldots,v_M],\quad Z=\tilde X V=US .
+\tilde X=USV^\top,\qquad V=[v_1,\ldots,v_M],
 \]
-Projection of observation $\tilde x_i$ on first $K$ PCs:
 \[
-z_i=\tilde x_i V_K,\qquad \hat x_i=z_iV_K^\top+\bar x .
+Z=\tilde XV=US,\qquad z_{ik}=\tilde x_i^\top v_k.
 \]
-\note{Trap} Exam matrices often print $V$; PC $k$ is column $k$, not row $k$. Sign of a PC is arbitrary, but projections and loadings must use the same sign.
+\[
+z_i=\tilde x_iV_K,\qquad \hat{\tilde x}_i=z_iV_K^\top .
+\]
+\textbf{Symbols:} $U$ = left singular-vector matrix; $S$ = diagonal singular-value matrix; $V$ = loading directions; column $v_k$ is PC $k$; $Z$ = score matrix; $z_i$ = PC coordinates of row $i$; $V_K$ retains $K$ PCs; $\hat{\tilde x}_i$ = reconstructed standardized row; $s_k$ = singular value.
+
+\textbf{How to read it:} large $|v_{mk}|$ means attribute $m$ defines PC $k$ strongly. A positive score lies in the direction of positive loadings. Reversing all signs on one PC changes neither the PCA representation nor distances.
 
 \subsection*{Explained variance}
 \[
 \lambda_k=\frac{s_k^2}{N-1},\quad
-\text{EVR}_k=\frac{s_k^2}{\sum_j s_j^2},\quad
-\text{cumEVR}(K)=\frac{\sum_{k=1}^K s_k^2}{\sum_j s_j^2}.
+\operatorname{EVR}_k=\frac{s_k^2}{\sum_j s_j^2},\quad
+\operatorname{cumEVR}(K)=\frac{\sum_{k=1}^Ks_k^2}{\sum_js_j^2}.
 \]
-\note{Use} Choose fewest $K$ with cumulative explained variance above target (often $90\%$).
-\note{Check} If standardized, total variance $\approx M$ and $\|\tilde X\|_F^2=\sum_k s_k^2\approx (N-1)M$.
+\textbf{Symbols/means:} $\lambda_k$ = variance along PC $k$; $\operatorname{EVR}_k$ = its fraction of total variance; $\operatorname{cumEVR}(K)$ = fraction retained by the first $K$ PCs.
 
-\subsection*{Reading PC directions}
-\[
-z_{ik}=\tilde x_i^\top v_k=\sum_m \tilde x_{im}v_{mk}.
-\]
-\note{Recipe} To evaluate a statement: identify signs/magnitudes of $\tilde x_m$, multiply by column $v_k$, sum dominant terms, compare sign.
-\note{Trap} ``High original value'' means positive standardized value only if above training mean.
+\textbf{Do this:} square singular values; divide by their total; accumulate in PC order; choose the smallest $K$ reaching the target.
 
-\subsection*{PCA plot candidates}
+\subsection*{Read PCA output and plots}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-Object & Rule\\ \midrule
-Scores $Z$ & Points in PC coordinate system.\\
-Loading vector $v_k$ & Attribute direction; positive attributes increase with arrow direction.\\
-Biplot sign & Flipping all signs of one PC gives equivalent plot.\\
-Orthogonality & PC directions are orthogonal in attribute space.\\
-Reconstruction & More PCs never increases reconstruction error.\\
+\textbf{Object} & \textbf{Interpretation}\\ \midrule
+Loading column $v_k$ & Read down the column: sign and magnitude connect original attributes to PC $k$.\\
+Score plot & Each point is one observation; nearby points have similar retained attribute profiles.\\
+Loading plot & Arrows/points are attributes; similar direction means similar contribution pattern.\\
+Biplot & Observations projected along a variable direction tend to have high values of that variable.\\
 \bottomrule
 \end{tabularx}
+\textbf{Do this for a projection:} take the requested column of $V$; multiply corresponding standardized attribute values; add terms to obtain $z_{ik}$.
 
-\subsection*{Common linear algebra checks}
+\subsection*{Norm and cosine}
 \[
-\|x\|_2=\sqrt{x^\top x},\quad
-\|X\|_F^2=\sum_{ij}x_{ij}^2=\sum_k s_k^2,\quad
+\|x\|_2=\sqrt{x^\top x},\qquad
+\|X\|_F^2=\sum_{ij}x_{ij}^2=\sum_ks_k^2,
+\]
+\[
 \cos(x,y)=\frac{x^\top y}{\|x\|\|y\|}.
 \]
-\note{Trap} Cosine ignores magnitude; Euclidean distance does not. Sparse text vectors often compare with cosine or Jaccard, not raw Euclidean distance.
+\textbf{Symbols/means:} $\|\cdot\|_2$ = vector length; $\|X\|_F$ = Frobenius length of all matrix entries; $x^\top y$ = dot product; $\cos(x,y)$ reads similar direction, while Euclidean distance also responds to magnitude.

@@ -1,91 +1,67 @@
 # Coverage report
 
-## Detected source files
+## Anvendte kilder
 
-`source_material/` is not present in this checkout. The available course material is under `input/`.
+- Forelæsninger: alle 13 PDF'er under `input/lectures/`, læst før eksamensanalysen.
+- Eksamen: `input/exams/F21.pdf` som samlet Q1-Q20 med svar og solution.
+- Kontroloriginal: `input/exams/Exam_F21_LCD1 Part 2 - no answers.pdf`, som gentager Q11-Q20 uden svar.
+- Der er ikke medleveret Matlabfiler, datasæt, hjælpemiddelregler eller flere årgange.
 
-### Lectures
+## Outputstruktur
 
-| File | Inferred topic |
-|---|---|
-| `input/lectures/1_Welcome_Lecture.pdf` | Course overview, feedback control, PID-based design |
-| `input/lectures/2_block_control_concept.pdf` | Block diagrams, feedback concepts, hand tuning |
-| `input/lectures/3_Laplace_TF.pdf` | Laplace transform, transfer functions, characteristic equations |
-| `input/lectures/4_Frequency_and_Time_Analysis_WSol.pdf` | Frequency response, time response, poles, stability |
-| `input/lectures/5_Modelling.pdf` | Mechanical/electrical modelling, linearization |
-| `input/lectures/6_Bode_plot&Stability.pdf` | Bode plots, stability margins, P-controller design |
-| `input/lectures/Lecture_07_Nyquist plot and stability.pdf` | Nyquist plots and stability criterion |
-| `input/lectures/Lecture_08_PI_LEAD_design.pdf` | PI and Lead controller design |
-| `input/lectures/Lecture_09_PI_LEAD_design_specifications.pdf` | Design specifications and PI-Lead tuning |
-| `input/lectures/Lecture_10_Unstable_systems (1).pdf` | Open-loop unstable systems and nested loops |
-| `input/lectures/Lecture_11_Limited_systems (1).pdf` | Limited systems, actuator limits, P-Lead-Lag |
-| `input/lectures/Lecture_12_Disturbances_sensitivity_prefilters.pdf` | Disturbances, sensitivity, prefilters |
-| `input/lectures/Lecture_13_Feed_forward.pdf` | Feed-forward control and disturbance cancellation |
+| Leverance | Status |
+| --------- | ------ |
+| `reports/input_audit.md` | Oprettet; alle 15 PDF-kilder dækket |
+| `reports/full_curriculum_report.md` | Oprettet; forelæsning 1-13 kortlagt |
+| `reports/exam_set_analyses/F21.md` | Oprettet; Q1-Q20 analyseret |
+| `reports/merged_task_taxonomy.md` | Oprettet |
+| `reports/script_inventory.md` | Oprettet |
+| `scripts/control/*.py`, `scripts/validate_scripts.py` | Oprettet og valideret |
+| `exam_toolbox.ipynb`, `reports/notebook_inventory.md` | Oprettet; notebook kørt top-til-bund |
+| `reports/python_coverage_report.md` | Oprettet |
+| `main.tex`, `sections/*.tex`, `main.pdf` | Oprettet og bygget |
+| Integrations-, verification- og reviewrapporter | Oprettet |
 
-### Exams
+## Hovedemner og notesektioner
 
-| File | Notes |
-|---|---|
-| `input/exams/F21.pdf` | F21 exam, Q1-Q20, recurring controller-design and analysis tasks |
-| `input/exams/Exam_F21_LCD1 Part 2 - no answers.pdf` | F21 part 2, Q11-Q20, no answers |
+| Hovedemne | Notesektion | Eksamensrelation |
+| --------- | ----------- | --------------- |
+| ODE/fysisk model, poler og TF | `sections/03_model_time.tex` | Q2,Q7,Q8,Q12 |
+| Første-/andenordensrespons | `sections/03_model_time.tex` | Q9,Q10 |
+| Bode og P-gain/margin | `sections/04_frequency_stability.tex`, `sections/06_controller_design.tex` | Q3-Q6,Q11,Q15 |
+| Nyquist og ustabil plant | `sections/04_frequency_stability.tex` | Q13,Q14 |
+| Feedback og stationær fejl | `sections/05_feedback_error.tex` | Q1,Q16,Q19 |
+| PI-Lead | `sections/06_controller_design.tex` | Q18 |
+| Lag og begrænsede systemer | `sections/07_limits_disturbances_feedforward.tex` | Q17; L11 |
+| Disturbance/sensitivity/prefilter | `sections/07_limits_disturbances_feedforward.tex` | L12 |
+| Feed-forward | `sections/07_limits_disturbances_feedforward.tex` | Q20 |
 
-### Exercises
+## Fravalgte eller nedprioriterede emner
 
-No `input/exercises/` or `source_material/exercises/` directory was present.
+- Ziegler-Nichols/håndtuning omtales i pensumrapporten, men har ingen direkte F21-typeopgave og er ikke udbygget som prioriteret eksamensopskrift.
+- REGBOT mandatory assignment/cascaded arkitektur omtales i pensumkilden, men ikke som særskilt F21-opgave; de generelle loopmetoder dækker de relevante principper.
+- Automatisk billedfortolkning af Bode, Nyquist og blokdiagrammer er fravalgt, fordi kilderne ikke giver strukturerede numeriske data og fortolkningen er den faglige opgave.
 
-## Inferred course title
+## Symbolregisterstatus
 
-`34721/34722 Linear Control Design 1`, Spring 2026.
+Symbolregister er inkluderet i `sections/02_symbolregister.tex`, fordi faget bruger signaler, komplekse variable, marginer, controllerparametre og sensitivitetssymboler med overlappende betydning.
 
-## Inferred formula-collection structure
+## Python-status
 
-The existing lecture-aligned modular structure was preserved because the lecture PDFs are numbered and the exam tasks map cleanly to those topics. The content was rewritten to be exam-friendly: short formulas, recognition keywords, recipes, fast checks, and common traps.
+- Ni offentlige funktioner er inkluderet og valideret med 23 passing checks.
+- Notebooken importerer kun disse validerede funktioner og er udført top-til-bund uden fejl.
+- Python dækker beregningskontrol og specificeret PI-Lead/Lag-design; metodevalg og figurlæsning forbliver manuelt.
 
-| File | Primary exam use |
-|---|---|
-| `sources/01_course_overview_and_control_concepts.tex` | Exam map, notation, controller templates, answer-option checks |
-| `sources/02_block_diagrams_and_feedback.tex` | Block reduction, feedback signs, non-unity feedback error |
-| `sources/03_laplace_transform_and_transfer_functions.tex` | ODE to transfer function, characteristic equations, poles/zeros |
-| `sources/04_frequency_and_time_domain_analysis.tex` | Final value, step response, overshoot, pole stability |
-| `sources/05_modelling_and_linearization.tex` | RLC and mechanical modelling, linearization |
-| `sources/06_bode_plots_and_stability_margins.tex` | Bode interpretation, phase margin, gain margin, P gain range |
-| `sources/07_nyquist_plot_and_stability.tex` | Nyquist encirclement, unstable open-loop stability, margins from Nyquist |
-| `sources/08_pi_lead_controller_design.tex` | PI-Lead equations and design recipe |
-| `sources/09_design_specifications_and_tuning.tex` | Steady-state error, system type, design-spec interpretation |
-| `sources/10_unstable_systems.tex` | Open-loop unstable checks, nested loops |
-| `sources/11_limited_systems_and_lag_control.tex` | Saturation/rate limits and P-Lead-Lag beta recipe |
-| `sources/12_disturbances_sensitivity_and_prefilters.tex` | Sensitivity paths, disturbance transfer functions, prefilters |
-| `sources/13_feed_forward_control.tex` | Dynamic/static feed-forward disturbance cancellation |
+## Buildstatus
 
-## Key notation
+- `latexmk -pdf ...` fejlede lokalt, fordi MiKTeX mangler Perl-scriptmotor.
+- PDF blev derefter bygget succesfuldt med to direkte kørsler af `pdflatex -interaction=nonstopmode -halt-on-error main.tex`.
+- Dansk `babel` og ubrugt `multirow`/kosmetisk `fancyhdr` var ikke installeret og blev fjernet fra præamblen; dokumentet anvender fortsat UTF-8/T1 og dansk tekst.
+- Resultat: `main.pdf`, 11 sider. `build.log` gemmer den succesfulde buildoutput.
 
-| Symbol | Meaning |
-|---|---|
-| \(r(t), R(s)\) | reference signal |
-| \(e(t), E(s)\) | control error |
-| \(u(t), U(s)\) | controller/plant input |
-| \(y(t), Y(s)\) | output |
-| \(y_m(t), Y_m(s)\) | measured output |
-| \(G(s)\) | plant transfer function |
-| \(C(s)\) | controller transfer function |
-| \(H(s)\) | measurement transfer function |
-| \(L(s)=C(s)G(s)H(s)\) | loop transfer function |
-| \(S(s)=1/(1+L(s))\) | sensitivity |
-| \(T(s)=L(s)/(1+L(s))\) | complementary sensitivity |
-| \(\omega_c\) | gain crossover frequency |
-| \(\gamma_M\) | phase margin |
-| \(A_M\) | gain margin |
-| \(K_P,\tau_i,\tau_d\) | controller parameters |
-| \(\alpha,\beta,N_i\) | Lead/Lag design parameters |
+## Kendte begrænsninger og manuelle reviewpunkter
 
-## Recurring exam concepts
-
-The recurring exam tasks are block diagram reduction; RLC transfer functions; coupled-mass equations of motion; ODE-to-transfer-function conversion; pole stability; Bode plot to transfer function; proportional gain from phase margin; proportional stability range; second-order overshoot; Nyquist stability for open-loop unstable systems; phase margin from Nyquist; PI-Lead design; P-Lead-Lag beta selection; steady-state error; sensitivity/disturbance transfer functions; and feed-forward disturbance cancellation with diagram-dependent summing-junction sign.
-
-## Searchability changes
-
-Each source file now starts with a `Ctrl+F keywords` subsection. Recipe headings include exam task wording such as `Exam recipe: infer transfer function from Bode plot`, `Exam recipe: choose K_P for desired phase margin`, and `Exam recipe: design dynamic disturbance feed-forward`. Danish aliases were added where useful, including regulering, tilbagekobling, forstyrrelse, maaling, stationaer fejl, bodeplot, and begraensning.
-
-## Known uncertainties
-
-The Nyquist sign convention is marked in the LaTeX with `% TODO: verify sign convention from source` because convention depends on clockwise/counter-clockwise definitions in the slides.
+- Kun ét historisk eksamenssæt foreligger; prioritering kan ikke bekræftes på tværs af år.
+- Plotbaserede værdier og blokdiagramfortegn skal kontrolleres i original PDF.
+- Q9-facit afrunder overshootgrænsen; Q18 solutiontekst har en mindre numerisk faseafvigelse fra den trykte TF. Begge er dokumenteret i scriptvalideringen.
+- Buildet giver ikke-fatale overfull/bookmark-warnings ved lange funktionsnavne/matematiske headings; fagligt indhold og PDF-generation er ikke påvirket.

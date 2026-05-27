@@ -1,47 +1,58 @@
-\section*{Exam format and data checks}
-\begin{riskbox}[Multiple choice risk]
-Score in observed exams: correct $=3$, wrong $=-1$, don't know $=0$. Guess only if
-$P(\text{correct})>1/4$. One false clause makes a statement false. Eliminate by units,
-sign, impossible range, wrong dimension, and violated assumptions before computing.
-\end{riskbox}
+\section*{Data, summaries and distances}
+\textbf{Shared notation:} $N$ = observations, $M$ = attributes; $i,\ell$ index observations, $j,m$ attributes, $c$ classes, $k$ components/clusters/folds as stated; $x_i$ = input row, $x_{ij}$ = its entry, $y_i$ = target, $\hat{\ }$ = estimated/predicted value.
 
 \subsection*{Data matrix and standardization}
-Use $X\in\R^{N\times M}$: rows observations, columns attributes. Standardized attribute:
+\textbf{Purpose:} Put attributes on comparable scales before distances, PCA or regularized models.
 \[
-\tilde x_{ij}=\frac{x_{ij}-\bar x_j}{s_j},\quad
-\bar x_j=\frac1N\sum_i x_{ij},\quad
+X\in\R^{N\times M},\qquad \tilde x_{ij}=\frac{x_{ij}-\bar x_j}{s_j},
+\]
+\[
+\bar x_j=\frac1N\sum_i x_{ij},\qquad
 s_j^2=\frac1{N-1}\sum_i(x_{ij}-\bar x_j)^2 .
 \]
-\note{Trap} If a problem says standardized, covariance and correlation coincide; diagonal
-variance is $1$. Never standardize labels $y$ unless explicitly stated.
+\textbf{Symbols:} $X\in\R^{N\times M}$ is the data matrix; $\R$ means real values; $\bar x_j$ and $s_j$ are mean and sample standard deviation of attribute $j$; $\tilde X$ is standardized data.
 
-\subsection*{Covariance, correlation, distance}
+\textbf{How to read it:} $\tilde x_{ij}>0$ means observation $i$ is above the mean of attribute $j$, measured in standard deviations.
+
+\subsection*{Covariance, correlation and distance}
+\textbf{Purpose:} Measure joint variation or similarity between observations.
 \[
-\begin{gathered}
 \hat\Sigma=\frac1{N-1}\tilde X^\top\tilde X,\qquad
-\rho_{jk}=\frac{\Cov(x_j,x_k)}{s_js_k},\\
-d(x_i,x_j)=\sqrt{\sum_{m=1}^M(x_{im}-x_{jm})^2}.
-\end{gathered}
+\rho_{jk}=\frac{\Cov(x_j,x_k)}{s_js_k},
 \]
-\note{Check} Correlation matrix is symmetric, diagonal $1$, entries in $[-1,1]$.
-Euclidean distance is nonnegative, symmetric, diagonal $0$.
+\[
+d(x_i,x_\ell)=\sqrt{\sum_m(x_{im}-x_{\ell m})^2}.
+\]
+\textbf{Symbols:} $\hat\Sigma$ = sample covariance/correlation matrix of standardized attributes; $\rho_{jk}$ = correlation of columns $j,k$; $\Cov$ = covariance; $d(x_i,x_\ell)$ = Euclidean distance between rows.
+\textbf{Means:} covariance/correlation compare columns; distance compares rows. For standardized $X$, the covariance matrix equals the correlation matrix.
 
-\subsection*{Visual/statistical identification}
+\textbf{How to read a matrix:} diagonal correlation is $1$; sign gives direction of linear relation and $|\rho|$ its strength. Distance matrices have zero diagonal and large entries for separated observations.
+
+\[
+d_1(x,z)=\sum_m|x_m-z_m|,\qquad
+d_\infty(x,z)=\max_m|x_m-z_m|.
+\]
+\textbf{Symbols/use:} $x,z$ = two vectors; $d_1$ is cityblock distance; $d_\infty$ is maximum-coordinate distance. Use the named distance in neighbour/density calculations.
+
+\subsection*{Plots and summary objects}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-Question cue & Fast check\\ \midrule
-Histogram vs percentile & Match support, skew, spikes, median and tails; standardized values can still be non-Gaussian.\\
-Boxplot & Median line, IQR box, whiskers/outliers; compare sign after standardization.\\
-Scatter matrix & Sign from slope/cloud tilt; strength from narrowness; density color not class unless stated.\\
-Candidate matrix & Symmetry + diagonal first, then signs from plots, then magnitudes.\\
+\textbf{Object} & \textbf{How to read it}\\ \midrule
+Histogram/density & Height shows where values concentrate; width/tails show spread and extremes.\\
+Boxplot & Middle line is median; box is middle $50\%$; whiskers/points show range or unusual values.\\
+Scatter plot & Tilt indicates correlation sign; narrow cloud indicates strong linear relation.\\
+Scatter matrix & Panel $(j,k)$ compares two attributes; match signs to a proposed correlation matrix.\\
 \bottomrule
 \end{tabularx}
+\textbf{Do this:} identify variables and scale; read direction/spread; then match to numerical summaries.
 
-\subsection*{Losses and simple estimators}
+\subsection*{Regression loss}
 \[
-\text{MSE}=\frac1N\sum_i(y_i-\hat y_i)^2,\quad
-\text{RMSE}=\sqrt{\text{MSE}},\quad
-\text{SSE}=\sum_i e_i^2.
+e_i=y_i-\hat y_i,\quad
+\text{SSE}=\sum_i e_i^2,\quad
+\text{MSE}=\frac1N\sum_i e_i^2,
 \]
-\note{Trap} Training error normally decreases with model flexibility; test error can increase.
-For constant regression predictor use mean of training $y$, not test $y$.
+\[
+\text{RMSE}=\sqrt{\text{MSE}}.
+\]
+\textbf{Symbols/means:} $e_i$ = residual for case $i$; $y_i,\hat y_i$ = true and predicted response; SSE = summed squared error; MSE = its mean; RMSE = its square root in the unit of $y$. Smaller test/CV RMSE indicates better prediction.

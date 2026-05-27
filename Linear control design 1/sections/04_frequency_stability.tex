@@ -1,0 +1,147 @@
+\section{Frekvens og stabilitet}
+
+\subsection{Bode-plot og P-gain / Bode, gain margin, phase margin}
+\label{sec:bode}
+
+\paragraph{Brug når}
+Opgaven giver en transferfunktion eller Bode-plot og spørger om poler/zeros,
+stabilitet, \(K_P\), gain margin eller phase margin.
+
+\paragraph{Input fra opgaven}
+Break frequencies, magnitude i dB, fasekurve, controllergain og ønsket margin.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Marker startgain, integratorer og hver ændring i magnitudeslope.
+\item Brug faseændringen til at skelne LHP fra RHP-singulariteter.
+\item Find \(\omega_c\) ved 0 dB eller \(\omega_\pi\) ved \(-180^\circ\).
+\item Beregn margin eller gainkorrektion; konvertér dB til lineær gain.
+\item Kontrollér stabilitetskonklusionen med plantens open-loop-stabilitet.
+\end{enumerate}
+
+\paragraph{Formler}
+\[
+M_{\mathrm{dB}}=20\log_{10}|G(\jw)|,\qquad
+|G|=10^{M_{\mathrm{dB}}/20},
+\]
+\[
+|L(\mathrm{j}\omega_c)|=1,\qquad
+\gamma_M=180^\circ+\angle L(\mathrm{j}\omega_c),\qquad
+K_M=\frac1{|L(\mathrm{j}\omega_\pi)|}.
+\]
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Singularitet & Magnitudeslope efter break & Samlet phasebidrag\\
+\midrule
+LHP-pol & \(-20\) dB/dec & \(-90^\circ\)\\
+LHP-zero & \(+20\) dB/dec & \(+90^\circ\)\\
+RHP-pol & \(-20\) dB/dec & \(+90^\circ\)\\
+RHP-zero & \(+20\) dB/dec & \(-90^\circ\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Symboler}
+\(\omega_c\) er gain crossover, \(\omega_\pi\) phase crossover,
+\(\gamma_M\) phase margin og \(K_M\) gain margin.
+
+\paragraph{Antagelser}
+Almindelig ``positiv margin giver stabilt lukket loop'' anvendes direkte for de
+open-loop-stabile/minimum-phase situationer, som kriteriet forudsætter; RHP-planter
+behandles med Nyquist nedenfor.
+
+\paragraph{Hurtigtjek}
+Positiv \(K_P\) løfter magnitude med \(20\log_{10}K_P\), men ændrer ikke fase.
+Netto højfrekvensslope skal passe med relativ grad.
+
+\paragraph{Typiske fælder}
+At bruge 38.9 dB som gain 38.9 i stedet for \(10^{38.9/20}\approx88\) (F21 Q6);
+at afgøre RHP/LHP uden phaseplot.
+
+\paragraph{Python}
+\code{evaluate\_transfer\_function(num,den,omega)} kan evaluere en kendt model;
+\code{closed\_loop\_poles(num,den,K)} kan kontrollere foreslået P-gain. Brugeren skal
+selv aflæse plots og verificere loopstruktur.
+
+\subsection{Nyquist-stabilitet for ustabil plant / encirclement, RHP poles}
+\label{sec:nyquist}
+
+\paragraph{Brug når}
+Plantens open-loop har RHP-poler, eller opgaven angiver Nyquistkurvens skæring
+og retning omkring \((-1,0)\).
+
+\paragraph{Input fra opgaven}
+Antal RHP-poler \(P\), netto kurveretning og realakseskæring samt controllergainens fortegn.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Find \(P\), antal open-loop RHP-poler.
+\item Tæl clockwise encirclements \(N\) af \(-1\) med fortegn fra figuren.
+\item Brug \(Z=P+N\); stabilt lukket loop kræver \(Z=0\).
+\item Skalér Nyquistkurven med positiv gain eller vurder spejling ved negativ gain.
+\item Kontrollér at stabiliseringsgain ikke blot rammer marginalpunktet.
+\end{enumerate}
+
+\paragraph{Formler}
+\[
+Z=P+N,\qquad Z=0\ \text{for closed-loop-stabilitet.}
+\]
+Har \(P=1\), kræves ét counter-clockwise encirclement, dvs. \(N=-1\) i
+forelæsningernes konvention. Hvis den relevante CCW-skæring er \(-a\), kræves
+typisk \(K_P>1/a\) for positiv radial skalering.
+
+\paragraph{Symboler}
+\(P\) er open-loop RHP-poler; \(N\) netto clockwise encirclements; \(Z\) closed-loop
+RHP-poler.
+
+\paragraph{Antagelser}
+Nyquistkonturen og eventuelle imaginæraksepoler håndteres som i den givne figur;
+den angivne skæring er den stabiliserende passage.
+
+\paragraph{Hurtigtjek}
+F21 Q13: \(a=0.0111\), så \(1/a\approx90.1\); valget \(K_P=100\) passerer \(-1\).
+
+\paragraph{Typiske fælder}
+At vælge lille positiv gain for en open-loop-ustabil plant; at vende CW/CCW-fortegn.
+
+\paragraph{Python}
+Ingen funktion automatiserer encirclement fra figuren. Efter manuel stabiliseringsbeslutning
+kan \code{closed\_loop\_poles} bruges, hvis en fuld analytisk \(G(s)\) er angivet.
+
+\subsection{Phase margin fra Nyquist-punkt / unit-circle point}
+
+\paragraph{Brug når}
+Nyquistkurvens punkt på enhedscirklen ved crossover opgives numerisk.
+
+\paragraph{Input fra opgaven}
+Punktet \((x,y)=(\Re L,\Im L)\), der svarer til \(|L|=1\).
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Beregn vinklen med \(\operatorname{atan2}(y,x)\), ikke enkel arctan uden kvadrant.
+\item Beregn \(\gamma_M=180^\circ+\phi_c\).
+\item Sammenlign størrelsesorden og svarenhed med valgmulighederne.
+\end{enumerate}
+
+\paragraph{Formler}
+\[
+\phi_c=\operatorname{atan2}(y,x),\qquad \gamma_M=180^\circ+\phi_c .
+\]
+
+\paragraph{Symboler}
+\(x,y\) er real- og imaginærdel af open-loop responsen; \(\phi_c\) er fase ved crossover.
+
+\paragraph{Antagelser}
+Punktet er korrekt crossoverpassage og vinklen udtrykkes i grader.
+
+\paragraph{Hurtigtjek}
+F21 Q14: \((0.134,-0.99)\) ligger i fjerde kvadrant, så \(\phi_c\) er omkring
+\(-82^\circ\) og marginen omkring \(98^\circ\).
+
+\paragraph{Typiske fælder}
+At aflevere \(\phi_c\), radianværdien eller \(-\phi_c\) som margin.
+
+\paragraph{Python}
+\code{phase\_margin\_from\_point(real\_part,imaginary\_part)} returnerer marginen,
+når du har aflæst det rette punkt.

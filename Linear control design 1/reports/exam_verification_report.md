@@ -1,46 +1,45 @@
-# Exam verification report
+# Exam verification report: F21
 
-## Coverage table
+## Mapping af alle eksamensopgaver
 
-Checked against every PDF currently in `input/exams/`: `F21.pdf` and `Exam_F21_LCD1 Part 2 - no answers.pdf`.
+| Eksamenssæt/opgave | Opgavetype | Notesektion | Metode dækket? | Formler dækket? | Symboler forklaret? | Hurtigtjek/fælde? | Pythonstatus | Mangler? |
+| ------------------ | ---------- | ----------- | -------------- | --------------- | ------------------- | ----------------- | ------------ | -------- |
+| F21 Q1 | Blokdiagram | Blokdiagramreduktion | Ja | Ja | Ja | Ja | `notes_only` | Figur aflæses manuelt |
+| F21 Q2 | RLC-blokdiagram | ODE/fysisk model; Blokdiagram | Ja | Ja | Ja | Ja | `notes_only` | Figuralternativer manuelle |
+| F21 Q3 | Pol/zero til Bode | Bode-plot og P-gain | Ja | Ja | Ja | Ja | `script_assisted` | Plot manuelt |
+| F21 Q4 | Kritisk P-gain | Bode-plot; P-gain fra margin | Ja | Ja | Ja | Ja | `closed_loop_poles` | Ingen |
+| F21 Q5 | Bode til singulariteter | Bode-plot og P-gain | Ja | Ja | Ja | Ja | `notes_only` | Plot manuelt |
+| F21 Q6 | Gain for PM | P-gain fra margin | Ja | Ja | Ja | Ja | `evaluate_transfer_function` | Plotværdi manuelt |
+| F21 Q7 | Masse/fjeder TF | ODE/fysisk model | Ja | Ja | Ja | Ja | `notes_only` | Figur/udledning manuel |
+| F21 Q8 | ODE-poler | ODE/fysisk model | Ja | Ja | Ja | Ja | `transfer_function_poles` | Ingen |
+| F21 Q9 | Overshoot/gain | Steprespons | Ja | Ja | Ja | Ja | `second_order_characteristics` | Afrunding dokumenteret |
+| F21 Q10 | Bode til steprespons | Bode; Steprespons | Ja | Ja | Ja | Ja | `script_assisted` | Plot manuelt |
+| F21 Q11 | Stabil gain | Bode/P-gain | Ja | Ja | Ja | Ja | `closed_loop_poles` | Ingen |
+| F21 Q12 | Højordens ODE | ODE/fysisk model | Ja | Ja | Ja | Ja | `transfer_function_poles` | Ingen |
+| F21 Q13 | Ustabil Nyquist | Nyquist-stabilitet | Ja | Ja | Ja | Ja | `notes_only` | Direction manuelt |
+| F21 Q14 | PM fra Nyquistpunkt | Phase margin fra punkt | Ja | Ja | Ja | Ja | `phase_margin_from_point` | Punkt manuelt |
+| F21 Q15 | P-gain koncept | Bode/P-gain; Stationær fejl | Ja | Ja | Ja | Ja | `notes_only` | Ingen |
+| F21 Q16 | Stationær fejl | Stationær referencefejl | Ja | Ja | Ja | Ja | `unity_feedback_step_error` | Diagramcheck manuelt |
+| F21 Q17 | P-Lead-Lag | P-Lead-Lag og limits | Ja | Ja | Ja | Ja | `solve_lag_beta` | Plantfase/phasebalance manuel |
+| F21 Q18 | PI-Lead | PI-Lead design | Ja | Ja | Ja | Ja | `design_pi_lead_at_crossover` | Kildeafvigelse dokumenteret |
+| F21 Q19 | Cascaded DC-fejl | Blokdiagram; Stationær fejl | Ja | Ja | Ja | Ja | `script_assisted` | Diagram/DC plot manuelt |
+| F21 Q20 | Feed-forward | Dynamisk feed-forward | Ja | Ja | Ja | Ja | `ideal_disturbance_feedforward` | Fortegn manuelt |
 
-| Source | Problem | Problem type | Fast method | Covered in section | Missing recipe? |
-|---|---|---|---|---|---|
-| F21 | Q1 | Block diagram reduction | Reduce series/parallel/feedback blocks and preserve signs | `02_block_diagrams...` / Exam recipe: reduce a block diagram | No |
-| F21 | Q2 | RLC transfer function and block diagram | Convert to \(s\)-domain impedances and use voltage divider/Kirchhoff equations | `05_modelling...` / Exam recipe: RLC circuit transfer function | No |
-| F21 | Q3 | Pole-zero map to Bode plot | Use Bode slope and phase contribution table | `06_bode...` / Exam recipe: infer transfer function from Bode plot | No |
-| F21 | Q4 | P-controller stability limit | Read \(-180^\circ\) frequency and compute \(K_{\mathrm{crit}}\) | `06_bode...` / Exam recipe: P-controller stability range from Bode plot | No |
-| F21 | Q5 | Transfer function from Bode slopes and phase | Count integrators, break frequencies, poles/zeros, and gain | `06_bode...` / Exam recipe: infer transfer function from Bode plot | No |
-| F21 | Q6 | Gain for specified phase margin | Find phase-implied frequency and shift magnitude to \(0\,\mathrm{dB}\) | `06_bode...` / Exam recipe: choose \(K_P\) for desired phase margin | No |
-| F21 | Q7 | Coupled masses model | Write one force-balance equation per mass and Laplace transform | `05_modelling...` / Exam recipe: coupled mass equations of motion | No |
-| F21 | Q8 | Differential equation to transfer function and poles | Zero initial conditions, collect \(Y\)/\(U\), factor denominator | `03_laplace...` / Exam recipe: ODE to transfer function and poles | No |
-| F21 | Q9 | Second-order overshoot | Match denominator to standard second-order form and compute \(M_p\) | `04_frequency...` / Exam recipe: overshoot limit from closed-loop denominator | No |
-| F21 | Q10 | Magnitude Bode plot to transfer function and DC gain | Read slopes, break frequencies, and low-frequency gain | `06_bode...` / Exam recipe: infer transfer function from Bode plot | No |
-| F21 | Q11 | P-controller gain range from Bode stability | Use \(\omega_\pi\) and \(K_{\mathrm{crit}}=1/|G(j\omega_\pi)|\) | `06_bode...` / Exam recipe: P-controller stability range from Bode plot | No |
-| F21 | Q12 | Higher-order ODE, poles at origin, stability | Build \(G(s)\), inspect denominator and repeated origin poles | `03_laplace...`; `04_frequency...` / Stability from poles | No |
-| F21 | Q13 | Nyquist stability for open-loop unstable system | Count \(P\), encirclements \(N\), require \(Z=0\) | `07_nyquist...` / Exam recipe: Nyquist stability with unstable open loop | No |
-| F21 | Q14 | Phase margin from Nyquist | Read unit-circle crossing angle | `07_nyquist...` / Exam recipe: phase margin from Nyquist plot | No |
-| F21 | Q15 | Type-0 P control and finite error | Use gain shift, system type, and final value theorem | `09_design...` / Exam recipe: steady-state error from diagram or Bode DC gain | No |
-| F21 | Q16 | Nonstandard feedback branch and DC error | Derive \(E/R\) from diagram before final value theorem | `02_block...` / Exam recipe: non-unity feedback steady-state error | No |
-| F21 | Q17 | P-Lead-Lag beta selection | Insert \(N_i\) and lag phase in \(\phi_{\mathrm{lag}}\) equation | `11_limited...` / Exam recipe: solve for Lag parameter \(\beta\) | No |
-| F21 | Q18 | PI-Lead design | Choose \(\tau_i\), compute phase deficit, solve \(\alpha,\tau_d,K_P\) | `08_pi_lead...` / Exam recipe: PI-Lead design from \(\omega_c\) and phase margin | No |
-| F21 | Q19 | Nested block diagram and steady-state error | Reduce loops, use DC gain and final value theorem | `02_block...`; `09_design...`; `12_disturbances...` | No |
-| F21 | Q20 | Feed-forward disturbance cancellation | Read disturbance sign, set \(\sigma_DD+GF_d=0\), check properness, compute disturbance sensitivity | `13_feed_forward...` / Exam recipe: design dynamic disturbance feed-forward | No |
-| F21 Part 2 no answers | Q11 | P-controller stability range from Bode plot | Use \(K_{\mathrm{crit}}\) at \(-180^\circ\) phase crossing | `06_bode...` / Exam recipe: P-controller stability range from Bode plot | No |
-| F21 Part 2 no answers | Q12 | ODE transfer function and unstable poles at origin | Transform ODE and inspect poles | `03_laplace...`; `04_frequency...` | No |
-| F21 Part 2 no answers | Q13 | Nyquist criterion for unstable open loop | Count \(P,N,Z\) | `07_nyquist...`; `10_unstable...` | No |
-| F21 Part 2 no answers | Q14 | Nyquist phase margin | Unit-circle crossing angle | `07_nyquist...` / Exam recipe: phase margin from Nyquist plot | No |
-| F21 Part 2 no answers | Q15 | P gain effect and type-0 error | Magnitude shift plus steady-state error table/final value | `06_bode...`; `09_design...` | No |
-| F21 Part 2 no answers | Q16 | Feedback branch gain and DC error | Derive \(E/R\) directly and evaluate \(s\to0\) | `02_block...` / Exam recipe: non-unity feedback steady-state error | No |
-| F21 Part 2 no answers | Q17 | P-Lead-Lag phase design | Solve lag phase equation for \(\beta\) | `11_limited...` / Exam recipe: solve for Lag parameter \(\beta\) | No |
-| F21 Part 2 no answers | Q18 | PI-Lead phase and magnitude design | PI phase, lead phase, crossover gain condition | `08_pi_lead...` / Exam recipe: PI-Lead design from \(\omega_c\) and phase margin | No |
-| F21 Part 2 no answers | Q19 | Nested loops and steady-state error | Reduce blocks, compute DC error | `02_block...`; `09_design...`; `12_disturbances...` | No |
-| F21 Part 2 no answers | Q20 | Feed-forward disturbance cancellation | Read disturbance sign and use \(F_d=-\sigma_DD/G\) with disturbance sensitivity | `13_feed_forward...` / Exam recipe: design dynamic disturbance feed-forward | No |
+## Kontrol mod prioriterede opgavetyper
 
-## Verification notes
+| Prioriteret type | Notesektion har Brug når/Input/Metode/Formler/Symboler/Antagelser/Hurtigtjek/Fælder? | Status |
+| ---------------- | ------------------------------------------------------------------------------------ | ------ |
+| Model/TF/poler | Ja | Dækket |
+| Tidsrespons/overshoot | Ja | Dækket |
+| Bode/P-gain/margin | Ja | Dækket |
+| Nyquist/stabilisering og punktmargin | Ja | Dækket |
+| Blokdiagram/stationær fejl | Ja | Dækket |
+| PI-Lead/P-design | Ja | Dækket |
+| Lag/limited systems | Ja | Dækket |
+| Disturbance/sensitivity/prefilter | Ja | Dækket |
+| Feed-forward | Ja | Dækket |
 
-Every listed exam problem maps to at least one formula section and at least one recipe or direct lookup table. No `sources/99_exam_required_extra_topics.tex` file was needed because the exam-required tasks fit the inferred lecture topics.
+## Kendte rester
 
-The feed-forward guide was checked against F21 Q20 and uses an explicit disturbance-sign variable \(\sigma_D\), because the correct sign depends on the summing junction in the exam diagram.
-
-The formula collection was checked for lecture-note style by scanning for long derivations and proof language. The rewritten files favor formula blocks, recipes, fast checks, and common traps.
+- Ingen F21-opgave er sprunget over.
+- Visuelt aflæste oplysninger er bevidst ikke automatiseret; dette er en begrænsning i scriptdækning, ikke i notesektionen.

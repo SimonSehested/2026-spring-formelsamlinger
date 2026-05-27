@@ -1,60 +1,54 @@
-\section*{Decision trees, ensembles and ANN}
-\subsection*{Decision tree splits}
-Classification impurity examples:
+\section*{Trees, ensembles and neural networks}
+\subsection*{Decision tree split}
+\textbf{Purpose:} Divide input space into regions with homogeneous class labels or responses.
 \[
-\begin{gathered}
-\text{class. error}=1-\max_c p_c,\qquad
-\text{Gini}=1-\sum_c p_c^2,\\
-\text{entropy}=-\sum_c p_c\log_2p_c.
-\end{gathered}
+I_{\rm error}=1-\max_cp_c,\quad
+I_{\rm Gini}=1-\sum_cp_c^2,
 \]
 \[
-\text{gain}=I(\text{parent})-\sum_v\frac{N_v}{N}I(\text{child }v).
+I_{\rm ent}=-\sum_cp_c\log_2p_c,
 \]
-\note{Recipe} For a candidate split: count classes in each branch, compute weighted child impurity, choose largest gain.
-\note{Trap} Use branch weights $N_v/N$; pure child impurity is $0$.
+\[
+\operatorname{gain}=I(\text{parent})-\sum_v\frac{N_v}{N}I(\text{child }v).
+\]
+\textbf{Symbols:} $I_{\rm error},I_{\rm Gini},I_{\rm ent}$ = node impurity measures; $p_c$ = class fraction in a node; $v$ indexes children; $N_v/N$ = child size fraction; gain = impurity removed by a split.
 
-\subsection*{Tree prediction and pruning}
-\note{Recipe} Follow threshold tests from root to leaf; predict majority class or leaf mean.
-\note{Trap} Axis-aligned splits compare one attribute at a time; depth/leaf count controls complexity.
+\textbf{How to read a tree:} follow threshold branches from root to leaf; a classification leaf returns its majority/class distribution, a regression leaf its response average. Splits give axis-aligned regions in a boundary plot.
+
+\textbf{Do this:} count labels in each candidate child; compute weighted child impurity; use the split with largest gain.
 
 \subsection*{AdaBoost}
+\textbf{Purpose:} Combine weak classifiers while emphasizing observations missed in previous rounds.
 \[
-\epsilon_t=\sum_i w_i^{(t)}\ind[h_t(x_i)\ne y_i],\quad
-\alpha_t=\frac12\ln\frac{1-\epsilon_t}{\epsilon_t},
+\epsilon_t=\sum_iq_i^{(t)}\ind[h_t(x_i)\ne y_i],\qquad
+\alpha_t=\frac12\log\frac{1-\epsilon_t}{\epsilon_t},
 \]
 \[
-w_i^{(t+1)}\propto w_i^{(t)}\exp\!\big(\alpha_t\ind[h_t(x_i)\ne y_i]\big),
-\quad H(x)=\operatorname{sign}\sum_t\alpha_t h_t(x).
+q_i^{(t+1)}\propto q_i^{(t)}
+\exp\!\big(\alpha_t\ind[h_t(x_i)\ne y_i]\big),
 \]
-\note{Trap} Misclassified observations get larger weight. Need $\epsilon_t<0.5$ for positive $\alpha_t$.
+\[
+H(x)=\operatorname{sign}\sum_t\alpha_th_t(x).
+\]
+\textbf{Symbols/means:} $t$ = boosting round; $q_i^{(t)}$ = weight of row $i$; $h_t(x)$ = weak classifier returning a signed class; $\epsilon_t$ = weighted error; $\alpha_t$ = vote weight; $H(x)$ = final signed class. Missed observations receive more relative weight next.
 
-\subsection*{Neural network forward pass}
-Two-layer regression/classification template:
+\textbf{Do this:} compute $\epsilon_t$ from current weights; find $\alpha_t$; update and normalize observation weights; combine signed votes.
+
+\subsection*{Neural-network forward pass}
+\textbf{Purpose:} Form nonlinear predictions by transforming weighted sums through hidden units.
 \[
-h_j=g(w_{0j}^{(1)}+\sum_m w_{mj}^{(1)}x_m),\quad
-\hat y=w_0^{(2)}+\sum_j w_j^{(2)}h_j.
+a_j=w_{0j}^{(1)}+\sum_mw_{mj}^{(1)}x_m,\quad
+h_j=g(a_j),\quad
+\hat y=w_0^{(2)}+\sum_jw_j^{(2)}h_j .
 \]
 \[
-\begin{gathered}
-\text{ReLU}(a)=\max(0,a),\quad \tanh(a)\in[-1,1],\\
-\sigma(a)\in(0,1).
-\end{gathered}
+\operatorname{ReLU}(a)=\max(0,a),\qquad \tanh(a)\in[-1,1],
 \]
-\note{Recipe} Compute hidden pre-activations, apply activation, then output layer. Include bias terms if listed.
-\note{Trap} For classification, final activation/threshold may differ from regression output.
+\[
+\sigma(a)=\frac1{1+e^{-a}}\in(0,1).
+\]
+\textbf{Symbols:} $a_j$ = pre-activation of hidden unit $j$; $g$ = activation; $h_j$ = hidden output; $w_{mj}^{(1)}$ = input-to-hidden weight; $w_j^{(2)}$ = hidden-to-output weight; $w_{0j}^{(1)},w_0^{(2)}$ = biases; $\hat y$ = network output; ReLU, $\tanh,\sigma$ = shown activations.
 
-\subsection*{ANN and regularization checks}
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\toprule
-Cue & Rule\\ \midrule
-More hidden units/layers & More flexible; more overfit risk.\\
-Weight decay/regularization & Shrinks weights; smoother boundary.\\
-Nonlinear activation absent & Network collapses to linear model.\\
-\bottomrule
-\end{tabularx}
+\textbf{How to read a diagram/table:} gather incoming weights for each hidden unit first; apply its activation; then use outgoing weights to calculate prediction or final class probability.
 
-\subsection*{Model statement traps}
-\begin{riskbox}[Common false statements]
-Regularization does not make a linear-in-parameters model nonlinear. K-means/GMM are unsupervised; logistic regression/ANN/trees are supervised when trained with labels. A method can have lower test error without being uniformly better on every observation.
-\end{riskbox}
+\textbf{Do this:} calculate all $a_j$; apply $g$; calculate output; apply final sigmoid/threshold only when specified for classification.

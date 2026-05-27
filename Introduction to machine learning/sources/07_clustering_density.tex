@@ -1,63 +1,69 @@
-\section*{Clustering and density/outliers}
-\subsection*{K-means}
+\section*{Clustering, density and outliers}
+\subsection*{K-means and centroids}
+\textbf{Purpose:} Partition observations into $K$ centre-based clusters.
 \[
-\min_{\{C_k,\mu_k\}}\sum_{k=1}^K\sum_{i\in C_k}\|x_i-\mu_k\|^2,\quad
+\min_{\{C_k,\mu_k\}}\sum_{k=1}^K\sum_{i\in C_k}\|x_i-\mu_k\|^2,\qquad
 \mu_k=\frac1{|C_k|}\sum_{i\in C_k}x_i.
 \]
-\note{Recipe} Assign to nearest centroid, recompute centroids, repeat until unchanged.
-\note{Trap} Sensitive to initialization and scaling; finds center-based/spherical clusters.
+\textbf{Symbols:} $K$ = number of clusters; $C_k$ = set of rows assigned to cluster $k$; $|C_k|$ = its size; $\mu_k$ = centroid/mean vector; $\|\cdot\|^2$ = squared Euclidean distance minimized by K-means.
 
-\subsection*{Hierarchical clustering}
+\textbf{How to read output:} each observation belongs to its nearest centroid; a centroid table is a mean attribute profile for each cluster.
+
+\textbf{Do this:} compute distances to centroids; assign nearest; recompute cluster means; repeat assignments if requested.
+
+\subsection*{Hierarchical clustering and dendrograms}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-Linkage & Distance between clusters\\ \midrule
-Single & $\min d(x_i,x_j)$; chaining/contiguity.\\
-Complete & $\max d(x_i,x_j)$; compact clusters.\\
-Average & Average pairwise distance.\\
-Centroid & Distance between centroids.\\
+\textbf{Linkage} & \textbf{Cluster-to-cluster distance}\\ \midrule
+Single & minimum pair distance; joins through close links.\\
+Complete & maximum pair distance; favours compact groups.\\
+Average & average of all cross-cluster pair distances.\\
+Centroid & distance between cluster means.\\
 \bottomrule
 \end{tabularx}
-\note{Recipe} Merge closest clusters step by step; dendrogram height is merge distance. Cut horizontal line to get clusters.
+\textbf{How to read a dendrogram:} leaves are observations; branch height is merge distance; a horizontal cut gives the connected groups below that height.
 
-\subsection*{Clustering comparison}
-Pair counts: $f_{11}$ same in both, $f_{00}$ different in both, $f_{10},f_{01}$ disagreements, $K=N(N-1)/2$.
+\subsection*{Compare clusterings}
 \[
-\text{Rand}=\frac{f_{11}+f_{00}}{K},\quad
-\text{Jaccard}=\frac{f_{11}}{f_{11}+f_{10}+f_{01}}.
+\operatorname{Rand}=\frac{f_{11}+f_{00}}{\binom N2},\qquad
+J=\frac{f_{11}}{f_{11}+f_{10}+f_{01}}.
 \]
-\note{Trap} Rand includes agreements on different-cluster pairs; Jaccard ignores $f_{00}$.
+\textbf{Symbols:} $\binom N2$ = number of observation pairs; $f_{11}$ = together in both clusterings; $f_{00}$ = apart in both; $f_{10},f_{01}$ = pair-status disagreements; $J$ = Jaccard agreement.
+
+\textbf{Means:} Rand counts both kinds of agreement; Jaccard measures overlap of same-cluster pairs only.
 
 \subsection*{Gaussian mixture model}
+\textbf{Purpose:} Describe data by weighted Gaussian components with soft memberships.
 \[
 \begin{gathered}
-p(x)=\sum_{k=1}^K\pi_k\mathcal N(x|\mu_k,\Sigma_k),\qquad \sum_k\pi_k=1,\\
+p(x)=\sum_{k=1}^K\pi_k\mathcal N(x|\mu_k,\Sigma_k),
+\qquad \sum_k\pi_k=1,\\
 \gamma_{ik}=\frac{\pi_k\mathcal N(x_i|\mu_k,\Sigma_k)}
-{\sum_j\pi_j\mathcal N(x_i|\mu_j,\Sigma_j)}.
+{\sum_j\pi_j\mathcal N(x_i|\mu_j,\Sigma_j)} .
 \end{gathered}
 \]
-\note{Decision} Assign to component with largest responsibility $\gamma_{ik}$.
-\note{Trap} Mixture density is sum of weighted component densities, not max.
+\textbf{Symbols:} $p(x)$ = mixture density; $\pi_k$ = weight of component $k$; $\mathcal N(x|\mu_k,\Sigma_k)$ = its Gaussian density; $\gamma_{ik}$ = responsibility for row $i$; $\mu_k,\Sigma_k$ = component mean and covariance; $j$ in the denominator indexes components.
+\textbf{How to read output:} $\pi_k$ is component frequency; $\gamma_{ik}$ is observation $i$'s responsibility for component $k$ and sums to $1$ across components. Largest responsibility gives a hard label.
 
-\subsection*{Kernel density estimation}
+\subsection*{KDE and local density}
+\textbf{Purpose:} Find regions of low probability density and potential outliers.
 \[
-\hat p(x)=\frac1N\sum_{i=1}^N \mathcal N(x|x_i,\sigma^2 I).
+\hat p(x)=\frac1N\sum_i\mathcal N(x|x_i,\sigma^2I),
 \]
-Leave-one-out density for selecting $\sigma$:
 \[
-L(\sigma)=\sum_i\log\left(\frac1{N-1}\sum_{j\ne i}\mathcal N(x_i|x_j,\sigma^2 I)\right).
+\ell_{\rm LOO}(\sigma)=\sum_i\log\!\left[
+\frac1{N-1}\sum_{j\ne i}\mathcal N(x_i|x_j,\sigma^2I)\right].
 \]
-\note{Outlier} Potential outlier has low estimated density.
-\note{Trap} Larger $\sigma$ smooths; smaller $\sigma$ gives spiky density.
+\[
+\operatorname{dens}(x_i,K)=
+\left(\frac1K\sum_{x_j\in N_i}d(x_i,x_j)\right)^{-1},
+\]
+\[
+\operatorname{ARD}(x_i,K)=
+\frac1K\sum_{x_j\in N_i}
+\frac{\operatorname{dens}(x_i,K)}{\operatorname{dens}(x_j,K)}.
+\]
+\textbf{Symbols:} $\hat p$ = kernel density estimate; $\sigma$ = Gaussian bandwidth; $I$ = identity matrix; $\ell_{\rm LOO}$ = leave-one-out log likelihood; $N_i$ = $K$ nearest neighbours of $x_i$; $\operatorname{dens}$ = inverse mean neighbour distance; ARD = average relative density ratio.
+\textbf{How to read it:} small KDE/local density marks isolation; small ARD marks a point less dense than its neighbours. Larger $\sigma$ smooths a KDE curve.
 
-\subsection*{KNN density and ARD}
-Let $N_{X\setminus i}(x_i,K)$ be the $K$ nearest neighbours of $x_i$ excluding itself.
-\[
-\text{density}(x_i,K)=\left(\frac1K\sum_{x_j\in N_i}d(x_i,x_j)\right)^{-1},
-\]
-\[
-\text{ARD}(x_i,K)=
-\frac{\text{density}(x_i,K)}
-{\frac1K\sum_{x_j\in N_i}\text{density}(x_j,K)}.
-\]
-\note{Outlier} Low density or low ARD. ARD compares to local neighbourhood density.
-\note{Trap} Recompute each neighbour's density excluding that neighbour itself.
+\textbf{Do this:} exclude the evaluated point for leave-one-out/local-neighbour calculations; compute densities; identify the smallest density or ARD as most outlying.

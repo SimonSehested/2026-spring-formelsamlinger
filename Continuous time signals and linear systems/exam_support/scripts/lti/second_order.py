@@ -69,24 +69,127 @@ def step_features_from_zeta_wn(zeta: float, wn: float) -> dict[str, float]:
     return {"zeta": zeta, "wn": wn, "wd": wd, "percent_overshoot": po, "peak_time": tp, "settling_time_2pct": ts_2_percent}
 
 
-def estimate_from_overshoot_peak_time(percent_overshoot: float, peak_time: float) -> dict[str, float]:
+def _round_sig(value: Any, sig: int = 4) -> Any:
+    """Round real or complex exam numbers to significant digits."""
+    if isinstance(value, complex):
+        return complex(_round_sig(value.real, sig), _round_sig(value.imag, sig))
+    if isinstance(value, (int, float, np.floating)):
+        value = float(value)
+        if value == 0.0 or not math.isfinite(value):
+            return value
+        return round(value, sig - int(math.floor(math.log10(abs(value)))) - 1)
+    return value
+
+
+def estimate_from_overshoot_peak_time(percent_overshoot: float, peak_time: float, *, dc_gain: float = 1.0) -> dict[str, Any]:
     """
-    Estimate zeta and wn from percent overshoot and first peak time.
+    Estimate robust standard second-order quantities from overshoot and first peak time.
 
     Use when:
-        A second-order step plot gives PO and tp.
+        A standard underdamped second-order step plot gives percent overshoot PO
+        and first peak time tp.
+
+    Assumptions:
+        percent_overshoot is in percent, peak_time is in seconds,
+        0 < percent_overshoot < 100, and peak_time > 0.
+
+    Formulas:
+        zeta = -ln(PO/100) / sqrt(pi**2 + ln(PO/100)**2)
+        wd = pi / peak_time
+        wn = wd / sqrt(1 - zeta**2)
+        poles = -zeta*wn +/- j*wd
+        denominator = s**2 + 2*zeta*wn*s + wn**2
+
+    For unity DC gain:
+        H(s) = wn**2 / (s**2 + 2*zeta*wn*s + wn**2)
+        y'' + 2*zeta*wn*y' + wn**2*y = wn**2*x
+
+    For arbitrary DC gain K, pass dc_gain=K. The transfer-function numerator
+    and ODE RHS coefficient become K*wn**2.
+
+    Example:
+        estimate_from_overshoot_peak_time(45.59, 0.785)
+
+        Approximately gives:
+            zeta ~= 0.2426
+            wn ~= 4.125
+            poles ~= -1 +/- j4
+            denominator ~= s**2 + 2*s + 17
     """
     if not (0.0 < percent_overshoot < 100.0):
-        raise ValueError("percent_overshoot must be between 0 and 100.")
+        raise ValueError(
+            "estimate_from_overshoot_peak_time only applies to an underdamped "
+            "standard second-order system with 0 < percent_overshoot < 100."
+        )
     if peak_time <= 0:
         raise ValueError("peak_time must be positive.")
+
     log_po = math.log(percent_overshoot / 100.0)
     zeta = -log_po / math.sqrt(math.pi**2 + log_po**2)
     wd = math.pi / peak_time
     wn = wd / math.sqrt(1.0 - zeta**2)
+    sigma = zeta * wn
+    a1 = 2.0 * sigma
+    a0 = wn**2
+    q = 1.0 / (2.0 * zeta)
+    poles = [complex(-sigma, wd), complex(-sigma, -wd)]
+    denominator_coeffs = [1.0, a1, a0]
+    numerator_coeffs = [dc_gain * a0]
+    unity_gain_numerator_coeffs = [a0]
+    settling_time_5pct = 3.0 / sigma
+    damped_period = 2.0 * math.pi / wd
+    time_constant_envelope = 1.0 / sigma
+    pole_angle_negative_rad = math.atan(wd / sigma)
+    pole_angle_positive_rad = math.atan2(wd, -sigma)
+
     out = step_features_from_zeta_wn(zeta, wn)
-    out["input_percent_overshoot"] = percent_overshoot
-    out["input_peak_time"] = peak_time
+    out.update(
+        {
+            "input_percent_overshoot": percent_overshoot,
+            "input_peak_time": peak_time,
+            "sigma": sigma,
+            "real_part": -sigma,
+            "imag_part": wd,
+            "poles": poles,
+            "denominator_coeffs": denominator_coeffs,
+            "denominator_expr": s**2 + sp.Float(a1) * s + sp.Float(a0),
+            "a1": a1,
+            "a0": a0,
+            "Q": q,
+            "damped_period": damped_period,
+            "time_constant_envelope": time_constant_envelope,
+            "exponential_envelope": sp.exp(-sp.Float(sigma) * t),
+            "overshoot_ratio": percent_overshoot / 100.0,
+            "peak_value_unity_final": 1.0 + percent_overshoot / 100.0,
+            "first_peak_time": peak_time,
+            "settling_time_5pct": settling_time_5pct,
+            "rise_time_0_100_approx": (math.pi - math.acos(zeta)) / wd,
+            "pole_angle_from_negative_real_axis_rad": pole_angle_negative_rad,
+            "pole_angle_from_negative_real_axis_deg": math.degrees(pole_angle_negative_rad),
+            "pole_angle_from_positive_real_axis_rad": pole_angle_positive_rad,
+            "pole_angle_from_positive_real_axis_deg": math.degrees(pole_angle_positive_rad),
+            "unity_gain_numerator_coeffs": unity_gain_numerator_coeffs,
+            "unity_gain_denominator_coeffs": denominator_coeffs,
+            "unity_gain_ode_lhs_coeffs": denominator_coeffs,
+            "unity_gain_ode_rhs_coeffs": unity_gain_numerator_coeffs,
+            "dc_gain": dc_gain,
+            "numerator_coeffs": numerator_coeffs,
+            "ode_lhs_coeffs": denominator_coeffs,
+            "ode_rhs_coeffs": numerator_coeffs,
+        }
+    )
+    out["rounded"] = {
+        "zeta": _round_sig(zeta),
+        "wn": _round_sig(wn),
+        "wd": _round_sig(wd),
+        "a1": _round_sig(a1),
+        "a0": _round_sig(a0),
+        "poles": [_round_sig(pole) for pole in poles],
+        "settling_time_2pct": _round_sig(out["settling_time_2pct"]),
+        "settling_time_5pct": _round_sig(settling_time_5pct),
+        "damped_period": _round_sig(damped_period),
+        "time_constant_envelope": _round_sig(time_constant_envelope),
+    }
     return out
 
 

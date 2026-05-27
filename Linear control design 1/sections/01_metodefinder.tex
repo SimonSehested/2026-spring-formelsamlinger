@@ -1,0 +1,34 @@
+\section{Metodefinder}
+
+\begin{table}[htbp]
+\centering
+\caption{Fra genkendelsessignal til metode.}
+\label{tab:metodefinder}
+\begin{tabularx}{\textwidth}{@{}p{.25\textwidth}Y Y@{}}
+\toprule
+Se efter & Gå til & Første handling \\
+\midrule
+ODE, RLC, masser, transferfunktion & \S\ref{sec:model} & Udled \(G(s)=Y/U\), find poler \\
+Steprespons, overshoot, \(t_s\), \(t_r\) & \S\ref{sec:time} & Match første-/andenordensstandardform \\
+Bode, dB, slope, PM/GM, \(K_P\) & \S\ref{sec:bode} & Markér breaks/crossover og konvertér dB \\
+Nyquist, \(-1\), RHP-pol & \S\ref{sec:nyquist} & Tæl \(P\) og nødvendige encirclements \\
+Blokdiagram, fejl eller DC-gain & \S\ref{sec:feedback} & Sæt andre input til nul og reducer signalvej \\
+\(C_{PI}\), \(C_{\mathrm{lead}}\), \(\omega_c,\gamma_M\) & \S\ref{sec:pilead} & Skriv fasebalance ved crossover \\
+Lag, \(\beta\), saturation/rate limit & \S\ref{sec:limits} & Afgør nonlinearity eller lagfase \\
+Disturbance, \(S,T\), prefilter & \S\ref{sec:disturbance} & Identificer hvor disturbance injiceres \\
+\(F_d\), målt disturbance, cancellation & \S\ref{sec:feedforward} & Sæt numeratorbidrag til nul \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Support modes}
+
+\begin{tabularx}{\textwidth}{@{}p{.25\textwidth}Y@{}}
+\toprule
+Mode & Betydning \\
+\midrule
+\code{notes\_only} & Figur-, bevis-, signalvej- eller metodevalg løses manuelt med noterne.\\
+\code{script\_assisted} & Metoden er manuel; valideret kode kan kontrollere beregninger.\\
+\code{script\_primary} & En klart specificeret parameterberegning kan udføres direkte, efter at antagelserne er skrevet.\\
+\bottomrule
+\end{tabularx}

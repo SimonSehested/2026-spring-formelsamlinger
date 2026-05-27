@@ -46,6 +46,33 @@ def main() -> None:
     _assert_close(round(est["wn"], 4), 4.1231, 1e-4)
     _assert_close(round(est["settling_time_2pct"], 4), 4.0, 1e-3)
 
+    est_exact = estimate_from_overshoot_peak_time(45.59, 0.785)
+    _assert_close(est_exact["zeta"], 0.24256, 1e-5)
+    _assert_close(est_exact["wn"], 4.12522, 1e-5)
+    _assert_close(est_exact["wd"], 4.00203, 1e-5)
+    _assert_close(est_exact["a1"], 2.001, 1e-3)
+    _assert_close(est_exact["a0"], 17.018, 1e-3)
+    _assert_close(est_exact["poles"][0].real, -1.0, 2e-3)
+    _assert_close(est_exact["poles"][0].imag, 4.0, 3e-3)
+    _assert_close(est_exact["poles"][1].real, -1.0, 2e-3)
+    _assert_close(est_exact["poles"][1].imag, -4.0, 3e-3)
+    for key in ["zeta", "wn", "wd", "percent_overshoot", "peak_time", "settling_time_2pct", "input_percent_overshoot", "input_peak_time"]:
+        assert key in est_exact
+    for bad_po in [0, -1, 100, 120]:
+        try:
+            estimate_from_overshoot_peak_time(bad_po, 0.785)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"Expected ValueError for percent_overshoot={bad_po}")
+    for bad_tp in [0, -1]:
+        try:
+            estimate_from_overshoot_peak_time(45.59, bad_tp)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"Expected ValueError for peak_time={bad_tp}")
+
     h = impulse_response_from_transfer([32, 0], [1, 8, 16])
     assert sp.simplify(h - 32 * (1 - 4 * t) * sp.exp(-4 * t) * sp.Heaviside(t)) == 0
 

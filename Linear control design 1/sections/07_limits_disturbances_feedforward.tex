@@ -1,0 +1,146 @@
+\section{Begrænsninger og eksterne signaler}
+
+\subsection{P-Lead-Lag og actuatorbegrænsning / Lag, saturation, windup}
+\label{sec:limits}
+
+\paragraph{Brug når}
+Der angives Lag-parameter \(\beta\), rate/amplitudelimit eller integrator windup.
+
+\paragraph{Input fra opgaven}
+For Lag: \(\omega_c,N_i,\alpha,\gamma_M\) og plantfase. For limits:
+\(u_{\min},u_{\max}\) eller \(R_{\max}\), reference og controllerrespons.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Afgør om opgaven handler om lineært Lag-design eller en ikke-lineær limit.
+\item Ved Lag: beregn leadfase, udled krævet negativ lagfase, løs for \(\beta>1\).
+\item Ved saturation/rate limit: undersøg om kommandoen rammer limit og om integralet
+      fortsat bygges op.
+\item Vælg mitigation: lavere bandwidth, integrator limit, prefilter, Lag eller anti-windup.
+\end{enumerate}
+
+\paragraph{Formler}
+\[
+C_{\mathrm{lag}}(s)=\frac{\tau_i s+1}{(\tau_i/\beta)s+1},\quad \beta>1,\qquad
+\phi_{\mathrm{lag}}=\arctan\!\left(\frac{N_i(1-\beta)}{1+\beta N_i^2}\right),
+\]
+\[
+u_{\min}\leq u_{\mathrm{sat}}(t)\leq u_{\max},\qquad |\dot u(t)|\leq R_{\max}.
+\]
+
+\paragraph{Symboler}
+\(\beta\) er lag-forhold; \(N_i=\omega_c\tau_i\); \(R_{\max}\) er maksimal inputrate.
+
+\paragraph{Antagelser}
+Lag er lineært og giver ikke en ren integrator. Saturation og rate limit er
+ikke-lineære, så en rent lineær marginanalyse er ikke tilstrækkelig for store signaler.
+
+\paragraph{Hurtigtjek}
+\(\phi_{\mathrm{lag}}<0\) og \(\beta>1\). Ved windup ses typisk lang recovery efter saturation.
+
+\paragraph{Typiske fælder}
+At behandle Lag som PI med garanteret nul stepfejl; at erklære stor-step-stabilitet
+ud fra en small-signal transferfunktion.
+
+\paragraph{Python}
+\code{solve\_lag\_beta(lag\_phase\_deg,n\_i)} beregner \(\beta\) fra den fase,
+du selv har udledt (F21 Q17). Der automatiseres ikke limit- eller windupdesign.
+
+\subsection{Disturbance og sensitivity / \(S\), \(T\), prefilter}
+\label{sec:disturbance}
+
+\paragraph{Brug når}
+En disturbance, measurement noise eller et prefilter indgår, og effekt på output/fejl
+skal bestemmes.
+
+\paragraph{Input fra opgaven}
+Disturbancens indsættelsespunkt og fortegn, loop \(L\), ønsket outputsignal og eventuelt
+stepstørrelse.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Sæt alle andre uafhængige input til nul (superposition).
+\item Reducér disturbance-to-output/error-pathen med samme loopnævner.
+\item Skriv resultatet med \(S\) eller \(T\), hvis standardloopet passer.
+\item Ved constant disturbance anvendes final value theorem efter stabilitetscheck.
+\item For et referenceprefilter: ændr kun \(R\to Y\)-pathen, ikke loopmarginer.
+\end{enumerate}
+
+\paragraph{Formler}
+\[
+S(s)=\frac1{1+L(s)},\qquad T(s)=\frac{L(s)}{1+L(s)},\qquad S+T=1,
+\]
+\[
+\text{output disturbance: } \frac{Y}{D}=S,\quad
+\text{plant-input disturbance: } \frac{Y}{D}=GS,\quad
+\text{measurement noise: } \frac{Y}{N}=-T,
+\]
+\[
+\text{referenceprefilter: }\frac{Y}{R}=F(s)T(s).
+\]
+
+\paragraph{Symboler}
+\(D,N\) er disturbance/noise; \(F\) er referenceprefilter; \(S,T\) er
+dimensionsløse standard-sensitiviteter.
+
+\paragraph{Antagelser}
+De kompakte \(S/T\)-former antager standard negativ unity feedback og den angivne
+placering; et konkret blokdiagram har forrang.
+
+\paragraph{Hurtigtjek}
+Et prefilter uden for loopet må ikke ændre \(L\), PM/GM eller disturbance rejection.
+Stor lavfrekvent loopgain reducerer typisk outputdisturbance via \(S(0)\).
+
+\paragraph{Typiske fælder}
+At bruge fejlsignalet fra en korrupt måling som performancefejl eller bytte input- og
+outputdisturbance.
+
+\paragraph{Python}
+Ingen offentlig funktion reducerer disturbanceblokdiagrammer; signalvej og fortegn er
+eksamensmetoden.
+
+\subsection{Dynamisk feed-forward / measured disturbance cancellation}
+\label{sec:feedforward}
+
+\paragraph{Brug når}
+En målbar disturbance \(d\) føres gennem \(D(s)\), og en feed-forward-blok \(F_d(s)\)
+skal afvise den gennem plant path \(G(s)\).
+
+\paragraph{Input fra opgaven}
+\(G(s)\), \(D(s)\), summationsfortegnet \(\sigma_D\in\{-1,+1\}\), og om disturbance
+kan måles.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Skriv disturbancebidraget før loopnævneren:
+      \(\sigma_DD(s)d(s)+G(s)F_d(s)d(s)\).
+\item Sæt bidraget lig nul og løs \(F_d=-\sigma_DD/G\).
+\item Kontrollér at \(F_d\) er proper og stabil.
+\item Hvis ikke, vælg statisk cancellation eller indsæt stabilt lavpasfilter.
+\item Angiv at perfekt rejection er nominal og afhænger af model/måling.
+\end{enumerate}
+
+\paragraph{Formler}
+\[
+F_d(s)=-\frac{\sigma_DD(s)}{G(s)},\qquad
+G_{yd}(s)=\frac{\sigma_DD(s)+G(s)F_d(s)}{1+C(s)G(s)}.
+\]
+
+\paragraph{Symboler}
+\(F_d\) er disturbance feed-forward; \(\sigma_D\) er fortegnet ved disturbance-summeringen.
+
+\paragraph{Antagelser}
+Disturbance er målt, plant og disturbance path er nominalt korrekte, og inversen kan
+realiseres.
+
+\paragraph{Hurtigtjek}
+Indsæt \(F_d\) tilbage i numeratoren og se at den bliver nul; tjek poler og relative grader.
+
+\paragraph{Typiske fælder}
+Forkert fortegn, invertering af forkert plant path eller påstand om perfekt rejection ved
+modelusikkerhed.
+
+\paragraph{Python}
+\code{ideal\_disturbance\_feedforward(...,disturbance\_sign)} danner ratioen og
+rapporterer proper/stable efter at du har valgt fortegnet. For F21 Q20 er
+\(\sigma_D=-1\), og nominalt fås \(G_{yd}=0\).

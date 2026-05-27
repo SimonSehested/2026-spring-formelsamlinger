@@ -1,0 +1,33 @@
+\section{Start her}
+
+\subsection{Brug under eksamen}
+
+Denne manual er organiseret efter det, du ser i opgaven: differentialligning, blokdiagram,
+Bode/Nyquist, performancekrav eller controllerform. Start i metodefinderen, gå til den
+angivne opskrift, og skriv dine antagelser før beregningen.
+
+\begin{enumerate}
+\item Identificer efterspurgt signal, input og loopfortegn.
+\item Klassificer opgaven med tabel~\ref{tab:metodefinder}.
+\item Udfør den manuelle opskrift; brug kun Python som kontrol eller for en markeret
+      parameterberegning.
+\item Kontrollér stabilitet før DC-gain eller final value theorem bruges.
+\item Kontrollér svar med fortegn, enheder, intervalkrav og simple grænseværdier.
+\end{enumerate}
+
+\subsection{Dokumenteret ramme og kildestatus}
+
+Kurset er \emph{34721/34722 Linear Control Design 1}. Forelæsning 1 angiver en
+4-timers skriftlig eksamen suppleret af en assignment-rapport. Det tilgængelige
+F21-materiale er multiple choice med løsninger til spørgsmål 1--20. Regler for
+hjælpemidler og brug af Python under eksamen fremgår ikke af kilderne; afklar dem
+før faktisk eksamensbrug.
+
+\subsection{Tre regler der forhindrer flest fejl}
+
+\begin{itemize}
+\item Et plot eller et blokdiagram skal fortolkes manuelt: retning, fortegn og signalplacering
+      må ikke antages af et script.
+\item dB er ikke en lineær gain: \(M=10^{M_{\mathrm{dB}}/20}\).
+\item Slutværdi kræver stabilt lukket loop; integratorer eller RHP-poler skal undersøges først.
+\end{itemize}

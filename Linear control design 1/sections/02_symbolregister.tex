@@ -1,0 +1,24 @@
+\section{Symbolregister}
+
+\begin{tabularx}{\textwidth}{@{}p{.16\textwidth}Y p{.18\textwidth}p{.23\textwidth}@{}}
+\toprule
+Symbol & Betydning & Enhed & Første notesektion \\
+\midrule
+\(r,e,u,y\) & Reference, fejl, kontrolinput, output & Systemspecifik & \S\ref{sec:feedback}\\
+\(G,C,H\) & Plant, controller, måleled & Ratio & \S\ref{sec:feedback}\\
+\(L=CGH\) & Open-loop/loop transfer function & -- & \S\ref{sec:feedback}\\
+\(S,T\) & Sensitivity og complementary sensitivity & -- & \S\ref{sec:disturbance}\\
+\(s=\sigma+\mathrm{j}\omega\) & Laplacevariabel & \(\mathrm{s}^{-1}\) & \S\ref{sec:model}\\
+\(p,z\) & Pol og nulpunkt & \(\mathrm{s}^{-1}\) & \S\ref{sec:model}\\
+\(K_{\mathrm{ss}}\) & DC/static gain & output/input & \S\ref{sec:model}\\
+\(\tau,\omega_b\) & Tidskonstant og break frequency & s, rad/s & \S\ref{sec:time}\\
+\(\omega_n,\zeta\) & Naturlig frekvens og damping ratio & rad/s, -- & \S\ref{sec:time}\\
+\(M_p,t_r,t_s\) & Overshoot, rise time, settling time & \%, s, s & \S\ref{sec:time}\\
+\(\omega_c,\omega_\pi\) & Gain- og phase-crossover frequency & rad/s & \S\ref{sec:bode}\\
+\(\gamma_M,K_M\) & Phase margin og gain margin & grader, faktor/dB & \S\ref{sec:bode}\\
+\(K_P,\tau_i,\tau_d\) & Controllergain, PI- og Lead-tid & --, s, s & \S\ref{sec:pilead}\\
+\(\alpha,N_i\) & Lead-forhold, \(\omega_c\tau_i\) & -- & \S\ref{sec:pilead}\\
+\(\beta\) & Lag lav-/højfrekvensforhold & -- & \S\ref{sec:limits}\\
+\(d,n,F,F_d\) & Disturbance, noise, prefilter, feed-forward & Varierer & \S\ref{sec:disturbance}\\
+\bottomrule
+\end{tabularx}

@@ -1,39 +1,42 @@
-\documentclass[10pt,a4paper]{article}
-
-\usepackage[margin=1.5cm]{geometry}
+\documentclass[a4paper,10pt]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
-\usepackage{amsmath,amssymb}
-\usepackage{booktabs}
-\usepackage{array}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{geometry}
 \usepackage[hidelinks]{hyperref}
-
+\geometry{margin=18mm}
+\setlist{nosep,leftmargin=*}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.35em}
-\setcounter{tocdepth}{2}
+\setlength{\parskip}{3pt}
+\renewcommand{\arraystretch}{1.14}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\tf}[2]{\dfrac{#1}{#2}}
+\newcommand{\jw}{\mathrm{j}\omega}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\RHP}{\mathrm{RHP}}
+\newcommand{\LHP}{\mathrm{LHP}}
+\newcommand{\code}[1]{\texttt{#1}}
+\pagestyle{plain}
 
-\title{Linear Control Design 1 Exam Formula Sheet}
-\author{34721/34722 Linear Control Design 1}
-\date{Spring 2026}
+\title{\vspace{-12mm}\textbf{Linear Control Design 1}\\Eksamensformelsamling og metodemanual}
+\author{Baseret på forelæsninger 1--13 og F21-eksamenssættet}
+\date{Udarbejdet 23. maj 2026}
 
 \begin{document}
 \maketitle
 \tableofcontents
 \newpage
-
-\input{sources/01_course_overview_and_control_concepts}
-\input{sources/02_block_diagrams_and_feedback}
-\input{sources/03_laplace_transform_and_transfer_functions}
-\input{sources/04_frequency_and_time_domain_analysis}
-\input{sources/05_modelling_and_linearization}
-\input{sources/06_bode_plots_and_stability_margins}
-\input{sources/07_nyquist_plot_and_stability}
-\input{sources/08_pi_lead_controller_design}
-\input{sources/09_design_specifications_and_tuning}
-\input{sources/10_unstable_systems}
-\input{sources/11_limited_systems_and_lag_control}
-\input{sources/12_disturbances_sensitivity_and_prefilters}
-\input{sources/13_feed_forward_control}
-
+\input{sections/00_start_her}
+\input{sections/01_metodefinder}
+\input{sections/02_symbolregister}
+\input{sections/03_model_time}
+\input{sections/04_frequency_stability}
+\input{sections/05_feedback_error}
+\input{sections/06_controller_design}
+\input{sections/07_limits_disturbances_feedforward}
+\input{sections/08_python_checklists}
 \end{document}

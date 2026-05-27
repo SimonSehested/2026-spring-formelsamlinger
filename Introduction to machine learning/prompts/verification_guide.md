@@ -1,27 +1,23 @@
-# Verification Guide for 4-Page Printed Formula Sheet
+# Verification Guide for 4-Page Formula-and-Interpretation Sheet
 
-After generating the formula sheet, verify it against exam sets and exercises.
+## Purpose
 
-The goal is not full coverage.
+Verify that the 4-page sheet supports both calculation and interpretation.
 
-The goal is the best possible 4-page printed exam backup sheet.
+The goal is not full lecture coverage. The goal is the best possible printed 4-page aid for solving exam problems when the student needs formulas, symbol meanings, and guidance on reading plots, matrices, and model outputs.
 
-## Verification purpose
+## What to verify
 
-For each exam problem, identify whether the sheet supports the student in the moments where they are likely to become uncertain:
+For each exam problem or exercise, identify whether the sheet helps with:
 
-- formula choice
-- assumptions
-- sign conventions
-- conditions
-- notation
-- units
-- boundary cases
-- common traps
-- plausibility checks
-- short solution method
+- choosing the relevant method
+- using the correct formula
+- understanding the symbols in the formula
+- reading a plot, matrix, table, boundary, density, or model output
+- interpreting numeric quantities such as probabilities, weights, loadings, scores, variances, distances, responsibilities, metrics, and similarities
+- following a short calculation procedure
 
-Do not solve full exam problems unless needed to identify missing formulas or uncertainty points.
+Do not evaluate whether the sheet contains generic warnings, exam-format rules, or guessing strategies. These are not target content.
 
 ## Verification table
 
@@ -31,54 +27,83 @@ Create or update:
 
 Use this table format:
 
-| Exam/source | Problem | Required concept or method | Likely uncertainty | Support on sheet | Missing? | Include/exclude decision |
-|---|---|---|---|---|---|---|
+| Exam/source | Problem | Object/method shown | Formula needed | Interpretation needed | Support on sheet | Missing? | Include/exclude decision |
+|---|---|---|---|---|---|---|---|
 
-## Rules
+## Include/exclude rules
 
-- Focus on coverage under a strict 4-page budget.
-- Prefer compact reference formulas over explanations.
-- Prefer assumptions, traps, and checks over derivations.
-- If a recurring method is missing, add a compact formula, rule, or recipe.
-- If a recurring trap is missing, add a short `Trap` or `Check` label.
-- If a concept appears in several exams, ensure it has a clear visual heading.
-- If a formula is missing from slides but clearly required by recurring exams, add it and mark it with:
-
-    % Added from exam coverage
-
-## Include/exclude decision
-
-When content is missing, decide whether to include it.
-
-Include if:
+Include an item if:
 
 - it appears repeatedly in exams or exercises
-- it is easy to confuse
-- a small sign/condition mistake causes wrong answers
-- it supports several problem types
-- it is hard to derive under time pressure
-- it provides a useful sanity check
+- it is needed to compute a requested answer
+- it explains a matrix, plot, or output that students must read
+- it explains symbols that are otherwise hard to remember
+- it helps connect formulas to interpretation
+- it gives a short reliable procedure for a recurring task
+- a small amount of text makes a formula usable
 
-Exclude if:
+Exclude an item if:
 
-- it appears only once
-- it is easy to derive
-- it is low-value compared with other content
-- it is mostly theoretical
-- it requires too much space for too little exam benefit
-- it would push the sheet beyond 4 pages
+- it is only exam-format strategy
+- it is mainly a warning about what not to do
+- it is a proof or derivation
+- it appears rarely and requires too much space
+- it is easy to derive under exam pressure
+- it repeats material already covered clearly
+- it does not help compute or interpret anything
 
 Mark excluded items explicitly:
 
-    Excluded: rare / derivable / low value / not worth 4-page space
+```text
+Excluded: rare / derivable / low value / exam-format only / warning-only / not worth 4-page space
+```
+
+## Verification questions
+
+For each recurring problem type, ask:
+
+1. Does the sheet contain the formula needed to calculate the answer?
+2. Does it explain what the symbols in that formula mean?
+3. If the problem shows a plot or matrix, does the sheet explain how to read it?
+4. If the problem gives model output, does the sheet explain what the numbers mean?
+5. Does the sheet give a short procedure for the task?
+6. Is any included text actually helping calculation or interpretation?
+
+## Required support categories
+
+The final sheet should support common exam objects such as:
+
+- data matrix and standardization
+- covariance and correlation matrix
+- histogram, boxplot, scatter plot, scatter matrix
+- PCA/SVD matrices and explained variance
+- score plots, loading plots, biplots
+- Bayes and Naive Bayes probability tables
+- Gaussian density values
+- regression and logistic regression outputs
+- KNN neighbour-based predictions
+- validation/CV results
+- confusion matrices and performance metrics
+- ROC curves
+- decision boundaries
+- decision tree splits and leaves
+- neural-network forward passes
+- k-means centroids and cluster assignments
+- hierarchical dendrograms
+- GMM responsibilities
+- KDE/KNN density and outlier scores
+- association-rule tables
+- binary similarity and text vectors
+
+Only include categories that are supported by the actual source material and exam recurrence.
 
 ## Page-count discipline
 
 If verification reveals missing content, do not simply add it.
 
-First decide whether it deserves space.
+First decide whether it deserves space under the 4-page limit.
 
-If adding it makes the PDF longer than 4 pages, remove or compress lower-priority content.
+If adding content makes the PDF longer than 4 pages, remove or compress lower-value content. Remove warning-only text and exam-format material before removing formulas or interpretation.
 
 The final PDF must remain exactly 4 A4 pages.
 
@@ -89,9 +114,12 @@ Before finishing, confirm:
 - LaTeX compiles.
 - The compiled PDF is exactly 4 A4 pages.
 - The sheet is readable when printed.
-- The layout is visually navigable.
-- No section looks like lecture notes.
-- No proof or long derivation remains.
-- Common traps and assumptions are visible.
-- Recurring exam task types have compact support.
+- The sheet contains formulas needed for calculation.
+- Important formulas have short explanations in words.
+- Symbols that are easy to confuse are explained.
+- Common plots and matrices are explained as objects to read.
+- Recurring problem types have short procedures.
+- No `Trap:` sections remain.
+- No exam-format or guessing-strategy section remains.
+- No long proof or derivation remains.
 - Rare excluded items are documented in the report.

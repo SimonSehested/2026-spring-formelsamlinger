@@ -1,82 +1,242 @@
-# Style Guide for 4-Page Printed Formula Sheet
+# Style Guide for 4-Page Printed Formula-and-Interpretation Sheet
 
-## Overall style
+## Goal
 
-Write in concise printed exam-reference style.
+Create a clean, dense, readable 4-page A4 exam sheet that combines formulas with short explanations in words.
 
-The formula sheet should look like a clean, dense, readable mathematical safety net.
+The sheet must help a student both:
 
-It should not look like lecture notes.
+1. calculate with the required formulas, and
+2. understand what the symbols, plots, matrices, axes, probabilities, scores, loadings, clusters, densities, and metrics mean.
 
-Each concept should usually be written as:
+This is not a pure formula sheet and not lecture notes. It is a printed exam aid for solving problems when the student needs both computation and interpretation.
+
+## Core principle
+
+Every important method should contain a calculation core and an interpretation core.
+
+Use this pattern whenever possible:
 
 ```tex
-\subsection*{Concept or task name}
+\subsection*{Method or exam object}
+\textbf{Purpose:} one short sentence explaining what the method is for.
+
+\textbf{Formulas:}
 \[
-formula
+...
 \]
-\textbf{Use:} ...
-\textbf{Condition:} ...
-\textbf{Trap:} ...
-\textbf{Check:} ...
+
+\textbf{Symbols:} short explanations of only the symbols needed to use the formulas.
+
+\textbf{How to read it:} short explanation of how to interpret matrices, plots, axes, numbers, weights, scores, loadings, probabilities, clusters, densities, or metrics.
+
+\textbf{Do this:} 2--4 concrete steps for typical exam tasks.
 ```
 
-Do not force every label if it adds noise.
+Do not force every label if it adds noise. Prefer meaning and usability over rigid formatting.
 
-## Primary design goal
+## Mandatory content style
 
-The final PDF must be exactly 4 A4 pages.
+The sheet must include:
 
-It must be readable when printed.
+- central formulas needed for calculations
+- short word explanations for formulas
+- symbol meanings where notation is likely to be confusing
+- how to read common plots, matrices, and model outputs
+- short procedures for recurring task types
+- method-selection cues where useful
+- compact interpretation rules for numeric outputs
 
-It must be easy to browse visually.
+The sheet must avoid:
 
-It is not optimized for Ctrl+F.
+- `Trap:` sections
+- exam-format descriptions
+- guessing strategies
+- multiple-choice scoring strategy
+- long proofs
+- long derivations
+- long theory paragraphs
+- formulas without explanations
+- explanations without formulas when the topic requires calculation
+- dense notation that is not explained in words
+- generic checklist material that does not directly help solve or interpret a problem
 
-## Mandatory rules
+## Label vocabulary
 
-- Output in `.tex` files must be valid LaTeX only.
-- Use `\section*`, `\subsection*`, and occasional `\subsubsection*`.
-- Use clear topic headings for visual navigation.
-- Put important formulas in display math when space allows.
-- Use compact inline math for simple identities.
-- Use at most one short explanatory note per formula.
-- Prefer labels: `Use`, `Condition`, `Trap`, `Check`, `Units`, `Sign`, `Boundary`.
-- Avoid long paragraphs.
-- Avoid proofs.
-- Avoid long derivations.
-- Avoid examples unless they prevent a common error.
-- Avoid Markdown in `.tex` files.
-- Use tables for compact comparison and lookup.
-- Preserve readability over maximal density.
+Preferred labels:
 
-## Explanation style
+```tex
+\textbf{Purpose:}
+\textbf{Formulas:}
+\textbf{Symbols:}
+\textbf{How to read it:}
+\textbf{Do this:}
+\textbf{Use when:}
+\textbf{Means:}
+\textbf{Interpretation:}
+\textbf{Decision:}
+```
+
+Avoid labels such as:
+
+```tex
+\textbf{Trap:}
+\textbf{Exam format:}
+\textbf{Guessing:}
+\textbf{Check:}
+```
+
+Use `Check` only if it is a direct mathematical validation that helps calculate or interpret an answer, not as a negative warning.
+
+## Formula style
+
+Formulas must be present, but each formula block should be followed by words explaining what the formula does.
 
 Good:
 
 ```tex
-\textbf{Condition:} valid for linear time-invariant systems.
-\textbf{Trap:} check sign convention before using the phase.
-\textbf{Check:} units of both sides must match.
+\[
+P(y=c\mid x)=\frac{P(x\mid y=c)P(y=c)}{\sum_{c'}P(x\mid y=c')P(y=c')}
+\]
+\textbf{Means:} compute one score per class, then divide by the sum of all class scores so probabilities add to 1.
 ```
 
 Bad:
 
 ```tex
-This formula is useful when you are asked to solve problems where you need to calculate the output, and it is important because it often appears in exams.
+\[
+P(y=c\mid x)=\frac{P(x\mid y=c)P(y=c)}{\sum_{c'}P(x\mid y=c')P(y=c')}
+\]
 ```
 
 Good:
 
 ```tex
-\textbf{Boundary:} final value theorem requires stable poles except possibly at zero.
+\textbf{How to read }V\textbf{:} in PCA, column $k$ is PC $k$. Large positive/negative values show which variables pull the observation along that PC.
 ```
 
 Bad:
 
 ```tex
-Remember this theorem because it can save time in many different kinds of questions.
+\textbf{Trap:} PC $k$ is column $k$, not row $k$.
 ```
+
+## Explanation density
+
+Use short sentences, not paragraphs.
+
+Good:
+
+```tex
+\textbf{Purpose:} PCA replaces many original variables with fewer new axes that explain most variation.
+\textbf{How to read scores:} each point is one observation in PC coordinates. Nearby points have similar profiles in the original variables.
+```
+
+Bad:
+
+```tex
+PCA is a dimensionality reduction technique that is useful because it transforms the original feature space into a new orthogonal basis where the axes are ordered by explained variance, which can then be used for visualization and compression.
+```
+
+## Plot and matrix interpretation
+
+Prioritize objects the student may see in exam problems:
+
+- data matrices
+- covariance and correlation matrices
+- PCA loading matrices
+- PCA score plots
+- loading plots and biplots
+- histograms, boxplots, scatter plots
+- confusion matrices
+- ROC curves
+- decision boundaries
+- dendrograms
+- cluster plots
+- density plots
+- GMM responsibilities
+- association-rule tables
+- text/vector similarity tables
+
+For each object, include:
+
+1. what the object represents,
+2. how to read the numbers or axes,
+3. the relevant formula if calculation is required,
+4. a short procedure for the exam task.
+
+## Tables
+
+Use compact tables for visual lookup.
+
+Recommended table types:
+
+- plot/object to interpretation
+- method to formula
+- model output to meaning
+- metric to formula and meaning
+- clustering method to how it behaves
+- matrix type to how it is read
+
+Example:
+
+```tex
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{Object} & \textbf{How to read it} \\
+\midrule
+Score plot & points are observations in PC coordinates; nearby points have similar profiles \\
+Loading vector & numbers show how much each original variable contributes to a PC \\
+Biplot & combines observations and variable directions in the same PC plane \\
+\bottomrule
+\end{tabularx}
+```
+
+Keep table text short.
+
+## Recipes
+
+Use recipes for recurring exam tasks.
+
+Example:
+
+```tex
+\subsection*{Naive Bayes classification}
+\textbf{Purpose:} choose the class that best explains the observed attributes.
+\[
+score(c)=P(y=c)\prod_m P(x_m\mid y=c),\qquad
+P(y=c\mid x)=\frac{score(c)}{\sum_{c'}score(c')}
+\]
+\textbf{Symbols:} $P(y=c)$ is the class prior. $P(x_m\mid y=c)$ is the probability of attribute value $x_m$ inside class $c$.
+\textbf{Do this:} compute one score per class; normalize scores; choose the largest posterior probability.
+```
+
+Recipes should normally be 2--4 steps.
+
+## What to include
+
+Include content that helps the student answer:
+
+- What does this method do?
+- Which formula do I use?
+- What do these symbols mean?
+- What does this matrix or plot show?
+- How do I compute the requested quantity?
+- How do I interpret the result?
+- What is the shortest reliable procedure?
+
+## What to exclude
+
+Exclude content that mainly answers:
+
+- what the exam scoring format is
+- how to guess multiple choice answers
+- what not to do
+- proofs or derivations
+- broad motivational theory
+- rare edge cases that cost too much space
+- repeated formulas with no added meaning
+- long lists of warnings
 
 ## Layout
 
@@ -86,7 +246,7 @@ Recommended starting point:
 
 ```tex
 \documentclass[9pt,a4paper]{article}
-\usepackage[a4paper,margin=0.8cm]{geometry}
+\usepackage[a4paper,margin=0.75cm]{geometry}
 \usepackage{multicol}
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{enumitem}
@@ -98,207 +258,34 @@ Recommended starting point:
 \setlength{\parskip}{1pt}
 \setlength{\columnsep}{0.45cm}
 \setlist{nosep,leftmargin=*}
-```
-
-Use either 2 or 3 columns.
-
-Prefer 3 columns for formula-heavy courses.
-
-Prefer 2 columns if formulas are wide or readability suffers.
-
-## Spacing
-
-Use compact spacing but keep the sheet readable.
-
-Recommended adjustments:
-
-```tex
 \setlength{\abovedisplayskip}{2pt}
 \setlength{\belowdisplayskip}{2pt}
 \setlength{\abovedisplayshortskip}{1pt}
 \setlength{\belowdisplayshortskip}{1pt}
 ```
 
-Avoid large vertical gaps.
+Use 2 or 3 columns depending on readability. Prefer 3 columns for formula-heavy sections and 2 columns if explanations become unreadable.
 
-Avoid page-breaking that separates a heading from its formula.
+## Page count
 
-## Headings
+The final PDF must be exactly 4 A4 pages.
 
-Use paper-friendly headings.
+If too long:
 
-Good headings:
+- shorten wording before removing formulas
+- merge related blocks
+- use compact tables
+- remove low-value warnings
+- remove exam-format material
+- remove rare topics
+- reduce repeated notation explanations
 
-```tex
-\section*{Transforms}
-\subsection*{Laplace rules}
-\subsection*{Stability checks}
-\subsection*{Boundary conditions}
-```
+If too short:
 
-Bad headings:
+- add interpretation of plots and matrices
+- add symbol explanations
+- add compact calculation recipes
+- add formulas that recur in exams
+- add object-reading tables
 
-```tex
-\subsection*{Keywords for search}
-\subsection*{Important}
-\subsection*{General theory}
-```
-
-## Formula blocks
-
-For central results:
-
-```tex
-\[
-X(\omega)=\int_{-\infty}^{\infty}x(t)e^{-j\omega t}\,dt
-\]
-\textbf{Trap:} sign convention may differ between courses.
-```
-
-For related identities:
-
-```tex
-\[
-\begin{aligned}
-Y(s)&=H(s)X(s),&
-H(s)&=\frac{Y(s)}{X(s)}.
-\end{aligned}
-\]
-```
-
-For small formulas, prefer inline text:
-
-```tex
-\textbf{Check:} stable CT system: poles strictly in left half-plane.
-```
-
-## Tables
-
-Use tables aggressively for compact lookup.
-
-Good table types:
-
-- formula pairs
-- transform pairs
-- condition/rule tables
-- sign convention tables
-- method selection tables
-- common traps
-- sanity checks
-- classification rules
-- boundary cases
-
-Recommended format:
-
-```tex
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\toprule
-\textbf{Case} & \textbf{Rule} \\
-\midrule
-... & ... \\
-\bottomrule
-\end{tabularx}
-```
-
-Keep table text short.
-
-## Boxes
-
-Use boxes sparingly for high-risk content.
-
-Good box content:
-
-- formulas that are easy to misuse
-- common traps
-- decision rules
-- final answer checks
-- sign conventions
-
-Example:
-
-```tex
-\begin{tcolorbox}[title=High-risk trap,boxrule=0.3pt,arc=1mm,left=1mm,right=1mm,top=1mm,bottom=1mm]
-Check assumptions before applying the theorem.
-\end{tcolorbox}
-```
-
-Do not overuse boxes, since they consume space.
-
-## Recipes
-
-Recipes should be short.
-
-Use this style:
-
-```tex
-\subsection*{Task: name}
-\textbf{Use:} recognition cue.
-\begin{enumerate}
-    \item Step 1.
-    \item Step 2.
-    \item Step 3.
-\end{enumerate}
-\textbf{Check:} ...
-```
-
-Normally use 2--5 steps.
-
-No long procedural explanations.
-
-## What to include
-
-Include:
-
-- recurring formulas
-- high-risk formula variants
-- conditions and assumptions
-- sign conventions
-- domain restrictions
-- units and dimensions
-- common traps
-- sanity checks
-- edge cases
-- short task recipes
-- notation reminders
-
-## What to exclude
-
-Exclude:
-
-- proofs
-- long derivations
-- motivational explanations
-- historical comments
-- generic study advice
-- rare formulas with low exam value
-- content included only for completeness
-- repeated explanations
-- large worked examples
-
-## Length control
-
-A normal subsection should contain:
-
-- 1 heading
-- 1 formula block or compact table
-- 0--3 short labels such as `Use`, `Trap`, `Check`
-
-Longer sections are allowed only for:
-
-- transform tables
-- classification tables
-- decision tables
-- compact method summaries
-- formula families
-
-## Page count rule
-
-After compiling, check the page count.
-
-The PDF must be exactly 4 pages.
-
-If it is too long, remove or compress content.
-
-If it is too short, add high-value exam backup material.
-
-Never leave the final PDF at 3 pages or 5 pages.
+Do not fill space with generic strategy or negative warnings.
