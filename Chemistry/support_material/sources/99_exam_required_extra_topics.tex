@@ -1,0 +1,92 @@
+\section{Exam Strategy and Mixed Task Recipes}
+
+\subsection{Ctrl+F keywords: multiple choice, statement validity, units, limiting case, answer check, traps, Danish keywords}
+Use for cross-topic exam tactics that recur in marked multiple-choice and calculation problems.
+
+\subsection{Symbols and notation}
+\referencetable{tab:strategy:symbols}{Symbols used in cross-topic checking strategies.}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+\mathrm{pH},\ [\ce{H3O+}] & pH and hydronium concentration used in logarithmic answer checks.\\
+\Delta G^\circ,\ K & Standard Gibbs energy change and equilibrium constant.\\
+E,\ E^\circ,\ n,\ Q & Cell potential, standard potential, transferred-electron amount, and reaction quotient in Nernst checks.\\
+n_{\mathrm{gas}},\ p,\ V,\ R,\ T & Gas amount, pressure, volume, gas constant, and absolute temperature.\\
+\bottomrule
+\end{tabular}
+
+\subsection{Exam recipe: multiple-choice statement elimination}
+
+\subsubsection{One false clause makes an option false}
+\begin{equation}\label{eq:strategy:all-clauses-true}
+\text{valid answer option}=\text{all required clauses true}
+\end{equation}
+For statement options, test each clause independently: sign, unit, condition, and exception. Eliminate options with one wrong condition even if the formula name looks right.
+
+\subsubsection{Dimensional and unit check}
+\begin{equation}\label{eq:strategy:unit-check}
+\text{final unit must match requested quantity}
+\end{equation}
+Use units as algebraic factors. Common exam errors are Celsius in gas/Arrhenius equations, entropy in \(\mathrm J\) with enthalpy in \(\mathrm{kJ}\), and cell length units in density.
+
+\subsubsection{Logarithm checks for pH, \(K\), and Nernst}
+\begin{equation}\label{eq:strategy:log-checks}
+\mathrm{pH}=-\log[\ce{H3O+}], \qquad
+\Delta G^\circ=-RT\ln K, \qquad
+E=E^\circ-\frac{0.0592}{n}\log Q
+\end{equation}
+A factor \(10\) in concentration changes pH or Nernst terms by one logarithmic unit. Check whether \(\ln\) or \(\log\) belongs with the numerical constant.
+
+\textbf{Use when:} the question asks which statement or numerical option is correct, or several options differ only in sign, unit, condition, or direction.
+
+\textbf{Given / Find:} one or more candidate answers; determine which option satisfies every required condition.
+
+\textbf{Required references:} Equation~\eqref{eq:strategy:all-clauses-true}, Equation~\eqref{eq:strategy:unit-check}, Equation~\eqref{eq:strategy:log-checks}, and the numbered topic equations or tables named by each option.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Split each answer option into separate claims, for example formula choice, sign, unit, phase inclusion, direction, or stated assumption.
+    \item For each formula claim, locate the matching numbered topic relation and substitute or compare exactly as that relation states; do not accept an option because its topic name sounds plausible.
+    \item For each numerical claim, carry units through the calculation and eliminate the option if its final unit fails Equation~\eqref{eq:strategy:unit-check}.
+    \item For pH, equilibrium, or electrochemical logarithm claims, verify logarithm base and sign using Equation~\eqref{eq:strategy:log-checks}.
+    \item Eliminate an option immediately when any single claim is false, according to Equation~\eqref{eq:strategy:all-clauses-true}; retain only options whose claims all pass.
+\end{enumerate}
+
+\textbf{Checks:} Re-read qualifiers such as ``standard'', ``at equilibrium'', ``spontaneous'', ``largest'', or ``lowest'' before submitting the retained option.
+
+\textbf{Common traps:} checking only the first clause of a compound option; accepting a correct formula with wrong units or wrong logarithm sign; overlooking a stated condition.
+
+\subsection{Recurring mixed recipes}
+
+\subsubsection{Ideal gas stoichiometry}
+\begin{equation}\label{eq:strategy:gas-moles}
+n_{\mathrm{gas}}=\frac{pV}{RT}
+\end{equation}
+Convert gas data to moles before applying reaction coefficients. This links gas-law questions with limiting-reactant calculations.
+
+\subsubsection{Percent change in hydronium concentration from pH}
+\begin{equation}\label{eq:strategy:ph-percent-change}
+\frac{[\ce{H3O+}]_2}{[\ce{H3O+}]_1}=10^{\mathrm{pH}_1-\mathrm{pH}_2}, \qquad
+\%\text{ change}=(\text{ratio}-1)100\%
+\end{equation}
+Use for ocean-acidification or pH-change wording. Lower pH means larger hydronium concentration.
+
+\subsubsection{Recognition keywords, English and Danish}
+\referencetable{tab:strategy:keywords}{Recognition keywords and the topic recipe they identify.}
+\begin{center}
+\begin{tabular}{c c}
+\toprule
+Exam wording & Go to\\
+\midrule
+bundfald, precipitate, sparingly soluble & \(K_{sp}, Q_{sp}\)\\
+puffer, buffer, Henderson & acid/base buffer\\
+galvanisk, electrode, concentration cell & Nernst/electrochemistry\\
+planar, bond angle, pyramidal & Lewis/VSEPR\\
+limiting, excess, yield, udbytte & stoichiometry\\
+vapor pressure, boiling point & intermolecular forces\\
+rate law, half-life, Arrhenius & kinetics\\
+\bottomrule
+\end{tabular}
+\end{center}
+Use the wording to jump to the relevant recipe before doing algebra.

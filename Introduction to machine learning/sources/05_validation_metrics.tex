@@ -1,88 +1,66 @@
-\section*{Validation and classifier output}
+\section*{Validation and output}
 \subsection*{Hold-out and cross-validation}
-\textbf{Purpose:} Estimate predictive error on observations not used for fitting.
 \[
-E_T=\frac1{|T|}\sum_{i\in T}L(y_i,\hat f(x_i)),\qquad
+\fid[eq:cv-error]E_T=\frac1{|T|}\sum_{i\in T}L(y_i,\hat f(x_i)),\qquad
 E_{\rm CV}=\frac1K\sum_{k=1}^K E_k .
 \]
-\textbf{Symbols:} $T$ = held-out/test set; $|T|$ = its number of rows; $L(y_i,\hat f(x_i))$ = loss of fitted predictor $\hat f$ on row $i$; $E_T$ = test error; $E_k$ = error on validation fold $k$; $K$ = number of folds; $E_{\rm CV}$ = fold-average error.
-
-\textbf{How to read a CV table:} select hyperparameters by inner/validation error; outer test-fold error estimates the selected procedure's generalization error.
-
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\toprule
-\textbf{Stage} & \textbf{Data use}\\ \midrule
-Fit/preprocess & Learn scaling, features and weights only from the training portion.\\
-Select model & Compare candidates on validation/inner folds.\\
-Report error & Evaluate selected procedure on held-out/outer folds.\\
-\bottomrule
-\end{tabularx}
+\textbf{Symbols:} $T$ is held-out/test rows; $L$ is the task loss; $E_k$ is validation-fold error.
+\textbf{Do this:} use \fref{eq:cv-error}; fit preprocessing and model only on training rows; for each candidate compute validation or inner-CV error; choose the candidate with smallest error; report held-out/outer-fold error only after selection.
+\textbf{Nested CV reading:} inner folds choose hyperparameters; outer folds estimate the whole selection procedure. Do not choose by outer error first; average outer errors only after each outer training set has made its own inner choice.
 
 \subsection*{Confusion matrix and metrics}
-\textbf{Purpose:} Summarize binary decisions relative to the chosen positive class.
 \[
-\begin{array}{c|cc}
+\fid[eq:conf-mat]\begin{array}{c|cc}
 &\hat y=+&\hat y=-\\\hline
 y=+&TP&FN\\
 y=-&FP&TN
 \end{array}
 \]
 \[
-\operatorname{Acc}=\frac{TP+TN}{N},\qquad
-\operatorname{Recall}=\operatorname{TPR}=\frac{TP}{TP+FN},
-\]
-\[
-\operatorname{FPR}=\frac{FP}{FP+TN},
-\qquad \operatorname{Precision}=\frac{TP}{TP+FP},
-\]
-\[
-\operatorname{Specificity}=\frac{TN}{TN+FP},\quad
-F_1=\frac{2\,\operatorname{Precision}\operatorname{Recall}}
+\fid[eq:class-metrics]\begin{aligned}
+\operatorname{Acc}&=\frac{TP+TN}{N},&
+\operatorname{Recall}=\operatorname{TPR}&=\frac{TP}{TP+FN},\\
+\operatorname{FPR}&=\frac{FP}{FP+TN},&
+\operatorname{Precision}&=\frac{TP}{TP+FP},\\
+\operatorname{Specificity}&=\frac{TN}{TN+FP},&
+F_1&=\frac{2\,\operatorname{Precision}\operatorname{Recall}}
 {\operatorname{Precision}+\operatorname{Recall}}.
+\end{aligned}
 \]
-\textbf{Symbols:} $TP,TN$ = correct positive/negative decisions; $FP,FN$ = false positive/negative decisions; $N$ = all classified cases; TPR = true-positive rate; FPR = false-positive rate; $F_1$ = harmonic mean of precision and recall.
-\textbf{How to read it:} recall asks ``which actual positives were found?''; precision asks ``which predicted positives were correct?''; FPR measures negative cases incorrectly flagged positive.
-
-\textbf{Do this:} define the positive class; place counts in the table; use the denominator matching the requested interpretation.
+\textbf{Do this:} first name the positive class, then fill \fref{eq:conf-mat}. Use \fref{eq:class-metrics}: accuracy denominator = all cases; recall/TPR = actual positives; precision = predicted positives; FPR/specificity = actual negatives. Recall asks what positives were found; precision asks what predicted positives were correct.
+\textbf{Matrix orientation:} if the shown matrix swaps rows/columns, do not copy positions blindly. Identify each count from the words: TP = actual positive and predicted positive; FN = actual positive predicted negative; FP = actual negative predicted positive; TN = actual negative predicted negative.
 
 \subsection*{ROC curves and thresholds}
 \[
-\operatorname{ROC}(\tau)=(\operatorname{FPR}(\tau),\operatorname{TPR}(\tau)),
-\qquad \operatorname{AUC}=\text{area under ROC}.
+\fid[eq:roc]\operatorname{ROC}(\tau)=(\operatorname{FPR}(\tau),\operatorname{TPR}(\tau)),\qquad
+\operatorname{AUC}=\text{area under ROC}.
 \]
-\textbf{Symbols:} $\tau$ = positive-score threshold; ROC = curve of FPR against TPR as $\tau$ varies; AUC = its area.
-\textbf{How to read it:} lowering $\tau$ predicts more positives, moving from $(0,0)$ toward $(1,1)$. A curve near the upper-left separates classes well; random rankings give AUC about $0.5$.
+\textbf{Do this:} sort positive scores high to low. Start at $(0,0)$ with no predicted positives. When the next row is truly positive, increase $TP$ and TPR using \fref{eq:class-metrics}; when truly negative, increase $FP$ and FPR. Lowering $\tau$ moves toward $(1,1)$; upper-left and high AUC mean better ranking.
+\textbf{Threshold choice:} a higher threshold predicts fewer positives, usually lower TPR and lower FPR. If false positives are expensive, prefer a point with smaller FPR; if missed positives are expensive, prefer larger TPR.
 
-\textbf{Do this:} sort predicted positive scores from high to low; add one case at a time as positive; update TPR/FPR; plot or identify the resulting point.
-
-\subsection*{Paired comparison: McNemar}
-\textbf{Purpose:} Compare two classifiers on the same evaluated observations.
+\subsection*{Paired model comparison}
 \[
-\begin{array}{c|cc}
+\fid[eq:mcnemar]\begin{array}{c|cc}
 &B\ {\rm correct}&B\ {\rm wrong}\\\hline
 A\ {\rm correct}&n_{11}&n_{12}\\
 A\ {\rm wrong}&n_{21}&n_{22}
 \end{array}
 \qquad
-\hat\theta=\frac{n_{12}-n_{21}}N .
+\hat\theta=\frac{n_{12}-n_{21}}N
 \]
 \[
-p=2F_{\operatorname{Binom}(n_{12}+n_{21},\,1/2)}
+\fid[eq:mcnemar-p]\begin{aligned}
+p&=2F_{\operatorname{Binom}(n_{12}+n_{21},\,1/2)}
 \!\left(\min(n_{12},n_{21})\right).
-\]
-\textbf{Symbols:} $A,B$ = the two classifiers; $n_{rs}$ = counts in the shown paired table; $\hat\theta$ = estimated accuracy difference; $F_{\operatorname{Binom}(n,1/2)}$ = binomial CDF for $n$ disagreements under equal performance; $p$ = two-sided p-value.
-\textbf{How to read it:} only disagreements $n_{12},n_{21}$ determine whether accuracies differ; positive $\hat\theta$ means A has higher accuracy under the table convention above. A small $p$ indicates evidence of different performance.
-
-\subsection*{Paired regression loss difference}
-\textbf{Purpose:} Decide whether two regressors differ on paired test losses.
-\[
-z_i=L_A(i)-L_B(i),\quad
-\bar z=\frac1N\sum_i z_i,\quad
-s_z^2=\frac1{N-1}\sum_i(z_i-\bar z)^2,
+\end{aligned}
 \]
 \[
-\operatorname{CI}_{1-\alpha}:\quad
-\bar z\ \pm\ t_{1-\alpha/2,N-1}\frac{s_z}{\sqrt N}.
+\fid[eq:paired-reg]\begin{aligned}
+z_i&=L_A(i)-L_B(i),\\
+\bar z&=\frac1N\sum_i z_i,\qquad
+s_z^2=\frac1{N-1}\sum_i(z_i-\bar z)^2,\\
+\operatorname{CI}_{1-\alpha}&:\quad
+\bar z\pm t_{1-\alpha/2,N-1}\frac{s_z}{\sqrt N}.
+\end{aligned}
 \]
-\textbf{Symbols:} $L_A(i),L_B(i)$ = model losses on test case $i$; $z_i$ = paired loss difference; $\bar z,s_z$ = its sample mean and standard deviation; $\alpha$ = error level; $t_{1-\alpha/2,N-1}$ = Student-$t$ critical value; CI = confidence interval.
-\textbf{How to read it:} $\bar z<0$ favours model A when lower loss is better; a confidence interval containing $0$ does not demonstrate a difference at that confidence level.
+\textbf{Do this:} for classifiers use \fref{eq:mcnemar}; only disagreements $n_{12},n_{21}$ affect $p$ in \fref{eq:mcnemar-p}; positive $\hat\theta$ favours A. For regression use \fref{eq:paired-reg}; compute one loss difference per same test row; $\bar z<0$ favours A when lower loss is better; a CI containing $0$ gives no demonstrated difference.

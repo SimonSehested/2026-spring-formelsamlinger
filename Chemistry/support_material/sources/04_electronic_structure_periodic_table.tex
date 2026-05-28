@@ -1,0 +1,169 @@
+\section{Electronic Structure and Periodic Table}
+
+\subsection{Ctrl+F keywords: quantum number, electron configuration, ion configuration, orbital, ionization energy, atomic radius, ionic radius, electronegativity}
+Use for questions about electron configurations, allowed quantum numbers, periodic trends, isoelectronic ions, and light-energy formulas.
+
+\subsection{Symbols and notation}
+\referencetable{tab:electronic:symbols}{Electronic-structure symbols and notation.}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+E,\ h,\ \nu,\ \lambda,\ c & Photon energy, Planck constant, frequency, wavelength, and speed of light.\\
+E_n,\ R_{\mathrm H} & Energy of Bohr level \(n\) and the hydrogen energy constant used in that formula.\\
+n_i,\ n_f & Initial and final principal quantum number in a transition.\\
+p,\ m,\ v & Particle momentum, mass, and speed in the de Broglie relation.\\
+n,\ \ell,\ m_\ell,\ m_s & Principal, angular-momentum, magnetic, and spin quantum numbers.\\
+\#e^-,\ \#\mathrm{orbitals} & Number of electrons and number of orbitals in a subshell.\\
+Z,\ \chi,\ \mathrm{IE},\ \mathrm{EA} & Atomic number, electronegativity, ionization energy, and electron affinity.\\
+\bottomrule
+\end{tabular}
+
+\subsection{Light and quantization}
+
+\subsubsection{Photon energy, wavelength, frequency}
+\begin{equation}
+E=h\nu=\frac{hc}{\lambda}
+\label{eq:electronic:photon-energy}
+\end{equation}
+Shorter wavelength means higher photon energy. Use SI units unless the data table specifies otherwise.
+
+\subsubsection{Bohr energy levels and transitions}
+\begin{equation}
+E_n=-\frac{R_{\mathrm H}}{n^2}, \qquad \Delta E=E_{n_f}-E_{n_i}
+\label{eq:electronic:bohr-transition}
+\end{equation}
+Emission releases energy when the electron moves to lower \(n\). Absorption requires positive energy input.
+
+\subsubsection{De Broglie wavelength}
+\begin{equation}
+\lambda=\frac{h}{p}=\frac{h}{mv}
+\label{eq:electronic:de-broglie}
+\end{equation}
+Use for matter-wave questions involving particle mass and speed.
+
+\subsection{Quantum numbers and orbitals}
+
+\subsubsection{Allowed quantum numbers}
+\referencetable{tab:electronic:quantum-numbers}{Allowed quantum numbers and meanings.}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+Symbol & Allowed values & Meaning\\
+\midrule
+\(n\) & \(1,2,3,\ldots\) & Shell\\
+\(\ell\) & \(0,1,\ldots,n-1\) & Subshell\\
+\(m_\ell\) & \(-\ell,\ldots,+\ell\) & Orbital\\
+\(m_s\) & \(\pm \frac12\) & Spin\\
+\bottomrule
+\end{tabular}
+Invalid sets usually break one allowed-value rule in Table~\ref{tab:electronic:quantum-numbers}.
+
+\subsubsection{Subshell labels and capacities}
+\begin{equation}
+\ell=0,1,2,3\leftrightarrow s,p,d,f, \qquad
+\#\text{orbitals}=2\ell+1, \qquad
+\#e^-=2(2\ell+1)
+\label{eq:electronic:subshell-capacity}
+\end{equation}
+Thus \(s,p,d,f\) hold \(2,6,10,14\) electrons.
+
+\subsubsection{Electron configuration filling order}
+\begin{equation}
+1s,\,2s,\,2p,\,3s,\,3p,\,4s,\,3d,\,4p,\,5s,\,4d,\ldots
+\label{eq:electronic:filling-order}
+\end{equation}
+Fill lower energy orbitals first, obey Pauli exclusion, and maximize unpaired spins within degenerate orbitals.
+
+\subsubsection{Electron count for atoms and ions}
+\begin{equation}
+N_e=Z-q
+\label{eq:electronic:ion-electron-count}
+\end{equation}
+Use signed charge \(q\): a positive charge removes electrons and a negative charge adds electrons.
+
+\subsection{Periodic trends}
+
+\subsubsection{Atomic radius trend}
+\begin{equation}
+\text{Across a period: radius decreases}, \qquad \text{down a group: radius increases}
+\label{eq:electronic:atomic-radius-trend}
+\end{equation}
+Increasing effective nuclear charge contracts atoms across a period. New shells dominate down a group.
+
+\subsubsection{Ionization energy trend}
+\begin{equation}
+\ce{X(g) -> X+(g) + e-}, \qquad \mathrm{IE}>0
+\label{eq:electronic:ionization-definition}
+\end{equation}
+Ionization energy generally increases across a period and decreases down a group. Filled and half-filled subshells can create exceptions.
+
+\subsubsection{Electron affinity and electronegativity}
+\begin{equation}
+\ce{X(g)+e- -> X-(g)}, \qquad \chi\approx\frac{\mathrm{IE}+\mathrm{EA}}{2}
+\label{eq:electronic:affinity-electronegativity}
+\end{equation}
+Electronegativity increases toward fluorine. Use it to judge bond polarity and likely formal-charge placement.
+
+\subsubsection{Isoelectronic ionic radius}
+\begin{equation}
+\text{Same electron count: larger }Z\Rightarrow\text{smaller radius}
+\label{eq:electronic:isoelectronic-radius}
+\end{equation}
+For \(\ce{N^3-}\), \(\ce{O^2-}\), \(\ce{F-}\), \(\ce{Na+}\), \(\ce{Mg^2+}\), the highest nuclear charge is smallest.
+
+\subsection{Exam recipe: quantum-number validity}
+\textbf{Use when:} the problem asks whether \((n,\ell,m_\ell,m_s)\) is allowed or how many orbitals or electrons belong to a subshell.
+
+\textbf{Given / Find:} Given one or more quantum-number sets or a specified subshell; find valid/invalid sets, the failed rule, or the capacity.
+
+\textbf{Required references:} Table~\ref{tab:electronic:quantum-numbers} and Equation~\eqref{eq:electronic:subshell-capacity}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Check \(n\) against the first row of Table~\ref{tab:electronic:quantum-numbers}: it must be a positive integer.
+    \item Check \(\ell\) against the chosen \(n\): require \(0\leq\ell\leq n-1\).
+    \item Check \(m_\ell\) and \(m_s\) against their table rows: require \(-\ell\leq m_\ell\leq+\ell\) and \(m_s=\pm\tfrac12\).
+    \item If capacity is requested, insert \(\ell\) in Equation~\eqref{eq:electronic:subshell-capacity}.
+\end{enumerate}
+
+\textbf{Checks:} An \(s\) subshell must have one orbital and capacity two electrons; a proposed \(m_\ell\) cannot have magnitude greater than \(\ell\).
+
+\textbf{Common traps:} Allowing \(\ell=n\); accepting \(m_s=0\); confusing the number of orbitals with the number of electrons.
+
+\subsection{Exam recipe: electron configuration and ion configuration}
+\textbf{Use when:} the problem asks for an atom or ion configuration, valence or unpaired electrons, or identification of an isoelectronic species.
+
+\textbf{Given / Find:} Given an element identity or \(Z\) and an ionic charge; find its electron configuration or compare electron counts.
+
+\textbf{Required references:} Equations~\eqref{eq:electronic:ion-electron-count}, \eqref{eq:electronic:filling-order}, and \eqref{eq:electronic:subshell-capacity}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Calculate the electron count from Equation~\eqref{eq:electronic:ion-electron-count}, using \(q=0\) for a neutral atom and the signed ionic charge otherwise.
+    \item Add electrons in the orbital order of Equation~\eqref{eq:electronic:filling-order}, never exceeding each subshell capacity from Equation~\eqref{eq:electronic:subshell-capacity}; inside a \(p\), \(d\), or \(f\) subshell, place one electron in each equal-energy orbital before pairing.
+    \item For a cation, remove electrons from the highest principal shell first; for transition-metal cations, remove \(ns\) before \((n-1)d\).
+    \item Sum all superscripts in the completed configuration and verify that the total equals \(N_e\); when unpaired electrons are requested, count singly occupied orbitals after the Hund-rule placement in step 2.
+\end{enumerate}
+
+\textbf{Checks:} A positive charge reduces the electron count; species identified as isoelectronic must have equal total superscripts; a completely filled subshell has no unpaired electrons.
+
+\textbf{Common traps:} Subtracting electrons for an anion; removing \(3d\) before \(4s\) in transition-metal cations; exceeding a subshell capacity.
+
+\subsection{Exam recipe: ranking atomic or ionic radius and ionization energy}
+\textbf{Use when:} the problem asks for largest/smallest radius or highest/lowest first ionization energy among atoms or ions.
+
+\textbf{Given / Find:} Given a list of species; find an ordered ranking of radius or ionization energy with the controlling rule stated.
+
+\textbf{Required references:} Equation~\eqref{eq:electronic:atomic-radius-trend}, Equation~\eqref{eq:electronic:isoelectronic-radius}, and Equation~\eqref{eq:electronic:ionization-definition}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item For ions, calculate electron counts; if counts match, rank radius using Equation~\eqref{eq:electronic:isoelectronic-radius}.
+    \item For non-isoelectronic radii, apply Equation~\eqref{eq:electronic:atomic-radius-trend}; for the same element, rank cation \(<\) neutral atom \(<\) anion in radius.
+    \item For first ionization energy, rank neutral atoms generally upward and to the right in the periodic table, then flag adjacent filled or half-filled subshell exceptions if relevant.
+    \item Write the final order with \(<\) or \(>\) defined explicitly as radius or ionization energy.
+\end{enumerate}
+
+\textbf{Checks:} Within an isoelectronic series, the largest \(Z\) must give the smallest radius; a cation must not be ranked larger than its neutral parent atom.
+
+\textbf{Common traps:} Applying neutral-atom trends directly to an isoelectronic ionic series; reversing a requested largest-to-smallest order; treating the general ionization-energy trend as exception-free.

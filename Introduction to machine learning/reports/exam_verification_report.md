@@ -1,32 +1,31 @@
 # Exam verification report
 
-## Review basis
+## Verification basis
 
-All provided solved exam PDFs from Spring/Fall 2017--2024 were text-inspected for recurring methods and objects. Recent sets were additionally spot-checked around PCA, regression, ROC, clustering and density formulas. Verification targets calculation and reading support under the four-page constraint.
+The final sheet was checked against the existing exam-derived coverage reports and the rewritten `sources/*.tex`. The verification target was not just topic presence, but whether the sheet says how to compute or read the object.
 
-| Exam/source | Problem/object family | Formula needed | Interpretation needed | Support on sheet | Missing? | Include/exclude decision |
+| Exam/source family | Object/method shown | Formula needed | Interpretation needed | Final support | Missing? | Include/exclude decision |
 |---|---|---|---|---|---|---|
-| 2017--2024 solved sets | Standardized observations; histogram/boxplot/scatter/correlation or distance object | Standardization, covariance/correlation, Euclidean/cityblock/max distance | Scale, plot spread, correlation sign and named metric | Data section | No | Included |
-| 2017--2024 solved sets | PCA `S,V`, projections and variance plots | `X=USV^T`, `Z=XV`, EVR | Loading column, score point, biplot direction | PCA section | No | Included |
-| Multiple 2017--2024 sets | Conditional/Naive Bayes table | Posterior and factorized score | Prior versus likelihood versus posterior | Bayes section | No | Included |
-| Multiple 2017--2024 sets | Gaussian density/class curves | Normal density and class score | Centre/spread and density versus probability | Bayes section | No | Included |
-| Multiple 2017--2024 sets, notably 2023--2024 | Linear/ridge/logistic prediction output | Prediction, ridge with unpenalized intercept, sigmoid | Coefficient sign, standardized input, boundary | Prediction section | No | Included |
-| Multiple sets | KNN prediction or boundary | Vote/mean of neighbours | Local smoothness and distances | Prediction section | No | Included |
-| 2017--2024 solved sets | CV/model-error table | Fold/test error mean | Selection result versus generalization estimate | Validation section | No | Included |
-| 2017--2024 solved sets | Confusion matrix and ROC curves | TPR/FPR/precision/F1 and ROC coordinates | Rows/columns, threshold motion, AUC | Validation section | No | Included |
-| Fall 2019--Spring 2024 recurring sets | Paired classifier/regression comparison | McNemar disagreement counts; paired-loss CI | Sign of difference, CI containing zero, p-value | Validation section | No | Included |
-| Multiple sets, notably 2018 and 2023--2024 | Tree, AdaBoost or ANN diagram/table | Gain, boost update, network forward pass | Leaf result, weights and activations | Trees/ANN section | No | Included |
-| Multiple 2018--2024 sets | Centroid/dendrogram/cluster assignments | K-means, linkage, Rand/Jaccard | Cut height and pair agreement | Clustering section | No | Included |
-| Spring 2024 and repeated earlier sets | GMM/KDE/local density table or plot | Mixture responsibility, KDE, KNN density, ARD | Soft membership and outlier reading | Density section | No | Included; ARD verified against printed formula |
-| Several solved sets | Association-rule or text/binary similarity table | Support/confidence/lift, Jaccard/cosine | Co-occurrence and sparse similarity | Association section | No | Included |
-| Lecture material beyond repeated exam objects | Full EM/optimization derivations | Lengthy derivation | Limited immediate output-reading value | None | Yes | Excluded: not worth 4-page space |
-| Lower-frequency supplementary methods | Extra representation/visualization methods | Varies | Limited recurrence | None | Yes | Excluded: low exam frequency |
+| 2017--2024 solved sets | Standardized observations, plots, correlation/distance matrices | `F1`--`F3` | Scale, axes, spread, sign/strength, row distance | Explicit recipes and plot-to-number matching in data section | No | Included |
+| 2017--2024 solved sets | PCA `S,V`, scores, EVR, biplots | `F4`, `F5` | Loading column, score point, biplot direction, PC wording | Projection, PC interpretation and plot reading rules | No | Included |
+| Multiple sets | Bayes/Naive Bayes probability tables | `F7`, `F8` | Prior/likelihood/posterior and normalization | Table recipe says exactly which factors to multiply and normalize | No | Included |
+| Multiple sets | Gaussian class density | `F9` | Density height versus probability, centre/spread | Density-class score recipe | No | Included |
+| Multiple sets | Linear/ridge/logistic/KNN/softmax prediction | `F10`--`F14` | Weight sign/unit, threshold, local neighbours, boundary type | Explicit prediction, coefficient and threshold/boundary recipes | No | Included |
+| 2017--2024 solved sets | CV/model-error table | `F15` | Selection versus final reporting; nested CV | Minimum validation/inner-CV rule and held-out/outer rule | No | Included |
+| 2017--2024 solved sets | Confusion matrix and ROC | `F16`--`F18` | Positive class, matrix orientation, denominators, threshold path | Denominator/orientation lookup and ROC update recipe | No | Included |
+| Fall 2019--Spring 2024 recurring sets | Paired classifier/regression comparison | `F19`--`F21` | Disagreements, sign, CI/p-value reading | McNemar and paired-loss procedures | No | Included |
+| Multiple sets | Tree split, AdaBoost, ANN diagram | `F22`--`F24` | Node fractions, normalized weights, activations, weight sign | Mechanical recipes for each calculation | No | Included |
+| Multiple sets | Centroids, dendrograms, cluster agreement | `F25`, `F26` | Cluster profile, cut height, pair agreement | K-means, centroid, linkage and agreement recipes | No | Included |
+| Spring 2024 and repeated earlier sets | GMM, KDE, KNN density, ARD | `F27`--`F29` | Responsibility, bandwidth, low-density outliers, global/local density distinction | Responsibility normalization and ARD ratio recipe | No | Included |
+| Several sets | Association rules, Jaccard, tf-idf/cosine | `F30`--`F32` | Rule meaning, sparse zeros, rare term weighting | Count/prune/similarity recipes | No | Included |
+| Lecture-only or rare extensions | Full derivations, EM details, low-frequency visualization extensions | Varies | Low immediate exam calculation value | None | Yes | Excluded: low frequency / derivable / not worth 4-page space |
 
 ## Build verification
 
-- `pdflatex -interaction=nonstopmode -halt-on-error -jobname=ml main.tex` compiles successfully.
-- `ml.pdf` is checked with `pdfinfo` for A4 size and exactly four pages.
-- Formula-symbol audit completed: a shared notation line defines recurring dimensions, indexes, inputs and targets, and every computational formula group has an adjacent `Symbols`, `Symbols/means` or `Symbols/use` explanation for its method-specific quantities.
-- The additional symbol explanations fit the print constraint using `\footnotesize` body text; the log contains no overfull lines.
-- Final source scan checks that the sheet contains no forbidden strategy block or `Trap:` label.
-- Long formulas are split for two-column print readability; only non-fatal short-table underfull box messages may remain.
+- `pdflatex -jobname=ml -interaction=nonstopmode -halt-on-error main.tex` was run twice.
+- `ml.pdf` is exactly 4 pages and A4 size.
+- Body text is true `10pt`/`\normalsize`; no global `\footnotesize` or `\scriptsize` is used.
+- Formula references resolve; log scan found no `Undefined`, `Reference`, `Error`, or `Overfull` lines.
+- One non-fatal underfull table message remains in the final object-to-action table; it does not affect page count or formula references.
+- Source scan found no `Trap:` label, exam-format section, guessing strategy, or multiple-choice strategy.
+- Every displayed formula block in `sources/*.tex` has a compact `F#` formula ID.

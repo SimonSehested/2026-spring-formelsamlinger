@@ -1,0 +1,185 @@
+\section{Electrochemistry and Oxidation States}
+
+\subsection{Ctrl+F keywords: oxidation state, redox, galvanic cell, anode, cathode, Nernst, concentration cell, electrode potential, elektrokemi}
+Use for oxidation numbers, spontaneous galvanic cells, standard cell potentials, Nernst calculations, concentration cells, and electrochemical equilibrium.
+
+\subsection{Symbols and notation}
+\referencetable{tab:electrochem:symbols}{Symbols and notation for electrochemistry.}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+E_{\mathrm{cell}},\ E^\circ_{\mathrm{cell}} & Cell potential and standard cell potential.\\
+x & Unknown oxidation state in an oxidation-number calculation.\\
+E^\circ_{\mathrm{cathode}},\ E^\circ_{\mathrm{anode}} & Tabulated standard reduction potentials assigned to the cathode and anode.\\
+\Delta G^\circ,\ n,\ F,\ R,\ T & Standard Gibbs energy change, transferred electrons, Faraday constant, gas constant, and absolute temperature.\\
+K,\ Q & Equilibrium constant and reaction quotient for the balanced cell reaction.\\
+c_{\mathrm{high}},\ c_{\mathrm{low}} & Higher and lower metal-ion concentrations in a concentration cell.\\
+|,\ || & Phase boundary and salt bridge in cell notation.\\
+\bottomrule
+\end{tabular}
+
+\subsection{Oxidation states}
+
+\subsubsection{Oxidation state rules}
+\referencetable{tab:electrochem:oxidation-rules}{Fast oxidation-state assignment rules.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Species or condition} & \textbf{Oxidation state or sum}\\
+\midrule
+free element & \(0\)\\
+monatomic ion & ion charge\\
+oxygen in most compounds & \(-II\)\\
+hydrogen in most compounds & \(+I\)\\
+halogens in binary salts & \(-I\)\\
+neutral molecule & sum \(=0\)\\
+polyatomic ion & sum \(=\) ion charge\\
+\bottomrule
+\end{tabular}
+Oxidation states are bookkeeping numbers for redox. The element whose oxidation state increases is oxidized.
+
+\subsection{Exam recipe: oxidation number}
+\textbf{Use when:} an oxidation state of \(\ce{Cr}\), \(\ce{S}\), \(\ce{Mn}\), \(\ce{N}\), or another atom is requested in a compound or ion.
+
+\textbf{Given / Find:} Given a molecular or ionic formula and its overall charge; find the oxidation state \(x\) of the specified element.
+
+\textbf{Required references:} Table~\ref{tab:electrochem:oxidation-rules}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Assign the fixed oxidation states from Table~\ref{tab:electrochem:oxidation-rules}, including their atom multiplicities.
+    \item Set the requested atom's oxidation state to \(x\), multiplied by its subscript if more than one occurs.
+    \item Set the sum of all oxidation-state contributions equal to the overall species charge.
+    \item Solve for \(x\) and state whether it indicates oxidation or reduction only if a comparison state is supplied.
+\end{enumerate}
+
+\textbf{Checks:} Reinsert \(x\) and recover the overall charge; free elements such as \(\ce{O2}\), \(\ce{H2}\), and elemental metals have oxidation state \(0\).
+
+\textbf{Common traps:} Setting an ion sum to zero; ignoring subscripts; applying the usual oxygen or hydrogen rule without checking for an indicated exception.
+
+\subsection{Galvanic cells}
+
+\subsubsection{Anode, cathode, and electron flow}
+\begin{equation}
+\label{eq:electrochem:electrode-processes}
+\text{anode: oxidation}, \qquad \text{cathode: reduction}, \qquad e^-:\text{ anode}\rightarrow\text{cathode}
+\end{equation}
+In a spontaneous galvanic cell, the cathode has the more positive reduction potential.
+
+\subsubsection{Cell notation}
+\begin{equation}
+\label{eq:electrochem:cell-notation-example}
+\ce{Zn(s) | Zn^2+(aq) || Cu^2+(aq) | Cu(s)}
+\end{equation}
+Single bars are phase boundaries and the double bar is the salt bridge. Anode is written on the left by convention.
+
+\subsubsection{Standard cell potential}
+\begin{equation}
+\label{eq:electrochem:standard-cell-potential}
+E^\circ_{\mathrm{cell}}=E^\circ_{\mathrm{cathode}}-E^\circ_{\mathrm{anode}}
+\end{equation}
+Use tabulated values as reduction potentials. Do not multiply \(E^\circ\) by stoichiometric coefficients.
+
+\subsubsection{Gibbs free energy and equilibrium}
+\begin{equation}
+\label{eq:electrochem:gibbs-from-potential}
+\Delta G^\circ=-nFE^\circ_{\mathrm{cell}}
+\end{equation}
+\begin{equation}
+\label{eq:electrochem:equilibrium-from-potential}
+nFE^\circ_{\mathrm{cell}}=RT\ln K
+\end{equation}
+Positive \(E^\circ_{\mathrm{cell}}\) gives negative \(\Delta G^\circ\) and product-favored equilibrium.
+
+\subsection{Exam recipe: galvanic cell potential and spontaneous direction}
+\textbf{Use when:} two half-cell reduction potentials are given or anode, cathode, electron flow, \(E^\circ_{\mathrm{cell}}\), \(\Delta G^\circ\), or \(K\) is requested.
+
+\textbf{Given / Find:} Given two standard reduction half-reactions and potentials; find spontaneous direction and the requested cell quantity.
+
+\textbf{Required references:} Equations~\eqref{eq:electrochem:electrode-processes}, \eqref{eq:electrochem:standard-cell-potential}, \eqref{eq:electrochem:gibbs-from-potential}, and \eqref{eq:electrochem:equilibrium-from-potential}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Select the more positive reduction potential as reduction at the cathode.
+    \item Reverse the other listed half-reaction for oxidation at the anode and balance transferred electrons to determine \(n\).
+    \item Compute \(E^\circ_{\mathrm{cell}}\) with Equation~\eqref{eq:electrochem:standard-cell-potential}; keep tabulated potentials unscaled.
+    \item Write electron flow from anode to cathode and, if needed, cell notation with the anode on the left.
+    \item Use \(n\) with Equation~\eqref{eq:electrochem:gibbs-from-potential} or \eqref{eq:electrochem:equilibrium-from-potential} only when \(\Delta G^\circ\) or \(K\) is required.
+\end{enumerate}
+
+\textbf{Checks:} A spontaneously written galvanic cell has \(E^\circ_{\mathrm{cell}}>0\) and \(\Delta G^\circ<0\); the half-reactions must cancel electrons.
+
+\textbf{Common traps:} Multiplying potentials by stoichiometric coefficients; reversing the anode reaction without using its reduction potential consistently in the subtraction; sending electrons from cathode to anode.
+
+\subsection{Nernst equation and concentration cells}
+
+\subsubsection{Nernst equation}
+\begin{equation}
+\label{eq:electrochem:nernst}
+E_{\mathrm{cell}}=E^\circ_{\mathrm{cell}}-\frac{RT}{nF}\ln Q
+\end{equation}
+The reaction quotient is written for the balanced cell reaction.
+
+\subsubsection{Nernst equation at \(298\,\mathrm K\)}
+\begin{equation}
+\label{eq:electrochem:nernst-298}
+E_{\mathrm{cell}}=E^\circ_{\mathrm{cell}}-\frac{0.0592\,\mathrm V}{n}\log Q
+\end{equation}
+Use base-10 logarithm only with \(0.0592\,\mathrm V\). Use \(n\) as moles of electrons transferred.
+
+\subsubsection{Concentration cell}
+\begin{equation}
+\label{eq:electrochem:concentration-standard-potential}
+E^\circ_{\mathrm{cell}}=0
+\end{equation}
+\begin{equation}
+\label{eq:electrochem:concentration-cell-potential}
+E_{\mathrm{cell}}=\frac{0.0592\,\mathrm V}{n}\log\left(\frac{c_{\mathrm{high}}}{c_{\mathrm{low}}}\right)
+\end{equation}
+For a metal/metal-ion concentration cell written spontaneously, the high-concentration half-cell is reduced and the low-concentration half-cell is oxidized.
+
+\subsubsection{Solubility product from cell potential}
+\begin{equation}
+\label{eq:electrochem:cell-equilibrium-gibbs}
+\Delta G^\circ=-nFE^\circ_{\mathrm{cell}}=-RT\ln K
+\end{equation}
+Write the cell reaction so its equilibrium constant matches the desired dissolution or precipitation expression.
+
+\subsection{Exam recipe: solubility product from electrochemical potential}
+\textbf{Use when:} standard reduction potentials or a standard cell potential are given and the requested equilibrium constant is \(K_{sp}\) for a sparingly soluble salt.
+
+\textbf{Given / Find:} Given relevant half-reaction potentials and salt dissolution species; find \(K_{sp}\).
+
+\textbf{Required references:} Equations~\eqref{eq:electrochem:standard-cell-potential}, \eqref{eq:electrochem:cell-equilibrium-gibbs}, and \eqref{eq:acid:ksp-expression}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Write and balance half-reactions so their sum is the salt dissolution reaction whose equilibrium expression is \(K_{sp}\), rather than its reverse precipitation reaction.
+    \item Determine the electron number \(n\), and calculate \(E^\circ_{\mathrm{cell}}\) for that oriented overall reaction using Equation~\eqref{eq:electrochem:standard-cell-potential}; reverse the sign if the summed reaction was first obtained backwards.
+    \item Calculate \(\ln K_{sp}=nFE^\circ_{\mathrm{cell}}/(RT)\) from Equation~\eqref{eq:electrochem:cell-equilibrium-gibbs}, then exponentiate to obtain \(K_{sp}\).
+    \item Check that the resulting equilibrium expression has the dissolved ions with the powers required by Equation~\eqref{eq:acid:ksp-expression}.
+\end{enumerate}
+
+\textbf{Checks:} A sparingly soluble salt normally gives \(K_{sp}\ll1\), corresponding to negative \(E^\circ\) for dissolution as written; the balanced dissolution reaction contains no free electrons.
+
+\textbf{Common traps:} reporting \(1/K_{sp}\) by orienting the reaction as precipitation; multiplying an electrode potential by coefficients; using the wrong electron count in the logarithmic relation.
+
+\subsection{Exam recipe: Nernst concentration cell}
+\textbf{Use when:} identical electrodes contact different ion concentrations, for example copper or nickel concentration cells.
+
+\textbf{Given / Find:} Given two concentrations, temperature \(298\,\mathrm K\), and the electrode ion charge; find cell voltage and spontaneous electrode direction.
+
+\textbf{Required references:} Equations~\eqref{eq:electrochem:concentration-standard-potential} and \eqref{eq:electrochem:concentration-cell-potential}; use Equation~\eqref{eq:electrochem:nernst} instead if the temperature is not \(298\,\mathrm K\).
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Confirm that the electrodes and redox couple are identical, so \(E^\circ_{\mathrm{cell}}=0\).
+    \item Determine \(n\) from the balanced metal oxidation/reduction half-reaction.
+    \item Assign \(c_{\mathrm{high}}\) and \(c_{\mathrm{low}}\), and write the spontaneous direction as reduction in the more concentrated metal-ion half-cell.
+    \item Insert the ratio \(c_{\mathrm{high}}/c_{\mathrm{low}}\) into Equation~\eqref{eq:electrochem:concentration-cell-potential}.
+    \item Report the positive cell potential for the spontaneous orientation and identify anode and cathode when requested.
+\end{enumerate}
+
+\textbf{Checks:} The voltage is positive for the spontaneous orientation and becomes zero when the concentrations are equal; the logarithm argument is at least one.
+
+\textbf{Common traps:} Inverting the concentration ratio; using \(n=1\) without checking ion charge; adding a nonzero standard potential for identical half-cells.

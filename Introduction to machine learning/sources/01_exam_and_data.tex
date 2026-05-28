@@ -1,58 +1,64 @@
-\section*{Data, summaries and distances}
-\textbf{Shared notation:} $N$ = observations, $M$ = attributes; $i,\ell$ index observations, $j,m$ attributes, $c$ classes, $k$ components/clusters/folds as stated; $x_i$ = input row, $x_{ij}$ = its entry, $y_i$ = target, $\hat{\ }$ = estimated/predicted value.
+\section*{Data, plots, matrices}
+\textbf{Notation:} $N$ rows, $M$ attributes; $i,\ell$ rows, $j,m$ attributes, $c$ classes, $k$ components/clusters/folds; $x_i$ row, $x_{ij}$ entry, $y_i$ target, $\hat{\ }$ predicted/estimated.
 
 \subsection*{Data matrix and standardization}
-\textbf{Purpose:} Put attributes on comparable scales before distances, PCA or regularized models.
+\textbf{Purpose:} make attributes comparable before distances, PCA or penalized models.
 \[
-X\in\R^{N\times M},\qquad \tilde x_{ij}=\frac{x_{ij}-\bar x_j}{s_j},
+\fid[eq:data-standardize]\begin{aligned}
+X&\in\R^{N\times M},&
+\tilde x_{ij}&=\frac{x_{ij}-\bar x_j}{s_j},\\
+\bar x_j&=\frac1N\sum_i x_{ij},&
+s_j^2&=\frac1{N-1}\sum_i(x_{ij}-\bar x_j)^2 .
+\end{aligned}
 \]
-\[
-\bar x_j=\frac1N\sum_i x_{ij},\qquad
-s_j^2=\frac1{N-1}\sum_i(x_{ij}-\bar x_j)^2 .
-\]
-\textbf{Symbols:} $X\in\R^{N\times M}$ is the data matrix; $\R$ means real values; $\bar x_j$ and $s_j$ are mean and sample standard deviation of attribute $j$; $\tilde X$ is standardized data.
+\textbf{Symbols:} $\bar x_j$ and $s_j$ are the mean and sample standard deviation of column $j$; $\tilde X$ is the standardized matrix.
+\textbf{Do this:} with \fref{eq:data-standardize}, subtract the column mean, divide by the column standard deviation, then read $\tilde x_{ij}=2$ as ``row $i$ is two standard deviations above average on attribute $j$.''
 
-\textbf{How to read it:} $\tilde x_{ij}>0$ means observation $i$ is above the mean of attribute $j$, measured in standard deviations.
-
-\subsection*{Covariance, correlation and distance}
-\textbf{Purpose:} Measure joint variation or similarity between observations.
+\subsection*{Covariance, correlation, distance}
 \[
-\hat\Sigma=\frac1{N-1}\tilde X^\top\tilde X,\qquad
-\rho_{jk}=\frac{\Cov(x_j,x_k)}{s_js_k},
+\fid[eq:cov-dist]\begin{aligned}
+\hat\Sigma&=\frac1{N-1}\tilde X^\top\tilde X,&
+\rho_{jk}&=\frac{\Cov(x_j,x_k)}{s_js_k},\\
+d_2(x_i,x_\ell)&=\sqrt{\sum_m(x_{im}-x_{\ell m})^2},&
+d_1(x,z)&=\sum_m|x_m-z_m|,\\
+d_\infty(x,z)&=\max_m|x_m-z_m|.&
+\end{aligned}
 \]
-\[
-d(x_i,x_\ell)=\sqrt{\sum_m(x_{im}-x_{\ell m})^2}.
-\]
-\textbf{Symbols:} $\hat\Sigma$ = sample covariance/correlation matrix of standardized attributes; $\rho_{jk}$ = correlation of columns $j,k$; $\Cov$ = covariance; $d(x_i,x_\ell)$ = Euclidean distance between rows.
-\textbf{Means:} covariance/correlation compare columns; distance compares rows. For standardized $X$, the covariance matrix equals the correlation matrix.
-
-\textbf{How to read a matrix:} diagonal correlation is $1$; sign gives direction of linear relation and $|\rho|$ its strength. Distance matrices have zero diagonal and large entries for separated observations.
-
-\[
-d_1(x,z)=\sum_m|x_m-z_m|,\qquad
-d_\infty(x,z)=\max_m|x_m-z_m|.
-\]
-\textbf{Symbols/use:} $x,z$ = two vectors; $d_1$ is cityblock distance; $d_\infty$ is maximum-coordinate distance. Use the named distance in neighbour/density calculations.
+\textbf{Means:} covariance/correlation compare columns; distances compare rows. For standardized $X$, $\hat\Sigma$ is the correlation matrix.
+\textbf{How to read it:} in a correlation matrix the diagonal is $1$; sign gives direction, $|\rho|$ gives linear strength. In a distance matrix the diagonal is $0$; the smallest off-diagonal values are nearest rows.
+\textbf{Do this:} for \fref{eq:cov-dist}, choose the named distance; subtract coordinates row by row; square/sum/square-root for $d_2$, sum absolute differences for $d_1$, or take the largest absolute coordinate difference for $d_\infty$.
 
 \subsection*{Plots and summary objects}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-\textbf{Object} & \textbf{How to read it}\\ \midrule
-Histogram/density & Height shows where values concentrate; width/tails show spread and extremes.\\
-Boxplot & Middle line is median; box is middle $50\%$; whiskers/points show range or unusual values.\\
-Scatter plot & Tilt indicates correlation sign; narrow cloud indicates strong linear relation.\\
-Scatter matrix & Panel $(j,k)$ compares two attributes; match signs to a proposed correlation matrix.\\
+\textbf{Object} & \textbf{Read it by doing this}\\ \midrule
+Histogram/density & x-axis is value; high bars/curve = many observations; wide/tails = large spread/extremes.\\
+Boxplot & median line; box = middle $50\%$; long whisker/points = skew or unusual values.\\
+Scatter plot & read axes first; upward tilt = positive correlation, downward = negative; narrow cloud = large $|\rho|$.\\
+Scatter matrix & panel $(j,k)$ compares attributes $j,k$; match each panel's sign/strength to $\rho_{jk}$ in \fref{eq:cov-dist}.\\
 \bottomrule
 \end{tabularx}
-\textbf{Do this:} identify variables and scale; read direction/spread; then match to numerical summaries.
+\textbf{Recipe:} identify axes and units; decide whether rows or columns are being compared; use the matching rule above and, if numeric, compute the relevant value from \fref{eq:data-standardize} or \fref{eq:cov-dist}.
+
+\subsection*{Matching plots to numbers}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+\textbf{Given} & \textbf{How to decide}\\ \midrule
+Mean/median & Symmetric plot: close together. Right tail: mean usually above median; left tail: mean below median.\\
+Large $s_j$ & Choose variable with widest spread on its own axis, not the tallest histogram bar.\\
+Large $|\rho|$ & Choose scatter panel closest to a thin line; sign is the line's slope.\\
+Outlier row & Look for unusual value after standardizing by \fref{eq:data-standardize}, or large row distance in \fref{eq:cov-dist}.\\
+\bottomrule
+\end{tabularx}
+\textbf{Do this:} when options mix plots and matrices, first match variable names/order, then match sign, then magnitude. A correlation near $0$ can still have nonlinear pattern; the formula only measures linear direction.
 
 \subsection*{Regression loss}
 \[
-e_i=y_i-\hat y_i,\quad
-\text{SSE}=\sum_i e_i^2,\quad
-\text{MSE}=\frac1N\sum_i e_i^2,
+\fid[eq:reg-loss]\begin{aligned}
+e_i&=y_i-\hat y_i,&
+\operatorname{SSE}&=\sum_i e_i^2,\\
+\operatorname{MSE}&=\frac1N\sum_i e_i^2,&
+\operatorname{RMSE}&=\sqrt{\operatorname{MSE}} .
+\end{aligned}
 \]
-\[
-\text{RMSE}=\sqrt{\text{MSE}}.
-\]
-\textbf{Symbols/means:} $e_i$ = residual for case $i$; $y_i,\hat y_i$ = true and predicted response; SSE = summed squared error; MSE = its mean; RMSE = its square root in the unit of $y$. Smaller test/CV RMSE indicates better prediction.
+\textbf{Do this:} use \fref{eq:reg-loss}: predicted error is true minus predicted; square before averaging; RMSE is in the same unit as $y$. Smaller test/CV RMSE means better prediction on unseen rows.

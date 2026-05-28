@@ -5,7 +5,7 @@
 - Kursus: `34721/34722 Linear Control Design 1`, DTU Electro, Spring Semester 2026.
 - Undervisere: Silvia Tolu og Dimitrios Papageorgiou.
 - Dokumenteret eksamensformat: 4-timers skriftlig eksamen suppleret af rapport om sidste assignment (`1_Welcome_Lecture.pdf`).
-- Observeret opgavestil: multiple choice med beregning, diagramfortolkning og controllerdesign (`F21.pdf`).
+- Observeret opgavestil: multiple choice med beregning, diagramfortolkning og controllerdesign (`F21.pdf`, `F25.pdf`).
 - Tilladte hjælpemidler og brug af Python til eksamen: ikke dokumenteret i inputmaterialet.
 - Kildeprioritet: eksamenssæt med svar, officiel eksamensoriginal, forelæsningsslides.
 
@@ -16,6 +16,7 @@ Alle PDF'er blev tekstudtrukket med `pdftotext -layout -enc UTF-8`; samtlige gav
 | Kilde | Type | Rolle | Kvalitet | Bruges til | Usikkerheder |
 | ----- | ---- | ----- | -------- | ---------- | ------------ |
 | `input/exams/F21.pdf` (28 s.) | Eksamen med svar | Primær eksamenskilde | God tekst; figurer findes | Q1-Q20, facit og metoder | Enkelt formel-/figurlayout er OCR-fragmenteret |
+| `input/exams/F25.pdf` (20 s.) | Eksamen med markerede svar | Primær eksamenskilde | God tekst; figurer findes | Q1-Q20, nye opgavetyper og facit | Figurbaserede Bode/Nyquist/blokdiagrammer kræver original PDF |
 | `input/exams/Exam_F21_LCD1 Part 2 - no answers.pdf` (11 s.) | Officiel questionnaire | Kontrolkilde for F21 Q11-Q20 | God tekst; figurer findes | Kontrollere ordlyd og dato | Ikke separat eksamenssæt; ingen svar |
 | `input/lectures/1_Welcome_Lecture.pdf` (22 s.) | Forelæsning 1 | Kursus-/eksamensramme | God | Kursusmål, format, PID-overblik | Ingen hjælpemiddelregel angivet |
 | `input/lectures/2_block_control_concept.pdf` (55 s.) | Forelæsning 2 | Pensum | God; mange diagrammer | Blokdiagrammer, feedback, motor, håndtuning | Diagramalgebra bør aflæses visuelt i konkrete opgaver |
@@ -33,7 +34,7 @@ Alle PDF'er blev tekstudtrukket med `pdftotext -layout -enc UTF-8`; samtlige gav
 
 ## Relationer og mangler
 
-- De to eksamens-PDF'er er ikke to forskellige eksamenssæt: del-2-filen gentager Q11-Q20 fra F21 uden svar og er dateret 6. maj 2026, mens `F21.pdf` leverer Q1-Q20 med svar/solutions.
+- `F21.pdf` og `F25.pdf` er to forskellige eksamenssæt med 20 spørgsmål hver. Del-2-filen gentager Q11-Q20 fra F21 uden svar og er kontrolkilde, ikke et separat sæt.
 - Der findes ingen separate øvelsesark, Matlab-scripts, datasæt eller officielle regler om hjælpemidler i `input/`.
 - Forelæsningerne refererer til Matlab/Simulink og `.m`-eksempler, men filerne er ikke inkluderet. Python-værktøjer kan derfor valideres matematisk, ikke mod original kode.
 - Et historisk genereret dokumenttræ var slettet i git-worktree ved arbejdets start. Det behandles ikke som kilde.

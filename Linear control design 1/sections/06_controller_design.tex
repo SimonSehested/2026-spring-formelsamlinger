@@ -13,26 +13,44 @@ skal placeres maksimalt ved crossover.
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Beregn \(\tau_i=N_i/\omega_c\) og \(\phi_{PI}=\arctan(N_i)-90^\circ\).
-\item Evaluer \(\phi_G=\angle G(\mathrm{j}\omega_c)\).
-\item Løs \(\phi_{\mathrm{lead}}=-180^\circ+\gamma_M-\phi_G-\phi_{PI}\).
-\item Beregn \(\alpha\) og \(\tau_d\) med leadmaksimum ved \(\omega_c\).
-\item Bestem \(K_P\) fra magnitudebalancen og kontrollér loopmålet.
+\item Skriv controlleren i formen \eqref{eq:pi-lead-controller}. Hvis opgaven giver
+      \(N_i=\omega_c\tau_i\), isoler \(\tau_i=N_i/\omega_c\). PI-leddets fase ved
+      crossover er \(\phi_{PI}=\angle(1+jN_i)-90^\circ=\arctan(N_i)-90^\circ\).
+\item Evaluer plantens fase ved den ønskede crossover: indsæt \(s=j\omega_c\) i
+      \(G(s)\), beregn real- og imaginærdel, og brug \(\operatorname{atan2}(\Im,\Re)\).
+      Hvis du aflæser fra Bode, brug faseværdien ved netop \(\omega_c\).
+\item Skriv faseregnskabet ved crossover:
+      \(\phi_G+\phi_{PI}+\phi_{\mathrm{lead}}=-180^\circ+\gamma_M\). Isoler derfor
+      \(\phi_{\mathrm{lead}}\). Hvis resultatet er negativt eller urimeligt stort
+      (typisk over ca. \(60^\circ\)), passer specifikationen eller strukturen dårligt.
+\item Sæt \(\phi_{\max}=\phi_{\mathrm{lead}}\), når leadmaksimum skal ligge ved
+      \(\omega_c\). Beregn \(\alpha\) og \(\tau_d\) med
+      \eqref{eq:pi-lead-parameters}; kontrollér straks at \(0<\alpha<1\) og
+      \(\tau_d>0\).
+\item Bestem \(K_P\) ved at fjerne \(K_P\) fra controlleren, evaluere
+      \(C_0(j\omega_c)G(j\omega_c)\), og bruge
+      \(K_P=1/|C_0(j\omega_c)G(j\omega_c)|\) fra \eqref{eq:pi-lead-magnitude}.
+\item Kontrollér til sidst at det færdige loop har magnitude \(1\) og fase
+      \(-180^\circ+\gamma_M\) ved \(\omega_c\); ellers er der en enheds-, grad/radian-
+      eller fortegnsfejl.
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:pi-lead-controller}
 C(s)=K_P\frac{\tau_i s+1}{\tau_i s}
           \frac{\tau_d s+1}{\alpha\tau_d s+1},\qquad 0<\alpha<1,
-\]
-\[
+\end{equation}
+\begin{equation}
+\label{eq:pi-lead-parameters}
 \phi_{\max}=\sin^{-1}\!\left(\frac{1-\alpha}{1+\alpha}\right),\quad
 \alpha=\frac{1-\sin\phi_{\max}}{1+\sin\phi_{\max}},\quad
 \tau_d=\frac1{\omega_c\sqrt{\alpha}},
-\]
-\[
+\end{equation}
+\begin{equation}
+\label{eq:pi-lead-magnitude}
 \left|C(\mathrm{j}\omega_c)G(\mathrm{j}\omega_c)\right|=1 .
-\]
+\end{equation}
 
 \paragraph{Symboler}
 \(K_P\) er proportionalgain; \(\tau_i,\tau_d\) [s] er tidskonstanter;
@@ -66,17 +84,27 @@ Plantens magnitude/fase eller analytiske \(G(s)\), samt ønsket margin.
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Find frekvensen hvor plantfasen er \(-180^\circ+\gamma_M\).
-\item Aflæs eller beregn magnitude \(M\) dér.
-\item Sæt \(K_P=1/M\), eller brug gain-margininterval ved stabilitetsgrænsen.
-\item Kontrollér closed-loop-stabilitet og stationær fejl.
+\item Positivt P-gain ændrer kun magnitude, ikke fase. Find derfor den frekvens
+      \(\omega_c\), hvor plantfasen alene opfylder første del af
+      \eqref{eq:p-gain-margin-design}: \(\angle G(j\omega_c)=-180^\circ+\gamma_M\).
+\item Hvis du har en formel for \(G(s)\), indsæt \(s=j\omega\), brug
+      \(\operatorname{atan2}\) for fasen, og løs for \(\omega\). Hvis du har Bode-plot,
+      aflæs den frekvens hvor fasekurven rammer målfasen.
+\item Aflæs eller beregn magnituden \(M=|G(j\omega_c)|\). Er den angivet i dB, konvertér
+      først med \eqref{eq:bode-db-conversion}.
+\item Sæt \(K_P=1/M\) med \eqref{eq:p-gain-margin-design}, så
+      \(|K_PG(j\omega_c)|=1\). Ved stabilitetsgrænse/gain margin skal marginalpunktet
+      ikke vælges som stabilt; vælg et gain inde i det stabile interval.
+\item Kontrollér closed-loop-polerne for det valgte \(K_P\). Hvis opgaven også spørger
+      om stationær fejl, brug \eqref{eq:steady-state-error} efter poltesten.
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:p-gain-margin-design}
 \angle G(\mathrm{j}\omega_c)=-180^\circ+\gamma_M,\qquad
 K_P=\frac1{|G(\mathrm{j}\omega_c)|}.
-\]
+\end{equation}
 
 \paragraph{Symboler}
 \(K_P\) er dimensionsløs gain i opgavernes normalisering; \(\gamma_M\) måles i grader.
@@ -94,3 +122,58 @@ At acceptere marginal gain som stabilt eller at overse type-0 stationær fejl.
 \paragraph{Python}
 \code{evaluate\_transfer\_function} og \code{closed\_loop\_poles} kan kontrollere
 en analytisk beregning, men kan ikke aflæse Bodefiguren.
+
+\subsection{Ziegler--Nichols PID fra ultimativ gain / \(K_u\), \(P_u\)}
+\label{sec:ziegler}
+
+\paragraph{Brug når}
+Opgaven giver en PID-loopstruktur, en kritisk/ultimativ proportionalgain \(K_u\), eller
+beder om Ziegler--Nichols tuning fra sustained oscillation.
+
+\paragraph{Input fra opgaven}
+Kritisk gain \(K_u\), oscillationsfrekvens \(\omega_u\) eller periode \(P_u\), og at
+controlleren skal skrives som ideal/parallel PID-form.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Hvis \(K_u\) ikke er opgivet, find marginalstabilitet for P-only closed loop:
+      skriv den karakteristiske nævner, sæt Routh-grænsen eller \(s=j\omega\), og løs
+      for \(K_u\) og \(\omega_u\).
+\item Beregn perioden med \eqref{eq:ultimate-period}. Pas på brøken: perioden er
+      \(2\pi/\omega_u\), ikke \(\omega_u/(2\pi)\).
+\item Brug PID-rækken i \eqref{eq:ziegler-nichols-pid}: \(K_P=0.6K_u\),
+      \(T_i=P_u/2\), \(T_d=P_u/8\).
+\item Indsæt tallene i \eqref{eq:ideal-pid}. Hvis svarmulighederne har formen
+      \(K_P(1+1/(T_i s)+T_d s)\), skal både gainet udenfor parentesen og tiderne inde i
+      parentesen matche.
+\end{enumerate}
+
+\paragraph{Formler}
+\begin{equation}
+\label{eq:ultimate-period}
+P_u=\frac{2\pi}{\omega_u}.
+\end{equation}
+\begin{equation}
+\label{eq:ziegler-nichols-pid}
+K_P=0.6K_u,\qquad T_i=\frac{P_u}{2},\qquad T_d=\frac{P_u}{8}.
+\end{equation}
+\begin{equation}
+\label{eq:ideal-pid}
+C_{\mathrm{PID}}(s)=K_P\left(1+\frac{1}{T_i s}+T_d s\right).
+\end{equation}
+
+\paragraph{Symboler}
+\(K_u\) er ultimativ gain; \(P_u\) er ultimativ periode; \(T_i,T_d\) er integral- og
+derivative-tid.
+
+\paragraph{Antagelser}
+Reglen er en heuristisk tuningregel for P-only marginal oscillation; den garanterer ikke
+god robusthed eller acceptable actuatorlimits.
+
+\paragraph{Hurtigtjek}
+F25 Q8: \(K_u=30\), \(\omega_u=\sqrt5\), \(P_u=2.809\), så \(K_P=18\),
+\(T_i=1.405\), \(T_d=0.351\).
+
+\paragraph{Typiske fælder}
+At bruge \(K_u\) direkte som \(K_P\), at bytte \(P_u/2\) og \(P_u/8\), eller at vende
+\(2\pi/\omega_u\).

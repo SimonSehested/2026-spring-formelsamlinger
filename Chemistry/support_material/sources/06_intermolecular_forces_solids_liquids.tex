@@ -1,0 +1,220 @@
+\section{Intermolecular Forces, Solids, Liquids, and Colligative Properties}
+
+\subsection{Ctrl+F keywords: vapor pressure, hydrogen bonding, boiling point, unit cell, BCC, FCC, density, freezing point depression, Raoult}
+Use for intermolecular force ranking, vapor pressure, crystal unit-cell density, cubic radius relations, and colligative-property calculations.
+
+\subsection{Symbols and notation}
+\referencetable{tab:phase:symbols}{Intermolecular forces, phase behavior, unit-cell, and colligative-property symbols.}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+P,\ \Delta H_{\mathrm{vap}},\ T,\ R,\ C & Vapor pressure, enthalpy of vaporization, absolute temperature, gas constant, and integration constant.\\
+P_1,P_2,T_1,T_2 & Vapor pressures and temperatures at states 1 and 2.\\
+\mathrm X,\ \mathrm Y & Electronegative atoms \(\ce{F}\), \(\ce{O}\), or \(\ce{N}\) in the hydrogen-bond motif.\\
+\Delta H_{\mathrm{fus}},\ \Delta H_{\mathrm{sub}} & Enthalpy of fusion and sublimation.\\
+Z,\ M,\ N_{\mathrm A},\ a,\ r,\ \rho & Units per cell, molar mass, Avogadro constant, edge length, atomic radius, and density.\\
+X_{\mathrm{solvent}},\ X_{\mathrm{solute}},\ P^\circ & Mole fractions and pure-solvent vapor pressure.\\
+m,\ i,\ K_f,\ K_b & Molality, van't Hoff factor, freezing-point constant, and boiling-point constant.\\
+\Delta T_f,\ \Delta T_b & Freezing-point depression and boiling-point elevation.\\
+\bottomrule
+\end{tabular}
+
+\subsection{Intermolecular forces and phase behavior}
+
+\subsubsection{Hydrogen bonding recognition}
+\begin{equation}
+\label{eq:phase:hydrogen-bonding}
+\mathrm{X{-}H\cdots Y}, \qquad X,Y\in\{\ce{F},\ce{O},\ce{N}\}
+\end{equation}
+Hydrogen bonding requires \(\ce{H}\) bonded to \(\ce{F}\), \(\ce{O}\), or \(\ce{N}\). It raises boiling points and lowers vapor pressure relative to similar molecules.
+
+\subsubsection{Dispersion and dipole forces}
+\begin{equation}
+\label{eq:phase:force-recognition}
+\text{all molecules: dispersion}, \qquad \text{polar molecules: dipole--dipole}
+\end{equation}
+Larger molar mass and surface area increase dispersion forces. Stronger intermolecular forces usually mean higher boiling point and lower vapor pressure.
+
+\subsubsection{Like dissolves like}
+\begin{equation}
+\label{eq:phase:like-dissolves-like}
+\text{polar dissolves polar}, \qquad \text{nonpolar dissolves nonpolar}
+\end{equation}
+Solubility is favored when solute-solvent interactions can replace solute-solute and solvent-solvent interactions.
+
+\subsection{Vapor pressure and phase changes}
+
+\subsubsection{Clausius--Clapeyron equation}
+\begin{equation}
+\label{eq:phase:clausius-clapeyron}
+\ln P=-\frac{\Delta H_{\mathrm{vap}}}{RT}+C
+\end{equation}
+A plot of \(\ln P\) versus \(1/T\) has slope \(-\Delta H_{\mathrm{vap}}/R\). Vapor pressure increases with temperature.
+
+\subsubsection{Two-point vapor pressure equation}
+\begin{equation}
+\label{eq:phase:two-point-vapor-pressure}
+\ln\left(\frac{P_2}{P_1}\right)
+=-\frac{\Delta H_{\mathrm{vap}}}{R}\left(\frac{1}{T_2}-\frac{1}{T_1}\right)
+\end{equation}
+Use kelvin. This form calculates \(P_2\), \(T_2\), or \(\Delta H_{\mathrm{vap}}\) from two states.
+
+\subsubsection{Phase transition enthalpies}
+\begin{equation}
+\label{eq:phase:sublimation-enthalpy}
+\Delta H_{\mathrm{sub}}=\Delta H_{\mathrm{fus}}+\Delta H_{\mathrm{vap}}
+\end{equation}
+Fusion, vaporization, and sublimation are endothermic in the forward direction.
+
+\subsection{Exam recipe: intermolecular force, vapor pressure, and boiling point}
+\textbf{Use when:} molecules are compared by intermolecular forces, volatility, vapor pressure, boiling point, or a vapor-pressure calculation is requested.
+
+\textbf{Given / Find:} molecular structures or \(P,T,\Delta H_{\mathrm{vap}}\) data; find dominant force, ranking, unknown vapor pressure, temperature, or vaporization enthalpy.
+
+\textbf{Required references:} Equation~\ref{eq:phase:hydrogen-bonding}, Equation~\ref{eq:phase:force-recognition}, Equation~\ref{eq:phase:clausius-clapeyron}, and Equation~\ref{eq:phase:two-point-vapor-pressure}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item For each molecule, mark dispersion, dipole--dipole behavior if polar, and hydrogen bonding only when the motif in Equation~\ref{eq:phase:hydrogen-bonding} is present.
+    \item For structurally comparable substances, rank interaction strength: hydrogen bonding and strong polarity first, then compare dispersion using size and surface area.
+    \item Convert the force ranking to properties: stronger forces imply lower vapor pressure, lower volatility, and higher boiling point.
+    \item If two vapor-pressure states are supplied, convert temperatures to kelvin and substitute in Equation~\ref{eq:phase:two-point-vapor-pressure}; otherwise use Equation~\ref{eq:phase:clausius-clapeyron} for a line or slope question.
+    \item Solve for the one requested unknown and state its units.
+\end{enumerate}
+
+\textbf{Checks:} increasing \(T\) must increase \(P\); a stronger-force compound should not be ranked as more volatile under comparable conditions; logarithm arguments are unitless ratios.
+
+\textbf{Common traps:} claiming hydrogen bonding from an oxygen or nitrogen atom without an \(\ce{X-H}\) donor; using Celsius in \(1/T\); reversing vapor-pressure and boiling-point rankings.
+
+\subsection{Crystals and unit cells}
+
+\subsubsection{Atoms per cubic unit cell}
+\referencetable{tab:phase:cubic-unit-cells}{Atoms or formula units and packing fractions for cubic unit cells.}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Cell type & \(Z\) & Packing fraction\\
+\midrule
+Simple cubic & \(1\) & \(0.52\)\\
+Body-centered cubic, BCC & \(2\) & \(0.68\)\\
+Face-centered cubic, FCC & \(4\) & \(0.74\)\\
+\bottomrule
+\end{tabular}
+Corner atoms contribute \(1/8\), face atoms \(1/2\), and body-center atoms \(1\).
+
+\subsubsection{Unit-cell density}
+\begin{equation}
+\label{eq:phase:unit-cell-density}
+\rho=\frac{ZM}{N_{\mathrm A}a^3}
+\end{equation}
+\(Z\) is atoms or formula units per cell and \(a\) is cubic edge length. Convert \(a\) to centimeters if \(\rho\) is in \(\mathrm{g\,cm^{-3}}\).
+
+\subsubsection{Cubic radius relations}
+\referencetable{tab:phase:cubic-radius-relations}{Edge length and atomic-radius relations for cubic unit cells.}
+\begin{tabular}{@{}lc@{}}
+\toprule
+Cell type & Edge--radius relation\\
+\midrule
+Simple cubic & \(a=2r\)\\
+BCC & \(\sqrt{3}a=4r\)\\
+FCC & \(\sqrt{2}a=4r\)\\
+\bottomrule
+\end{tabular}
+Use the diagonal that actually touches atoms: edge for simple cubic, body diagonal for BCC, face diagonal for FCC.
+
+\subsection{Exam recipe: unit-cell density, volume, and radius}
+\textbf{Use when:} the problem gives a simple cubic, BCC, or FCC solid together with density, atomic radius, molar mass, edge length, or unit-cell volume.
+
+\textbf{Given / Find:} cell type and any two useful dimensional or mass quantities; find \(\rho\), \(a^3\), \(a\), or \(r\).
+
+\textbf{Required references:} Table~\ref{tab:phase:cubic-unit-cells}, Table~\ref{tab:phase:cubic-radius-relations}, and Equation~\ref{eq:phase:unit-cell-density}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Read \(Z\) for the identified cell type from Table~\ref{tab:phase:cubic-unit-cells}.
+    \item Determine \(a\): use \(a^3=V_{\mathrm{cell}}\), or rearrange the matching relation in Table~\ref{tab:phase:cubic-radius-relations} when \(r\) is given.
+    \item Convert length to centimeters before cubing when density is required in \(\mathrm{g\,cm^{-3}}\).
+    \item Substitute \(Z\), \(M\), \(N_{\mathrm A}\), and \(a^3\) in Equation~\ref{eq:phase:unit-cell-density}; rearrange only for the requested unknown.
+    \item If radius is requested after solving for \(a\), use the correct row of Table~\ref{tab:phase:cubic-radius-relations}.
+\end{enumerate}
+
+\textbf{Checks:} \(1\,\mathrm{pm}=10^{-10}\,\mathrm{cm}\); \(1\,\mathrm{nm}=10^{-7}\,\mathrm{cm}\); a density answer has mass per volume units.
+
+\textbf{Common traps:} using the FCC relation for BCC; omitting \(Z\); cubing a length before converting its units.
+
+\subsection{Colligative properties}
+
+\subsubsection{Raoult's law and vapor-pressure lowering}
+\begin{equation}
+\label{eq:phase:raoult-solvent-pressure}
+P_{\mathrm{solvent}}=X_{\mathrm{solvent}}P^\circ_{\mathrm{solvent}}
+\end{equation}
+\begin{equation}
+\label{eq:phase:vapor-pressure-lowering}
+\Delta P=X_{\mathrm{solute}}P^\circ_{\mathrm{solvent}}
+\end{equation}
+A nonvolatile solute lowers solvent vapor pressure in proportion to solute mole fraction.
+
+\subsubsection{Molality and freezing point depression}
+\begin{equation}
+\label{eq:phase:molality}
+m=\frac{n_{\mathrm{solute}}}{m_{\mathrm{solvent}}(\mathrm{kg})}
+\end{equation}
+\begin{equation}
+\label{eq:phase:freezing-point-depression}
+\Delta T_f=iK_fm
+\end{equation}
+\begin{equation}
+\label{eq:phase:boiling-point-elevation}
+\Delta T_b=iK_bm
+\end{equation}
+\begin{equation}
+\label{eq:phase:solution-transition-temperature}
+T_{f,\mathrm{solution}}=T_f^\circ-\Delta T_f, \qquad
+T_{b,\mathrm{solution}}=T_b^\circ+\Delta T_b
+\end{equation}
+\begin{equation}
+\label{eq:phase:solute-molar-mass}
+n_{\mathrm{solute}}=m\,m_{\mathrm{solvent}}(\mathrm{kg}), \qquad
+M_{\mathrm{solute}}=\frac{m_{\mathrm{solute}}}{n_{\mathrm{solute}}}
+\end{equation}
+\(i\) is the van't Hoff factor, approximately the number of dissolved ions for complete dissociation.
+
+\subsection{Exam recipe: freezing or boiling point change}
+\textbf{Use when:} the problem gives solute mass, solvent mass, \(K_f\), \(K_b\), dissociation information, or asks for a new freezing or boiling temperature.
+
+\textbf{Given / Find:} solute identity and amount, solvent mass and reference phase-change temperature; find \(m\), \(\Delta T_f\), \(\Delta T_b\), or the solution phase-change temperature.
+
+\textbf{Required references:} Equations~\ref{eq:phase:molality}, \ref{eq:phase:freezing-point-depression}, \ref{eq:phase:boiling-point-elevation}, and \ref{eq:phase:solution-transition-temperature}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Convert the solute amount to moles and convert solvent mass alone to kilograms.
+    \item Calculate molality with Equation~\ref{eq:phase:molality}.
+    \item Choose \(i=1\) for a nonelectrolyte or use the stated/ideal dissociation count for an electrolyte.
+    \item Use Equation~\ref{eq:phase:freezing-point-depression} or Equation~\ref{eq:phase:boiling-point-elevation} as requested.
+    \item Apply the calculated change to the pure-solvent value with Equation~\ref{eq:phase:solution-transition-temperature}.
+\end{enumerate}
+
+\textbf{Checks:} a nonvolatile solute lowers freezing point and raises boiling point; \(m\) uses kilograms of solvent; \(\Delta T\) is reported as a positive magnitude before applying its direction.
+
+\textbf{Common traps:} using total solution mass as solvent mass; forgetting \(i\) for a salt such as \(\ce{NaBr}\); subtracting a boiling-point elevation.
+
+\subsection{Exam recipe: molar mass from freezing or boiling point change}
+\textbf{Use when:} an unknown solute mass and an observed freezing-point depression or boiling-point elevation are given and its molar mass is requested.
+
+\textbf{Given / Find:} Given \(m_{\mathrm{solute}}\), solvent mass, \(K_f\) or \(K_b\), measured phase-change temperature, and dissociation assumption; find \(M_{\mathrm{solute}}\).
+
+\textbf{Required references:} Equations~\ref{eq:phase:freezing-point-depression}, \ref{eq:phase:boiling-point-elevation}, \ref{eq:phase:solution-transition-temperature}, and \ref{eq:phase:solute-molar-mass}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Calculate the positive temperature change as pure-solvent freezing point minus solution freezing point, or solution boiling point minus pure-solvent boiling point, using Equation~\ref{eq:phase:solution-transition-temperature}.
+    \item Select \(i=1\) for an indicated nonelectrolyte or use the stated dissociation factor, then rearrange the matching colligative equation to \(m=\Delta T/(iK)\).
+    \item Convert solvent mass to kilograms and calculate solute moles with the first relation in Equation~\ref{eq:phase:solute-molar-mass}.
+    \item Divide the stated solute mass by the calculated moles using the second relation in Equation~\ref{eq:phase:solute-molar-mass}.
+\end{enumerate}
+
+\textbf{Checks:} \(\Delta T\), molality, moles, and molar mass must all be positive; a smaller observed change for the same solute mass implies a larger molar mass.
+
+\textbf{Common traps:} using solution mass as solvent mass; choosing the wrong sign for \(\Delta T\); assuming electrolyte dissociation for an organic nonelectrolyte.

@@ -1,0 +1,259 @@
+\section{Kinetics and Chemical Equilibrium}
+
+\subsection{Ctrl+F keywords: rate law, reaction order, first order, second order, half-life, Arrhenius, catalyst, equilibrium, Le Chatelier, \(K_p\)}
+Use for concentration-time data, identifying order, half-life, activation energy, catalyst statements, equilibrium expressions, \(Q\) versus \(K\), and gas equilibria.
+
+\subsection{Symbols and notation}
+\referencetable{tab:kinetics:symbols}{Kinetics and equilibrium symbols}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+r,\ k,\ t,\ [\ce{A}]_t & Reaction rate, rate constant, time, and concentration of \(\ce{A}\) at time \(t\).\\
+\dfrac{d[\ce{A}]}{dt} & Change in concentration of species \(\ce{A}\) per unit time.\\
+a,b,c,d & Stoichiometric coefficients in the example reaction.\\
+m,n & Experimentally determined orders in the rate law; not amounts of substance here.\\
+t_{1/2},\ E_{\mathrm a},\ A,\ R,\ T & Half-life, activation energy, frequency factor, gas constant, and temperature.\\
+{\mathrm{cat}},\ {\mathrm{uncat}} & Subscripts for catalyzed and uncatalyzed pathways.\\
+Q,\ K,\ a_{\ce{A}} & Reaction quotient, equilibrium constant, and thermodynamic activity.\\
+\alpha,\beta,\gamma,\delta & Stoichiometric coefficients in the general equilibrium reaction.\\
+K_p,\ K_c,\ p_{\ce{A}},\ \Delta n_{\mathrm{gas}} & Pressure/concentration equilibrium constants, partial pressure, and gas coefficient change.\\
+\bottomrule
+\end{tabular}
+
+\subsection{Kinetics formulas}
+
+\subsubsection{Reaction rate from stoichiometry}
+\begin{equation}
+a\ce{A}+b\ce{B}\rightarrow c\ce{C}+d\ce{D}
+\label{eq:kinetics:reaction-stoichiometry}
+\end{equation}
+\begin{equation}
+r=-\frac{1}{a}\frac{d[\ce{A}]}{dt}
+=-\frac{1}{b}\frac{d[\ce{B}]}{dt}
+=\frac{1}{c}\frac{d[\ce{C}]}{dt}
+=\frac{1}{d}\frac{d[\ce{D}]}{dt}
+\label{eq:kinetics:stoichiometric-rate}
+\end{equation}
+Divide by coefficients so every species reports the same reaction rate.
+
+\subsubsection{Rate law and overall order}
+\begin{equation}
+r=k[\ce{A}]^m[\ce{B}]^n, \qquad \text{overall order}=m+n
+\label{eq:kinetics:rate-law-order}
+\end{equation}
+Orders are found experimentally unless the problem states an elementary step.
+
+\subsubsection{Initial-rate comparison}
+\begin{equation}
+\frac{r_2}{r_1}=
+\left(\frac{[\ce{A}]_2}{[\ce{A}]_1}\right)^m
+\left(\frac{[\ce{B}]_2}{[\ce{B}]_1}\right)^n
+\label{eq:kinetics:initial-rate-ratio}
+\end{equation}
+Compare experiments in which all but one reactant concentration are unchanged to isolate one order at a time.
+
+\subsubsection{Integrated rate laws and linearity test}
+\referencetable{tab:kinetics:integrated-rate-laws}{Transformed concentration-time tests for reaction order}
+{\small
+\begin{tabular}{@{}c l l l@{}}
+\toprule
+\text{Order} & \text{Transform to plot against \(t\)} & \text{Linear relation} & \text{Slope gives \(k\)}\\
+\midrule
+0 & \([\ce{A}]_t\) & \([\ce{A}]_t=-kt+[\ce{A}]_0\) & \(k=-\text{slope}\)\\
+1 & \(\ln[\ce{A}]_t\) & \(\ln[\ce{A}]_t=-kt+\ln[\ce{A}]_0\) & \(k=-\text{slope}\)\\
+2 & \(1/[\ce{A}]_t\) & \(1/[\ce{A}]_t=kt+1/[\ce{A}]_0\) & \(k=\text{slope}\)\\
+\bottomrule
+\end{tabular}
+}
+The transformed data set that forms a straight line identifies the order; its fitted slope gives \(k\).
+
+\subsubsection{Half-life}
+\begin{equation}
+t_{1/2}^{(0)}=\frac{[\ce{A}]_0}{2k}, \qquad
+t_{1/2}^{(1)}=\frac{\ln 2}{k}, \qquad
+t_{1/2}^{(2)}=\frac{1}{k[\ce{A}]_0}
+\label{eq:kinetics:half-life}
+\end{equation}
+Only first-order half-life is independent of initial concentration.
+
+\subsubsection{Arrhenius equation}
+\begin{equation}
+k=Ae^{-E_{\mathrm a}/RT}, \qquad
+\ln k=-\frac{E_{\mathrm a}}{R}\frac{1}{T}+\ln A
+\label{eq:kinetics:arrhenius}
+\end{equation}
+A plot of \(\ln k\) versus \(1/T\) has slope \(-E_{\mathrm a}/R\).
+
+\subsubsection{Two-temperature Arrhenius relation}
+\begin{equation}
+\ln\left(\frac{k_2}{k_1}\right)
+=-\frac{E_{\mathrm a}}{R}\left(\frac{1}{T_2}-\frac{1}{T_1}\right)
+\label{eq:kinetics:arrhenius-two-temperature}
+\end{equation}
+Use kelvin. If \(T_2>T_1\), then normally \(k_2>k_1\).
+
+\subsubsection{Catalyst effect}
+\begin{equation}
+E_{\mathrm a,cat}<E_{\mathrm a,uncat}, \qquad
+K_{\mathrm{eq,cat}}=K_{\mathrm{eq,uncat}}, \qquad
+\Delta G^\circ_{\mathrm{cat}}=\Delta G^\circ_{\mathrm{uncat}}
+\label{eq:kinetics:catalyst-effect}
+\end{equation}
+A catalyst speeds forward and reverse reactions by lowering activation barriers; it does not move equilibrium.
+
+\subsection{Exam recipe: reaction order from concentration-time data}
+\textbf{Use when:} a table or graph gives \([\ce{A}]\) versus time and the task asks for order, \(k\), or a concentration prediction.
+
+\textbf{Given / Find:} given \(t\) and \([\ce{A}]_t\); find zero-, first-, or second-order behavior and the corresponding \(k\).
+
+\textbf{Required references:} Table~\ref{tab:kinetics:integrated-rate-laws} and equation~\eqref{eq:kinetics:half-life} when a half-life is requested.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Construct all three transformed data sets by calculating \([\ce{A}]_t\), \(\ln[\ce{A}]_t\), and \(1/[\ce{A}]_t\) for each listed time.
+    \item Determine the order by plotting each transformed data set against \(t\), or by comparing successive slopes, and choosing the one with approximately constant slope (best linearity).
+    \item Obtain \(k\) from the linear fit slope by using \(k=-\text{slope}\) for the \([\ce{A}]_t\) or \(\ln[\ce{A}]_t\) line and \(k=\text{slope}\) for the \(1/[\ce{A}]_t\) line.
+    \item Predict a missing concentration or time by inserting the fitted \(k\), the initial value, and the requested variable into the selected linear relation in Table~\ref{tab:kinetics:integrated-rate-laws}.
+\end{enumerate}
+
+\textbf{Checks:} verify that \(k>0\), that only one transformation is clearly linear within data precision, and that first-order data show approximately equal fractional loss over equal time intervals.
+
+\textbf{Common traps:} selecting an order from the raw decreasing curve without testing transformations; using the negative slope itself as \(k\) for order zero or one; taking \(\ln\) of a value with inconsistent concentration units.
+
+\subsection{Exam recipe: reaction order from initial-rate experiments}
+\textbf{Use when:} a data table gives initial concentrations and initial rates for multiple experimental runs.
+
+\textbf{Given / Find:} Given initial-rate runs; find the order in each reactant, overall order, or the rate constant.
+
+\textbf{Required references:} Equations~\eqref{eq:kinetics:rate-law-order} and \eqref{eq:kinetics:initial-rate-ratio}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Choose two runs in which every concentration except one reactant is identical; this makes all unchanged concentration ratios equal to one in Equation~\eqref{eq:kinetics:initial-rate-ratio}.
+    \item Calculate the remaining concentration ratio and rate ratio, then solve \(\text{rate ratio}=(\text{concentration ratio})^{\text{order}}\); for ratios not obvious by inspection, use \(\text{order}=\log(r_2/r_1)/\log(c_2/c_1)\).
+    \item Repeat step 1 for each reactant whose order is required and add the exponents for overall order using Equation~\eqref{eq:kinetics:rate-law-order}.
+    \item If \(k\) is requested, substitute one complete experimental run and the determined exponents into Equation~\eqref{eq:kinetics:rate-law-order}, then isolate \(k\).
+\end{enumerate}
+
+\textbf{Checks:} Substitution of a second run should reproduce its rate; unchanged concentrations must not affect the isolated exponent.
+
+\textbf{Common traps:} comparing runs where two concentrations change before both orders are known; treating stoichiometric coefficients as measured orders; reversing numerator and denominator in only one ratio.
+
+\subsection{Exam recipe: Arrhenius relation and catalyst}
+\textbf{Use when:} the task gives rate constants at temperatures, asks for \(E_{\mathrm a}\), or asks what a catalyst changes.
+
+\textbf{Given / Find:} given \(k\) and \(T\) values and/or catalyst information; find \(E_{\mathrm a}\), a new \(k\), or the correct catalyst conclusion.
+
+\textbf{Required references:} equations~\eqref{eq:kinetics:arrhenius}, \eqref{eq:kinetics:arrhenius-two-temperature}, and \eqref{eq:kinetics:catalyst-effect}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Prepare temperatures by converting each temperature to kelvin before calculating \(1/T\) or using a temperature ratio relation.
+    \item Find \(E_{\mathrm a}\) from two measurements by substituting \(k_1,k_2,T_1,T_2\) into equation~\eqref{eq:kinetics:arrhenius-two-temperature} and isolating \(E_{\mathrm a}\), or from several measurements by fitting \(\ln k\) versus \(1/T\) and using \(E_{\mathrm a}=-R(\text{slope})\).
+    \item Find an unknown rate constant by rearranging equation~\eqref{eq:kinetics:arrhenius-two-temperature} after \(E_{\mathrm a}\) is known.
+    \item Evaluate a catalyst statement by applying equation~\eqref{eq:kinetics:catalyst-effect}: lower activation energy and faster approach to equilibrium, but unchanged \(K_{\mathrm{eq}}\) and \(\Delta G^\circ\).
+\end{enumerate}
+
+\textbf{Checks:} for a positive \(E_{\mathrm a}\), raising \(T\) must raise \(k\); activation energy should have energy-per-mole units.
+
+\textbf{Common traps:} using degrees Celsius in reciprocal temperature; losing the minus sign in the Arrhenius slope; claiming that a catalyst changes equilibrium composition.
+
+\subsection{Equilibrium formulas}
+
+\subsubsection{Reaction quotient and equilibrium constant}
+\begin{equation}
+\alpha\ce{A}+\beta\ce{B}\rightleftharpoons\gamma\ce{C}+\delta\ce{D}
+\label{eq:kinetics:equilibrium-reaction}
+\end{equation}
+\begin{equation}
+Q=\frac{a_{\ce{C}}^\gamma a_{\ce{D}}^\delta}{a_{\ce{A}}^\alpha a_{\ce{B}}^\beta},
+\qquad Q_{\mathrm{eq}}=K
+\label{eq:kinetics:reaction-quotient}
+\end{equation}
+Pure solids, pure liquids, and the solvent are omitted from the expression.
+
+\subsubsection{Direction from \(Q\) and \(K\)}
+\begin{equation}
+Q<K:\ \text{forward shift}, \qquad
+Q=K:\ \text{equilibrium}, \qquad
+Q>K:\ \text{reverse shift}
+\label{eq:kinetics:q-versus-k}
+\end{equation}
+The system shifts so that \(Q\) approaches \(K\).
+
+\subsubsection{Gas equilibrium \(K_p\)}
+\begin{equation}
+K_p=\frac{(p_{\ce{C}})^\gamma(p_{\ce{D}})^\delta}{(p_{\ce{A}})^\alpha(p_{\ce{B}})^\beta}
+\label{eq:kinetics:kp-expression}
+\end{equation}
+Use partial pressures with stoichiometric powers and omit pure condensed phases.
+
+\subsubsection{Relation between \(K_p\) and \(K_c\)}
+\begin{equation}
+K_p=K_c(RT)^{\Delta n_{\mathrm{gas}}},
+\qquad
+\Delta n_{\mathrm{gas}}=\sum\nu_{\mathrm{gas,products}}-\sum\nu_{\mathrm{gas,reactants}}
+\label{eq:kinetics:kp-kc-relation}
+\end{equation}
+
+\subsubsection{Le Chatelier shift rules}
+\referencetable{tab:kinetics:shift-rules}{Quick equilibrium shift decisions}
+\begin{tabular}{@{}l l@{}}
+\toprule
+\text{Disturbance} & \text{Shift decision}\\
+\midrule
+Add reactant or remove product & Toward products\\
+Remove reactant or add product & Toward reactants\\
+Decrease volume for gas system & Toward fewer moles of gas\\
+Raise \(T\) for an endothermic forward reaction & Toward products\\
+Raise \(T\) for an exothermic forward reaction & Toward reactants\\
+Add catalyst & No equilibrium shift\\
+\bottomrule
+\end{tabular}
+
+\subsection{Exam recipe: equilibrium expression and shift}
+\textbf{Use when:} the task asks for \(K\), \(Q\), \(K_p\), reaction direction, or a Le Chatelier/catalyst statement.
+
+\textbf{Given / Find:} given a balanced equilibrium and activities, concentrations, partial pressures, or a disturbance; find the equilibrium expression, \(Q\)-based direction, or qualitative shift.
+
+\textbf{Required references:} equations~\eqref{eq:kinetics:reaction-quotient}, \eqref{eq:kinetics:q-versus-k}, \eqref{eq:kinetics:kp-expression}, and \eqref{eq:kinetics:kp-kc-relation}; Table~\ref{tab:kinetics:shift-rules}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Write the expression by placing product activities over reactant activities and using balanced stoichiometric coefficients as exponents, while omitting pure solids and pure liquids.
+    \item Choose the quantity type by using partial pressures in equation~\eqref{eq:kinetics:kp-expression} for \(K_p\), concentrations for \(K_c\), or converting with equation~\eqref{eq:kinetics:kp-kc-relation} when required.
+    \item Determine the spontaneous direction from measured values by calculating \(Q\) with the same expression as \(K\) and comparing it with \(K\) using equation~\eqref{eq:kinetics:q-versus-k}.
+    \item Determine the response to an imposed change by locating the disturbance in Table~\ref{tab:kinetics:shift-rules}; for temperature changes, treat heat as a reactant for an endothermic forward reaction and as a product for an exothermic one; for a catalyst, state faster equilibration rather than a shifted position.
+\end{enumerate}
+
+\textbf{Checks:} exponents must match the balanced equation; \(Q=K\) means no net shift; a volume change only favors a side if the gaseous mole totals differ.
+
+\textbf{Common traps:} including a pure solid or liquid in \(K\); reversing the \(Q<K\) direction; stating that a catalyst changes \(K\).
+
+\subsubsection{ICE-table extent relation}
+\begin{equation}
+n_i=n_{i,0}+\nu_i\xi, \qquad [i]=\frac{n_i}{V}
+\label{eq:kinetics:ice-extent}
+\end{equation}
+Use negative signed coefficients \(\nu_i\) for reactants and positive coefficients for products in the forward direction.
+
+\subsection{Exam recipe: equilibrium composition from \(K\) and initial amounts}
+\textbf{Use when:} initial amounts or concentrations and an equilibrium constant are given, and the equilibrium amount or concentration is requested.
+
+\textbf{Given / Find:} Given a balanced equilibrium, initial composition, volume, and \(K\) or thermodynamic data from which \(K\) can be obtained; find the equilibrium composition.
+
+\textbf{Required references:} Equations~\eqref{eq:kinetics:reaction-quotient}, \eqref{eq:kinetics:ice-extent}, and \eqref{eq:thermo:equilibrium-constant} when \(K\) must first be calculated.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Balance the equilibrium and write the \(K\) expression from Equation~\eqref{eq:kinetics:reaction-quotient}; omit pure solids and liquids.
+    \item Obtain \(K\): use the supplied value directly or calculate it from \(\Delta G^\circ\) with Equation~\eqref{eq:thermo:equilibrium-constant}.
+    \item Define one forward extent \(\xi\) and write every equilibrium amount as \(n_{i,0}+\nu_i\xi\) using Equation~\eqref{eq:kinetics:ice-extent}; divide by common volume when a concentration expression is needed.
+    \item Substitute those expressions into \(K\), solve for \(\xi\), and reject any mathematical root that makes any physical amount negative.
+    \item Insert the accepted \(\xi\) into each requested species expression and report amount or concentration with units.
+\end{enumerate}
+
+\textbf{Checks:} Equilibrium amounts are nonnegative and give the stated \(K\) when substituted back; the sign of \(\xi\) agrees with the initial \(Q\)-versus-\(K\) direction.
+
+\textbf{Common traps:} using initial concentrations directly as equilibrium values; omitting stoichiometric multipliers in the ICE row; retaining a nonphysical algebraic root.

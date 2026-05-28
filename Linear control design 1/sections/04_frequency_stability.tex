@@ -12,23 +12,38 @@ Break frequencies, magnitude i dB, fasekurve, controllergain og ønsket margin.
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Marker startgain, integratorer og hver ændring i magnitudeslope.
-\item Brug faseændringen til at skelne LHP fra RHP-singulariteter.
-\item Find \(\omega_c\) ved 0 dB eller \(\omega_\pi\) ved \(-180^\circ\).
-\item Beregn margin eller gainkorrektion; konvertér dB til lineær gain.
-\item Kontrollér stabilitetskonklusionen med plantens open-loop-stabilitet.
+\item Aflæs magnitudeplottet fra lav mod høj frekvens. Hver gang slope ændrer sig
+      med \(-20\) dB/dec, marker en pol; hver \(+20\) dB/dec markerer et zero. Starter
+      plottet allerede med \(-20\) dB/dec ved lav frekvens, er der en integrator
+      \(1/s\); \(-40\) dB/dec betyder to integratorer.
+\item Brug faseplottet til at afgøre LHP/RHP: samme slopeændring kan komme fra både
+      LHP og RHP, så du sammenligner med tabellen nedenfor. En pol giver negativ
+      fase hvis den er LHP og positiv fase hvis den er RHP; for zeros er fortegnet
+      omvendt.
+\item Find gain crossover \(\omega_c\) dér hvor magnitude er \(0\) dB, altså
+      \(|L(\jw)|=1\) i \eqref{eq:bode-margins}. Find phase crossover \(\omega_\pi\)
+      dér hvor fasekurven er \(-180^\circ\).
+\item Beregn margin med \eqref{eq:bode-margins}. Hvis en aflæsning er i dB, omregn den
+      først med \eqref{eq:bode-db-conversion}; \(38.9\) dB er derfor
+      \(10^{38.9/20}\), ikke tallet \(38.9\).
+\item Kontrollér om Bode-marginargumentet må bruges direkte. Hvis open-loop \(L(s)\)
+      er stabil og minimum-phase i den relevante opgave, tolkes positiv margin som
+      stabilt lukket loop. Hvis der er open-loop RHP-poler, brug Nyquist i
+      \S\ref{sec:nyquist} i stedet.
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:bode-db-conversion}
 M_{\mathrm{dB}}=20\log_{10}|G(\jw)|,\qquad
 |G|=10^{M_{\mathrm{dB}}/20},
-\]
-\[
+\end{equation}
+\begin{equation}
+\label{eq:bode-margins}
 |L(\mathrm{j}\omega_c)|=1,\qquad
 \gamma_M=180^\circ+\angle L(\mathrm{j}\omega_c),\qquad
 K_M=\frac1{|L(\mathrm{j}\omega_\pi)|}.
-\]
+\end{equation}
 \begin{center}
 \begin{tabular}{@{}lcc@{}}
 \toprule
@@ -54,6 +69,8 @@ behandles med Nyquist nedenfor.
 \paragraph{Hurtigtjek}
 Positiv \(K_P\) løfter magnitude med \(20\log_{10}K_P\), men ændrer ikke fase.
 Netto højfrekvensslope skal passe med relativ grad.
+Hvis et gain øges for at flytte crossover til en lavere phase margin, bliver afstanden
+til \(-180^\circ\)-skæringen i dB mindre; gain margin falder med samme dB-løft.
 
 \paragraph{Typiske fælder}
 At bruge 38.9 dB som gain 38.9 i stedet for \(10^{38.9/20}\approx88\) (F21 Q6);
@@ -76,17 +93,27 @@ Antal RHP-poler \(P\), netto kurveretning og realakseskæring samt controllergai
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Find \(P\), antal open-loop RHP-poler.
-\item Tæl clockwise encirclements \(N\) af \(-1\) med fortegn fra figuren.
-\item Brug \(Z=P+N\); stabilt lukket loop kræver \(Z=0\).
-\item Skalér Nyquistkurven med positiv gain eller vurder spejling ved negativ gain.
-\item Kontrollér at stabiliseringsgain ikke blot rammer marginalpunktet.
+\item Find \(P\) ved at faktorisere open-loop nævneren eller læse polerne fra opgaven:
+      tæl kun poler med positiv realdel. Poler på imaginæraksen kræver særskilt
+      konturhåndtering; brug kun figurens konvention hvis opgaven giver den.
+\item Tegn eller følg Nyquistkurvens retning for stigende \(\omega\). Tæl netto
+      encirclements af punktet \(-1+0j\): clockwise tælles positivt som \(N>0\), og
+      counter-clockwise tælles negativt som \(N<0\) i denne notes konvention.
+\item Beregn antal lukkede RHP-poler med \eqref{eq:nyquist-count}. Lukket loop er
+      asymptotisk stabilt kun når \(Z=0\); hvis \(Z>0\), har closed loop \(Z\) ustabile
+      poler.
+\item Hvis positivt \(K_P\) ændres, skaleres hele Nyquistkurven radielt væk fra origo.
+      En realakseskæring \(-a\) rammer \(-1\), når \(K_Pa=1\), altså ved
+      \(K_P=1/a\). Vælg på den side af grænsen som giver det nødvendige \(N\).
+\item Afvis marginale svar: hvis kurven går præcis gennem \(-1\), ligger en closed-loop
+      pol på imaginæraksen, og systemet tælles ikke som asymptotisk stabilt.
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:nyquist-count}
 Z=P+N,\qquad Z=0\ \text{for closed-loop-stabilitet.}
-\]
+\end{equation}
 Har \(P=1\), kræves ét counter-clockwise encirclement, dvs. \(N=-1\) i
 forelæsningernes konvention. Hvis den relevante CCW-skæring er \(-a\), kræves
 typisk \(K_P>1/a\) for positiv radial skalering.
@@ -119,15 +146,23 @@ Punktet \((x,y)=(\Re L,\Im L)\), der svarer til \(|L|=1\).
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Beregn vinklen med \(\operatorname{atan2}(y,x)\), ikke enkel arctan uden kvadrant.
-\item Beregn \(\gamma_M=180^\circ+\phi_c\).
-\item Sammenlign størrelsesorden og svarenhed med valgmulighederne.
+\item Kontrollér først at punktet er en crossoveroplysning: der skal stå eller fremgå,
+      at \(|L|=1\). Hvis punktet ikke ligger på enhedscirklen, er det ikke nok til phase
+      margin uden ekstra information.
+\item Beregn vinklen med \(\operatorname{atan2}(y,x)\) i \eqref{eq:phase-margin-point}.
+      Brug ikke \(\arctan(y/x)\) alene, fordi den mister kvadranten; punktet
+      \((x<0,y<0)\) og \((x>0,y>0)\) kan ellers forveksles.
+\item Beregn \(\gamma_M\) med \eqref{eq:phase-margin-point}, og angiv svaret i grader.
+      Hvis du får radianer fra lommeregner/Python, gang med \(180/\pi\).
+\item Sammenlign med valgmuligheder: phase margin skal normalt være et positivt antal
+      grader for et stabilt design, ikke selve fasen \(\phi_c\).
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:phase-margin-point}
 \phi_c=\operatorname{atan2}(y,x),\qquad \gamma_M=180^\circ+\phi_c .
-\]
+\end{equation}
 
 \paragraph{Symboler}
 \(x,y\) er real- og imaginærdel af open-loop responsen; \(\phi_c\) er fase ved crossover.

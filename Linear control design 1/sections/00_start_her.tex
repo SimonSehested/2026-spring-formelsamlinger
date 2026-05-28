@@ -1,4 +1,5 @@
 \section{Start her}
+\label{sec:start}
 
 \subsection{Brug under eksamen}
 
@@ -7,12 +8,24 @@ Bode/Nyquist, performancekrav eller controllerform. Start i metodefinderen, gå 
 angivne opskrift, og skriv dine antagelser før beregningen.
 
 \begin{enumerate}
-\item Identificer efterspurgt signal, input og loopfortegn.
-\item Klassificer opgaven med tabel~\ref{tab:metodefinder}.
-\item Udfør den manuelle opskrift; brug kun Python som kontrol eller for en markeret
-      parameterberegning.
-\item Kontrollér stabilitet før DC-gain eller final value theorem bruges.
-\item Kontrollér svar med fortegn, enheder, intervalkrav og simple grænseværdier.
+\item Skriv først præcis hvad opgaven spørger efter: ratio som \(Y/R\), fejl som
+      \(E/R\), et gain \(K_P\), en margin, en polplacering eller et tidsresponsmål.
+      Marker derefter hvilke signaler der er uafhængige input, og hvilket fortegn hvert
+      summationspunkt viser.
+\item Klassificer opgaven med tabel~\ref{tab:metodefinder}: vælg rækken ud fra det
+      første konkrete tegn i opgaven, fx Bode-plot, Nyquistkurve, blokdiagram,
+      differentialligning eller controllerform. Hvis to rækker passer, start med den
+      række der bestemmer signalvejen; beregningsformler bruges bagefter.
+\item Udfør den manuelle opskrift punkt for punkt. Når et trin henviser til en formel,
+      indsæt de kendte størrelser i den nummererede ligning og skriv mellemregningen,
+      før du bruger Python som kontrol.
+\item Kontrollér stabilitet før DC-gain eller final value theorem bruges: find
+      closed-loop-polerne fra den nævner du faktisk bruger, og kræv at alle poler
+      ligger strengt i \(\LHP\), medmindre opskriften eksplicit bruger Nyquist.
+\item Kontrollér svaret ved fire simple tests: fortegn skal passe med signalretningen,
+      enheder skal passe med den efterspurgte størrelse, intervalkrav som
+      \(0<\alpha<1\) eller \(\beta>1\) skal være opfyldt, og resultatet skal give mening
+      i en grænseværdi som \(K_P=0\), \(\omega\to0\) eller \(\omega\to\infty\).
 \end{enumerate}
 
 \subsection{Dokumenteret ramme og kildestatus}
@@ -27,7 +40,11 @@ før faktisk eksamensbrug.
 
 \begin{itemize}
 \item Et plot eller et blokdiagram skal fortolkes manuelt: retning, fortegn og signalplacering
-      må ikke antages af et script.
-\item dB er ikke en lineær gain: \(M=10^{M_{\mathrm{dB}}/20}\).
-\item Slutværdi kræver stabilt lukket loop; integratorer eller RHP-poler skal undersøges først.
+      må ikke antages af et script. Skriv derfor altid en lille signalrelation eller en
+      aflæsning, før du regner videre.
+\item dB er ikke en lineær gain: brug \eqref{eq:bode-db-conversion} før et gain ganges
+      på eller sammenlignes med en margin.
+\item Slutværdi kræver stabilt lukket loop; brug poltesten i \S\ref{sec:model} eller
+      Nyquist-testen \eqref{eq:nyquist-count} før final value theorem i
+      \eqref{eq:steady-state-error}.
 \end{itemize}

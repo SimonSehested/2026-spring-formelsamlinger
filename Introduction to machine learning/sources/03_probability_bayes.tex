@@ -1,53 +1,41 @@
-\section*{Probability and Bayes classification}
+\section*{Probability, Bayes, densities}
 \subsection*{Conditional probability and Bayes}
-\textbf{Purpose:} Update class probabilities after seeing attributes.
+\textbf{Purpose:} turn likelihoods and priors into class probabilities after seeing $x$.
 \[
-P(A|B)=\frac{P(A,B)}{P(B)},\quad P(A)=\sum_cP(A|c)P(c),
-\]
-\[
-P(y=c|x)=\frac{P(x|y=c)P(y=c)}
+\fid[eq:bayes]\begin{aligned}
+P(A|B)&=\frac{P(A,B)}{P(B)},\\
+P(A)&=\sum_cP(A|c)P(c),\\
+P(y=c|x)&=\frac{P(x|y=c)P(y=c)}
 {\sum_{c'}P(x|y=c')P(y=c')}.
+\end{aligned}
 \]
-\textbf{Symbols:} $P(A|B)$ = probability of event $A$ given $B$; $x$ = observed attribute vector; $y$ = label; $P(y=c)$ = class prior; $P(x|y=c)$ = likelihood; $P(y=c|x)$ = posterior; $c'$ indexes candidate classes.
-
-\textbf{Do this:} compute likelihood times prior for every class; sum scores; divide each score by the sum; select largest posterior.
+\textbf{Symbols:} prior $P(y=c)$ is class frequency before $x$; likelihood $P(x|y=c)$ says how likely $x$ is inside class $c$; posterior $P(y=c|x)$ is the final class probability.
+\textbf{Do this:} use \fref{eq:bayes}; for each class compute score = likelihood $\times$ prior; add all scores; divide each score by the sum; choose the largest posterior.
 
 \subsection*{Counts and Naive Bayes}
-\textbf{Purpose:} Classify from categorical or binary attribute tables.
 \[
-\hat P(y=c|x=a)=
-\frac{\#\{i:y_i=c,x_i=a\}}{\#\{i:x_i=a\}},
+\fid[eq:naive-bayes]\begin{aligned}
+\hat P(y=c|x=a)&=
+\frac{\#\{i:y_i=c,x_i=a\}}{\#\{i:x_i=a\}},\\
+\operatorname{score}(c)&=P(y=c)\prod_{m=1}^MP(x_m|y=c),\\
+P(y=c|x)&=\frac{\operatorname{score}(c)}{\sum_{c'}\operatorname{score}(c')},\\
+\log\operatorname{score}(c)&=\log P(c)+\sum_m\log P(x_m|c).
+\end{aligned}
 \]
-\[
-\operatorname{score}(c)=P(y=c)\prod_{m=1}^MP(x_m|y=c).
-\]
-\[
-P(y=c|x)=\frac{\operatorname{score}(c)}{\sum_{c'}\operatorname{score}(c')}.
-\]
-\textbf{Symbols/means:} $\#\{\cdot\}$ = number of matching rows; $a$ = specified attribute value; $x_m$ = attribute $m$; $\operatorname{score}(c)$ = unnormalized posterior. Naive Bayes factorizes the likelihood by conditional independence within class.
-
-\textbf{How to read a probability table:} use the class row/column matching $c$ for each factor; posterior values are normalized class memberships and add to $1$.
+\textbf{How to use tables:} for each class row/column, pick the probability for the observed value of each attribute; multiply them with the prior as in \fref{eq:naive-bayes}; normalize scores so posteriors sum to $1$. Use log-scores when products are tiny; the largest log-score gives the same class.
+\textbf{From counts:} if a table gives raw counts, convert each needed entry to a conditional probability by dividing by the total count in the same condition/class. For $P(x_m=a|y=c)$, denominator is the number of rows in class $c$, not all rows.
 
 \subsection*{Gaussian density classifier}
-\textbf{Purpose:} Assign continuous observations using class-specific centres and spreads.
 \[
-\mathcal N(x|\mu,\Sigma)=
+\fid[eq:gauss]\begin{aligned}
+\mathcal N(x|\mu,\Sigma)&=
 \frac{\exp[-\tfrac12(x-\mu)^\top\Sigma^{-1}(x-\mu)]}
-{(2\pi)^{M/2}|\Sigma|^{1/2}},
+{(2\pi)^{M/2}|\Sigma|^{1/2}},\\
+\mathcal N(x|\mu,\sigma^2)&=\frac1{\sqrt{2\pi}\sigma}
+\exp\!\left[-\frac{(x-\mu)^2}{2\sigma^2}\right),\\
+\hat y&=\argmax_c\{\mathcal N(x|\mu_c,\Sigma_c)P(c)\}.
+\end{aligned}
 \]
-\[
-\hat y=\argmax_c\{\mathcal N(x|\mu_c,\Sigma_c)P(c)\}.
-\]
-\[
-\mathcal N(x|\mu,\sigma^2)=\frac1{\sqrt{2\pi}\sigma}
-\exp\!\left[-\frac{(x-\mu)^2}{2\sigma^2}\right].
-\]
-\textbf{Symbols:} $\mathcal N$ = Gaussian density; $\mu,\Sigma$ = centre and covariance, with subscript $c$ for a class; $|\Sigma|$ = determinant; $\Sigma^{-1}$ = inverse covariance; $\sigma$ = univariate standard deviation; $\hat y$ = predicted class; $\argmax_c$ selects the largest class score.
-
-\textbf{How to read density curves:} points near $\mu$ receive high density; larger variance creates a wider, lower curve. Density is a height, whereas posterior is a class probability.
-
-\subsection*{Log scores}
-\[
-\log\operatorname{score}(c)=\log P(c)+\sum_m\log P(x_m|c).
-\]
-\textbf{Symbols/use:} $\log$ = logarithm; $m$ indexes attributes. Use when many small factors are multiplied; the largest log-score gives the same class decision.
+\textbf{Symbols:} $\mu$ is centre, $\Sigma$ covariance, $\sigma$ standard deviation, $|\Sigma|$ determinant. Density height is not a probability by itself.
+\textbf{Do this:} use \fref{eq:gauss}; for each class insert $x,\mu_c,\Sigma_c$ or $\sigma_c$; multiply density by prior; choose the largest class score. Curves are highest near $\mu$; larger variance makes a wider, lower curve.
+\textbf{Boundary reading:} with equal priors, choose the class with larger density at $x$; with unequal priors, a class with lower density can still win if its prior is large enough.

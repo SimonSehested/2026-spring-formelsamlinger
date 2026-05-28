@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.12)  26 MAY 2026 14:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.12)  28 MAY 2026 11:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -229,15 +229,29 @@ Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
 \l_MT_below_shortintertext_sep=\dimen183
 \xmathstrut@box=\box101
 \xmathstrut@dim=\dimen184
-) (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.sty
+)
+(C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/xparse\xpars
+e.sty
+(C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/l3kernel\expl3.sty
+Package: expl3 2025-12-24 L3 programming layer (loader) 
+
+(C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
+tex.def
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count313
+))
+Package: xparse 2025-10-09 L3 Experimental document command parser
+)
+(C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.sty
 Package: enumitem 2025/02/06 v3.11 Customized lists
 \labelindent=\skip60
 \enit@outerparindent=\dimen185
 \enit@toks=\toks24
 \enit@inbox=\box102
-\enit@count@id=\count313
-\enitdp@description=\count314
-) (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
+\enit@count@id=\count314
+\enitdp@description=\count315
+)
+(C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen186
 \lightrulewidth=\dimen187
@@ -249,14 +263,15 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen193
 \cmidrulekern=\dimen194
 \defaultaddspace=\dimen195
-\@cmidla=\count315
-\@cmidlb=\count316
+\@cmidla=\count316
+\@cmidlb=\count317
 \@aboverulesep=\dimen196
 \@belowrulesep=\dimen197
-\@thisruleclass=\count317
-\@lastruleclass=\count318
+\@thisruleclass=\count318
+\@lastruleclass=\count319
 \@thisrulewidth=\dimen198
-) (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/tools\tabularx.sty
+)
+(C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/tools\tabularx.sty
 Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
 
 (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
@@ -274,7 +289,7 @@ Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \TX@old@col=\dimen259
 \TX@target=\dimen260
 \TX@delta=\dimen261
-\TX@cols=\count319
+\TX@cols=\count320
 \TX@ftn=\toks26
 )
 (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
@@ -319,11 +334,11 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 Package: microtype 2026/03/01 v3.2d Micro-typographical refinements (RS)
 (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count320
+\etb@tempcnta=\count321
 )
 \MT@toks=\toks27
 \MT@tempbox=\box105
-\MT@count=\count321
+\MT@count=\count322
 LaTeX Info: Redefining \noprotrusionifhmode on input line 1084.
 LaTeX Info: Redefining \leftprotrusion on input line 1085.
 \MT@prot@toks=\toks28
@@ -332,7 +347,7 @@ LaTeX Info: Redefining \textls on input line 1449.
 \MT@outer@kern=\dimen262
 LaTeX Info: Redefining \microtypecontext on input line 2053.
 LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
-\MT@listname@count=\count322
+\MT@listname@count=\count323
 
 (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype-pdf
 tex.def
@@ -349,32 +364,28 @@ File: microtype.cfg 2026/03/01 v3.2d microtype main configuration file (RS)
 )
 LaTeX Info: Redefining \microtypesetup on input line 3065.
 )
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 32
+\c@formulaid=\count324
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 49
 .
  (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-(C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
-tex.def
-File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count323
 ) (ml.aux)
 \openout1 = `ml.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -384,22 +395,22 @@ LaTeX Font Info:    ... okay on input line 32.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(21.33955pt, 554.82877pt, 21.33955pt)
-* v-part:(T,H,B)=(21.33955pt, 802.36774pt, 21.33955pt)
+* h-part:(L,W,R)=(15.6491pt, 566.20969pt, 15.6491pt)
+* v-part:(T,H,B)=(15.6491pt, 813.74866pt, 15.6491pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=554.82877pt
-* \textheight=802.36774pt
-* \oddsidemargin=-50.93044pt
-* \evensidemargin=-50.93044pt
-* \topmargin=-87.93044pt
+* \textwidth=566.20969pt
+* \textheight=813.74866pt
+* \oddsidemargin=-56.6209pt
+* \evensidemargin=-56.6209pt
+* \topmargin=-93.6209pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=10.0pt
 * \footskip=30.0pt
 * \marginparwidth=57.0pt
 * \marginparsep=11.0pt
-* \columnsep=11.9501pt
+* \columnsep=10.243pt
 * \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
@@ -431,16 +442,16 @@ File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count324
+\scratchcounter=\count325
 \scratchdimen=\dimen263
 \scratchbox=\box106
-\nofMPsegments=\count325
-\nofMParguments=\count326
+\nofMPsegments=\count326
+\nofMParguments=\count327
 \everyMPshowfont=\toks29
-\MPscratchCnt=\count327
+\MPscratchCnt=\count328
 \MPscratchDim=\dimen264
-\MPnumerator=\count328
-\makeMPintoPDFobject=\count329
+\MPnumerator=\count329
+\makeMPintoPDFobject=\count330
 \everyMPtoPDFconversion=\toks30
 )))
 (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
@@ -456,13 +467,13 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 \Gin@req@height=\dimen265
 \Gin@req@width=\dimen266
 )
-LaTeX Info: Redefining \microtypecontext on input line 32.
-Package microtype Info: Applying patch `item' on input line 32.
-Package microtype Info: Applying patch `toc' on input line 32.
-Package microtype Info: Applying patch `eqnum' on input line 32.
-Package microtype Info: Applying patch `footnote' on input line 32.
-Package microtype Info: Applying patch `verbatim' on input line 32.
-LaTeX Info: Redefining \microtypesetup on input line 32.
+LaTeX Info: Redefining \microtypecontext on input line 49.
+Package microtype Info: Applying patch `item' on input line 49.
+Package microtype Info: Applying patch `toc' on input line 49.
+Package microtype Info: Applying patch `eqnum' on input line 49.
+Package microtype Info: Applying patch `footnote' on input line 49.
+Package microtype Info: Applying patch `verbatim' on input line 49.
+LaTeX Info: Redefining \microtypesetup on input line 49.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -504,9 +515,9 @@ LaTeX Font Info:    Trying to load font information for OMX+lmex on input line
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 2.
+(Font)              <10> on input line 2.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 2.
+(Font)              <7> on input line 2.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 2.
 LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
@@ -524,25 +535,20 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 (C:\Users\sehes\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-)
-Underfull \hbox (badness 5446) in paragraph at lines 46--46
-[]|\T1/lmr/m/n/8 (+20) Middle line is me-dian; box is mid-dle $\OT1/lmr/m/n/8 (
-+20) 50%$\T1/lmr/m/n/8 (+20) ;
- []
-
-) (sources/02_pca_linear_algebra.tex) (sources/03_probability_bayes.tex
-[1
+))
+(sources/02_pca_linear_algebra.tex [1
 
 {C:/Users/sehes/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/sehe
 s/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/sehes/Ap
 pData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/sehes/Ap
 pData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/sehes/AppDat
 a/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/sehes/AppDat
-a/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}])
+a/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}]) (sources/03_probabi
+lity_bayes.tex)
 (sources/04_regression_classification.tex) (sources/05_validation_metrics.tex
 [2]) (sources/06_trees_ensembles_ann.tex) (sources/07_clustering_density.tex
 [3]) (sources/08_association_text_checks.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 70--48
+Underfull \hbox (badness 10000) in paragraph at lines 47--64
 
  []
 
@@ -553,30 +559,29 @@ L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 7290 strings out of 467871
- 118704 string characters out of 5418376
- 596946 words of memory out of 5000000
- 35884 multiletter control sequences out of 15000+600000
- 683391 words of font info for 150 fonts, out of 8000000 for 9000
+ 7425 strings out of 467871
+ 121757 string characters out of 5418376
+ 602093 words of memory out of 5000000
+ 36004 multiletter control sequences out of 15000+600000
+ 674795 words of font info for 152 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 63i,9n,70p,1003b,385s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pf
-b><C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb
-><C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb
-><C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi5.pfb>
-<C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><
-C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C
-:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr5.pfb><C:/
-Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Us
-ers/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/User
-s/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/Users
-/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/
-sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/s
-ehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.p
-fb>
-Output written on ml.pdf (4 pages, 246249 bytes).
+ 63i,11n,70p,1003b,423s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
+b><C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pf
+b><C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pf
+b><C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi5.pfb
+><C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi7.pfb>
+<C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><
+C:/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr5.pfb><C:
+/Users/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/U
+sers/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/U
+sers/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/Us
+ers/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Use
+rs/sehes/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm
+10.pfb>
+Output written on ml.pdf (4 pages, 216962 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
+ 86 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 30721 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 24577 words of extra memory for PDF output out of 24883 (max. 10000000)
 

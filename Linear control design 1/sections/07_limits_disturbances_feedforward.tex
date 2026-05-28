@@ -12,21 +12,40 @@ For Lag: \(\omega_c,N_i,\alpha,\gamma_M\) og plantfase. For limits:
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Afgør om opgaven handler om lineært Lag-design eller en ikke-lineær limit.
-\item Ved Lag: beregn leadfase, udled krævet negativ lagfase, løs for \(\beta>1\).
-\item Ved saturation/rate limit: undersøg om kommandoen rammer limit og om integralet
-      fortsat bygges op.
-\item Vælg mitigation: lavere bandwidth, integrator limit, prefilter, Lag eller anti-windup.
+\item Afgør typen ved at se på elementet: et Lag-led er en transferfunktion med
+      \(\beta\) og behandles lineært med \eqref{eq:lag-controller-phase}; saturation
+      eller rate limit er en ulighed på \(u(t)\) eller \(\dot u(t)\) og behandles med
+      \eqref{eq:actuator-limits}.
+\item Ved Lag-design: skriv først den fase som allerede kommer fra plant, P/PI og Lead
+      ved \(\omega_c\). Den manglende fase er
+      \(\phi_{\mathrm{lag}}=-180^\circ+\gamma_M-\phi_{\mathrm{uden\ lag}}\), og den
+      skal være negativ. Indsæt \(\phi_{\mathrm{lag}}\) og \(N_i\) i
+      \eqref{eq:lag-controller-phase}, og løs for \(\beta\); accepter kun \(\beta>1\).
+\item Ved amplitudesaturation: beregn eller skitser først den ubegrænsede
+      controllerkommando \(u_{\mathrm{lin}}(t)\). Hvis maksimum er større end
+      \(u_{\max}\), eller minimum er mindre end \(u_{\min}\), erstattes signalet af
+      grænsen i \eqref{eq:actuator-limits}, og den lineære model beskriver ikke længere
+      hele responsen.
+\item Ved rate limit: beregn den stejleste ændring i kommandoen, enten som
+      \(\max|\dot u_{\mathrm{lin}}(t)|\) eller fra en tangent på plottet. Hvis den er
+      større end \(R_{\max}\), kan aktuatoren ikke følge den lineære kommando.
+\item Windup mistænkes når en integrator fortsætter med at akkumulere fejl, mens
+      aktuatoren står på en grænse. Vælg mitigation ud fra årsagen: lavere bandwidth
+      reducerer \(u\)-kravet, prefilter reducerer referencespring, integrator limit eller
+      anti-windup stopper integratoropbygning, og Lag ændrer lavfrekvent/højfrekvent
+      gain uden at være en hard limit.
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:lag-controller-phase}
 C_{\mathrm{lag}}(s)=\frac{\tau_i s+1}{(\tau_i/\beta)s+1},\quad \beta>1,\qquad
 \phi_{\mathrm{lag}}=\arctan\!\left(\frac{N_i(1-\beta)}{1+\beta N_i^2}\right),
-\]
-\[
+\end{equation}
+\begin{equation}
+\label{eq:actuator-limits}
 u_{\min}\leq u_{\mathrm{sat}}(t)\leq u_{\max},\qquad |\dot u(t)|\leq R_{\max}.
-\]
+\end{equation}
 
 \paragraph{Symboler}
 \(\beta\) er lag-forhold; \(N_i=\omega_c\tau_i\); \(R_{\max}\) er maksimal inputrate.
@@ -59,25 +78,38 @@ stepstørrelse.
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Sæt alle andre uafhængige input til nul (superposition).
-\item Reducér disturbance-to-output/error-pathen med samme loopnævner.
-\item Skriv resultatet med \(S\) eller \(T\), hvis standardloopet passer.
-\item Ved constant disturbance anvendes final value theorem efter stabilitetscheck.
-\item For et referenceprefilter: ændr kun \(R\to Y\)-pathen, ikke loopmarginer.
+\item Vælg ét uafhængigt input ad gangen. Hvis du finder \(Y/D\), sæt \(R=0\) og
+      \(N=0\); hvis du finder \(Y/R\), sæt disturbances og noise til nul.
+\item Marker hvor disturbance kommer ind. Kommer den direkte på outputtet efter
+      planten, bruger du output-disturbance-rækken i \eqref{eq:disturbance-standard-paths};
+      kommer den ind før planten, bruger du plant-input-rækken; kommer den ind som
+      målefejl i feedbacksignalet, bruger du noise-rækken.
+\item Hvis diagrammet er standard negativ unity feedback, skriv først \(L=CG\) og brug
+      \(S,T\) fra \eqref{eq:sensitivity-functions}. Hvis der er sensor \(H\), ekstra
+      feed-forward eller anderledes fortegn, skriv blokdiagramligninger som i
+      \S\ref{sec:feedback} og brug kun \(S/T\)-navnene efter at formen matcher.
+\item Ved constant disturbance: sæt \(D(s)=d_0/s\), find \(Y(s)\) eller \(E(s)\), og
+      brug final value theorem \eqref{eq:steady-state-error} efter stabilitetscheck.
+\item For et referenceprefilter: gang kun referencevejen med \(F(s)\) som i
+      \eqref{eq:reference-prefilter}. Fordi prefilteret står uden for feedbacksløjfen,
+      ændrer det ikke \(L\), phase margin, gain margin eller disturbance rejection.
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:sensitivity-functions}
 S(s)=\frac1{1+L(s)},\qquad T(s)=\frac{L(s)}{1+L(s)},\qquad S+T=1,
-\]
-\[
+\end{equation}
+\begin{equation}
+\label{eq:disturbance-standard-paths}
 \text{output disturbance: } \frac{Y}{D}=S,\quad
 \text{plant-input disturbance: } \frac{Y}{D}=GS,\quad
 \text{measurement noise: } \frac{Y}{N}=-T,
-\]
-\[
+\end{equation}
+\begin{equation}
+\label{eq:reference-prefilter}
 \text{referenceprefilter: }\frac{Y}{R}=F(s)T(s).
-\]
+\end{equation}
 
 \paragraph{Symboler}
 \(D,N\) er disturbance/noise; \(F\) er referenceprefilter; \(S,T\) er
@@ -112,19 +144,31 @@ kan måles.
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Skriv disturbancebidraget før loopnævneren:
-      \(\sigma_DD(s)d(s)+G(s)F_d(s)d(s)\).
-\item Sæt bidraget lig nul og løs \(F_d=-\sigma_DD/G\).
-\item Kontrollér at \(F_d\) er proper og stabil.
-\item Hvis ikke, vælg statisk cancellation eller indsæt stabilt lavpasfilter.
-\item Angiv at perfekt rejection er nominal og afhænger af model/måling.
+\item Skriv fortegnet \(\sigma_D\) ud fra summationspunktet: \(+1\) hvis disturbance
+      lægges til outputbidraget, \(-1\) hvis den trækkes fra. Skriv derefter
+      disturbancebidraget før loopnævneren som i tælleren i
+      \eqref{eq:feedforward-cancellation}.
+\item Sæt disturbance-numeratoren lig nul:
+      \(\sigma_DD(s)+G(s)F_d(s)=0\). Isoler \(F_d\), hvilket giver første del af
+      \eqref{eq:feedforward-cancellation}.
+\item Kontrollér properness ved at sammenligne polynomiumsgrader i \(F_d\): nævnergrad
+      skal være mindst tællergrad for en proper realisering. Kontrollér stabilitet ved
+      at finde polerne i \(F_d\); de skal ligge strengt i \(\LHP\).
+\item Hvis den ideelle \(F_d\) er improper eller ustabil, må perfekt dynamisk
+      cancellation ikke loves. Brug i stedet en statisk approximation ved lav frekvens,
+      \(F_d(0)\), hvis den findes, eller multiplicér med et stabilt lavpasfilter og
+      skriv at rejection bliver begrænset.
+\item Indsæt den valgte \(F_d\) tilbage i \eqref{eq:feedforward-cancellation}. Hvis
+      numeratoren bliver nul, er rejection perfekt i nominalmodellen; hvis ikke, er
+      restleddet den disturbance der stadig når outputtet.
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:feedforward-cancellation}
 F_d(s)=-\frac{\sigma_DD(s)}{G(s)},\qquad
 G_{yd}(s)=\frac{\sigma_DD(s)+G(s)F_d(s)}{1+C(s)G(s)}.
-\]
+\end{equation}
 
 \paragraph{Symboler}
 \(F_d\) er disturbance feed-forward; \(\sigma_D\) er fortegnet ved disturbance-summeringen.
@@ -144,3 +188,47 @@ modelusikkerhed.
 \code{ideal\_disturbance\_feedforward(...,disturbance\_sign)} danner ratioen og
 rapporterer proper/stable efter at du har valgt fortegnet. For F21 Q20 er
 \(\sigma_D=-1\), og nominalt fås \(G_{yd}=0\).
+
+\subsection{Reference feed-forward for nul stationær fejl / inverse with low-pass}
+\label{sec:tracking-feedforward}
+
+\paragraph{Brug når}
+Opgaven viser en reference feed-forward-blok \(F(s)\) omkring et feedbackloop og spørger,
+hvilken \(F(s)\) der giver nul steady-state tracking error.
+
+\paragraph{Input fra opgaven}
+Plant \(G(s)\), feedbackgain/controller \(K_P\), krav om steady-state error, og om
+plantinversen er proper/stabil.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Skriv reference-to-output pathen ved lav frekvens. For unit step er kravet
+      \(y_{\mathrm{ss}}=r_{\mathrm{ss}}\), altså DC-gain fra \(R\) til \(Y\) lig 1.
+\item Den ideelle feed-forward til tracking er plantinversen \(F(s)=1/G(s)\), fordi
+      \(G(s)F(s)=1\). Dette fjerner ikke behovet for feedback; det former referencevejen.
+\item Kontrollér realiserbarhed. Hvis \(1/G(s)\) er improper, multiplicér med et stabilt
+      lavpasfilter som i \eqref{eq:tracking-feedforward}. Vælg \(\tau_f\) lille nok til
+      at lavfrekvent gain stadig er omtrent 1.
+\item Brug ikke \(G(0)\) som feed-forward, hvis formålet er at invertere planten; den
+      rigtige statiske invers ville være \(1/G(0)\), og den dynamiske invers er
+      \(1/G(s)\) plus eventuelt lavpasfilter.
+\end{enumerate}
+
+\paragraph{Formler}
+\begin{equation}
+\label{eq:tracking-feedforward}
+F_{\mathrm{track}}(s)=\frac{1}{G(s)(\tau_f s+1)},\qquad
+G(s)F_{\mathrm{track}}(s)=\frac{1}{\tau_f s+1}.
+\end{equation}
+
+\paragraph{Symboler}
+\(\tau_f\) er lavpasfilterets tidskonstant; \(F_{\mathrm{track}}\) er reference
+feed-forward til tracking.
+
+\paragraph{Antagelser}
+Plantmodellen er nominalt korrekt, og lavpasfilteret er stabilt. Perfekt tracking gælder
+kun lavfrekvent/asymptotisk, ikke nødvendigvis i transienten.
+
+\paragraph{Hurtigtjek}
+Ved \(s=0\) giver \eqref{eq:tracking-feedforward} \(G(0)F_{\mathrm{track}}(0)=1\), så
+unit-step steady-state error kan blive nul.

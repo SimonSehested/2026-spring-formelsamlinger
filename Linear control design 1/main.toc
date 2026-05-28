@@ -4,133 +4,150 @@
 \contentsline {subsection}{\numberline {1.3}Tre regler der forhindrer flest fejl}{2}{subsection.1.3}%
 \contentsline {section}{\numberline {2}Metodefinder}{2}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Support modes}{2}{subsection.2.1}%
-\contentsline {section}{\numberline {3}Symbolregister}{3}{section.3}%
-\contentsline {section}{\numberline {4}Model og tidsrespons}{3}{section.4}%
-\contentsline {subsection}{\numberline {4.1}ODE eller fysisk model til transferfunktion / Laplace, modelling}{3}{subsection.4.1}%
-\contentsline {paragraph}{Brug når}{3}{section*.2}%
-\contentsline {paragraph}{Input fra opgaven}{3}{section*.3}%
-\contentsline {paragraph}{Metode}{3}{section*.4}%
-\contentsline {paragraph}{Formler}{3}{section*.5}%
-\contentsline {paragraph}{Symboler}{3}{section*.6}%
-\contentsline {paragraph}{Antagelser}{3}{section*.7}%
-\contentsline {paragraph}{Hurtigtjek}{3}{section*.8}%
-\contentsline {paragraph}{Typiske fælder}{3}{section*.9}%
-\contentsline {paragraph}{Python}{4}{section*.10}%
-\contentsline {subsection}{\numberline {4.2}Første- og andenordens steprespons / time response, overshoot}{4}{subsection.4.2}%
-\contentsline {paragraph}{Brug når}{4}{section*.11}%
-\contentsline {paragraph}{Input fra opgaven}{4}{section*.12}%
-\contentsline {paragraph}{Metode}{4}{section*.13}%
-\contentsline {paragraph}{Formler}{4}{section*.14}%
-\contentsline {paragraph}{Symboler}{4}{section*.15}%
-\contentsline {paragraph}{Antagelser}{4}{section*.16}%
-\contentsline {paragraph}{Hurtigtjek}{4}{section*.17}%
-\contentsline {paragraph}{Typiske fælder}{4}{section*.18}%
-\contentsline {paragraph}{Python}{4}{section*.19}%
-\contentsline {section}{\numberline {5}Frekvens og stabilitet}{4}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Bode-plot og P-gain / Bode, gain margin, phase margin}{4}{subsection.5.1}%
-\contentsline {paragraph}{Brug når}{4}{section*.20}%
-\contentsline {paragraph}{Input fra opgaven}{4}{section*.21}%
-\contentsline {paragraph}{Metode}{5}{section*.22}%
-\contentsline {paragraph}{Formler}{5}{section*.23}%
-\contentsline {paragraph}{Symboler}{5}{section*.24}%
-\contentsline {paragraph}{Antagelser}{5}{section*.25}%
-\contentsline {paragraph}{Hurtigtjek}{5}{section*.26}%
-\contentsline {paragraph}{Typiske fælder}{5}{section*.27}%
-\contentsline {paragraph}{Python}{5}{section*.28}%
-\contentsline {subsection}{\numberline {5.2}Nyquist-stabilitet for ustabil plant / encirclement, RHP poles}{5}{subsection.5.2}%
-\contentsline {paragraph}{Brug når}{5}{section*.29}%
-\contentsline {paragraph}{Input fra opgaven}{5}{section*.30}%
-\contentsline {paragraph}{Metode}{5}{section*.31}%
-\contentsline {paragraph}{Formler}{5}{section*.32}%
-\contentsline {paragraph}{Symboler}{5}{section*.33}%
-\contentsline {paragraph}{Antagelser}{6}{section*.34}%
-\contentsline {paragraph}{Hurtigtjek}{6}{section*.35}%
-\contentsline {paragraph}{Typiske fælder}{6}{section*.36}%
-\contentsline {paragraph}{Python}{6}{section*.37}%
-\contentsline {subsection}{\numberline {5.3}Phase margin fra Nyquist-punkt / unit-circle point}{6}{subsection.5.3}%
-\contentsline {paragraph}{Brug når}{6}{section*.38}%
-\contentsline {paragraph}{Input fra opgaven}{6}{section*.39}%
-\contentsline {paragraph}{Metode}{6}{section*.40}%
-\contentsline {paragraph}{Formler}{6}{section*.41}%
-\contentsline {paragraph}{Symboler}{6}{section*.42}%
-\contentsline {paragraph}{Antagelser}{6}{section*.43}%
-\contentsline {paragraph}{Hurtigtjek}{6}{section*.44}%
-\contentsline {paragraph}{Typiske fælder}{6}{section*.45}%
-\contentsline {paragraph}{Python}{6}{section*.46}%
-\contentsline {section}{\numberline {6}Feedback og stationær fejl}{6}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Blokdiagramreduktion / feedback path, closed-loop transfer}{6}{subsection.6.1}%
-\contentsline {paragraph}{Brug når}{6}{section*.47}%
-\contentsline {paragraph}{Input fra opgaven}{6}{section*.48}%
-\contentsline {paragraph}{Metode}{6}{section*.49}%
-\contentsline {paragraph}{Formler}{6}{section*.50}%
-\contentsline {paragraph}{Symboler}{7}{section*.51}%
-\contentsline {paragraph}{Antagelser}{7}{section*.52}%
-\contentsline {paragraph}{Hurtigtjek}{7}{section*.53}%
-\contentsline {paragraph}{Typiske fælder}{7}{section*.54}%
-\contentsline {paragraph}{Python}{7}{section*.55}%
-\contentsline {subsection}{\numberline {6.2}Stationær referencefejl / final value, system type}{7}{subsection.6.2}%
-\contentsline {paragraph}{Brug når}{7}{section*.56}%
-\contentsline {paragraph}{Input fra opgaven}{7}{section*.57}%
-\contentsline {paragraph}{Metode}{7}{section*.58}%
-\contentsline {paragraph}{Formler}{7}{section*.59}%
-\contentsline {paragraph}{Symboler}{7}{section*.60}%
-\contentsline {paragraph}{Antagelser}{7}{section*.61}%
-\contentsline {paragraph}{Hurtigtjek}{7}{section*.62}%
-\contentsline {paragraph}{Typiske fælder}{7}{section*.63}%
-\contentsline {paragraph}{Python}{7}{section*.64}%
-\contentsline {section}{\numberline {7}Controllerdesign}{7}{section.7}%
-\contentsline {subsection}{\numberline {7.1}PI-Lead design / phase boost, \(\alpha \), \(N_i\)}{7}{subsection.7.1}%
-\contentsline {paragraph}{Brug når}{7}{section*.65}%
-\contentsline {paragraph}{Input fra opgaven}{7}{section*.66}%
-\contentsline {paragraph}{Metode}{8}{section*.67}%
-\contentsline {paragraph}{Formler}{8}{section*.68}%
-\contentsline {paragraph}{Symboler}{8}{section*.69}%
-\contentsline {paragraph}{Antagelser}{8}{section*.70}%
-\contentsline {paragraph}{Hurtigtjek}{8}{section*.71}%
-\contentsline {paragraph}{Typiske fælder}{8}{section*.72}%
-\contentsline {paragraph}{Python}{8}{section*.73}%
-\contentsline {subsection}{\numberline {7.2}P-gain fra margin / proportional controller design}{8}{subsection.7.2}%
-\contentsline {paragraph}{Brug når}{8}{section*.74}%
-\contentsline {paragraph}{Input fra opgaven}{8}{section*.75}%
-\contentsline {paragraph}{Metode}{8}{section*.76}%
-\contentsline {paragraph}{Formler}{8}{section*.77}%
-\contentsline {paragraph}{Symboler}{8}{section*.78}%
-\contentsline {paragraph}{Antagelser}{8}{section*.79}%
-\contentsline {paragraph}{Hurtigtjek}{8}{section*.80}%
-\contentsline {paragraph}{Typiske fælder}{8}{section*.81}%
-\contentsline {paragraph}{Python}{8}{section*.82}%
-\contentsline {section}{\numberline {8}Begrænsninger og eksterne signaler}{9}{section.8}%
-\contentsline {subsection}{\numberline {8.1}P-Lead-Lag og actuatorbegrænsning / Lag, saturation, windup}{9}{subsection.8.1}%
-\contentsline {paragraph}{Brug når}{9}{section*.83}%
-\contentsline {paragraph}{Input fra opgaven}{9}{section*.84}%
-\contentsline {paragraph}{Metode}{9}{section*.85}%
-\contentsline {paragraph}{Formler}{9}{section*.86}%
-\contentsline {paragraph}{Symboler}{9}{section*.87}%
-\contentsline {paragraph}{Antagelser}{9}{section*.88}%
-\contentsline {paragraph}{Hurtigtjek}{9}{section*.89}%
-\contentsline {paragraph}{Typiske fælder}{9}{section*.90}%
-\contentsline {paragraph}{Python}{9}{section*.91}%
-\contentsline {subsection}{\numberline {8.2}Disturbance og sensitivity / \(S\), \(T\), prefilter}{9}{subsection.8.2}%
-\contentsline {paragraph}{Brug når}{9}{section*.92}%
-\contentsline {paragraph}{Input fra opgaven}{9}{section*.93}%
-\contentsline {paragraph}{Metode}{9}{section*.94}%
-\contentsline {paragraph}{Formler}{9}{section*.95}%
-\contentsline {paragraph}{Symboler}{9}{section*.96}%
-\contentsline {paragraph}{Antagelser}{10}{section*.97}%
-\contentsline {paragraph}{Hurtigtjek}{10}{section*.98}%
-\contentsline {paragraph}{Typiske fælder}{10}{section*.99}%
-\contentsline {paragraph}{Python}{10}{section*.100}%
-\contentsline {subsection}{\numberline {8.3}Dynamisk feed-forward / measured disturbance cancellation}{10}{subsection.8.3}%
-\contentsline {paragraph}{Brug når}{10}{section*.101}%
-\contentsline {paragraph}{Input fra opgaven}{10}{section*.102}%
-\contentsline {paragraph}{Metode}{10}{section*.103}%
-\contentsline {paragraph}{Formler}{10}{section*.104}%
-\contentsline {paragraph}{Symboler}{10}{section*.105}%
-\contentsline {paragraph}{Antagelser}{10}{section*.106}%
-\contentsline {paragraph}{Hurtigtjek}{10}{section*.107}%
-\contentsline {paragraph}{Typiske fælder}{10}{section*.108}%
-\contentsline {paragraph}{Python}{10}{section*.109}%
-\contentsline {section}{\numberline {9}Python-hjælpere og sluttjek}{10}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Validerede funktioner}{10}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}Svar-tjekliste}{11}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}Kendte kildebegrænsninger}{11}{subsection.9.3}%
+\contentsline {section}{\numberline {3}Symbolregister}{2}{section.3}%
+\contentsline {section}{\numberline {4}Model og tidsrespons}{5}{section.4}%
+\contentsline {subsection}{\numberline {4.1}ODE eller fysisk model til transferfunktion / Laplace, modelling}{5}{subsection.4.1}%
+\contentsline {paragraph}{Brug når}{5}{section*.2}%
+\contentsline {paragraph}{Input fra opgaven}{5}{section*.3}%
+\contentsline {paragraph}{Metode}{5}{section*.4}%
+\contentsline {paragraph}{Formler}{5}{section*.5}%
+\contentsline {paragraph}{Symboler}{7}{section*.6}%
+\contentsline {paragraph}{Antagelser}{7}{section*.7}%
+\contentsline {paragraph}{Hurtigtjek}{7}{section*.8}%
+\contentsline {paragraph}{Typiske fælder}{7}{section*.9}%
+\contentsline {paragraph}{Python}{7}{section*.10}%
+\contentsline {subsection}{\numberline {4.2}Første- og andenordens steprespons / time response, overshoot}{7}{subsection.4.2}%
+\contentsline {paragraph}{Brug når}{7}{section*.11}%
+\contentsline {paragraph}{Input fra opgaven}{7}{section*.12}%
+\contentsline {paragraph}{Metode}{7}{section*.13}%
+\contentsline {paragraph}{Formler}{7}{section*.14}%
+\contentsline {paragraph}{Symboler}{7}{section*.15}%
+\contentsline {paragraph}{Antagelser}{7}{section*.16}%
+\contentsline {paragraph}{Hurtigtjek}{8}{section*.17}%
+\contentsline {paragraph}{Typiske fælder}{8}{section*.18}%
+\contentsline {paragraph}{Python}{8}{section*.19}%
+\contentsline {section}{\numberline {5}Frekvens og stabilitet}{8}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Bode-plot og P-gain / Bode, gain margin, phase margin}{8}{subsection.5.1}%
+\contentsline {paragraph}{Brug når}{8}{section*.20}%
+\contentsline {paragraph}{Input fra opgaven}{8}{section*.21}%
+\contentsline {paragraph}{Metode}{8}{section*.22}%
+\contentsline {paragraph}{Formler}{8}{section*.23}%
+\contentsline {paragraph}{Symboler}{8}{section*.24}%
+\contentsline {paragraph}{Antagelser}{8}{section*.25}%
+\contentsline {paragraph}{Hurtigtjek}{8}{section*.26}%
+\contentsline {paragraph}{Typiske fælder}{8}{section*.27}%
+\contentsline {paragraph}{Python}{9}{section*.28}%
+\contentsline {subsection}{\numberline {5.2}Nyquist-stabilitet for ustabil plant / encirclement, RHP poles}{9}{subsection.5.2}%
+\contentsline {paragraph}{Brug når}{9}{section*.29}%
+\contentsline {paragraph}{Input fra opgaven}{9}{section*.30}%
+\contentsline {paragraph}{Metode}{9}{section*.31}%
+\contentsline {paragraph}{Formler}{9}{section*.32}%
+\contentsline {paragraph}{Symboler}{9}{section*.33}%
+\contentsline {paragraph}{Antagelser}{9}{section*.34}%
+\contentsline {paragraph}{Hurtigtjek}{9}{section*.35}%
+\contentsline {paragraph}{Typiske fælder}{9}{section*.36}%
+\contentsline {paragraph}{Python}{9}{section*.37}%
+\contentsline {subsection}{\numberline {5.3}Phase margin fra Nyquist-punkt / unit-circle point}{9}{subsection.5.3}%
+\contentsline {paragraph}{Brug når}{9}{section*.38}%
+\contentsline {paragraph}{Input fra opgaven}{9}{section*.39}%
+\contentsline {paragraph}{Metode}{9}{section*.40}%
+\contentsline {paragraph}{Formler}{10}{section*.41}%
+\contentsline {paragraph}{Symboler}{10}{section*.42}%
+\contentsline {paragraph}{Antagelser}{10}{section*.43}%
+\contentsline {paragraph}{Hurtigtjek}{10}{section*.44}%
+\contentsline {paragraph}{Typiske fælder}{10}{section*.45}%
+\contentsline {paragraph}{Python}{10}{section*.46}%
+\contentsline {section}{\numberline {6}Feedback og stationær fejl}{10}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Blokdiagramreduktion / feedback path, closed-loop transfer}{10}{subsection.6.1}%
+\contentsline {paragraph}{Brug når}{10}{section*.47}%
+\contentsline {paragraph}{Input fra opgaven}{10}{section*.48}%
+\contentsline {paragraph}{Metode}{10}{section*.49}%
+\contentsline {paragraph}{Formler}{10}{section*.50}%
+\contentsline {paragraph}{Symboler}{10}{section*.51}%
+\contentsline {paragraph}{Antagelser}{10}{section*.52}%
+\contentsline {paragraph}{Hurtigtjek}{10}{section*.53}%
+\contentsline {paragraph}{Typiske fælder}{10}{section*.54}%
+\contentsline {paragraph}{Python}{10}{section*.55}%
+\contentsline {subsection}{\numberline {6.2}Stationær referencefejl / final value, system type}{10}{subsection.6.2}%
+\contentsline {paragraph}{Brug når}{10}{section*.56}%
+\contentsline {paragraph}{Input fra opgaven}{11}{section*.57}%
+\contentsline {paragraph}{Metode}{11}{section*.58}%
+\contentsline {paragraph}{Formler}{11}{section*.59}%
+\contentsline {paragraph}{Symboler}{11}{section*.60}%
+\contentsline {paragraph}{Antagelser}{11}{section*.61}%
+\contentsline {paragraph}{Hurtigtjek}{11}{section*.62}%
+\contentsline {paragraph}{Typiske fælder}{11}{section*.63}%
+\contentsline {paragraph}{Python}{11}{section*.64}%
+\contentsline {section}{\numberline {7}Controllerdesign}{11}{section.7}%
+\contentsline {subsection}{\numberline {7.1}PI-Lead design / phase boost, \(\alpha \), \(N_i\)}{11}{subsection.7.1}%
+\contentsline {paragraph}{Brug når}{11}{section*.65}%
+\contentsline {paragraph}{Input fra opgaven}{11}{section*.66}%
+\contentsline {paragraph}{Metode}{11}{section*.67}%
+\contentsline {paragraph}{Formler}{12}{section*.68}%
+\contentsline {paragraph}{Symboler}{12}{section*.69}%
+\contentsline {paragraph}{Antagelser}{12}{section*.70}%
+\contentsline {paragraph}{Hurtigtjek}{12}{section*.71}%
+\contentsline {paragraph}{Typiske fælder}{12}{section*.72}%
+\contentsline {paragraph}{Python}{12}{section*.73}%
+\contentsline {subsection}{\numberline {7.2}P-gain fra margin / proportional controller design}{12}{subsection.7.2}%
+\contentsline {paragraph}{Brug når}{12}{section*.74}%
+\contentsline {paragraph}{Input fra opgaven}{12}{section*.75}%
+\contentsline {paragraph}{Metode}{12}{section*.76}%
+\contentsline {paragraph}{Formler}{12}{section*.77}%
+\contentsline {paragraph}{Symboler}{12}{section*.78}%
+\contentsline {paragraph}{Antagelser}{12}{section*.79}%
+\contentsline {paragraph}{Hurtigtjek}{12}{section*.80}%
+\contentsline {paragraph}{Typiske fælder}{12}{section*.81}%
+\contentsline {paragraph}{Python}{12}{section*.82}%
+\contentsline {subsection}{\numberline {7.3}Ziegler--Nichols PID fra ultimativ gain / \(K_u\), \(P_u\)}{13}{subsection.7.3}%
+\contentsline {paragraph}{Brug når}{13}{section*.83}%
+\contentsline {paragraph}{Input fra opgaven}{13}{section*.84}%
+\contentsline {paragraph}{Metode}{13}{section*.85}%
+\contentsline {paragraph}{Formler}{13}{section*.86}%
+\contentsline {paragraph}{Symboler}{13}{section*.87}%
+\contentsline {paragraph}{Antagelser}{13}{section*.88}%
+\contentsline {paragraph}{Hurtigtjek}{13}{section*.89}%
+\contentsline {paragraph}{Typiske fælder}{13}{section*.90}%
+\contentsline {section}{\numberline {8}Begrænsninger og eksterne signaler}{13}{section.8}%
+\contentsline {subsection}{\numberline {8.1}P-Lead-Lag og actuatorbegrænsning / Lag, saturation, windup}{13}{subsection.8.1}%
+\contentsline {paragraph}{Brug når}{13}{section*.91}%
+\contentsline {paragraph}{Input fra opgaven}{13}{section*.92}%
+\contentsline {paragraph}{Metode}{13}{section*.93}%
+\contentsline {paragraph}{Formler}{14}{section*.94}%
+\contentsline {paragraph}{Symboler}{14}{section*.95}%
+\contentsline {paragraph}{Antagelser}{14}{section*.96}%
+\contentsline {paragraph}{Hurtigtjek}{14}{section*.97}%
+\contentsline {paragraph}{Typiske fælder}{14}{section*.98}%
+\contentsline {paragraph}{Python}{14}{section*.99}%
+\contentsline {subsection}{\numberline {8.2}Disturbance og sensitivity / \(S\), \(T\), prefilter}{14}{subsection.8.2}%
+\contentsline {paragraph}{Brug når}{14}{section*.100}%
+\contentsline {paragraph}{Input fra opgaven}{14}{section*.101}%
+\contentsline {paragraph}{Metode}{14}{section*.102}%
+\contentsline {paragraph}{Formler}{14}{section*.103}%
+\contentsline {paragraph}{Symboler}{14}{section*.104}%
+\contentsline {paragraph}{Antagelser}{14}{section*.105}%
+\contentsline {paragraph}{Hurtigtjek}{14}{section*.106}%
+\contentsline {paragraph}{Typiske fælder}{15}{section*.107}%
+\contentsline {paragraph}{Python}{15}{section*.108}%
+\contentsline {subsection}{\numberline {8.3}Dynamisk feed-forward / measured disturbance cancellation}{15}{subsection.8.3}%
+\contentsline {paragraph}{Brug når}{15}{section*.109}%
+\contentsline {paragraph}{Input fra opgaven}{15}{section*.110}%
+\contentsline {paragraph}{Metode}{15}{section*.111}%
+\contentsline {paragraph}{Formler}{15}{section*.112}%
+\contentsline {paragraph}{Symboler}{15}{section*.113}%
+\contentsline {paragraph}{Antagelser}{15}{section*.114}%
+\contentsline {paragraph}{Hurtigtjek}{15}{section*.115}%
+\contentsline {paragraph}{Typiske fælder}{15}{section*.116}%
+\contentsline {paragraph}{Python}{15}{section*.117}%
+\contentsline {subsection}{\numberline {8.4}Reference feed-forward for nul stationær fejl / inverse with low-pass}{15}{subsection.8.4}%
+\contentsline {paragraph}{Brug når}{15}{section*.118}%
+\contentsline {paragraph}{Input fra opgaven}{15}{section*.119}%
+\contentsline {paragraph}{Metode}{15}{section*.120}%
+\contentsline {paragraph}{Formler}{16}{section*.121}%
+\contentsline {paragraph}{Symboler}{16}{section*.122}%
+\contentsline {paragraph}{Antagelser}{16}{section*.123}%
+\contentsline {paragraph}{Hurtigtjek}{16}{section*.124}%
+\contentsline {section}{\numberline {9}Python-hjælpere og sluttjek}{16}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Validerede funktioner}{16}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Svar-tjekliste}{17}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Kendte kildebegrænsninger}{18}{subsection.9.3}%

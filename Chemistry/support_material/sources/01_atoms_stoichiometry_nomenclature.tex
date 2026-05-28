@@ -1,0 +1,197 @@
+\section{Atoms, Stoichiometry, and Nomenclature}
+
+\subsection{Ctrl+F keywords: isotope, neutron, ion formula, naming, molar mass, empirical formula, limiting reactant, yield, navngivning, stofmaengde, udbytte}
+Use for isotope particles, compound formulas and names, composition, sum formulas, reaction amounts, limiting reagent, theoretical yield, and percent yield.
+
+\subsection{Symbols and notation}
+\referencetable{tab:atoms:symbols}{Symbols used for atoms, composition, and stoichiometry}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+A,\ Z,\ N_{\mathrm n} & Mass number, atomic number/proton count, and neutron count.\\
+X & Element symbol in isotope notation \({}^{A}_{Z}\ce{X}\).\\
+N,\ N_{\mathrm A} & Number of particles and Avogadro constant.\\
+n,\ m,\ M & Amount in moles, mass, and molar mass.\\
+w_i & Mass percent of component \(i\).\\
+\nu_i,\ \xi & Balanced-reaction coefficient and reaction extent.\\
+k & Integer factor from an empirical formula to a molecular formula.\\
+q_i,\ a_i & Charge and formula subscript of ion \(i\).\\
+\bottomrule
+\end{tabular}
+
+\subsection{Core formulas and definitions}
+
+\subsubsection{Isotope notation, mass number, atomic number, neutron count}
+\begin{equation}\label{eq:atoms:isotope-particles}
+{}^{A}_{Z}\ce{X}, \qquad A=Z+N_{\mathrm n}, \qquad N_{\mathrm n}=A-Z
+\end{equation}
+\(Z\) is the proton count. A neutral atom has \(Z\) electrons; an ion of charge \(r+\) has \(Z-r\) electrons and an ion of charge \(r-\) has \(Z+r\) electrons.
+
+\subsubsection{Mole, particles, and molar mass}
+\begin{equation}\label{eq:atoms:mole-mass-particles}
+N=nN_{\mathrm A}, \qquad N_{\mathrm A}=6.022\times10^{23}\,\mathrm{mol^{-1}}, \qquad n=\frac{m}{M}, \qquad m=nM
+\end{equation}
+\(M\) is the sum of atomic molar masses multiplied by formula subscripts.
+
+\subsubsection{Mass percent and elemental composition}
+\begin{equation}\label{eq:atoms:mass-percent}
+w_i=\frac{m_i}{m_{\mathrm{total}}}\times100\%, \qquad
+w_{\mathrm{element}}=\frac{a_iM_i}{M_{\mathrm{compound}}}\times100\%
+\end{equation}
+In the second expression, \(a_i\) is the number of atoms of the element per formula unit.
+
+\subsubsection{Empirical formula and molecular formula}
+\begin{equation}\label{eq:atoms:empirical-ratio}
+n_i=\frac{m_i}{M_i}, \qquad r_i=\frac{n_i}{\min(n_i)}
+\end{equation}
+\begin{equation}\label{eq:atoms:molecular-factor}
+k=\frac{M_{\mathrm{molecular}}}{M_{\mathrm{empirical}}}, \qquad
+\text{molecular formula}=k\left(\text{empirical formula}\right)
+\end{equation}
+Accept \(k\) only when it is approximately an integer; convert fractional \(r_i\) values to the smallest whole-number ratio.
+
+\subsubsection{Balanced equation stoichiometry and limiting reactant}
+\begin{equation}\label{eq:atoms:stoichiometric-conversion}
+\nu_A\ce{A}+\nu_B\ce{B}\rightarrow\nu_C\ce{C}, \qquad
+n_C=n_A\frac{\nu_C}{\nu_A}
+\end{equation}
+\begin{equation}\label{eq:atoms:limiting-extent}
+\xi_i=\frac{n_i}{\nu_i}, \qquad
+\xi_{\max}=\min(\xi_i), \qquad
+n_{\mathrm{product}}=\xi_{\max}\nu_{\mathrm{product}}
+\end{equation}
+\begin{equation}\label{eq:atoms:percent-yield}
+\%\mathrm{yield}=\frac{\mathrm{actual\ yield}}{\mathrm{theoretical\ yield}}\times100\%
+\end{equation}
+Coefficients are mole ratios. Balance atoms and charge before applying them.
+
+\subsection{Ionic formulas and names}
+
+\subsubsection{Charge neutrality for ionic compounds}
+\begin{equation}\label{eq:atoms:charge-neutrality}
+\sum_i q_i a_i=0
+\end{equation}
+Choose the smallest whole-number subscripts that satisfy \eqref{eq:atoms:charge-neutrality}. Use parentheses when a polyatomic ion has a subscript larger than one, for example \(\ce{(NH4)2HPO4}\).
+
+\subsubsection{Common ions, English and Danish search names}
+\referencetable{tab:atoms:common-ions}{Common polyatomic ions for formula writing and naming}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Ion & Name / search alias & Ion & Name / search alias\\
+\midrule
+\(\ce{NH4+}\) & ammonium & \(\ce{OH-}\) & hydroxide\\
+\(\ce{NO3-}\) & nitrate & \(\ce{NO2-}\) & nitrite\\
+\(\ce{SO4^2-}\) & sulfate / sulfat & \(\ce{SO3^2-}\) & sulfite / sulfit\\
+\(\ce{HSO4-}\) & hydrogen sulfate & \(\ce{CO3^2-}\) & carbonate / carbonat\\
+\(\ce{PO4^3-}\) & phosphate / fosfat & \(\ce{HPO4^2-}\) & hydrogen phosphate\\
+\(\ce{H2PO4-}\) & dihydrogen phosphate & \(\ce{CN-}\) & cyanide\\
+\bottomrule
+\end{tabular}
+
+\subsubsection{Binary molecular prefixes}
+\referencetable{tab:atoms:molecular-prefixes}{Prefixes for binary molecular compounds}
+\begin{tabular}{@{}r l@{\qquad}r l@{\qquad}r l@{}}
+\toprule
+1 & mono & 2 & di & 3 & tri\\
+4 & tetra & 5 & penta & 6 & hexa\\
+7 & hepta & 8 & octa & 9 & nona\\
+10 & deca & & & &\\
+\bottomrule
+\end{tabular}
+For binary molecular compounds, the second element receives the ending ``-ide''; omit ``mono'' on the first element in common naming.
+
+\subsection{Exam recipe: isotope particle count}
+\textbf{Use when:} isotope notation, mass number, atomic number, neutrons, protons, or electrons in an ion are requested.
+
+\textbf{Given / Find:} Given \({}^{A}_{Z}\ce{X}\) and possibly an ionic charge; find proton, neutron, and electron counts.
+
+\textbf{Required references:} Equation \eqref{eq:atoms:isotope-particles} and notation in Table \ref{tab:atoms:symbols}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Read the lower index as \(Z\), so the proton count is \(Z\), using \eqref{eq:atoms:isotope-particles}.
+    \item Compute neutrons as \(N_{\mathrm n}=A-Z\) using \eqref{eq:atoms:isotope-particles}.
+    \item Set electrons equal to \(Z\) for a neutral atom; for a charged ion subtract the positive charge or add the magnitude of a negative charge.
+\end{enumerate}
+
+\textbf{Checks:} The neutron count is nonnegative; isotopes of one element have identical \(Z\).
+
+\textbf{Common traps:} Confusing mass number with molar mass; adding electrons for a positive ion.
+
+\subsection{Exam recipe: ionic formula and naming}
+\textbf{Use when:} ions, charges, or an ionic compound name must be converted to a neutral formula or back to a name.
+
+\textbf{Given / Find:} Given cation and anion names or charges; find the smallest neutral formula and systematic name.
+
+\textbf{Required references:} Charge-neutrality equation \eqref{eq:atoms:charge-neutrality} and common-ion Table \ref{tab:atoms:common-ions}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Identify each ion and its charge from the problem or Table \ref{tab:atoms:common-ions}.
+    \item Choose the smallest subscripts whose signed charge sum is zero by applying \eqref{eq:atoms:charge-neutrality}.
+    \item Write the cation first and place parentheses around a repeated polyatomic ion.
+    \item Name the cation followed by the anion; state the oxidation number for a metal with variable charge when needed to identify \(q_i\).
+\end{enumerate}
+
+\textbf{Checks:} Substitute subscripts and charges into \eqref{eq:atoms:charge-neutrality}; the result must be zero.
+
+\textbf{Common traps:} Leaving reducible subscripts; changing the internal subscript of a polyatomic ion; using molecular prefixes for ionic compounds.
+
+\subsection{Exam recipe: molar mass and mass percent}
+\textbf{Use when:} formula mass, molar mass, elemental mass percentage, or composition is requested.
+
+\textbf{Given / Find:} Given a chemical formula and atomic molar masses; find \(M_{\mathrm{compound}}\) or \(w_{\mathrm{element}}\).
+
+\textbf{Required references:} Equations \eqref{eq:atoms:mole-mass-particles} and \eqref{eq:atoms:mass-percent}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Count each element's atoms from the formula, multiplying through any parentheses.
+    \item Compute \(M_{\mathrm{compound}}\) by summing each atom count times its atomic molar mass as specified below \eqref{eq:atoms:mole-mass-particles}.
+    \item For an element percentage, divide its atom-count contribution \(a_iM_i\) by \(M_{\mathrm{compound}}\) and multiply by \(100\%\) using \eqref{eq:atoms:mass-percent}.
+\end{enumerate}
+
+\textbf{Checks:} Element percentages in a complete composition sum to approximately \(100\%\); molar mass units are \(\mathrm{g\,mol^{-1}}\).
+
+\textbf{Common traps:} Ignoring parentheses or hydration coefficients; dividing an atomic mass by the compound mass without its subscript.
+
+\subsection{Exam recipe: empirical/molecular formula}
+\textbf{Use when:} masses or percentages of elements and possibly a compound molar mass are supplied.
+
+\textbf{Given / Find:} Given elemental masses or mass percentages; find empirical formula and, if \(M_{\mathrm{molecular}}\) is given, molecular formula.
+
+\textbf{Required references:} Equations \eqref{eq:atoms:empirical-ratio}, \eqref{eq:atoms:molecular-factor}, and \eqref{eq:atoms:mole-mass-particles}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item For percentages, choose a \(100\,\mathrm{g}\) basis so each percentage becomes an element mass.
+    \item Convert each element mass to moles using \(n=m/M\) in \eqref{eq:atoms:mole-mass-particles}.
+    \item Divide each mole amount by the smallest using \eqref{eq:atoms:empirical-ratio}; multiply all ratios by one common small integer if they are near simple fractions.
+    \item Write the empirical formula from the resulting whole-number subscripts and compute its molar mass.
+    \item If a molecular molar mass is supplied, calculate \(k\) using \eqref{eq:atoms:molecular-factor} and multiply every empirical subscript by that integer.
+\end{enumerate}
+
+\textbf{Checks:} Reconstructed percentages agree with the data; \(k\) is approximately a positive integer.
+
+\textbf{Common traps:} Rounding \(1.50\) to \(2\) instead of scaling all ratios; scaling only one subscript.
+
+\subsection{Exam recipe: stoichiometry/limiting reactant/yield}
+\textbf{Use when:} a balanced reaction connects reactant masses or moles to product amount, excess reagent, theoretical yield, or percent yield.
+
+\textbf{Given / Find:} Given a reaction and one or more amounts; find limiting reactant, product quantity, or yield.
+
+\textbf{Required references:} Equations \eqref{eq:atoms:mole-mass-particles}, \eqref{eq:atoms:stoichiometric-conversion}, \eqref{eq:atoms:limiting-extent}, and \eqref{eq:atoms:percent-yield}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Balance the chemical reaction so the coefficients \(\nu_i\) required by \eqref{eq:atoms:stoichiometric-conversion} conserve atoms and charge.
+    \item Convert each available reactant quantity to moles using \eqref{eq:atoms:mole-mass-particles}.
+    \item Compute each available extent \(n_i/\nu_i\) and select the smallest value as \(\xi_{\max}\) using \eqref{eq:atoms:limiting-extent}.
+    \item Compute product moles as \(\xi_{\max}\nu_{\mathrm{product}}\) from \eqref{eq:atoms:limiting-extent}, then convert to the requested mass or particle count with \eqref{eq:atoms:mole-mass-particles}.
+    \item If actual product is stated, divide it by the theoretical product in identical units using \eqref{eq:atoms:percent-yield}.
+\end{enumerate}
+
+\textbf{Checks:} The limiting reagent is consumed first; percent yield is normally at most \(100\%\); units cancel correctly.
+
+\textbf{Common traps:} Using grams as coefficient ratios; choosing the largest \(n_i/\nu_i\); comparing actual mass with theoretical moles.

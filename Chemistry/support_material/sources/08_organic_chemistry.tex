@@ -1,0 +1,192 @@
+\section{Organic Chemistry, Functional Groups, Chirality, and Polymers}
+
+\subsection{Ctrl+F keywords: functional group, alcohol, ether, ester, amide, carboxylic acid, aromatic, chirality, isomer, polymerization}
+Use for identifying organic functional groups, aromatic rings, isomers, chiral centers, amino acids, peptides, and polymer repeat units.
+
+\subsection{Symbols and notation}
+\referencetable{tab:organic:symbols}{Symbols and notation for organic chemistry.}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+n & Number of carbon atoms in general hydrocarbon formulas; polymerization degree when used with polymer masses.\\
+\mathrm C_n\mathrm H_{2n+2} & General formula for an acyclic alkane.\\
+\mathrm C_n\mathrm H_{2n},\ \mathrm C_n\mathrm H_{2n-2} & General formulas for acyclic alkenes and alkynes.\\
+\mathrm{DBE} & Degree of unsaturation: total rings and \(\pi\)-bonds.\\
+C,\ H,\ N,\ X & Atom counts in the DBE formula; \(X\) counts halogens.\\
+\mathrm R,\ \mathrm{R'} & Generic organic groups; primes distinguish groups that need not be identical.\\
+\mathrm{C^*} & A tetrahedral stereogenic carbon attached to four different groups.\\
+M_{\mathrm{polymer}},\ M_{\mathrm{repeat}} & Polymer molar mass and repeat-unit molar mass.\\
+\bottomrule
+\end{tabular}
+
+\subsection{Hydrocarbons and unsaturation}
+
+\subsubsection{Alkane, alkene, alkyne formulas}
+\begin{equation}
+\label{eq:organic:hydrocarbon-formulas}
+\text{alkane: }\mathrm{C}_n\mathrm{H}_{2n+2}, \qquad
+\text{alkene: }\mathrm{C}_n\mathrm{H}_{2n}, \qquad
+\text{alkyne: }\mathrm{C}_n\mathrm{H}_{2n-2}
+\end{equation}
+Alkenes contain \(\ce{C=C}\) and alkynes contain \(\ce{C#C}\). Rings reduce hydrogen count like one double bond.
+
+\subsubsection{Degree of unsaturation, double bond equivalent}
+\begin{equation}
+\label{eq:organic:dbe}
+\mathrm{DBE}=\frac{2C+2+N-H-X}{2}
+\end{equation}
+Oxygen does not affect DBE. Each ring or \(\pi\)-bond counts as one DBE; benzene has four DBE.
+
+\subsubsection{Aromatic ring recognition}
+\begin{equation}
+\label{eq:organic:aromatic-motif}
+\ce{C6H6}\ \text{ring motif}, \qquad \text{phenyl group: }\mathrm{C_6H_5{-}}
+\end{equation}
+A benzene ring is planar and aromatic. Aromatic rings often occur with alcohol, carboxylic acid, amide, or ester groups.
+
+\subsection{Functional group lookup}
+
+\subsubsection{Functional group recognition table}
+\referencetable{tab:organic:functional-groups}{Functional groups recognized from structural motifs.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Group} & \textbf{Structural motif}\\
+\midrule
+alcohol & \(\mathrm{R{-}OH}\)\\
+ether & \(\mathrm{R{-}O{-}R'}\)\\
+aldehyde & \(\mathrm{R{-}CHO}\)\\
+ketone & \(\mathrm{R{-}C(=O){-}R'}\)\\
+carboxylic acid & \(\mathrm{R{-}COOH}\)\\
+ester & \(\mathrm{R{-}C(=O){-}O{-}R'}\)\\
+amine & \(\mathrm{R{-}NH_2},\ \mathrm{R_2NH},\ \mathrm{R_3N}\)\\
+amide & \(\mathrm{R{-}C(=O){-}NH_2},\ \mathrm{R{-}C(=O){-}NR_2}\)\\
+nitrile & \(\mathrm{R{-}C{\equiv}N}\)\\
+\bottomrule
+\end{tabular}
+Carbonyl-containing groups are distinguished by what is attached directly to the carbonyl carbon.
+
+\subsubsection{Ester, ether, amide, amine distinction}
+\begin{equation}
+\label{eq:organic:heteroatom-distinction}
+\text{ester: }\mathrm{C(=O)O}, \qquad
+\text{ether: }\mathrm{C{-}O{-}C}, \qquad
+\text{amide: }\mathrm{C(=O)N}, \qquad
+\text{amine: }\mathrm{C{-}N}
+\end{equation}
+Look for the carbonyl first. A nitrogen next to a carbonyl is an amide, not an amine.
+
+\subsection{Exam recipe: functional groups in a molecule}
+\textbf{Use when:} an organic structure is shown and the functional groups present must be identified.
+
+\textbf{Given / Find:} Given a line, condensed, or displayed structure; find every functional group named in the question or answer options.
+
+\textbf{Required references:} Table~\ref{tab:organic:functional-groups} and Equation~\eqref{eq:organic:heteroatom-distinction}; use Equation~\eqref{eq:organic:aromatic-motif} for aromatic rings.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Mark every heteroatom \(\ce{O}\), \(\ce{N}\), halogen, triple bond, and carbonyl \(\ce{C=O}\).
+    \item For each carbonyl carbon, inspect its directly attached atom and classify acid, ester, amide, aldehyde, or ketone.
+    \item Classify remaining \(\ce{O}\) and \(\ce{N}\) motifs as alcohol, ether, or amine only after carbonyl groups are assigned.
+    \item Identify aromatic rings and nitriles separately.
+    \item Match the complete list against the requested response or eliminate options containing a missing motif.
+\end{enumerate}
+
+\textbf{Checks:} Every reported group must correspond to an explicit motif; an acid counts as carboxylic acid, not separate alcohol plus ketone.
+
+\textbf{Common traps:} Calling an ester an ether; calling an amide an amine; overlooking a carbonyl or an aromatic ring.
+
+\subsection{Isomerism, chirality, and biomolecules}
+
+\subsubsection{Structural isomers}
+\begin{equation}
+\label{eq:organic:structural-isomers}
+\text{structural isomers}=\text{same molecular formula, different connectivity}
+\end{equation}
+Structural isomers can have different names, boiling points, and functional groups.
+
+\subsection{Exam recipe: molecular formula consistency and constitutional isomer enumeration}
+\textbf{Use when:} a displayed structure must be tested against a molecular formula, or the number of constitutional isomers with a stated functional group is requested.
+
+\textbf{Given / Find:} Given a molecular formula, candidate structures, or a functional-group restriction such as alcohol; find inconsistent structures or the number of distinct connectivities.
+
+\textbf{Required references:} Equations~\eqref{eq:organic:dbe}, \eqref{eq:organic:structural-isomers}, and Table~\ref{tab:organic:functional-groups}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Calculate DBE from Equation~\eqref{eq:organic:dbe}; use it to determine how many total rings and multiple bonds a valid candidate can contain.
+    \item To test a shown option, count each element in the drawing and compare with the stated formula, then reject it if the atom count or DBE does not match.
+    \item To enumerate isomers, first list distinct carbon skeletons compatible with the formula and DBE, without placing the required functional group twice on symmetry-equivalent positions.
+    \item Place the required functional group on each nonequivalent permitted position of each skeleton; for an alcohol, attach \(\ce{-OH}\) to carbon and exclude ethers unless the question includes them.
+    \item Count only structures with different connectivity as required by Equation~\eqref{eq:organic:structural-isomers}; do not count mirror images or rotations as additional constitutional isomers.
+\end{enumerate}
+
+\textbf{Checks:} Every counted structure has the stated formula, DBE, and required functional group; for saturated acyclic \(\ce{C4H10O}\) alcohols, DBE must be zero.
+
+\textbf{Common traps:} counting an ether among alcohols; counting the same structure redrawn from another end; forgetting a branched carbon skeleton.
+
+\subsubsection{Chiral center}
+\begin{equation}
+\label{eq:organic:chiral-center}
+\mathrm{C^*}=\text{tetrahedral carbon attached to four different groups}
+\end{equation}
+A molecule with one chiral center is chiral. Symmetry can make molecules with multiple stereocenters achiral.
+
+\subsubsection{Amino acids and peptide bond}
+\begin{equation}
+\label{eq:organic:amino-acid}
+\text{amino acid motif: }\mathrm{H_2N{-}CHR{-}COOH}
+\end{equation}
+\begin{equation}
+\label{eq:organic:peptide-bond}
+\text{peptide bond: }\mathrm{C(=O){-}NH}
+\end{equation}
+Amino acids contain amine and carboxylic acid groups. Peptides are connected by amide bonds.
+
+\subsection{Exam recipe: chirality and peptide or biomolecule recognition}
+\textbf{Use when:} a structure must be classified as chiral, amino-acid-like, or peptide-containing.
+
+\textbf{Given / Find:} Given a molecular structure; find stereogenic carbons and identify amino acid or peptide motifs.
+
+\textbf{Required references:} Equations~\eqref{eq:organic:chiral-center}, \eqref{eq:organic:amino-acid}, and \eqref{eq:organic:peptide-bond}; Table~\ref{tab:organic:functional-groups}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Locate tetrahedral carbon candidates and list the four attached groups for each candidate.
+    \item Mark \(\mathrm{C^*}\) only when all four groups differ; if multiple centers occur, check for internal symmetry before concluding that the molecule is chiral.
+    \item Search for the amino acid pattern: amine and carboxylic acid attached through the same alpha-carbon framework.
+    \item Search for \(\mathrm{C(=O){-}NH}\) links between residues; classify each such link as a peptide (amide) bond.
+    \item State only the requested property: number of chiral centers, chirality, amino acid motif, or peptide bond count.
+\end{enumerate}
+
+\textbf{Checks:} A carbon with two identical substituents is not stereogenic; a peptide bond must include a carbonyl directly bonded to nitrogen.
+
+\textbf{Common traps:} Counting a planar carbonyl carbon as chiral; calling any \(\ce{C-N}\) bond a peptide bond; treating an amide nitrogen as an amine group.
+
+\subsection{Polymers}
+
+\subsubsection{Degree of polymerization}
+\begin{equation}
+\label{eq:organic:polymerization-degree}
+n=\frac{M_{\mathrm{polymer}}}{M_{\mathrm{repeat}}}
+\end{equation}
+The degree of polymerization is the number of repeat units in the chain.
+
+\subsection{Exam recipe: polymer repeat unit and degree of polymerization}
+\textbf{Use when:} a polymer structure, monomer, repeat-unit mass, or polymer molar mass is given.
+
+\textbf{Given / Find:} Given the repeat-unit structure or its molar mass and \(M_{\mathrm{polymer}}\); find the repeat unit, \(M_{\mathrm{repeat}}\), or degree \(n\).
+
+\textbf{Required references:} Equation~\eqref{eq:organic:polymerization-degree} and the atomic molar masses supplied in the problem or data sheet.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Identify the smallest structural segment that repeats along the chain and write its atom count.
+    \item Compute \(M_{\mathrm{repeat}}\) from that segment unless it is supplied.
+    \item Insert consistent molar-mass units into Equation~\eqref{eq:organic:polymerization-degree}.
+    \item Calculate \(n\) and round only as justified by the idealized chain or stated precision.
+\end{enumerate}
+
+\textbf{Checks:} \(n\) is dimensionless and is normally close to a positive integer in an idealized exam problem; multiplying \(nM_{\mathrm{repeat}}\) should recover \(M_{\mathrm{polymer}}\).
+
+\textbf{Common traps:} Using monomer mass when condensation removes a small molecule; counting end groups as part of every repeat unit; reporting \(n\) with mass units.

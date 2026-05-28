@@ -1,4 +1,5 @@
 \section{Metodefinder}
+\label{sec:metodefinder}
 
 \begin{table}[htbp]
 \centering
@@ -6,17 +7,19 @@
 \label{tab:metodefinder}
 \begin{tabularx}{\textwidth}{@{}p{.25\textwidth}Y Y@{}}
 \toprule
-Se efter & Gå til & Første handling \\
+Se efter & Gå til & Første handling, udført konkret \\
 \midrule
-ODE, RLC, masser, transferfunktion & \S\ref{sec:model} & Udled \(G(s)=Y/U\), find poler \\
-Steprespons, overshoot, \(t_s\), \(t_r\) & \S\ref{sec:time} & Match første-/andenordensstandardform \\
-Bode, dB, slope, PM/GM, \(K_P\) & \S\ref{sec:bode} & Markér breaks/crossover og konvertér dB \\
-Nyquist, \(-1\), RHP-pol & \S\ref{sec:nyquist} & Tæl \(P\) og nødvendige encirclements \\
-Blokdiagram, fejl eller DC-gain & \S\ref{sec:feedback} & Sæt andre input til nul og reducer signalvej \\
-\(C_{PI}\), \(C_{\mathrm{lead}}\), \(\omega_c,\gamma_M\) & \S\ref{sec:pilead} & Skriv fasebalance ved crossover \\
-Lag, \(\beta\), saturation/rate limit & \S\ref{sec:limits} & Afgør nonlinearity eller lagfase \\
-Disturbance, \(S,T\), prefilter & \S\ref{sec:disturbance} & Identificer hvor disturbance injiceres \\
-\(F_d\), målt disturbance, cancellation & \S\ref{sec:feedforward} & Sæt numeratorbidrag til nul \\
+ODE, RLC, masser, transferfunktion & \S\ref{sec:model} & Skriv én ligning pr. fysisk lov, Laplace-transformer med nul initialled, og dan \(G=Y/U\) med \eqref{eq:transfer-function-dc}. \\
+Steprespons, \(y(0^+)\), \(y(\infty)\), overshoot, \(t_s\), \(t_r\) & \S\ref{sec:time} & Skriv \(Y(s)=G(s)U(s)\); brug \eqref{eq:first-final-value} for initial/slutværdi eller match mod \eqref{eq:first-order-step}--\eqref{eq:settling-band}. \\
+Bode, dB, slope, PM/GM, \(K_P\) & \S\ref{sec:bode} & Aflæs slopeændringer og crossover; konvertér dB med \eqref{eq:bode-db-conversion} før gain beregnes. \\
+Nyquist, \(-1\), RHP-pol & \S\ref{sec:nyquist} & Find open-loop RHP-poler \(P\), tæl netto encirclements med fortegn, og brug \eqref{eq:nyquist-count}. \\
+Blokdiagram, fejl eller DC-gain & \S\ref{sec:feedback} & Sæt ubrugte uafhængige input til nul, skriv én ligning pr. blok/summer, og løs for den efterspurgte ratio. \\
+\(C_{PI}\), \(C_{\mathrm{lead}}\), \(\omega_c,\gamma_M\) & \S\ref{sec:pilead} & Evaluer plantens fase ved \(\omega_c\), skriv faseregnskabet, og bestem parametre med \eqref{eq:pi-lead-controller}--\eqref{eq:pi-lead-magnitude}. \\
+PID, \(K_u\), \(P_u\), sustained oscillation & \S\ref{sec:ziegler} & Find ultimativ periode med \eqref{eq:ultimate-period} og indsæt i Ziegler--Nichols-reglerne \eqref{eq:ziegler-nichols-pid}. \\
+Lag, \(\beta\), saturation/rate limit & \S\ref{sec:limits} & Tjek først om elementet er lineært Lag eller en hard limit; brug \eqref{eq:lag-controller-phase} eller sammenlign \(u(t)\) med \eqref{eq:actuator-limits}. \\
+Disturbance, \(S,T\), prefilter & \S\ref{sec:disturbance} & Marker disturbancepunktet, sæt andre input til nul, og vælg den standardform i \eqref{eq:disturbance-standard-paths} der matcher placeringen. \\
+\(F_d\), målt disturbance, cancellation & \S\ref{sec:feedforward} & Skriv disturbance-numeratoren og sæt den lig nul med \eqref{eq:feedforward-cancellation}. \\
+Reference feed-forward, \(1/G(s)\), nul \(e_{\mathrm{ss}}\) & \S\ref{sec:tracking-feedforward} & Inverter planten ved lav frekvens og gør inversen proper med \eqref{eq:tracking-feedforward}. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -27,8 +30,8 @@ Disturbance, \(S,T\), prefilter & \S\ref{sec:disturbance} & Identificer hvor dis
 \toprule
 Mode & Betydning \\
 \midrule
-\code{notes\_only} & Figur-, bevis-, signalvej- eller metodevalg løses manuelt med noterne.\\
-\code{script\_assisted} & Metoden er manuel; valideret kode kan kontrollere beregninger.\\
-\code{script\_primary} & En klart specificeret parameterberegning kan udføres direkte, efter at antagelserne er skrevet.\\
+\code{notes\_only} & Bruges når opgaven kræver figurlæsning, fortegn, signalvej eller metodevalg. Skriv aflæsningen eller signalrelationen selv; Python må først bruges efter dette valg.\\
+\code{script\_assisted} & Bruges når metoden er manuel, men tal kan kontrolleres. Regn først med den relevante formel i noterne, og brug scriptet til at opdage algebra- eller tastefejl.\\
+\code{script\_primary} & Bruges kun når alle input til en valideret parameterberegning er kendte og opskriften siger det. Skriv antagelser og enhed/fortegn før scriptkaldet.\\
 \bottomrule
 \end{tabularx}

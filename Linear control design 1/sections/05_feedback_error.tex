@@ -12,18 +12,29 @@ Alle blokke, summationsfortegn og det præcise input/outputpar der efterspørges
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Sæt ikke-relevante uafhængige input til nul.
-\item Skriv signalrelationer fra summationspunkt til output og tilbage til summationspunkt.
-\item Identificer loopprodukt \(L\) og summer forward contributions i tælleren.
-\item Løs algebraisk for den ønskede ratio; forenkl først derefter.
+\item Skriv hvilket input/outputpar opgaven spørger om, fx \(Y/R\), \(E/R\) eller
+      \(Y/D\). Alle andre uafhængige input sættes til nul; det betyder at reference,
+      disturbance og noise behandles én ad gangen med superposition.
+\item Sæt et symbol på hver vigtig ledning i diagrammet: \(e,u,y\) og eventuelle
+      mellemled. For hvert summationspunkt skriver du en ligning med de viste fortegn,
+      fx \(e=r-Hy\) for negativ sensorfeedback.
+\item For hver blok skriver du output = blok gange input, fx \(u=Ce\) og \(y=Gu\).
+      Indsæt derefter baglæns, indtil den efterspurgte variabel står i én ligning med
+      inputtet.
+\item Hvis diagrammet er standard negativ feedback, kan du kontrollere med
+      \eqref{eq:standard-feedback}. Ellers må du ikke kopiere standardformlen; løs de
+      skrevne ligninger algebraisk og faktoriser først til sidst.
+\item Nævneren kommer fra de led der går rundt i feedbacksløjfen. Sidegrene uden for
+      sløjfen hører til tælleren, medmindre de ændrer signalet inde i feedbackvejen.
 \end{enumerate}
 
 \paragraph{Formler}
 For standard negativ feedback med forward branch \(C(s)G(s)\) og sensor \(H(s)\):
-\[
+\begin{equation}
+\label{eq:standard-feedback}
 \frac{Y}{R}=\frac{CG}{1+CGH},\qquad
 \frac{E}{R}=\frac{1}{1+CGH}.
-\]
+\end{equation}
 
 \paragraph{Symboler}
 \(R,E,U,Y\) er reference, fejl, kontrolsignal og output; \(H\) er måleled.
@@ -53,19 +64,45 @@ Den udledte error transferfunktion, referenceform og bekræftelse af closed-loop
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Udled \(G_{er}(s)=E(s)/R(s)\) fra det konkrete diagram.
-\item Indsæt \(R(s)=1/s\) for unit step.
-\item Kontrollér closed-loop-poler.
-\item Beregn \(e_{\mathrm{ss}}=\lim_{s\to0}sE(s)\).
+\item Udled først den rigtige error transferfunktion \(G_{er}(s)=E(s)/R(s)\) med
+      blokdiagrammet i \S\ref{sec:feedback}. Brug ikke \(Y/R\), hvis opgaven spørger
+      om fejl.
+\item Indsæt referenceformen. For unit step er \(R(s)=1/s\); for et step med størrelse
+      \(h_0\) er \(R(s)=h_0/s\). Dermed bliver \(E(s)=G_{er}(s)R(s)\).
+\item Find polerne i den lukkede respons, dvs. nævneren i \(E(s)\) efter eventuelle
+      forkortelser der er legitime i signalvejen. Final value theorem i
+      \eqref{eq:steady-state-error} må kun bruges, når alle disse poler ligger strengt
+      i \(\LHP\).
+\item Beregn \(e_{\mathrm{ss}}\) med \eqref{eq:steady-state-error}: gang først med
+      \(s\), forkort \(s\) fra step-inputtet, og sæt derefter \(s=0\).
+\item Hvis \(L(s)\) har \(n\) rene integratorer, er systemtypen \(n\). I stabil unity
+      feedback giver type 0 typisk endelig stepfejl, type 1 nul stepfejl for step og
+      endelig fejl for ramp.
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:steady-state-error}
 e_{\mathrm{ss}}=\lim_{s\to0}sE(s),\qquad
 G_{er}(s)=S(s)=\frac1{1+L(s)}\quad\text{(negativ unity feedback)}.
-\]
+\end{equation}
 For stabil unity feedback: type 0 giver endelig normalt ikke-nul stepfejl; type 1
 giver nul stepfejl.
+\begin{equation}
+\label{eq:static-error-constants}
+K_p^\ast=\lim_{s\to0}L(s),\qquad
+K_v=\lim_{s\to0}sL(s),\qquad
+K_a=\lim_{s\to0}s^2L(s).
+\end{equation}
+\begin{equation}
+\label{eq:standard-input-errors}
+e_{\mathrm{step}}=\frac1{1+K_p^\ast},\qquad
+e_{\mathrm{ramp}}=\frac1{K_v},\qquad
+e_{\mathrm{parabolic}}=\frac1{K_a}.
+\end{equation}
+Hvis konstanten er \(\infty\), er fejlen \(0\); hvis konstanten er \(0\), er fejlen
+\(\infty\). En type-1 unity-feedback loop har derfor nul stepfejl, endelig rampfejl og
+uendelig parabolic-fejl.
 
 \paragraph{Symboler}
 \(e_{\mathrm{ss}}\) er endelig fejl; systemtype er antal rene integratorer i \(L(s)\).

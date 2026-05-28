@@ -1,7 +1,8 @@
-\documentclass[a4paper]{article}
-\usepackage[a4paper,margin=0.75cm]{geometry}
+\documentclass[10pt,a4paper]{article}
+\usepackage[a4paper,margin=0.55cm]{geometry}
 \usepackage{multicol}
 \usepackage{amsmath,amssymb,mathtools}
+\usepackage{xparse}
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{tabularx}
@@ -10,15 +11,31 @@
 \usepackage{microtype}
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.6pt}
-\setlength{\columnsep}{0.42cm}
-\setlength{\abovedisplayskip}{1.5pt}
-\setlength{\belowdisplayskip}{1.5pt}
-\setlength{\abovedisplayshortskip}{0.5pt}
-\setlength{\belowdisplayshortskip}{0.5pt}
+\setlength{\parskip}{0.15pt}
+\setlength{\columnsep}{0.36cm}
+\setlength{\columnseprule}{0.12pt}
+\setlength{\abovedisplayskip}{0.7pt}
+\setlength{\belowdisplayskip}{0.7pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
 \setlist{nosep,leftmargin=*}
-\renewcommand{\arraystretch}{0.95}
-\setlength{\tabcolsep}{2.2pt}
+\renewcommand{\arraystretch}{0.84}
+\setlength{\tabcolsep}{1.7pt}
+\setcounter{secnumdepth}{0}
+
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{0pt}{1.4pt}{0.8pt}{\normalfont\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{0pt}{0.9pt}{0.3pt}{\normalfont\bfseries}}
+\makeatother
+
+\newcounter{formulaid}
+\renewcommand{\theformulaid}{F\arabic{formulaid}}
+\NewDocumentCommand{\fid}{o}{%
+  \refstepcounter{formulaid}%
+  \IfValueT{#1}{\label{#1}}%
+  \mathllap{\text{\normalfont\bfseries\theformulaid}\quad}%
+}
+\newcommand{\fref}[1]{\ref{#1}}
 
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Var}{\operatorname{Var}}
@@ -31,11 +48,10 @@
 \newcommand{\sigmoid}{\sigma}
 \begin{document}
 \pagestyle{empty}
-\footnotesize
 \begin{center}
 {\bfseries 02450/02451 Introduction to Machine Learning and Data Mining -- 4-page exam aid}
 \end{center}
-\vspace{-3pt}
+\vspace{-6pt}
 \begin{multicols*}{2}
 \input{sources/01_exam_and_data}
 \input{sources/02_pca_linear_algebra}

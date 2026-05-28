@@ -1,70 +1,47 @@
-\section*{Associations and sparse similarity}
+\section*{Associations and sparse vectors}
 \subsection*{Association rules and Apriori}
-\textbf{Purpose:} Quantify which items co-occur and form frequent rules.
 \[
-\operatorname{supp}(X)=\frac{\#(X)}N,
+\fid[eq:assoc]\begin{aligned}
+\operatorname{supp}(X)&=\frac{\#(X)}N,\\
+\operatorname{conf}(X\to Y)&=\frac{\operatorname{supp}(X\cup Y)}{\operatorname{supp}(X)},\\
+\operatorname{lift}(X\to Y)&=\frac{\operatorname{conf}(X\to Y)}{\operatorname{supp}(Y)}.
+\end{aligned}
 \]
-\[
-\operatorname{conf}(X\to Y)=\frac{\operatorname{supp}(X\cup Y)}
-{\operatorname{supp}(X)},
-\]
-\[
-\operatorname{lift}(X\to Y)=\frac{\operatorname{conf}(X\to Y)}
-{\operatorname{supp}(Y)}.
-\]
-\textbf{Symbols:} $X$ = antecedent itemset; $Y$ = consequent itemset; $\#(X)$ = baskets containing $X$; $N$ = number of baskets; $\operatorname{supp}$ = support; $\operatorname{conf}$ = confidence; lift compares observed confidence with baseline support of $Y$. For a rule, $X,Y$ are disjoint.
-
-\textbf{How to read a rule table:} support is prevalence of all rule items; confidence is conditional frequency of $Y$ among baskets with $X$; lift $>1$ indicates more co-occurrence than expected from $Y$'s frequency.
-
-\textbf{Do this:} count $X$, $Y$ and $X\cup Y$; calculate support/confidence/lift; for Apriori, keep itemsets meeting support and extend only retained sets.
+\textbf{Symbols:} $X$ antecedent, $Y$ consequent, disjoint itemsets; $\#(X)$ is baskets containing $X$.
+\textbf{Do this:} use \fref{eq:assoc}; count baskets containing $X$, $Y$, and $X\cup Y$; support is count divided by $N$; confidence is the fraction of $X$ baskets that also contain $Y$; lift compares confidence to baseline support of $Y$. Apriori: discard candidate itemsets below minimum support, and only extend retained frequent itemsets.
 
 \subsection*{Binary attributes and Jaccard}
 \[
+\fid[eq:jaccard]\begin{gathered}
 \begin{array}{c|cc}
 &b=1&b=0\\\hline
 a=1&f_{11}&f_{10}\\
 a=0&f_{01}&f_{00}
 \end{array}
-\qquad
-J(a,b)=\frac{f_{11}}{f_{11}+f_{10}+f_{01}},
-\]
-\[
+\\
+J(a,b)=\frac{f_{11}}{f_{11}+f_{10}+f_{01}},\qquad
 \operatorname{SMC}=\frac{f_{11}+f_{00}}M.
+\end{gathered}
 \]
-\textbf{Symbols/means:} $a,b$ = two binary vectors; $f_{rs}$ = number of attributes having values $r$ in $a$ and $s$ in $b$; $M$ = attribute count; $J$ = Jaccard; SMC = simple matching coefficient. Jaccard ignores shared absences; SMC counts both agreements.
-
-\textbf{Use when:} Jaccard suits sparse baskets or word-presence vectors where common zeros do not show similarity.
+\textbf{Do this:} for each attribute, count which cell of \fref{eq:jaccard} the pair $(a_m,b_m)$ falls in. Jaccard ignores shared zeros, so use it for sparse baskets/word presence; SMC counts both shared ones and shared zeros.
 
 \subsection*{Text vectors and cosine}
-\textbf{Purpose:} Compare documents by weighted word content rather than raw document length.
 \[
-\operatorname{tfidf}_{ij}=\operatorname{tf}_{ij}\log\frac{N}{\operatorname{df}_j},
-\qquad
+\fid[eq:tfidf]\operatorname{tfidf}_{ij}=\operatorname{tf}_{ij}\log\frac{N}{\operatorname{df}_j},\qquad
 \cos(x,y)=\frac{x^\top y}{\|x\|_2\|y\|_2}.
 \]
-\textbf{Symbols:} $\operatorname{tf}_{ij}$ = term count/weight for word $j$ in document $i$; $\operatorname{df}_j$ = documents containing word $j$; $N$ = documents; $x,y$ = tf--idf document vectors; $x^\top y$ = dot product; $\|\cdot\|_2$ = vector length.
-
-\textbf{How to read it:} rare terms receive larger inverse-document-frequency weight; cosine near $1$ means documents point in similar word-weight directions.
+\textbf{Do this:} use \fref{eq:tfidf}; multiply term frequency by inverse document frequency, so rare terms get larger weight; compare documents with cosine from \fref{eq:norm-cos}. Cosine near $1$ means similar word-weight direction, independent of document length scale.
 
 \subsection*{Choose from the given object}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-\textbf{Given in task} & \textbf{Calculate/read}\\ \midrule
-Label and class score & Posterior/logistic probability; confusion/ROC for performance.\\
-Numeric response and weights & Regression prediction, residual/RMSE and validation error.\\
-No label; centroids/tree of merges & K-means assignment or dendrogram cut.\\
-Density or neighbour table & GMM responsibility, KDE/local density or ARD outlier score.\\
-Item/word table & Association metrics, Jaccard or cosine similarity.\\
-\bottomrule
-\end{tabularx}
-
-\subsection*{Numerical output meanings}
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\toprule
-\textbf{Quantity} & \textbf{Reading rule}\\ \midrule
-Probability/responsibility & Between $0$ and $1$; competing class/component values sum to $1$.\\
-EVR/AUC/metric & EVR sums to $1$ across PCs; AUC closer to $1$ means stronger ranking.\\
-Density & Nonnegative local height; compare values to locate low-density observations.\\
-Similarity & Cosine/Jaccard large means more similar under their respective representation.\\
+\textbf{Given} & \textbf{Use this concrete action}\\ \midrule
+Class probabilities/scores & Normalize scores with \fref{eq:bayes}, \fref{eq:naive-bayes}, \fref{eq:gmm} or \fref{eq:softmax}; choose largest.\\
+Weights and a new row & Add intercept, multiply weights and inputs using \fref{eq:lin-ridge}, \fref{eq:logistic} or \fref{eq:ann}.\\
+Validation table & Choose smallest validation/inner error with \fref{eq:cv-error}; report held-out/outer error.\\
+Confusion/ROC & Define positive class, fill counts, then use denominators in \fref{eq:class-metrics}.\\
+Centroids/dendrogram & Assign nearest centroid with \fref{eq:kmeans}, or cut dendrogram at requested height/$K$.\\
+Density/neighbours & Use \fref{eq:gmm}, \fref{eq:kde} or \fref{eq:local-density}; smallest density/ARD is most outlying.\\
+Baskets/text vectors & Count rule supports with \fref{eq:assoc}, or compare sparse vectors with \fref{eq:jaccard}/\fref{eq:tfidf}.\\
 \bottomrule
 \end{tabularx}

@@ -1,0 +1,275 @@
+\section{Aqueous Reactions, Redox Balancing, and Gases}
+
+\subsection{Ctrl+F keywords: molarity, dilution, net ionic, precipitation, redox, oxidation number, gas law, partial pressure, ideal gas, gas stoichiometry, pressure tank, bundfald}
+Use for solution concentrations, net ionic equations, precipitate decisions, half-reaction balancing, gas state changes, gas mixtures, and reaction amounts involving gases.
+
+\subsection{Symbols and notation}
+\referencetable{tab:aqueous:symbols}{Symbols used for aqueous reactions, redox, and gases}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+c,\ n,\ V & Molar concentration, amount of substance, and solution or gas volume.\\
+c_1,V_1,c_2,V_2 & Concentration and volume before and after dilution.\\
+Q_{\mathrm{sp}},\ K_{\mathrm{sp}} & Ion product at current concentrations and solubility-product constant.\\
+p,\ T,\ R & Gas pressure, absolute temperature, and gas constant.\\
+x_i,\ p_i,\ p_{\mathrm{tot}} & Mole fraction, partial pressure of gas \(i\), and total pressure.\\
+\rho,\ M & Gas density and molar mass.\\
+\ce{e-},\ \ce{H+},\ \ce{OH-} & Species used in half-reaction balancing.\\
+\ce{(aq)},\ \ce{(s)} & Dissolved aqueous species and solid precipitate.\\
+\bottomrule
+\end{tabular}
+
+\subsection{Solutions and aqueous reactions}
+
+\subsubsection{Molarity, dilution, actual ion concentration}
+\begin{equation}\label{eq:aqueous:concentration-dilution}
+c=\frac{n}{V}, \qquad n=cV, \qquad c_1V_1=c_2V_2
+\end{equation}
+Use liters for \(V\). For a completely dissociated strong electrolyte, obtain an ion concentration by multiplying \(c\) by its coefficient; for example, \(\ce{CaCl2(aq) -> Ca^2+(aq) + 2Cl-(aq)}\) gives \([\ce{Cl-}]=2c\).
+
+\subsubsection{Complete dissolution and total ion amount}
+\begin{equation}\label{eq:aqueous:complete-dissolution-ions}
+\mathrm{A}_a\mathrm{B}_b(aq)\longrightarrow a\,\mathrm{A}(aq)+b\,\mathrm{B}(aq), \qquad
+n_{\mathrm{ions,total}}=(a+b)n_{\mathrm{salt}}
+\end{equation}
+For a strong soluble electrolyte, each formula unit produces the number of dissolved ions shown by the balanced dissociation coefficients.
+
+\subsection{Exam recipe: moles of ions from complete dissolution}
+\textbf{Use when:} a soluble ionic compound dissolves completely and the task asks for total moles of ions or the amount of one ion.
+
+\textbf{Given / Find:} Given the amount or mass of a soluble salt; find \(n_{\mathrm{ions,total}}\) or \(n\) of a specified ion.
+
+\textbf{Required references:} Equations \eqref{eq:aqueous:complete-dissolution-ions} and \eqref{eq:aqueous:concentration-dilution}; use Equation \eqref{eq:atoms:mole-mass-particles} if a mass is given.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Write the complete dissociation equation and balance the ionic coefficients; for example, one \(\ce{Al2(SO4)3}\) formula unit produces \(2+3=5\) ions.
+    \item Convert a stated mass or solution concentration to moles of salt before applying the dissociation coefficients.
+    \item Multiply salt moles by the requested ion coefficient, or by the sum of all ion coefficients for total moles of ions, using \eqref{eq:aqueous:complete-dissolution-ions}.
+\end{enumerate}
+
+\textbf{Checks:} Total charge of ions produced from one formula unit is zero; total ion moles exceed salt moles when more than one ion is formed.
+
+\textbf{Common traps:} counting distinct ion types instead of stoichiometric ion amounts; forgetting parentheses in salts such as \(\ce{Al2(SO4)3}\).
+
+\subsubsection{Net ionic equation and spectator ions}
+\begin{equation}\label{eq:aqueous:net-ionic-example}
+\ce{Pb^2+(aq) + 2I-(aq) -> PbI2(s)}
+\end{equation}
+Remove ions that occur unchanged on both sides. A net ionic equation conserves atoms and total charge.
+
+\subsubsection{Precipitation recognition}
+\begin{equation}\label{eq:aqueous:precipitation-test}
+Q_{\mathrm{sp}}>K_{\mathrm{sp}}\Rightarrow\text{precipitate}, \qquad
+Q_{\mathrm{sp}}<K_{\mathrm{sp}}\Rightarrow\text{no precipitate yet}
+\end{equation}
+\referencetable{tab:aqueous:precipitation-language}{Recognition cues for precipitation questions}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{8.0cm}@{}}
+\toprule
+Problem wording & Immediate action\\
+\midrule
+mixing ionic solutions; bundfald & Form candidate products and test whether one is insoluble.\\
+\(K_{\mathrm{sp}}\) or sparingly soluble & Compute post-mixing ion concentrations and compare \(Q_{\mathrm{sp}}\) with \(K_{\mathrm{sp}}\).\\
+net ionic equation & Dissociate soluble strong electrolytes and cancel spectator ions.\\
+\bottomrule
+\end{tabular}
+
+\referencetable{tab:aqueous:solubility-rules}{Common solubility rules for deciding candidate precipitates when no \(K_{\mathrm{sp}}\) data are supplied}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{8.0cm}@{}}
+\toprule
+Ions in compound & Rapid solubility decision\\
+\midrule
+\(\ce{NO3-}\), group 1 cations, \(\ce{NH4+}\) & Treat as soluble; these usually remain spectator ions.\\
+\(\ce{Cl-}\), \(\ce{Br-}\), \(\ce{I-}\) & Usually soluble; treat compounds with \(\ce{Ag+}\) or \(\ce{Pb^2+}\) as precipitate candidates.\\
+\(\ce{SO4^2-}\) & Usually soluble; treat compounds with \(\ce{Ba^2+}\) or \(\ce{Pb^2+}\) as precipitate candidates.\\
+\(\ce{CO3^2-}\), \(\ce{PO4^3-}\), \(\ce{OH-}\) & Usually insoluble unless paired with group 1 cations or \(\ce{NH4+}\).\\
+\bottomrule
+\end{tabular}
+
+\subsection{Exam recipe: net ionic precipitation}
+\textbf{Use when:} two aqueous ionic solutions are mixed and the question asks for a precipitate or net ionic equation.
+
+\textbf{Given / Find:} Given dissolved compounds, concentrations, and possibly \(K_{\mathrm{sp}}\); find whether a solid forms and write its net ionic equation.
+
+\textbf{Required references:} Equations \eqref{eq:aqueous:concentration-dilution}, \eqref{eq:aqueous:net-ionic-example}, \eqref{eq:aqueous:precipitation-test}, and Tables \ref{tab:aqueous:precipitation-language} and \ref{tab:aqueous:solubility-rules}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Dissociate each soluble strong electrolyte into ions and obtain concentrations after mixing with \(c=n/V\) from \eqref{eq:aqueous:concentration-dilution} when numerical data are given.
+    \item Pair the available cations and anions to write candidate neutral solid formulas by charge balance.
+    \item Decide the precipitate branch: when no numerical solubility data are supplied, classify each candidate using Table \ref{tab:aqueous:solubility-rules}; when \(K_{\mathrm{sp}}\) is supplied, calculate \(Q_{\mathrm{sp}}\) from mixed ion concentrations and apply \eqref{eq:aqueous:precipitation-test}.
+    \item Write only the precipitating ions and the solid product, following the pattern in \eqref{eq:aqueous:net-ionic-example}, then choose coefficients that conserve atoms and charge.
+\end{enumerate}
+
+\textbf{Checks:} No unchanged spectator ion remains; phases and charges are shown; both atom count and charge balance.
+
+\textbf{Common traps:} Using concentrations before dilution by mixing; leaving nitrate or alkali metal ions in the net equation; writing an uncharged ionic product with incorrect subscripts.
+
+\subsubsection{Gravimetric concentration from a precipitate}
+\begin{equation}\label{eq:aqueous:gravimetric-precipitation}
+n_{\mathrm{precipitate}}=\frac{m_{\mathrm{precipitate}}}{M_{\mathrm{precipitate}}},
+\qquad
+n_{\mathrm{analyte}}=n_{\mathrm{precipitate}}
+\frac{\nu_{\mathrm{analyte}}}{\nu_{\mathrm{precipitate}}},
+\qquad
+c_{\mathrm{analyte}}=\frac{n_{\mathrm{analyte}}}{V_{\mathrm{sample}}}
+\end{equation}
+The coefficient ratio is taken from the balanced net ionic precipitation reaction.
+
+\subsection{Exam recipe: concentration from precipitate mass}
+\textbf{Use when:} an ion is precipitated quantitatively, the mass of solid is measured, and the original solution concentration is requested.
+
+\textbf{Given / Find:} Given a precipitate mass, its identity, the sampled solution volume, and the analyte ion; find the analyte concentration.
+
+\textbf{Required references:} Equation~\eqref{eq:aqueous:gravimetric-precipitation}, Equation~\eqref{eq:atoms:mole-mass-particles}, and the net ionic reaction method in Equation~\eqref{eq:aqueous:net-ionic-example}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Write the balanced net ionic reaction linking the analyte ion to the measured solid; its coefficients define the mole ratio.
+    \item Calculate the precipitate molar mass, then convert measured solid mass to moles using the first expression in Equation~\eqref{eq:aqueous:gravimetric-precipitation}.
+    \item Convert precipitate moles to analyte moles using the coefficient ratio in the second expression of Equation~\eqref{eq:aqueous:gravimetric-precipitation}.
+    \item Divide analyte moles by the original sampled solution volume in liters using the final expression of Equation~\eqref{eq:aqueous:gravimetric-precipitation}.
+\end{enumerate}
+
+\textbf{Checks:} For \(\ce{Ag+ + Cl- -> AgCl(s)}\), precipitate and chloride moles are equal; concentration units are \(\mathrm{mol\,L^{-1}}\).
+
+\textbf{Common traps:} dividing by total reagent-plus-sample volume rather than the original sample volume; using mass ratios in place of the balanced mole ratio.
+
+\subsection{Redox balancing}
+
+\subsubsection{Oxidation, reduction, and electron cancellation}
+Oxidation produces electrons and increases oxidation state; reduction consumes electrons and decreases oxidation state. The final equation contains no free electrons.
+
+\subsubsection{Half-reaction sequence in acid and base}
+\begin{equation}\label{eq:aqueous:redox-half-reaction-sequence}
+\begin{aligned}
+&\text{balance atoms except H and O};\quad
+\text{balance O with }\ce{H2O};\\
+&\text{balance H with }\ce{H+};\quad
+\text{balance charge with }\ce{e-};\\
+&\text{in base, add }\ce{OH-}\text{ to both sides for every }\ce{H+}\text{ and cancel }\ce{H2O}.
+\end{aligned}
+\end{equation}
+
+\subsection{Exam recipe: redox balancing}
+\textbf{Use when:} an oxidation--reduction equation must be balanced in acidic or basic aqueous solution.
+
+\textbf{Given / Find:} Given reactant and product species plus acidic or basic medium; find the balanced overall equation.
+
+\textbf{Required references:} Half-reaction procedure \eqref{eq:aqueous:redox-half-reaction-sequence}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Separate oxidation and reduction half-reactions by identifying which oxidation states increase and decrease.
+    \item For each half-reaction, balance non-\(\ce{H}\), non-\(\ce{O}\) atoms, then add \(\ce{H2O}\), \(\ce{H+}\), and \(\ce{e-}\) in the order prescribed by \eqref{eq:aqueous:redox-half-reaction-sequence}.
+    \item Multiply each balanced half-reaction by the smallest integers that give equal electron counts, then add and cancel identical species.
+    \item For basic solution, apply the final conversion step in \eqref{eq:aqueous:redox-half-reaction-sequence} and cancel excess water.
+\end{enumerate}
+
+\textbf{Checks:} Total atoms and total charge agree on both sides; electrons do not occur in the final equation; no \(\ce{H+}\) remains in a final basic-medium equation.
+
+\textbf{Common traps:} Balancing charge before oxygen and hydrogen; converting to base before the acidic half-reaction is balanced; failing to cancel water.
+
+\subsection{Gases}
+
+\subsubsection{Ideal gas law and fixed-amount state change}
+\begin{equation}\label{eq:aqueous:ideal-gas-law}
+pV=nRT
+\end{equation}
+\begin{equation}\label{eq:aqueous:combined-gas-law}
+\frac{p_1V_1}{T_1}=\frac{p_2V_2}{T_2}\qquad(n\ \text{constant})
+\end{equation}
+Temperatures must be in kelvin. Choose \(R\) to match the pressure and volume units.
+
+\subsubsection{Partial pressure and mole fraction}
+\begin{equation}\label{eq:aqueous:dalton-law}
+p_i=x_ip_{\mathrm{tot}}, \qquad x_i=\frac{n_i}{n_{\mathrm{tot}}}, \qquad p_{\mathrm{tot}}=\sum_i p_i
+\end{equation}
+For an ideal gas mixture, mole fraction equals pressure fraction.
+
+\subsubsection{Gas density and molar mass}
+\begin{equation}\label{eq:aqueous:gas-density}
+\rho=\frac{m}{V}=\frac{pM}{RT}, \qquad M=\frac{\rho RT}{p}
+\end{equation}
+Use \eqref{eq:aqueous:gas-density} when density, pressure, and temperature identify an unknown gas.
+
+\subsection{Exam recipe: molar mass and molecular formula from gas data}
+\textbf{Use when:} an unknown gaseous compound is specified by mass and gas-state data and its molar mass or molecular formula is requested.
+
+\textbf{Given / Find:} Given gas mass, pressure, volume, temperature, and optionally an empirical formula; find \(M\) and/or the molecular formula.
+
+\textbf{Required references:} Equations~\eqref{eq:aqueous:ideal-gas-law} and \eqref{eq:aqueous:gas-density}; use Equation~\eqref{eq:atoms:molecular-factor} when an empirical formula is given.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Convert temperature to kelvin and use consistent pressure-volume units with the chosen gas constant.
+    \item Calculate gas moles as \(n=pV/(RT)\) from Equation~\eqref{eq:aqueous:ideal-gas-law}, then calculate \(M=m/n\); equivalently calculate \(\rho=m/V\) and use Equation~\eqref{eq:aqueous:gas-density}.
+    \item If an empirical formula is supplied or obtained, calculate its formula mass and determine the integer factor \(k=M/M_{\mathrm{empirical}}\) by Equation~\eqref{eq:atoms:molecular-factor}.
+    \item Multiply every empirical-formula subscript by the nearest justified integer \(k\) to state the molecular formula.
+\end{enumerate}
+
+\textbf{Checks:} \(M\) must be positive and close to an integer multiple of the empirical-formula mass when a molecular formula is requested.
+
+\textbf{Common traps:} using Celsius; treating gas volume as molar mass information without pressure and temperature; rounding \(k\) before checking measurement precision.
+
+\subsubsection{Effusion through a small opening, Graham's law}
+\begin{equation}\label{eq:aqueous:graham-effusion}
+\frac{r_1}{r_2}=\sqrt{\frac{M_2}{M_1}}
+\end{equation}
+At the same temperature, the lighter gas effuses faster because its molar mass is smaller.
+
+\subsection{Exam recipe: gas law state change}
+\textbf{Use when:} a fixed amount of gas changes pressure, volume, or temperature without a chemical reaction, such as a sealed tank or piston problem.
+
+\textbf{Given / Find:} Given two gas states with one unknown variable; find final pressure, volume, or temperature.
+
+\textbf{Required references:} Combined gas law \eqref{eq:aqueous:combined-gas-law}; use \eqref{eq:aqueous:ideal-gas-law} only when moles must first be determined.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Confirm that the amount of gas is constant; otherwise calculate or track \(n\) with \eqref{eq:aqueous:ideal-gas-law} instead of applying \eqref{eq:aqueous:combined-gas-law}.
+    \item Convert each temperature to kelvin and put pressure and volume in matching units on both sides.
+    \item Substitute the two states into \eqref{eq:aqueous:combined-gas-law} and algebraically isolate the requested variable.
+\end{enumerate}
+
+\textbf{Checks:} At constant volume, increasing absolute temperature increases pressure; at constant temperature, increasing volume decreases pressure.
+
+\textbf{Common traps:} Substituting Celsius; applying the combined gas law when gas is added, removed, or consumed.
+
+\subsection{Exam recipe: gas stoichiometry}
+\textbf{Use when:} a reacting gas is specified by pressure, volume, temperature, or partial pressure, including a closed heated tank in which gases react before a final pressure is requested.
+
+\textbf{Given / Find:} Given a balanced reaction and gas-state data; find reacting moles, product mass, product gas volume, or final gas pressure.
+
+\textbf{Required references:} Equations \eqref{eq:aqueous:ideal-gas-law}, \eqref{eq:aqueous:dalton-law}, and \eqref{eq:atoms:stoichiometric-conversion}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item If the gas is in a mixture, calculate its partial pressure with \eqref{eq:aqueous:dalton-law}; otherwise use the stated gas pressure.
+    \item Convert the reacting gas data to moles by rearranging \eqref{eq:aqueous:ideal-gas-law} as \(n=pV/(RT)\), using kelvin and compatible units.
+    \item Write and balance the reaction, then apply the coefficient ratio exactly as in \eqref{eq:atoms:stoichiometric-conversion}.
+    \item For a final reacting-gas mixture, subtract consumed reactants, add gaseous products, sum remaining gas moles, and use \eqref{eq:aqueous:ideal-gas-law} at the final \(T\) and \(V\); otherwise convert product moles directly to the requested mass, volume, or pressure.
+\end{enumerate}
+
+\textbf{Checks:} The pressure used is the reacting gas pressure; balanced coefficients relate moles, not liters unless state conditions are identical.
+
+\textbf{Common traps:} Using total pressure for one component; applying gas volume ratios at different temperatures or pressures; using Celsius in \(pV=nRT\).
+
+\subsection{Exam recipe: gas effusion from a punctured container}
+\textbf{Use when:} a container is punctured, gases escape through a small hole, or the task compares which gas remains or escapes faster.
+
+\textbf{Given / Find:} Given two gas identities or molar masses in one container; find relative effusion rate or enrichment of the remaining gas.
+
+\textbf{Required references:} Equation \eqref{eq:aqueous:graham-effusion}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Determine each molar mass from its formula.
+    \item Compare rates using \eqref{eq:aqueous:graham-effusion}: the gas with smaller \(M\) has larger effusion rate.
+    \item For a punctured mixture, state that the faster-effusing gas becomes depleted more quickly in the container, so the remaining gas mixture becomes richer in the heavier gas.
+\end{enumerate}
+
+\textbf{Checks:} If \(M_1<M_2\), then \(r_1/r_2>1\); identical molar masses give equal rates.
+
+\textbf{Common traps:} using molecular size intuition instead of molar mass; concluding that the faster gas becomes enriched inside the leaking container.

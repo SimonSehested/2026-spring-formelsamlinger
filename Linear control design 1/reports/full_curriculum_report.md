@@ -340,7 +340,7 @@ Notation anvendt her: `G(s)` er plant/system, `C(s)` controller, `L(s)=C(s)G(s)`
 
 ## Svagt eller ikke dokumenteret
 
-- Heuristisk Ziegler-Nichols nævnes, men F21 fokuserer på algebra, plotfortolkning og design; det prioriteres lavere i slutnoterne.
+- Heuristisk Ziegler-Nichols nævnes i pensum og er nu direkte repræsenteret af F25 Q8; slutnoterne prioriterer derfor en kort, operationel PID-opskrift.
 - Mandatory REGBOT assignment og cascaded balance-control omtales, men er ikke direkte testet i det tilgængelige eksamenssæt.
 - Matlab/Simulink bruges i undervisningen; kildepakken indeholder ikke scripts/data til reproduktion.
 

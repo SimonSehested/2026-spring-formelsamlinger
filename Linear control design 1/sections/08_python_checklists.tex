@@ -1,4 +1,5 @@
 \section{Python-hjælpere og sluttjek}
+\label{sec:python}
 
 \subsection{Validerede funktioner}
 
@@ -10,28 +11,44 @@ Funktionerne importeres fra \code{scripts.control} og demonstreres i
 \toprule
 Funktion & Brug og manuelt ansvar \\
 \midrule
-\code{transfer\_function\_poles} & Poler fra allerede udledt nævner; fortolk stabilitet selv.\\
-\code{find\_stable\_gain\_ranges} & Symbolske marginalgrænser og stabile \(K\)-intervaller for \(p(s,K)\) eller \(1+K G(s)=0\); grænsepunkter er ikke stabile.\\
-\code{closed\_loop\_poles} & Kontrollér P-gain for et verificeret negativt standardloop.\\
-\code{unity\_feedback\_step\_error} & Slutværdi for verificeret unity-errorpath; afviser ustabilt loop.\\
-\code{phase\_margin\_from\_point} & Margin fra manuelt aflæst Nyquist-crossoverpunkt.\\
-\code{second\_order\_characteristics} & Standard andenordensmetrics; kontroller modelmatch.\\
-\code{design\_pi\_lead\_at\_crossover} & PI-Lead-parametre ved valgt specifikation; kontroller limits.\\
-\code{solve\_lag\_beta} & Lag-\(\beta\) fra manuelt udledt lagfase.\\
-\code{ideal\_disturbance\_feedforward} & Nominal ratio/properness efter manuelt disturbancefortegn.\\
+\code{transfer\_function\_poles} & Brug kun efter du har udledt nævneren i \(G(s)\) med \eqref{eq:transfer-function-dc}. Stabilitet afgøres manuelt ved at kræve alle poler strengt i \(\LHP\).\\
+\code{evaluate\_transfer\_function} & Brug til at beregne \(G(j\omega)\) for en allerede kendt tæller/nævner. Du skal selv vælge den rigtige frekvens og afgøre om det er plant, controller eller loop der skal evalueres.\\
+\code{bode\_to\_transfer} & Brug kun når startgain og break frequencies allerede er aflæst. Funktionen bygger en mulig minimum-phase model; RHP/LHP-valg kræver stadig faseargumentet i \S\ref{sec:bode}.\\
+\code{analyze\_transfer\_function} & Brug til samlet kontrol af poler, zeros, DC-gain, type og simple marginer for en symbolsk \(G(s)\). Funktionen erstatter ikke blokdiagramreduktion eller valg af input/output.\\
+\code{closed\_loop\_characteristic} & Brug når open-loop \(G(s)\) og feedbackfortegn er kendt. Resultatet er den nævner der skal poltestes; marginale rødder tælles ikke som stabile.\\
+\code{find\_stable\_gain\_ranges} & Brug når du har et karakteristisk polynomium \(p(s,K)\) eller en ligning \(1+KG(s)=0\). Funktionen finder marginale \(K\)-værdier og tester intervaller; grænsepunkter med imaginæraksepoler er ikke stabile.\\
+\code{solve\_stability\_interval\_by\_boundary} & Lavniveaukontrol for samme type stabilitetsinterval som \code{find\_stable\_gain\_ranges}. Brug den kun når du allerede har et polynomium og vil se boundary-beregningen eksplicit.\\
+\code{closed\_loop\_poles} & Brug efter du har verificeret negativ standardfeedback og valgt \(K\). Sammenlign resultatet med stabilitetskravet før DC-gain eller final value bruges.\\
+\code{unity\_feedback\_step\_error} & Brug kun når errorpathen er \(E/R=1/(1+KG)\), jf. \eqref{eq:standard-feedback}. Funktionen afviser ustabil slutværdi, men den vælger ikke signalvej for dig.\\
+\code{phase\_margin\_from\_point} & Brug efter du manuelt har aflæst et punkt på enhedscirklen. Funktionen udfører \(\operatorname{atan2}\)-delen i \eqref{eq:phase-margin-point}.\\
+\code{second\_order\_characteristics} & Brug efter du har normaliseret nævneren og matchet \eqref{eq:second-order-step}. Funktionen kontrollerer \(\omega_n,\zeta,M_p\), ikke om modellen faktisk er domineret af anden orden.\\
+\code{design\_pi\_lead\_at\_crossover} & Brug når \(G(s)\), \(\omega_c\), \(\gamma_M\) og \(N_i\) er kendte. Funktionen implementerer \eqref{eq:pi-lead-controller}--\eqref{eq:pi-lead-magnitude}; du skal stadig vurdere limits og realiserbarhed.\\
+\code{solve\_lag\_beta} & Brug efter du selv har udledt den krævede negative lagfase. Accepter kun løsninger med \(\beta>1\), jf. \eqref{eq:lag-controller-phase}.\\
+\code{ideal\_disturbance\_feedforward} & Brug efter du har valgt disturbancefortegn \(\sigma_D\). Funktionen danner \eqref{eq:feedforward-cancellation} og rapporterer properness/stabilitet; målelighed og modelusikkerhed er stadig manuelle antagelser.\\
 \bottomrule
 \end{tabularx}
 
 \subsection{Svar-tjekliste}
 
 \begin{itemize}
-\item Har jeg skrevet hvilket input/output og hvilken feedbackretning jeg bruger?
-\item Har jeg undersøgt RHP-poler, origo-poler eller Nyquistkrav før stabilitetskonklusion?
-\item Har jeg konverteret dB til lineær magnitude før gainberegning?
-\item Har jeg angivet gyldighedsbetingelser før final value theorem?
-\item Er \(0<\alpha<1\) for Lead og \(\beta>1\) for Lag?
-\item Har jeg undersøgt properness/stabilitet ved en invers feed-forward?
-\item Ved saturation eller rate limit: har jeg undgået at love large-signal-adfærd ud fra linear model?
+\item Input/output: står den efterspurgte ratio eksplicit, fx \(Y/R\), \(E/R\) eller
+      \(Y/D\), og er ubrugte uafhængige input sat til nul?
+\item Feedbackretning: har jeg skrevet summationsligningen, fx \(e=r-Hy\), så fortegnet
+      ikke kun er antaget?
+\item Stabilitet: har jeg kontrolleret closed-loop-poler eller brugt Nyquist
+      \eqref{eq:nyquist-count}, før jeg bruger DC-gain eller final value theorem?
+\item dB: har jeg konverteret med \eqref{eq:bode-db-conversion}, før et gain ganges på
+      eller sammenlignes?
+\item Standardform: har jeg normaliseret nævneren og matchet koefficienter mod
+      \eqref{eq:first-order-step} eller \eqref{eq:second-order-step}, før jeg bruger
+      tidsresponsformler?
+\item Controllerparametre: er \(0<\alpha<1\) for Lead og \(\beta>1\) for Lag, og er
+      \(\tau_i,\tau_d,K_P\) positive når designet kræver det?
+\item Invers/feed-forward: har jeg tjekket både properness og polplacering for
+      \(F_d\), før jeg kalder den realiserbar?
+\item Limits: hvis \(u_{\mathrm{lin}}(t)\) bryder \eqref{eq:actuator-limits}, har jeg
+      skrevet at den lineære model kun er small-signal og ikke garanterer large-signal-
+      adfærd?
 \end{itemize}
 
 \subsection{Kendte kildebegrænsninger}

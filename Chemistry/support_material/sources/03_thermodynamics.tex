@@ -1,0 +1,203 @@
+\section{Thermodynamics and Thermochemistry}
+
+\subsection{Ctrl+F keywords: enthalpy, Hess, formation enthalpy, combustion, entropy, Gibbs, spontaneity, equilibrium constant}
+Use for heat, work, \(\Delta H\), \(\Delta S\), \(\Delta G\), equilibrium constants from thermodynamics, and temperature-dependent spontaneity.
+
+\subsection{Symbols and notation}
+\referencetable{tab:thermo:symbols}{Thermodynamic symbols and notation.}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+U,\ H,\ S,\ G & Internal energy, enthalpy, entropy, and Gibbs free energy.\\
+q,\ w & Heat entering the system and work performed on the system.\\
+p,\ q_p & Pressure and heat measured at constant pressure.\\
+p_{\mathrm{ext}},\ \Delta V & External pressure and volume change in pressure-volume work.\\
+T,\ R & Absolute temperature and gas constant.\\
+\nu_i & Coefficient of species \(i\) in the balanced reaction.\\
+{}^\circ,\ \mathrm{rxn},\ \mathrm f,\ \mathrm{comb} & Standard state; reaction, formation, and combustion subscripts.\\
+\mathrm{prod},\ \mathrm{react},\ k & Products, reactants, and reaction-equation term index in summations.\\
+K,\ Q & Equilibrium constant and current reaction quotient.\\
+D & Average bond enthalpy used for bond-breaking and bond-forming estimates.\\
+\bottomrule
+\end{tabular}
+
+\subsection{Core formulas}
+
+\subsubsection{First law, heat, and work}
+\begin{equation}
+\Delta U=q+w, \qquad w=-p_{\mathrm{ext}}\Delta V
+\label{eq:thermo:first-law-work}
+\end{equation}
+Heat into the system is positive. Expansion work is negative for the system when \(\Delta V>0\).
+
+\subsubsection{Constant-pressure heat and enthalpy}
+\begin{equation}
+H=U+pV, \qquad q_p=\Delta H
+\label{eq:thermo:enthalpy-constant-pressure}
+\end{equation}
+At constant pressure, measured heat equals the enthalpy change. \(\Delta H<0\) is exothermic and \(\Delta H>0\) is endothermic.
+
+\subsubsection{Reaction enthalpy from standard formation enthalpies}
+\begin{equation}
+\boxed{\Delta H^\circ_{\mathrm{rxn}}=
+\sum_{\mathrm{prod}}\nu_i\Delta H^\circ_{\mathrm f,i}
+-\sum_{\mathrm{react}}\nu_i\Delta H^\circ_{\mathrm f,i}}
+\label{eq:thermo:reaction-enthalpy-formation}
+\end{equation}
+Use coefficients from the balanced equation. Elements in their standard state have \(\Delta H^\circ_{\mathrm f}=0\).
+
+\subsubsection{Hess's law and thermochemical scaling}
+\begin{equation}
+\Delta H^\circ_{\mathrm{overall}}=\sum_k \Delta H^\circ_k, \qquad
+\ce{2A -> 2B}: \Delta H=2\Delta H_{\ce{A -> B}}
+\label{eq:thermo:hess-scaling}
+\end{equation}
+Reversing a reaction changes the sign. Multiplying a reaction multiplies \(\Delta H\), \(\Delta S\), and \(\Delta G\).
+
+\subsubsection{Combustion enthalpy}
+\begin{equation}
+\Delta H^\circ_{\mathrm{comb}}
+=\sum\nu\Delta H^\circ_{\mathrm f}(\ce{CO2},\ce{H2O},\ldots)
+-\sum\nu\Delta H^\circ_{\mathrm f}(\text{fuel},\ce{O2})
+\label{eq:thermo:combustion-enthalpy}
+\end{equation}
+Balance complete combustion to \(\ce{CO2}\) and \(\ce{H2O}\) first. \(\Delta H^\circ_{\mathrm f}(\ce{O2(g)})=0\).
+
+\subsubsection{Reaction enthalpy from average bond enthalpies}
+\begin{equation}
+\Delta H_{\mathrm{rxn}}\approx
+\sum D(\text{bonds broken})-\sum D(\text{bonds formed})
+\label{eq:thermo:bond-enthalpy-estimate}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+\Delta H_{\mathrm{rxn}}&\approx
+-\sum \Delta H_{\mathrm{bond}}(\text{bonds broken})
++\sum \Delta H_{\mathrm{bond}}(\text{bonds formed})\\
+&\hspace{1cm}\text{when tabulated bond-formation values are negative}
+\end{aligned}
+\label{eq:thermo:signed-bond-data}
+\end{equation}
+Bond enthalpy data are usually positive bond-breaking magnitudes; if the supplied table instead prints negative bond-formation values, use Equation~\eqref{eq:thermo:signed-bond-data}. Count bonds from the balanced molecular reaction before applying either formula.
+
+\subsubsection{Entropy change from standard molar entropies}
+\begin{equation}
+\Delta S^\circ_{\mathrm{rxn}}=
+\sum_{\mathrm{prod}}\nu_iS^\circ_i-\sum_{\mathrm{react}}\nu_iS^\circ_i
+\label{eq:thermo:reaction-entropy}
+\end{equation}
+Use \(\mathrm{J\,mol^{-1}K^{-1}}\) for entropy and convert to \(\mathrm{kJ}\) if combining with \(\Delta H\).
+
+\subsubsection{Gibbs free energy and spontaneity}
+\begin{equation}
+\Delta G=\Delta H-T\Delta S
+\label{eq:thermo:gibbs}
+\end{equation}
+\(\Delta G<0\) is spontaneous, \(\Delta G=0\) is equilibrium, and \(\Delta G>0\) is nonspontaneous under the stated conditions.
+
+\subsubsection{Standard free energy and equilibrium constant}
+\begin{equation}
+\Delta G^\circ=-RT\ln K, \qquad K=e^{-\Delta G^\circ/RT}
+\label{eq:thermo:equilibrium-constant}
+\end{equation}
+\(K>1\) corresponds to \(\Delta G^\circ<0\). Use kelvin and consistent energy units.
+
+\subsubsection{Nonstandard Gibbs free energy}
+\begin{equation}
+\Delta G=\Delta G^\circ+RT\ln Q
+\label{eq:thermo:nonstandard-gibbs}
+\end{equation}
+The reaction direction under current conditions is determined by \(\Delta G\), not by \(\Delta G^\circ\) alone.
+
+\subsubsection{Spontaneity from signs and temperature}
+\referencetable{tab:thermo:spontaneity-signs}{Spontaneity predicted from signs of \(\Delta H\) and \(\Delta S\).}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+\(\Delta H\) & \(\Delta S\) & Spontaneity\\
+\midrule
+\(-\) & \(+\) & All \(T\)\\
+\(+\) & \(-\) & No \(T\)\\
+\(-\) & \(-\) & Low \(T\)\\
+\(+\) & \(+\) & High \(T\)\\
+\bottomrule
+\end{tabular}
+\begin{equation}
+T_{\mathrm{switch}}=\frac{\Delta H}{\Delta S}\qquad(\Delta G=0)
+\label{eq:thermo:switch-temperature}
+\end{equation}
+
+\subsection{Exam recipe: reaction enthalpy and Hess's law}
+\textbf{Use when:} the target is \(\Delta H^\circ_{\mathrm{rxn}}\) and formation enthalpies, combustion enthalpies, or thermochemical equations are provided.
+
+\textbf{Given / Find:} Given a balanced or balanceable reaction and thermochemical data; find \(\Delta H^\circ_{\mathrm{rxn}}\) for the target reaction as written.
+
+\textbf{Required references:} Equation~\eqref{eq:thermo:reaction-enthalpy-formation}, Equation~\eqref{eq:thermo:hess-scaling}, and, for combustion data, Equation~\eqref{eq:thermo:combustion-enthalpy}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Balance the target reaction and retain its requested direction and stoichiometric scale.
+    \item If \(\Delta H^\circ_{\mathrm f}\) values are given, insert the balanced coefficients in Equation~\eqref{eq:thermo:reaction-enthalpy-formation}.
+    \item If reaction equations are given, reverse or scale each equation until species cancel to the target; change or scale each \(\Delta H^\circ\) by Equation~\eqref{eq:thermo:hess-scaling}.
+    \item Add the adjusted enthalpy terms and report the value per target reaction as written; if heat per gram is requested, divide the molar reaction enthalpy by the mass of the specified substance consumed according to the balanced reaction.
+\end{enumerate}
+
+\textbf{Checks:} Standard-state elements contribute \(0\) in formation-data calculations; complete combustion is normally exothermic, so \(\Delta H^\circ_{\mathrm{comb}}<0\).
+
+\textbf{Common traps:} Omitting stoichiometric coefficients; reversing a reaction without reversing the sign; changing the target equation after calculating its enthalpy; reporting \(\mathrm{kJ\,mol^{-1}}\) when the question asks for \(\mathrm{kJ\,g^{-1}}\).
+
+\subsection{Exam recipe: reaction enthalpy from bond enthalpies}
+\textbf{Use when:} the problem supplies bond enthalpies or bond energies for reactant and product bonds instead of formation enthalpies.
+
+\textbf{Given / Find:} Given a molecular reaction and bond enthalpies; find an estimated \(\Delta H_{\mathrm{rxn}}\).
+
+\textbf{Required references:} Equations~\eqref{eq:thermo:bond-enthalpy-estimate} and \eqref{eq:thermo:signed-bond-data}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Balance the molecular reaction and draw or read enough structure to count each bond type broken in reactants and formed in products.
+    \item If the data are positive dissociation energies \(D\), multiply each broken- and formed-bond count by \(D\), then subtract the formed total from the broken total using Equation~\eqref{eq:thermo:bond-enthalpy-estimate}.
+    \item If the data are printed as negative bond-formation enthalpies, reverse the sign for bonds broken and retain the printed sign for bonds formed using Equation~\eqref{eq:thermo:signed-bond-data}.
+\end{enumerate}
+
+\textbf{Checks:} Forming more or stronger bonds than are broken should tend to make \(\Delta H\) negative; count all bonds after balancing.
+
+\textbf{Common traps:} Adding positive formed-bond dissociation energies instead of subtracting them; applying the positive-\(D\) formula directly to negative bond-formation entries.
+
+\subsection{Exam recipe: Gibbs spontaneity from signs and temperature}
+\textbf{Use when:} the question gives signs or numerical values of \(\Delta H\) and \(\Delta S\) and asks when the process is spontaneous.
+
+\textbf{Given / Find:} Given \(\Delta H\), \(\Delta S\), and possibly \(T\); find the sign of \(\Delta G\), the spontaneous temperature range, or the threshold temperature.
+
+\textbf{Required references:} Equation~\eqref{eq:thermo:gibbs}, Table~\ref{tab:thermo:spontaneity-signs}, and Equation~\eqref{eq:thermo:switch-temperature}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Convert \(\Delta S\) to the same energy unit basis as \(\Delta H\), normally \(\mathrm{kJ\,mol^{-1}K^{-1}}\).
+    \item For sign-only questions, select the matching row in Table~\ref{tab:thermo:spontaneity-signs}.
+    \item For a stated temperature, calculate \(\Delta G\) with Equation~\eqref{eq:thermo:gibbs} and classify by its sign.
+    \item If spontaneity can switch with temperature, calculate \(T_{\mathrm{switch}}\) from Equation~\eqref{eq:thermo:switch-temperature} and state the spontaneous side of the threshold.
+\end{enumerate}
+
+\textbf{Checks:} A computed threshold temperature must be in kelvin and physically meaningful; \(\Delta G=0\) at the threshold.
+
+\textbf{Common traps:} Mixing \(\mathrm{J}\) and \(\mathrm{kJ}\); interpreting \(\Delta G>0\) as spontaneous; using a threshold for the sign combinations that never switch.
+
+\subsection{Exam recipe: equilibrium constant from thermodynamic data}
+\textbf{Use when:} the target is \(K\) and standard Gibbs data or standard enthalpy and entropy data are supplied.
+
+\textbf{Given / Find:} Given \(T\) and either \(\Delta G^\circ_{\mathrm{rxn}}\) or data for \(\Delta H^\circ_{\mathrm{rxn}}\) and \(\Delta S^\circ_{\mathrm{rxn}}\); find the dimensionless equilibrium constant \(K\).
+
+\textbf{Required references:} Equation~\eqref{eq:thermo:gibbs}, Equation~\eqref{eq:thermo:reaction-entropy}, Equation~\eqref{eq:thermo:reaction-enthalpy-formation}, and Equation~\eqref{eq:thermo:equilibrium-constant}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Balance the target reaction and calculate any missing \(\Delta H^\circ_{\mathrm{rxn}}\) or \(\Delta S^\circ_{\mathrm{rxn}}\) using the balanced coefficients.
+    \item If \(\Delta G^\circ_{\mathrm{rxn}}\) is not given, calculate it at the stated \(T\) from Equation~\eqref{eq:thermo:gibbs}.
+    \item Convert \(\Delta G^\circ_{\mathrm{rxn}}\) to \(\mathrm{J\,mol^{-1}}\) when using \(R\) in \(\mathrm{J\,mol^{-1}K^{-1}}\), and convert \(T\) to kelvin.
+    \item Calculate \(K=e^{-\Delta G^\circ/RT}\) from Equation~\eqref{eq:thermo:equilibrium-constant}.
+\end{enumerate}
+
+\textbf{Checks:} \(\Delta G^\circ<0\) must give \(K>1\), and \(\Delta G^\circ>0\) must give \(K<1\).
+
+\textbf{Common traps:} Using Celsius; missing the minus sign in the exponent; mixing energy units; using \(Q\) when the request is the standard-state equilibrium constant.

@@ -1,54 +1,38 @@
-\section*{Trees, ensembles and neural networks}
+\section*{Trees, ensembles, ANN}
 \subsection*{Decision tree split}
-\textbf{Purpose:} Divide input space into regions with homogeneous class labels or responses.
 \[
-I_{\rm error}=1-\max_cp_c,\quad
-I_{\rm Gini}=1-\sum_cp_c^2,
+\fid[eq:tree-imp]\begin{aligned}
+I_{\rm error}&=1-\max_cp_c,&
+I_{\rm Gini}&=1-\sum_cp_c^2,\\
+I_{\rm ent}&=-\sum_cp_c\log_2p_c,&
+\operatorname{gain}&=I(\text{parent})-\sum_v\frac{N_v}{N}I(\text{child }v).
+\end{aligned}
 \]
-\[
-I_{\rm ent}=-\sum_cp_c\log_2p_c,
-\]
-\[
-\operatorname{gain}=I(\text{parent})-\sum_v\frac{N_v}{N}I(\text{child }v).
-\]
-\textbf{Symbols:} $I_{\rm error},I_{\rm Gini},I_{\rm ent}$ = node impurity measures; $p_c$ = class fraction in a node; $v$ indexes children; $N_v/N$ = child size fraction; gain = impurity removed by a split.
-
-\textbf{How to read a tree:} follow threshold branches from root to leaf; a classification leaf returns its majority/class distribution, a regression leaf its response average. Splits give axis-aligned regions in a boundary plot.
-
-\textbf{Do this:} count labels in each candidate child; compute weighted child impurity; use the split with largest gain.
+\textbf{Do this:} for each candidate split, count class labels in every node; compute $p_c=n_c/N_{\rm node}$; insert $p_c$ in the chosen impurity in \fref{eq:tree-imp}; multiply each child impurity by $N_v/N$; choose the split with largest gain. Read a tree by following thresholds from root to leaf; classification leaf returns majority/class fractions, regression leaf returns mean response.
+\textbf{Regression tree:} replace class fractions by response variance/SSE inside each node if the task is numeric prediction; the chosen split is the one giving the lowest weighted child error or largest error reduction.
 
 \subsection*{AdaBoost}
-\textbf{Purpose:} Combine weak classifiers while emphasizing observations missed in previous rounds.
 \[
-\epsilon_t=\sum_iq_i^{(t)}\ind[h_t(x_i)\ne y_i],\qquad
-\alpha_t=\frac12\log\frac{1-\epsilon_t}{\epsilon_t},
+\fid[eq:adaboost]\begin{aligned}
+\epsilon_t&=\sum_iq_i^{(t)}\ind[h_t(x_i)\ne y_i],&
+\alpha_t&=\frac12\log\frac{1-\epsilon_t}{\epsilon_t},\\
+q_i^{(t+1)}&\propto q_i^{(t)}
+\exp\!\big(\alpha_t\ind[h_t(x_i)\ne y_i]\big),&
+H(x)&=\operatorname{sign}\sum_t\alpha_th_t(x).
+\end{aligned}
 \]
-\[
-q_i^{(t+1)}\propto q_i^{(t)}
-\exp\!\big(\alpha_t\ind[h_t(x_i)\ne y_i]\big),
-\]
-\[
-H(x)=\operatorname{sign}\sum_t\alpha_th_t(x).
-\]
-\textbf{Symbols/means:} $t$ = boosting round; $q_i^{(t)}$ = weight of row $i$; $h_t(x)$ = weak classifier returning a signed class; $\epsilon_t$ = weighted error; $\alpha_t$ = vote weight; $H(x)$ = final signed class. Missed observations receive more relative weight next.
-
-\textbf{Do this:} compute $\epsilon_t$ from current weights; find $\alpha_t$; update and normalize observation weights; combine signed votes.
+\textbf{Do this:} use signed labels/classes for $h_t$. In \fref{eq:adaboost}, add current weights $q_i^{(t)}$ only for misclassified rows to get $\epsilon_t$; compute $\alpha_t$; multiply each row weight by the shown factor; divide all new weights by their sum so they add to $1$; final class is the sign of weighted votes.
 
 \subsection*{Neural-network forward pass}
-\textbf{Purpose:} Form nonlinear predictions by transforming weighted sums through hidden units.
 \[
-a_j=w_{0j}^{(1)}+\sum_mw_{mj}^{(1)}x_m,\quad
-h_j=g(a_j),\quad
-\hat y=w_0^{(2)}+\sum_jw_j^{(2)}h_j .
+\fid[eq:ann]\begin{aligned}
+a_j&=w_{0j}^{(1)}+\sum_mw_{mj}^{(1)}x_m,\\
+h_j&=g(a_j),\\
+\hat y&=w_0^{(2)}+\sum_jw_j^{(2)}h_j,\\
+\operatorname{ReLU}(a)&=\max(0,a),\quad
+\sigma(a)=\frac1{1+e^{-a}},\quad
+\tanh(a)\in[-1,1].
+\end{aligned}
 \]
-\[
-\operatorname{ReLU}(a)=\max(0,a),\qquad \tanh(a)\in[-1,1],
-\]
-\[
-\sigma(a)=\frac1{1+e^{-a}}\in(0,1).
-\]
-\textbf{Symbols:} $a_j$ = pre-activation of hidden unit $j$; $g$ = activation; $h_j$ = hidden output; $w_{mj}^{(1)}$ = input-to-hidden weight; $w_j^{(2)}$ = hidden-to-output weight; $w_{0j}^{(1)},w_0^{(2)}$ = biases; $\hat y$ = network output; ReLU, $\tanh,\sigma$ = shown activations.
-
-\textbf{How to read a diagram/table:} gather incoming weights for each hidden unit first; apply its activation; then use outgoing weights to calculate prediction or final class probability.
-
-\textbf{Do this:} calculate all $a_j$; apply $g$; calculate output; apply final sigmoid/threshold only when specified for classification.
+\textbf{Do this:} from a diagram/table, gather all incoming weights for hidden unit $j$; compute $a_j$ with \fref{eq:ann}; apply the stated activation to get $h_j$; multiply hidden outputs by outgoing weights and add output bias; apply final sigmoid/threshold only if the task says classification probability/class.
+\textbf{Reading weights:} a large positive incoming weight makes that input increase the hidden activation; a large negative weight makes it decrease. Bias is added even when all inputs are zero.

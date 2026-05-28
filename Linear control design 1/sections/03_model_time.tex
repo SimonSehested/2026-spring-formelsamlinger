@@ -12,20 +12,42 @@ Input/output-definition, fysiske parametre, ODE-led og begyndelsesbetingelser.
 
 \paragraph{Metode}
 \begin{enumerate}
-\item Skriv fysiske relationer med korrekte fortegn, fx Newton eller Kirchhoff.
-\item Linearisér kun hvis modellen er ikke-lineær og angiv arbejdspunkt.
-\item Brug nul begyndelsesbetingelser: \(\mathcal{L}\{y^{(n)}\}=s^nY(s)\).
-\item Saml \(Y(s)/U(s)=G(s)\), faktoriser og bestem poler/zeros.
-\item Klassificer stabilitet før DC-gain eller slutværdi beregnes.
+\item Vælg positiv retning for hvert signal og skriv den på figuren eller i teksten.
+      For mekanik: tegn free-body diagram og brug \(\sum F=m\ddot x\) i den valgte
+      positive retning. For kredsløb: vælg strømretning og spændingspolariteter, og brug
+      KCL/KVL med samme fortegn i alle led.
+\item Skriv én ligning pr. fysisk lov eller pr. opgivet ODE. Hvis opgaven allerede giver
+      en lineær ODE, må du ikke kalde den ikke-lineær; gå direkte til Laplace-trinnet.
+      Hvis et led er ikke-lineært, vælg arbejdspunkt \((x_0,u_0)\), skriv
+      \(x=x_0+\tilde x\), \(u=u_0+\tilde u\), behold konstant- og førsteordensled fra
+      Taylor/Jacobian, og drop produkter som \(\tilde x\tilde u\).
+\item Sæt initialbetingelser til nul, medmindre opgaven udtrykkeligt spørger om dem.
+      Erstat derefter hvert \(y^{(n)}(t)\) med \(s^nY(s)\), hvert \(u^{(n)}(t)\) med
+      \(s^nU(s)\), og saml alle \(Y\)-led på venstre side og \(U\)-led på højre side.
+\item Dan transferfunktionen ved at dividere med inputtet: \(G(s)=Y(s)/U(s)\) i
+      \eqref{eq:transfer-function-dc}. Poler er rødder i nævneren efter fælles faktorer
+      er forkortet; zeros er rødder i tælleren.
+\item Klassificer stabilitet før DC-gain eller slutværdi: alle poler skal ligge strengt
+      i \(\LHP\). Hvis der er en RHP-pol, en gentagen imaginæraksepol eller en origo-pol
+      i den lukkede respons, må du ikke bruge en endelig slutværdi.
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:transfer-function-dc}
 G(s)=\frac{Y(s)}{U(s)}=\frac{b_ms^m+\cdots+b_0}{a_ns^n+\cdots+a_0},
 \qquad K_{\mathrm{ss}}=\lim_{s\to0}G(s).
-\]
+\end{equation}
 Alle poler strengt i \(\LHP\) giver asymptotisk stabil rational kontinuert model.
 En RHP-pol eller gentagen pol på imaginæraksen er ustabil i kursets betydning.
+\begin{equation}
+\label{eq:first-final-value}
+y(0^+)=\lim_{s\to\infty}sY(s),\qquad
+y(\infty)=\lim_{s\to0}sY(s).
+\end{equation}
+Initial value theorem kræver at signalet ikke har impuls ved \(t=0\). Final value theorem
+kræver at alle poler i \(sY(s)\), bortset fra en simpel pol i origo fra et stepinput,
+ligger strengt i \(\LHP\).
 
 \paragraph{Symboler}
 \(Y,U\) er Laplace-transformer; \(p\) og \(z\) er nævner- og tællerrødder;
@@ -37,7 +59,9 @@ forudsætter nul begyndelsesbetingelser, medmindre initialled håndteres eksplic
 
 \paragraph{Hurtigtjek}
 Nævnerens grad skal være mindst tællerens for en proper fysisk standardplant; kontrollér
-origo-poler før du skriver en endelig DC-gain.
+origo-poler før du skriver en endelig DC-gain. Ved et input som \(u(t)=e^{-at}+\theta(t)\)
+skal du først skrive \(U(s)=1/(s+a)+1/s\), derefter \(Y(s)=G(s)U(s)\), og først så bruge
+\eqref{eq:first-final-value}.
 
 \paragraph{Typiske fælder}
 At kalde en lineær ODE ikke-lineær; at overse \(s^2\) i F21 Q12; at læse et diagram uden
@@ -67,22 +91,46 @@ Closed-loop-transferfunktion eller nævner, stepstørrelse og performancekrav.
 
 \paragraph{Metode}
 \begin{enumerate}
-\item For første orden identificeres \(K_{\mathrm{ss}}\) og \(\tau\).
-\item For anden orden normaliseres nævneren og sammenlignes med standardformen.
-\item Beregn \(\omega_n,\zeta\) og overshoot; løs eventuelt uligheden for gain.
-\item Kontrollér om systemet faktisk domineres af denne standardform.
+\item For første orden: skriv transferfunktionen som \(K/(\tau s+1)\). Hvis nævneren
+      er \(as+b\), divider med \(b\), så formen bliver \((a/b)s+1\); dermed er
+      \(\tau=a/b\), og DC-gain findes med \eqref{eq:transfer-function-dc}.
+\item For anden orden: divider nævneren med koefficienten foran \(s^2\), så den bliver
+      \(s^2+a_1s+a_0\). Match derefter mod nævneren i \eqref{eq:second-order-step}:
+      \(\omega_n=\sqrt{a_0}\) og \(\zeta=a_1/(2\omega_n)\).
+\item Beregn overshoot med \eqref{eq:second-order-step}. Hvis kravet er fx højst
+      \(12\%\), brug \(M_p\leq0.12\), ikke \(12\). Hvis \(K\) indgår i \(a_0\) eller
+      \(a_1\), indsæt udtrykket for \(\zeta(K)\) og løs uligheden.
+\item Hvis opgaven spørger om settling inden for \(1\%\) eller et andet bånd, brug
+      eksponentialreglen i \eqref{eq:settling-band}. For en reel dominerende pol
+      \(p_{\mathrm{dom}}\) er \(\tau_{\mathrm{dom}}=-1/p_{\mathrm{dom}}\). For et
+      underdæmpet polpar er envelope-tidskonstanten \(1/(\zeta\omega_n)\).
+\item Kontrollér at standardformen må bruges. For ren første-/andenorden er den eksakt.
+      For højere orden kræves at ekstra poler er mindst ca. 5 gange længere mod venstre
+      end de dominerende poler, eller at opgaven eksplicit beder om en
+      dominant-pole-approksimation.
 \end{enumerate}
 
 \paragraph{Formler}
-\[
+\begin{equation}
+\label{eq:first-order-step}
 G_1(s)=\frac{K_{\mathrm{ss}}}{\tau s+1},\quad
 y(t)=h_0K_{\mathrm{ss}}(1-e^{-t/\tau}),\quad \omega_b=\frac1\tau .
-\]
-\[
+\end{equation}
+\begin{equation}
+\label{eq:second-order-step}
 G_2(s)=\frac{\omega_n^2}{s^2+2\zeta\omega_ns+\omega_n^2},\qquad
 M_p=e^{-\pi\zeta/\sqrt{1-\zeta^2}}\ (0<\zeta<1),\quad
 t_s\approx\frac4{\zeta\omega_n}.
-\]
+\end{equation}
+\begin{equation}
+\label{eq:settling-band}
+|e^{-t/\tau}|\leq \varepsilon
+\quad\Rightarrow\quad
+t_s(\varepsilon)\approx -\tau\ln(\varepsilon).
+\end{equation}
+For \(2\%\) giver \(-\ln(0.02)\approx3.91\), som afrundes til \(4\tau\). For \(1\%\)
+giver \(-\ln(0.01)\approx4.61\), så et langsomt førsteordensled med
+\(\tau=5\) s har \(t_s\approx23\) s, dvs. nærmeste eksamenssvar kan være 25 s.
 
 \paragraph{Symboler}
 \(\tau\) [s] er tidskonstant; \(\omega_n\) [rad/s] naturlig frekvens;

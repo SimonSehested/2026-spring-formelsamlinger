@@ -1,0 +1,188 @@
+\section{Bonding, Lewis Structures, Formal Charge, and VSEPR}
+
+\subsection{Ctrl+F keywords: Lewis, formal charge, resonance, VSEPR, bond angle, planar, polarity, dipole, hybridization}
+Use for drawing or checking Lewis structures, choosing resonance forms, molecular geometry, bond angles, polarity, and planar/non-planar questions.
+
+\subsection{Symbols and notation}
+\referencetable{tab:bonding:symbols}{Bonding, Lewis, and VSEPR symbols.}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+N_{\mathrm{val}},\ q & Total number of valence electrons and overall ionic charge.\\
+\mathrm{FC},\ V & Formal charge and valence-electron count of the selected atom.\\
+N_{\mathrm{nonbonding}},\ N_{\mathrm{bonding}} & Nonbonding and bonding electrons assigned in a Lewis structure.\\
+\mathrm{SN} & Steric number: bonded atoms plus lone pairs on the central atom.\\
+\vec{\mu}_i,\ \vec{\mu}_{\mathrm{mol}},\ i & Individual bond dipole, vector sum for molecular dipole, and bond index in the sum.\\
+\chi,\ \Delta\chi & Electronegativity and electronegativity difference.\\
+N_{\mathrm{bonding}},\ N_{\mathrm{antibonding}} & Electrons in bonding and antibonding molecular orbitals in the bond-order formula.\\
+\bottomrule
+\end{tabular}
+
+\subsection{Lewis structures}
+
+\subsubsection{Valence electron count}
+\begin{equation}
+\label{eq:bonding:valence-electrons}
+N_{\mathrm{val}}=\sum_i N_{\mathrm{val},i}-q
+\end{equation}
+For an ion, subtract positive charge and add negative charge. Total Lewis electrons must equal \(N_{\mathrm{val}}\).
+
+\subsubsection{Formal charge}
+\begin{equation}
+\label{eq:bonding:formal-charge}
+\mathrm{FC}=V-\left(N_{\mathrm{nonbonding}}+\frac12N_{\mathrm{bonding}}\right)
+\end{equation}
+Preferred structures usually minimize formal charges and place negative formal charge on more electronegative atoms.
+
+\subsubsection{Resonance structures}
+\begin{equation}
+\label{eq:bonding:resonance-rule}
+\text{resonance forms differ in electron placement, not atom placement}
+\end{equation}
+Equivalent resonance forms indicate delocalization and equalized bond lengths. Do not move nuclei when drawing resonance.
+
+\subsubsection{Octet, expanded octet, electron-deficient exceptions}
+\begin{equation}
+\label{eq:bonding:octet-rule}
+\text{period 2 atoms normally obey octet}, \qquad
+\text{period }3+\text{ may expand octet}
+\end{equation}
+Hydrogen has a duet. Boron can be electron deficient; sulfur, phosphorus, iodine, and xenon can appear hypervalent in course examples.
+
+\subsection{Exam recipe: Lewis structure and formal charge}
+\textbf{Use when:} the problem asks for a valid Lewis structure, resonance contributors, formal charges, nitrate, or oxalate.
+
+\textbf{Given / Find:} atom identities and charge \(q\); find electron placement, resonance forms, and formal charges.
+
+\textbf{Required references:} Equation~\ref{eq:bonding:valence-electrons}, Equation~\ref{eq:bonding:formal-charge}, Equation~\ref{eq:bonding:resonance-rule}, and Equation~\ref{eq:bonding:octet-rule}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Compute \(N_{\mathrm{val}}\) from Equation~\ref{eq:bonding:valence-electrons}; reserve exactly that many electrons.
+    \item Choose a skeleton: hydrogen is terminal; otherwise put the least electronegative suitable atom centrally.
+    \item Draw single bonds, complete terminal-atom octets or hydrogen duets, then place remaining electrons centrally.
+    \item If a second-period central atom is electron deficient, convert adjacent lone pairs to multiple bonds without exceeding its octet.
+    \item Calculate \(\mathrm{FC}\) on every atom using Equation~\ref{eq:bonding:formal-charge}; verify that the sum is \(q\).
+    \item Draw equivalent electron-placement alternatives as resonance forms and select contributors with minimized, chemically sensible formal charges.
+\end{enumerate}
+
+\textbf{Checks:} electrons drawn equal \(N_{\mathrm{val}}\); formal charges sum to \(q\); no second-period atom exceeds an octet.
+
+\textbf{Common traps:} moving atoms between resonance forms; ignoring ionic charge in the count; expanding a second-period octet.
+
+\subsection{VSEPR geometry}
+
+\subsubsection{Steric number and electron domains}
+\begin{equation}
+\label{eq:bonding:steric-number}
+\mathrm{SN}=\#\text{bonded atoms}+\#\text{lone pairs on central atom}
+\end{equation}
+Multiple bonds count as one electron domain in VSEPR. Lone pairs compress bond angles.
+
+\subsubsection{Common VSEPR geometries and bond angles}
+\referencetable{tab:bonding:vsepr-geometries}{Common central-atom VSEPR geometries and ideal or approximate bond angles.}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\(\mathrm{SN}\) & Lone pairs & Molecular geometry & Bond angle\\
+\midrule
+\(2\) & \(0\) & linear & \(180^\circ\)\\
+\(3\) & \(0\) & trigonal planar & \(120^\circ\)\\
+\(4\) & \(0\) & tetrahedral & \(109.5^\circ\)\\
+\(4\) & \(1\) & trigonal pyramidal & \(\approx107^\circ\)\\
+\(4\) & \(2\) & bent & \(\approx105^\circ\)\\
+\(5\) & \(0\) & trigonal bipyramidal & \(90^\circ,120^\circ\)\\
+\(6\) & \(0\) & octahedral & \(90^\circ\)\\
+\(6\) & \(1\) & square pyramidal & \(\approx90^\circ\)\\
+\(6\) & \(2\) & square planar & \(90^\circ\)\\
+\bottomrule
+\end{tabular}
+Exam wording often asks ``planar'', ``non-planar'', ``bond angle'', ``pyramidal'', or ``bent''.
+
+\subsubsection{Planar molecule recognition}
+\begin{equation}
+\label{eq:bonding:planarity-rule}
+\text{linear, trigonal planar, square planar, and many aromatic rings are planar}
+\end{equation}
+Tetrahedral and trigonal pyramidal centers are non-planar around that atom. A molecule is planar only when all atoms can lie in one plane.
+
+\subsubsection{Molecular polarity}
+\begin{equation}
+\label{eq:bonding:molecular-dipole}
+\vec{\mu}_{\mathrm{mol}}=\sum_i\vec{\mu}_i
+\end{equation}
+Polar bonds can cancel in symmetric geometries. Lone pairs often prevent cancellation and make the molecule polar.
+
+\subsection{Exam recipe: molecular geometry, bond angle, and planarity}
+\textbf{Use when:} the problem asks for VSEPR shape, approximate bond angle, planar/non-planar, or central-atom geometry.
+
+\textbf{Given / Find:} a molecular formula or Lewis structure; find geometry, requested angle, and planarity.
+
+\textbf{Required references:} Equation~\ref{eq:bonding:steric-number}, Table~\ref{tab:bonding:vsepr-geometries}, and Equation~\ref{eq:bonding:planarity-rule}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Draw or verify the Lewis structure, including central-atom lone pairs.
+    \item Count bonded atoms and lone pairs around each relevant center; compute \(\mathrm{SN}\) by Equation~\ref{eq:bonding:steric-number}.
+    \item Match \(\mathrm{SN}\) and lone-pair count to Table~\ref{tab:bonding:vsepr-geometries}.
+    \item Report the listed angle; state that lone pairs compress an ideal angle where applicable.
+    \item Test planarity from the local geometries: one tetrahedral or trigonal-pyramidal arrangement containing required atoms makes the molecule non-planar.
+\end{enumerate}
+
+\textbf{Checks:} multiple bonds were counted as one domain; the stated geometry matches the lone-pair count; the planarity claim concerns all atoms requested.
+
+\textbf{Common traps:} counting bond order as domains; reporting electron-domain geometry instead of molecular geometry; calling a molecule planar from one planar fragment.
+
+\subsection{Exam recipe: molecular polarity}
+\textbf{Use when:} the problem asks for polar/nonpolar, dipole moment, bond-dipole cancellation, or polarity ranking.
+
+\textbf{Given / Find:} bond identities and molecular structure; find whether \(\vec{\mu}_{\mathrm{mol}}\) is zero or nonzero.
+
+\textbf{Required references:} Equation~\ref{eq:bonding:molecular-dipole}, Equation~\ref{eq:bonding:bond-polarity}, and Table~\ref{tab:bonding:vsepr-geometries}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Identify polar bonds by electronegativity difference using Equation~\ref{eq:bonding:bond-polarity}.
+    \item Obtain the three-dimensional molecular geometry from the Lewis structure and VSEPR table.
+    \item Draw bond-dipole directions toward more electronegative atoms; include asymmetry caused by substituent changes or lone pairs.
+    \item Add vectors by symmetry using Equation~\ref{eq:bonding:molecular-dipole}: complete cancellation means nonpolar; a residual vector means polar.
+\end{enumerate}
+
+\textbf{Checks:} a molecule with no polar bonds is nonpolar; equal symmetrically arranged dipoles cancel; an unsymmetrical arrangement usually does not.
+
+\textbf{Common traps:} deciding molecular polarity from a single bond; ignoring shape or lone pairs; assuming every symmetric-looking drawing is three-dimensionally symmetric.
+
+\subsection{Bonding formulas}
+
+\subsubsection{Bond polarity from electronegativity}
+\begin{equation}
+\label{eq:bonding:bond-polarity}
+\Delta\chi=|\chi_A-\chi_B|
+\end{equation}
+Larger electronegativity difference gives a more polar bond. Geometry decides whether the whole molecule is polar.
+
+\subsection{Exam recipe: ionic versus covalent bond character}
+\textbf{Use when:} the task asks which bond has greater ionic character, greater covalent character, or the smallest/largest polarity.
+
+\textbf{Given / Find:} Given several bonded atom pairs and electronegativity values or periodic positions; rank bond character.
+
+\textbf{Required references:} Equation~\eqref{eq:bonding:bond-polarity}; use supplied electronegativity values when provided.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item For each bonded pair, obtain \(\chi_A\) and \(\chi_B\) from the provided table or accepted periodic trend data.
+    \item Calculate \(\Delta\chi=|\chi_A-\chi_B|\) for every pair using Equation~\eqref{eq:bonding:bond-polarity}.
+    \item Rank increasing ionic character by increasing \(\Delta\chi\); reverse this ranking for increasing covalent character.
+    \item For a bond between identical atoms, set \(\Delta\chi=0\) and classify it as the most purely covalent option in that comparison.
+\end{enumerate}
+
+\textbf{Checks:} The ranking is based on a bond, not whole-molecule polarity; larger \(\Delta\chi\) cannot be labelled more covalent in the same set.
+
+\textbf{Common traps:} using molecular shape to rank bond character; reversing the covalent ranking; overlooking that a homonuclear bond has zero electronegativity difference.
+
+\subsubsection{Molecular orbital bond order}
+\begin{equation}
+\label{eq:bonding:mo-bond-order}
+\text{bond order}=\frac{N_{\mathrm{bonding}}-N_{\mathrm{antibonding}}}{2}
+\end{equation}
+Higher bond order usually means shorter, stronger bonds. Zero bond order predicts no stable bond in simple MO treatment.

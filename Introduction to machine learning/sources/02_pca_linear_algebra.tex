@@ -1,47 +1,49 @@
-\section*{PCA and SVD}
-\subsection*{Components, scores and reconstruction}
-\textbf{Purpose:} Replace correlated attributes by orthogonal directions ordered by variation.
+\section*{PCA, SVD, vectors}
+\subsection*{Components, scores, reconstruction}
+\textbf{Purpose:} replace correlated attributes by orthogonal axes ordered by variance.
 \[
-\tilde X=USV^\top,\qquad V=[v_1,\ldots,v_M],
+\fid[eq:pca-svd]\begin{aligned}
+\tilde X&=USV^\top,& V&=[v_1,\ldots,v_M],\\
+Z&=\tilde XV=US,& z_{ik}&=\tilde x_i^\top v_k,\\
+z_i&=\tilde x_iV_K,& \hat{\tilde x}_i&=z_iV_K^\top .
+\end{aligned}
 \]
-\[
-Z=\tilde XV=US,\qquad z_{ik}=\tilde x_i^\top v_k.
-\]
-\[
-z_i=\tilde x_iV_K,\qquad \hat{\tilde x}_i=z_iV_K^\top .
-\]
-\textbf{Symbols:} $U$ = left singular-vector matrix; $S$ = diagonal singular-value matrix; $V$ = loading directions; column $v_k$ is PC $k$; $Z$ = score matrix; $z_i$ = PC coordinates of row $i$; $V_K$ retains $K$ PCs; $\hat{\tilde x}_i$ = reconstructed standardized row; $s_k$ = singular value.
-
-\textbf{How to read it:} large $|v_{mk}|$ means attribute $m$ defines PC $k$ strongly. A positive score lies in the direction of positive loadings. Reversing all signs on one PC changes neither the PCA representation nor distances.
+\textbf{Symbols:} columns of $V$ are loading vectors; $v_k$ is PC $k$; $Z$ contains scores; $s_k$ is singular value; $V_K$ keeps the first $K$ PCs.
+\textbf{How to read it:} large $|v_{mk}|$ means attribute $m$ strongly defines PC $k$; a positive score means the row points in the direction of positive loadings. If all signs in one PC flip, interpretation flips but distances and variance do not change.
+\textbf{Projection recipe:} use \fref{eq:pca-svd}; standardize row values first if needed; take column $v_k$; multiply matching entries $\tilde x_{im}v_{mk}$; add them to get score $z_{ik}$.
 
 \subsection*{Explained variance}
 \[
-\lambda_k=\frac{s_k^2}{N-1},\quad
-\operatorname{EVR}_k=\frac{s_k^2}{\sum_j s_j^2},\quad
-\operatorname{cumEVR}(K)=\frac{\sum_{k=1}^Ks_k^2}{\sum_js_j^2}.
+\fid[eq:pca-evr]\begin{aligned}
+\lambda_k&=\frac{s_k^2}{N-1},&
+\operatorname{EVR}_k&=\frac{s_k^2}{\sum_j s_j^2},\\
+\operatorname{cumEVR}(K)&=\frac{\sum_{k=1}^Ks_k^2}{\sum_j s_j^2}.&
+\end{aligned}
 \]
-\textbf{Symbols/means:} $\lambda_k$ = variance along PC $k$; $\operatorname{EVR}_k$ = its fraction of total variance; $\operatorname{cumEVR}(K)$ = fraction retained by the first $K$ PCs.
+\textbf{Do this:} use \fref{eq:pca-evr}: square each singular value; divide by the total squared singular values; accumulate from PC1 upward; choose the smallest $K$ whose cumulative value reaches the required fraction.
 
-\textbf{Do this:} square singular values; divide by their total; accumulate in PC order; choose the smallest $K$ reaching the target.
+\subsection*{Interpreting a PC in words}
+\textbf{Do this:} choose one PC column in $V$ from \fref{eq:pca-svd}; rank variables by largest $|v_{mk}|$; describe the positive side using variables with positive loadings and the negative side using variables with negative loadings. If two variables have same sign, high scores tend to have both high; opposite signs mean the PC contrasts them.
+\textbf{For a score:} compute $z_{ik}$ with \fref{eq:pca-svd}; if $z_{ik}$ is large positive, read row $i$ using the positive-loading variables; if large negative, read it using the negative-loading variables.
 
 \subsection*{Read PCA output and plots}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-\textbf{Object} & \textbf{Interpretation}\\ \midrule
-Loading column $v_k$ & Read down the column: sign and magnitude connect original attributes to PC $k$.\\
-Score plot & Each point is one observation; nearby points have similar retained attribute profiles.\\
-Loading plot & Arrows/points are attributes; similar direction means similar contribution pattern.\\
-Biplot & Observations projected along a variable direction tend to have high values of that variable.\\
+\textbf{Object} & \textbf{How to solve/read}\\ \midrule
+Loading column $v_k$ & Read down column $k$; largest absolute entries name variables defining PC $k$; sign tells positive/negative direction.\\
+Score plot & Each point is one row in PC coordinates from \fref{eq:pca-svd}; nearby points have similar standardized profiles.\\
+Loading plot & Points/arrows are attributes; same direction = similar contribution pattern; opposite direction = negative relation in PC plane.\\
+Biplot & Project an observation along a variable arrow; far in arrow direction means high value for that variable after scaling.\\
 \bottomrule
 \end{tabularx}
-\textbf{Do this for a projection:} take the requested column of $V$; multiply corresponding standardized attribute values; add terms to obtain $z_{ik}$.
+\textbf{Choosing $K$:} if the task says ``at least $90\%$ variance'', use cumulative EVR in \fref{eq:pca-evr}. If it asks for a 2D plot, use PC1 and PC2 even if cumulative EVR is below the target, then state how much variance the two axes explain.
 
 \subsection*{Norm and cosine}
 \[
-\|x\|_2=\sqrt{x^\top x},\qquad
-\|X\|_F^2=\sum_{ij}x_{ij}^2=\sum_ks_k^2,
+\fid[eq:norm-cos]\begin{aligned}
+\|x\|_2&=\sqrt{x^\top x},&
+\cos(x,y)&=\frac{x^\top y}{\|x\|_2\|y\|_2},\\
+\|X\|_F^2&=\sum_{ij}x_{ij}^2=\sum_ks_k^2.&
+\end{aligned}
 \]
-\[
-\cos(x,y)=\frac{x^\top y}{\|x\|\|y\|}.
-\]
-\textbf{Symbols/means:} $\|\cdot\|_2$ = vector length; $\|X\|_F$ = Frobenius length of all matrix entries; $x^\top y$ = dot product; $\cos(x,y)$ reads similar direction, while Euclidean distance also responds to magnitude.
+\textbf{Do this:} for \fref{eq:norm-cos}, multiply matching vector entries and sum for $x^\top y$; divide by both vector lengths. Cosine near $1$ means same direction; Euclidean distance also changes when vector lengths change.

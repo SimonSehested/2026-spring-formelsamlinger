@@ -1,0 +1,276 @@
+\section{Acids, Bases, Buffers, Titration, and Solubility Products}
+
+\subsection{Ctrl+F keywords: pH, pOH, weak acid, \(K_a\), \(pK_a\), buffer, Henderson, phosphate, titration, \(K_{sp}\), common ion, oploeselighed}
+Use for acid strength, pH calculations, buffers, phosphate systems, titration equivalence, solubility, precipitation, and common-ion tasks.
+
+\subsection{Symbols and notation}
+\referencetable{tab:acid:symbols}{Acid-base and solubility symbols}
+\begin{tabular}{@{}>{$}l<{$} p{10.8cm}@{}}
+\toprule
+\text{Symbol} & \text{Meaning and usage}\\
+\midrule
+K_w,\ K_a,\ K_b & Water autoionization, acid dissociation, and base dissociation constants.\\
+\mathrm{pH},\ \mathrm{pOH},\ pK_a,\ pK_b & Negative base-10 logarithms of hydronium, hydroxide, \(K_a\), and \(K_b\).\\
+\ce{HA},\ \ce{A-},\ \ce{B},\ \ce{HB+} & Weak acid/conjugate base and weak base/conjugate acid notation.\\
+c_0,\ x & Initial analytical concentration and amount dissociated per volume in an equilibrium setup.\\
+K_{sp},\ Q_{sp},\ s & Solubility-product constant, current ion product, and molar solubility.\\
+\mathrm M,\ \mathrm X & Generic cation/metal and anion in a sparingly soluble salt.\\
+a,\ b,\ m,\ x & Stoichiometric subscripts or ionic charges in \(\mathrm M_a\mathrm X_b\); identified by context.\\
+\bottomrule
+\end{tabular}
+
+\subsection{pH and acid-base constants}
+
+\subsubsection{Water, pH, and pOH}
+\begin{equation}
+K_w=[\ce{H3O+}][\ce{OH-}]=1.0\times10^{-14}, \qquad
+\mathrm{pH}=-\log[\ce{H3O+}], \qquad
+\mathrm{pOH}=-\log[\ce{OH-}], \qquad
+\mathrm{pH}+\mathrm{pOH}=14
+\label{eq:acid:ph-poh-water}
+\end{equation}
+At \(298\,\mathrm K\), neutral water has pH \(7\). A decrease of one pH unit means ten times larger \([\ce{H3O+}]\).
+
+\subsubsection{Strong acid and strong base pH}
+\begin{equation}
+[\ce{H3O+}]\approx \nu_{\ce{H+}}c_{\mathrm{acid}}, \qquad
+[\ce{OH-}]\approx \nu_{\ce{OH-}}c_{\mathrm{base}}
+\label{eq:acid:strong-acid-base}
+\end{equation}
+Strong acids and bases are treated as fully dissociated. Include stoichiometric coefficients; for example, \(\ce{Ba(OH)2}\) gives \(2\ce{OH-}\).
+
+\subsubsection{Weak acid and weak base constants}
+\begin{equation}
+K_a=\frac{[\ce{A-}][\ce{H3O+}]}{[\ce{HA}]}, \qquad
+K_b=\frac{[\ce{HB+}][\ce{OH-}]}{[\ce{B}]}
+\label{eq:acid:weak-equilibrium-constants}
+\end{equation}
+\begin{equation}
+K=10^{-pK}, \qquad pK=-\log K
+\label{eq:acid:pk-conversion}
+\end{equation}
+Larger \(K_a\) or smaller \(pK_a\) means stronger acid. Larger \(K_b\) or smaller \(pK_b\) means stronger base.
+
+\referencetable{tab:acid:common-strength-recognition}{Common acid and base identities for qualitative classification when no \(K_a\) data are supplied}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{4.5cm}>{\raggedright\arraybackslash}p{4.5cm}@{}}
+\toprule
+Category & Course-level examples & Classification action\\
+\midrule
+Strong acids & \(\ce{HCl}\), \(\ce{HNO3}\), first proton of \(\ce{H2SO4}\) & Rank above listed weak acids in water.\\
+Weak acids & \(\ce{HF}\), \(\ce{CH3COOH}\), \(\ce{HNO2}\), \(\ce{H3PO4}\) & Acidic, but weaker than the listed strong acids.\\
+Bases / non-acids & \(\ce{NaOH}\), \(\ce{NH3}\), metal hydrides such as \(\ce{NaH}\) & Reject from an option requiring acids only.\\
+Generally non-acid organic compounds & hydrocarbons and ordinary alcohols without an acidic group & Do not classify as common aqueous acids unless data state otherwise.\\
+\bottomrule
+\end{tabular}
+
+\subsubsection{Conjugate acid-base relation}
+\begin{equation}
+K_aK_b=K_w, \qquad pK_a+pK_b=14
+\label{eq:acid:conjugate-relation}
+\end{equation}
+Use this for conjugate acid/base pairs at \(298\,\mathrm K\).
+
+\subsubsection{Weak acid and weak base approximation with exact fallback}
+\begin{equation}
+[\ce{H3O+}]\approx\sqrt{K_ac_0}, \qquad
+[\ce{OH-}]\approx\sqrt{K_bc_0}
+\label{eq:acid:weak-approximation}
+\end{equation}
+\begin{equation}
+K=\frac{x^2}{c_0-x}
+\quad\Longrightarrow\quad
+x=\frac{-K+\sqrt{K^2+4Kc_0}}{2}
+\label{eq:acid:weak-exact-quadratic}
+\end{equation}
+Use the approximation only when the computed \(x/c_0\leq 0.05\); otherwise use the exact positive root.
+
+\subsection{Exam recipe: identify acids and rank acid strength}
+\textbf{Use when:} answer options list chemical formulas and ask which is an acid, which set contains only acids or weak acids, or which acid is strongest without supplying numerical constants.
+
+\textbf{Given / Find:} Given formulas and possibly \(K_a\) or \(pK_a\) data; find acid/non-acid classification or relative acid strength.
+
+\textbf{Required references:} Table~\ref{tab:acid:common-strength-recognition} and Equation~\eqref{eq:acid:pk-conversion} when numerical \(K_a\) or \(pK_a\) data are given.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Match each listed species to Table~\ref{tab:acid:common-strength-recognition}; reject an ``all acids'' or ``all weak acids'' option as soon as it contains a listed base or non-acid.
+    \item For qualitative ranking without data, rank a listed strong acid above a listed weak acid; compare weak acids further only when course data or a supplied table supports it.
+    \item When \(K_a\) values are supplied, rank acids by decreasing \(K_a\); when \(pK_a\) values are supplied, rank them by increasing \(pK_a\), using Equation~\eqref{eq:acid:pk-conversion}.
+    \item State the classification or selected option and identify the specific species or constant comparison that decides it.
+\end{enumerate}
+
+\textbf{Checks:} Strong acid means essentially complete dissociation for ordinary introductory calculations; smaller \(pK_a\) must correspond to larger \(K_a\).
+
+\textbf{Common traps:} assuming every compound containing hydrogen is an acid; classifying \(\ce{NH3}\) as an acid because it contains hydrogen; ranking weak acids without supplied or established comparative data.
+
+\subsection{Exam recipe: weak acid or weak base pH with approximation and exact fallback}
+\textbf{Use when:} a weak acid/base concentration and \(K_a\), \(K_b\), \(pK_a\), or \(pK_b\) are given without a pre-existing buffer pair.
+
+\textbf{Given / Find:} given \(c_0\) and an acid/base constant; find \([\ce{H3O+}]\) or \([\ce{OH-}]\), then pH.
+
+\textbf{Required references:} equations~\eqref{eq:acid:ph-poh-water}, \eqref{eq:acid:weak-equilibrium-constants}, \eqref{eq:acid:pk-conversion}, \eqref{eq:acid:conjugate-relation}, \eqref{eq:acid:weak-approximation}, and \eqref{eq:acid:weak-exact-quadratic}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Select the equilibrium constant by using \(K_a\) for \(\ce{HA}\) or \(K_b\) for \(\ce{B}\), converting a supplied \(pK\) with Equation~\eqref{eq:acid:pk-conversion}, and using Equation~\eqref{eq:acid:conjugate-relation} only when the conjugate constant is supplied.
+    \item Estimate dissociation by calculating \(x_{\mathrm{approx}}=\sqrt{Kc_0}\) from equation~\eqref{eq:acid:weak-approximation}, interpreting \(x\) as \([\ce{H3O+}]\) for an acid and \([\ce{OH-}]\) for a base.
+    \item Decide whether the estimate is acceptable by calculating \(x_{\mathrm{approx}}/c_0\); retain it when the ratio is at most \(0.05\), otherwise calculate \(x\) from equation~\eqref{eq:acid:weak-exact-quadratic}.
+    \item Report pH by evaluating \(-\log[\ce{H3O+}]\) for an acid or by evaluating pOH from \([\ce{OH-}]\) and subtracting it from \(14\) for a base using equation~\eqref{eq:acid:ph-poh-water}.
+\end{enumerate}
+
+\textbf{Checks:} \(0<x<c_0\); a weak acid solution should be acidic and a weak base solution basic under ordinary concentrations; the approximation and exact result should be close when the 5\% test passes.
+
+\textbf{Common traps:} using the square-root approximation after it fails the 5\% test; reporting pOH as pH for a weak base; mixing \(K_a\) with a base calculation without converting through \(K_w\).
+
+\subsection{Buffers and titration}
+
+\subsubsection{Henderson-Hasselbalch buffer equation}
+\begin{equation}
+\mathrm{pH}=pK_a+\log\left(\frac{[\ce{A-}]}{[\ce{HA}]}\right)
+=pK_a+\log\left(\frac{n_{\ce{A-}}}{n_{\ce{HA}}}\right)
+\label{eq:acid:henderson-hasselbalch}
+\end{equation}
+The mole ratio form applies when acid and base occupy the same final solution volume.
+
+\subsubsection{Buffer after adding strong acid or base}
+\begin{equation}
+\ce{A- + H+ -> HA}, \qquad
+\ce{HA + OH- -> A- + H2O}
+\label{eq:acid:buffer-neutralization}
+\end{equation}
+Complete the stoichiometric neutralization before applying the buffer equation.
+
+\subsubsection{Phosphoric acid phosphate system}
+\begin{equation}
+\begin{aligned}
+\ce{H3PO4 &<=> H+ + H2PO4-} && pK_{a1}\approx2.1,\\
+\ce{H2PO4- &<=> H+ + HPO4^2-} && pK_{a2}\approx7.2,\\
+\ce{HPO4^2- &<=> H+ + PO4^3-} && pK_{a3}\approx12.4
+\end{aligned}
+\label{eq:acid:phosphate-pka}
+\end{equation}
+Choose the conjugate pair whose \(pK_a\) is closest to the target or observed pH.
+
+\subsubsection{Titration equivalence point}
+\begin{equation}
+n_{\mathrm{acid\ equivalents}}=n_{\mathrm{base\ equivalents}}
+\label{eq:acid:titration-equivalence}
+\end{equation}
+At equivalence, the pH depends on the acid-base properties of the salt remaining after neutralization.
+
+\subsubsection{Complete neutralization of a polyprotic acid}
+\begin{equation}
+\ce{H3PO4 + 3OH- -> PO4^3- + 3H2O}, \qquad
+n_{\ce{OH-}}=3n_{\ce{H3PO4}}
+\label{eq:acid:phosphoric-complete-neutralization}
+\end{equation}
+To form fully deprotonated phosphate, supply one mole of hydroxide for each acidic proton removed.
+
+\subsection{Exam recipe: acid-base stoichiometry and titration amount}
+\textbf{Use when:} the task asks for the amount or volume of strong acid/base needed to neutralize an acid/base or to form a specified phosphate species.
+
+\textbf{Given / Find:} Given concentrations, volumes, and target neutralization product; find moles or volume of titrant.
+
+\textbf{Required references:} Equations~\eqref{eq:acid:titration-equivalence} and \eqref{eq:acid:phosphoric-complete-neutralization}; use \(n=cV\) from Equation~\eqref{eq:aqueous:concentration-dilution}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Identify how many protons or hydroxides must react per formula unit to produce the named target species; for sodium phosphate from \(\ce{H3PO4}\), use the 3:1 hydroxide-to-acid ratio in Equation~\eqref{eq:acid:phosphoric-complete-neutralization}.
+    \item Calculate initial acid or base moles from its concentration and volume.
+    \item Multiply by the required stoichiometric equivalents to find titrant moles, using Equation~\eqref{eq:acid:titration-equivalence}.
+    \item Divide required titrant moles by titrant concentration to obtain the volume.
+\end{enumerate}
+
+\textbf{Checks:} Conversion to fully deprotonated \(\ce{PO4^3-}\) requires three hydroxide equivalents per \(\ce{H3PO4}\); use liters in \(n=cV\).
+
+\textbf{Common traps:} stopping at the first equivalence point when the target salt requires full deprotonation; using milliliters without converting to liters.
+
+\subsection{Exam recipe: buffer pH}
+\textbf{Use when:} both a weak acid and its conjugate base are present, including a phosphate buffer or a buffer after addition of strong acid/base.
+
+\textbf{Given / Find:} given pair amounts, \(pK_a\), and optionally added acid/base; find buffer pH or the required ratio.
+
+\textbf{Required references:} equations~\eqref{eq:acid:henderson-hasselbalch}, \eqref{eq:acid:buffer-neutralization}, and \eqref{eq:acid:phosphate-pka} for phosphate buffers.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Identify the conjugate pair by matching species that differ by one proton, and for phosphate choose the pair in equation~\eqref{eq:acid:phosphate-pka} with \(pK_a\) nearest the relevant pH.
+    \item Convert the supplied amounts to moles by multiplying each concentration by its solution volume before any mixing or reaction.
+    \item Account for added strong acid or base by subtracting and adding moles according to equation~\eqref{eq:acid:buffer-neutralization} until the limiting strong reagent is consumed.
+    \item Calculate pH by inserting the remaining mole ratio \(n_{\ce{A-}}/n_{\ce{HA}}\) into equation~\eqref{eq:acid:henderson-hasselbalch}, or rearrange that equation to find a requested ratio.
+\end{enumerate}
+
+\textbf{Checks:} equal conjugate-pair amounts give \(\mathrm{pH}=pK_a\); a valid buffer retains positive amounts of both pair members; adding acid must lower the pH.
+
+\textbf{Common traps:} applying Henderson-Hasselbalch before neutralizing added strong reagent; selecting the wrong phosphate \(pK_a\); using concentrations from unequal pre-mixing volumes instead of post-reaction mole ratios.
+
+\subsection{Solubility products}
+
+\subsubsection{Solubility product expression}
+\begin{equation}
+\mathrm{M}_a\mathrm{X}_b(s)\rightleftharpoons a\,\mathrm{M}^{m+}+b\,\mathrm{X}^{x-}
+\label{eq:acid:dissolution-reaction}
+\end{equation}
+\begin{equation}
+K_{sp}=[\mathrm{M}^{m+}]^a[\mathrm{X}^{x-}]^b
+\label{eq:acid:ksp-expression}
+\end{equation}
+The pure solid is omitted. Powers come from dissolution stoichiometry.
+
+\subsubsection{Molar solubility patterns}
+\referencetable{tab:acid:solubility-patterns}{Common molar-solubility substitutions}
+\begin{tabular}{@{}l l l@{}}
+\toprule
+\text{Solid} & \text{Ion concentrations from molar solubility \(s\)} & \text{\(K_{sp}\) relation}\\
+\midrule
+\(\mathrm{MX}\) & \([\mathrm M^+]=s,\ [\mathrm X^-]=s\) & \(K_{sp}=s^2\)\\
+\(\mathrm{MX_2}\) & \([\mathrm M^{2+}]=s,\ [\mathrm X^-]=2s\) & \(K_{sp}=4s^3\)\\
+\(\mathrm{M(OH)_2}\) & \([\mathrm M^{2+}]=s,\ [\ce{OH-}]=2s\) & \(K_{sp}=4s^3\)\\
+\bottomrule
+\end{tabular}
+
+\subsubsection{Ion product and precipitation}
+\begin{equation}
+Q_{sp}=[\mathrm{M}^{m+}]^a[\mathrm{X}^{x-}]^b
+\label{eq:acid:qsp-expression}
+\end{equation}
+\referencetable{tab:acid:precipitation-test}{Precipitation decision from \(Q_{sp}\) and \(K_{sp}\)}
+\begin{tabular}{@{}c l@{}}
+\toprule
+\text{Comparison} & \text{State or direction}\\
+\midrule
+\(Q_{sp}<K_{sp}\) & Unsaturated; additional solid can dissolve\\
+\(Q_{sp}=K_{sp}\) & Saturated solution at equilibrium\\
+\(Q_{sp}>K_{sp}\) & Supersaturated; precipitation is favored\\
+\bottomrule
+\end{tabular}
+
+\subsubsection{Common-ion solubility}
+\begin{equation}
+K_{sp}=[\mathrm{M}^{m+}][\mathrm{X}^{x-}], \qquad
+[\mathrm{X}^{x-}]_{\mathrm{initial}}\gg s
+\quad\Longrightarrow\quad
+s\approx\frac{K_{sp}}{[\mathrm{X}^{x-}]_{\mathrm{initial}}}
+\label{eq:acid:common-ion-approximation}
+\end{equation}
+A common ion lowers solubility by shifting dissolution toward the solid.
+
+\subsection{Exam recipe: solubility product, common ion, and hydroxide pH}
+\textbf{Use when:} the task asks for molar solubility, precipitation, saturated-solution pH, or common-ion effects.
+
+\textbf{Given / Find:} given a salt formula, \(K_{sp}\), and optionally initial ion concentrations; find \(s\), \(Q_{sp}\), precipitation direction, or pH for a hydroxide.
+
+\textbf{Required references:} equations~\eqref{eq:acid:dissolution-reaction}, \eqref{eq:acid:ksp-expression}, \eqref{eq:acid:qsp-expression}, \eqref{eq:acid:common-ion-approximation}, and \eqref{eq:acid:ph-poh-water}; Tables~\ref{tab:acid:solubility-patterns} and \ref{tab:acid:precipitation-test}.
+
+\textbf{Steps:}
+\begin{enumerate}
+    \item Write the dissolution equation by splitting one formula unit into ions and preserving each stoichiometric subscript as an ion coefficient.
+    \item Build the \(K_{sp}\) or \(Q_{sp}\) expression by raising each dissolved ion concentration to its coefficient as in equation~\eqref{eq:acid:ksp-expression}.
+    \item Calculate molar solubility by replacing each newly formed ion concentration with its coefficient times \(s\), using Table~\ref{tab:acid:solubility-patterns} directly for the listed patterns and adding any given initial common-ion concentration before solving.
+    \item Decide whether precipitation occurs by calculating \(Q_{sp}\) from current concentrations and comparing it with \(K_{sp}\) using Table~\ref{tab:acid:precipitation-test}.
+    \item Find hydroxide-solution pH by converting the solved \(s\) into \([\ce{OH-}]\) through the dissolution coefficient, then calculating pOH and pH with equation~\eqref{eq:acid:ph-poh-water}.
+\end{enumerate}
+
+\textbf{Checks:} a common ion must reduce \(s\) relative to pure water; for \(\mathrm{M(OH)_2}\), \([\ce{OH-}]=2s\); precipitation begins at \(Q_{sp}=K_{sp}\).
+
+\textbf{Common traps:} including the solid in \(K_{sp}\); missing powers generated by stoichiometric coefficients; setting \([\ce{OH-}]=s\) for a dihydroxide; applying the common-ion approximation when the initial ion concentration is not much greater than \(s\).

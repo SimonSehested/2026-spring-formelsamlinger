@@ -1,69 +1,58 @@
-\section*{Clustering, density and outliers}
+\section*{Clustering and outliers}
 \subsection*{K-means and centroids}
-\textbf{Purpose:} Partition observations into $K$ centre-based clusters.
 \[
-\min_{\{C_k,\mu_k\}}\sum_{k=1}^K\sum_{i\in C_k}\|x_i-\mu_k\|^2,\qquad
+\fid[eq:kmeans]\min_{\{C_k,\mu_k\}}\sum_{k=1}^K\sum_{i\in C_k}\|x_i-\mu_k\|^2,\qquad
 \mu_k=\frac1{|C_k|}\sum_{i\in C_k}x_i.
 \]
-\textbf{Symbols:} $K$ = number of clusters; $C_k$ = set of rows assigned to cluster $k$; $|C_k|$ = its size; $\mu_k$ = centroid/mean vector; $\|\cdot\|^2$ = squared Euclidean distance minimized by K-means.
-
-\textbf{How to read output:} each observation belongs to its nearest centroid; a centroid table is a mean attribute profile for each cluster.
-
-\textbf{Do this:} compute distances to centroids; assign nearest; recompute cluster means; repeat assignments if requested.
+\textbf{Do this:} with \fref{eq:kmeans}, compute squared Euclidean distance from row $x_i$ to every centroid $\mu_k$; assign to the smallest distance; recompute each centroid as the coordinate-wise mean of assigned rows; repeat only if another iteration is requested. A centroid table is the mean attribute profile of each cluster.
+\textbf{Read clusters:} compare centroid coordinates attribute by attribute. A high standardized centroid value means that cluster is above average on that attribute; cluster labels $1,2,\ldots$ have no inherent order.
 
 \subsection*{Hierarchical clustering and dendrograms}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-\textbf{Linkage} & \textbf{Cluster-to-cluster distance}\\ \midrule
-Single & minimum pair distance; joins through close links.\\
-Complete & maximum pair distance; favours compact groups.\\
+\textbf{Linkage} & \textbf{Compute cluster distance as}\\ \midrule
+Single & smallest pair distance across clusters; can form chains.\\
+Complete & largest pair distance; favours compact groups.\\
 Average & average of all cross-cluster pair distances.\\
 Centroid & distance between cluster means.\\
 \bottomrule
 \end{tabularx}
-\textbf{How to read a dendrogram:} leaves are observations; branch height is merge distance; a horizontal cut gives the connected groups below that height.
+\textbf{Read dendrogram:} leaves are rows; merge height is the distance at which groups join; a horizontal cut creates clusters by collecting branches connected below that height.
+\textbf{Choosing groups:} to get exactly $K$ clusters, cut at a height that leaves $K$ disconnected branches. A large vertical gap means a stable separation because no merges occur over that distance range.
 
 \subsection*{Compare clusterings}
 \[
-\operatorname{Rand}=\frac{f_{11}+f_{00}}{\binom N2},\qquad
+\fid[eq:cluster-agree]\operatorname{Rand}=\frac{f_{11}+f_{00}}{\binom N2},\qquad
 J=\frac{f_{11}}{f_{11}+f_{10}+f_{01}}.
 \]
-\textbf{Symbols:} $\binom N2$ = number of observation pairs; $f_{11}$ = together in both clusterings; $f_{00}$ = apart in both; $f_{10},f_{01}$ = pair-status disagreements; $J$ = Jaccard agreement.
-
-\textbf{Means:} Rand counts both kinds of agreement; Jaccard measures overlap of same-cluster pairs only.
+\textbf{Do this:} inspect all row pairs. $f_{11}$ = together in both clusterings; $f_{00}$ = apart in both; $f_{10},f_{01}$ = disagreement. Rand in \fref{eq:cluster-agree} counts both agreements; Jaccard ignores shared separation.
 
 \subsection*{Gaussian mixture model}
-\textbf{Purpose:} Describe data by weighted Gaussian components with soft memberships.
 \[
-\begin{gathered}
-p(x)=\sum_{k=1}^K\pi_k\mathcal N(x|\mu_k,\Sigma_k),
-\qquad \sum_k\pi_k=1,\\
+\fid[eq:gmm]\begin{gathered}
+p(x)=\sum_{k=1}^K\pi_k\mathcal N(x|\mu_k,\Sigma_k),\qquad \sum_k\pi_k=1,\\
 \gamma_{ik}=\frac{\pi_k\mathcal N(x_i|\mu_k,\Sigma_k)}
 {\sum_j\pi_j\mathcal N(x_i|\mu_j,\Sigma_j)} .
 \end{gathered}
 \]
-\textbf{Symbols:} $p(x)$ = mixture density; $\pi_k$ = weight of component $k$; $\mathcal N(x|\mu_k,\Sigma_k)$ = its Gaussian density; $\gamma_{ik}$ = responsibility for row $i$; $\mu_k,\Sigma_k$ = component mean and covariance; $j$ in the denominator indexes components.
-\textbf{How to read output:} $\pi_k$ is component frequency; $\gamma_{ik}$ is observation $i$'s responsibility for component $k$ and sums to $1$ across components. Largest responsibility gives a hard label.
+\textbf{Do this:} use \fref{eq:gmm}; for row $i$ compute one component score $\pi_k$ times Gaussian density; divide each score by the sum of all component scores; responsibilities $\gamma_{ik}$ sum to $1$ across $k$ and the largest gives a hard label.
 
-\subsection*{KDE and local density}
-\textbf{Purpose:} Find regions of low probability density and potential outliers.
+\subsection*{KDE, local density, ARD}
 \[
-\hat p(x)=\frac1N\sum_i\mathcal N(x|x_i,\sigma^2I),
-\]
-\[
-\ell_{\rm LOO}(\sigma)=\sum_i\log\!\left[
+\fid[eq:kde]\begin{aligned}
+\hat p(x)&=\frac1N\sum_i\mathcal N(x|x_i,\sigma^2I),\\
+\ell_{\rm LOO}(\sigma)&=\sum_i\log\!\left[
 \frac1{N-1}\sum_{j\ne i}\mathcal N(x_i|x_j,\sigma^2I)\right].
+\end{aligned}
 \]
 \[
-\operatorname{dens}(x_i,K)=
-\left(\frac1K\sum_{x_j\in N_i}d(x_i,x_j)\right)^{-1},
-\]
-\[
-\operatorname{ARD}(x_i,K)=
+\fid[eq:local-density]\begin{aligned}
+\operatorname{dens}(x_i,K)&=
+\left(\frac1K\sum_{x_j\in N_i}d(x_i,x_j)\right)^{-1},\\
+\operatorname{ARD}(x_i,K)&=
 \frac1K\sum_{x_j\in N_i}
 \frac{\operatorname{dens}(x_i,K)}{\operatorname{dens}(x_j,K)}.
+\end{aligned}
 \]
-\textbf{Symbols:} $\hat p$ = kernel density estimate; $\sigma$ = Gaussian bandwidth; $I$ = identity matrix; $\ell_{\rm LOO}$ = leave-one-out log likelihood; $N_i$ = $K$ nearest neighbours of $x_i$; $\operatorname{dens}$ = inverse mean neighbour distance; ARD = average relative density ratio.
-\textbf{How to read it:} small KDE/local density marks isolation; small ARD marks a point less dense than its neighbours. Larger $\sigma$ smooths a KDE curve.
-
-\textbf{Do this:} exclude the evaluated point for leave-one-out/local-neighbour calculations; compute densities; identify the smallest density or ARD as most outlying.
+\textbf{Do this:} for KDE use \fref{eq:kde}: add Gaussian bumps from training points; for LOO exclude the evaluated point $j=i$; larger $\sigma$ smooths more. For local density use \fref{eq:local-density}: find $K$ nearest neighbours, average their distances, invert; for ARD compute neighbour densities too and average density ratios. Small density or small ARD is most outlying.
+\textbf{Which outlier score:} KDE compares to global density; KNN density compares neighbour distances; ARD compares a point to its own neighbours. ARD is useful when clusters have different densities because it asks whether the point is sparse relative to nearby points.
