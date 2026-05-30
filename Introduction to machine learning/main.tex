@@ -1,5 +1,5 @@
-\documentclass[10pt,a4paper]{article}
-\usepackage[a4paper,margin=0.55cm]{geometry}
+\documentclass[12pt,a4paper]{article}
+\usepackage[a4paper,margin=0.45cm]{geometry}
 \usepackage{multicol}
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{xparse}
@@ -9,23 +9,26 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{microtype}
+\linespread{0.98}
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.15pt}
-\setlength{\columnsep}{0.36cm}
+\setlength{\parskip}{0pt}
+\setlength{\columnsep}{0.30cm}
 \setlength{\columnseprule}{0.12pt}
-\setlength{\abovedisplayskip}{0.7pt}
-\setlength{\belowdisplayskip}{0.7pt}
+\setlength{\multicolsep}{0pt}
+\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{1pt}
 \setlength{\abovedisplayshortskip}{0pt}
 \setlength{\belowdisplayshortskip}{0pt}
 \setlist{nosep,leftmargin=*}
-\renewcommand{\arraystretch}{0.84}
-\setlength{\tabcolsep}{1.7pt}
+\renewcommand{\arraystretch}{0.78}
+\setlength{\tabcolsep}{1.4pt}
+\setlength{\jot}{0pt}
 \setcounter{secnumdepth}{0}
 
 \makeatletter
-\renewcommand\section{\@startsection{section}{1}{0pt}{1.4pt}{0.8pt}{\normalfont\bfseries}}
-\renewcommand\subsection{\@startsection{subsection}{2}{0pt}{0.9pt}{0.3pt}{\normalfont\bfseries}}
+\renewcommand\section{\@startsection{section}{1}{0pt}{0.8pt}{0.2pt}{\normalfont\large\scshape}}
+\renewcommand\subsection{\@startsection{subsection}{2}{0pt}{0.35pt}{0.05pt}{\normalfont\normalsize}}
 \makeatother
 
 \newcounter{formulaid}
@@ -33,7 +36,7 @@
 \NewDocumentCommand{\fid}{o}{%
   \refstepcounter{formulaid}%
   \IfValueT{#1}{\label{#1}}%
-  \mathllap{\text{\normalfont\bfseries\theformulaid}\quad}%
+  \mathllap{\text{\normalfont\theformulaid}\quad}%
 }
 \newcommand{\fref}[1]{\ref{#1}}
 
@@ -49,7 +52,7 @@
 \begin{document}
 \pagestyle{empty}
 \begin{center}
-{\bfseries 02450/02451 Introduction to Machine Learning and Data Mining -- 4-page exam aid}
+{\large 02450/02451 Introduction to Machine Learning and Data Mining -- 4-page exam aid}
 \end{center}
 \vspace{-6pt}
 \begin{multicols*}{2}
@@ -60,6 +63,5 @@
 \input{sources/05_validation_metrics}
 \input{sources/06_trees_ensembles_ann}
 \input{sources/07_clustering_density}
-\input{sources/08_association_text_checks}
 \end{multicols*}
 \end{document}

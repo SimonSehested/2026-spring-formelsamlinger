@@ -1,58 +1,49 @@
-\section*{Clustering and outliers}
-\subsection*{K-means and centroids}
+\section*{CLUSTERING / ASSOCIATION}
+\subsection*{K-MEANS}
 \[
-\fid[eq:kmeans]\min_{\{C_k,\mu_k\}}\sum_{k=1}^K\sum_{i\in C_k}\|x_i-\mu_k\|^2,\qquad
-\mu_k=\frac1{|C_k|}\sum_{i\in C_k}x_i.
+\fid[eq:kmeans]\min_{\{C_k,\mu_k\}}\sum_{k=1}^K\sum_{i\in C_k}\|x_i-\mu_k\|^2,\quad
+\mu_k=\frac1{|C_k|}\sum_{i\in C_k}x_i
 \]
-\textbf{Do this:} with \fref{eq:kmeans}, compute squared Euclidean distance from row $x_i$ to every centroid $\mu_k$; assign to the smallest distance; recompute each centroid as the coordinate-wise mean of assigned rows; repeat only if another iteration is requested. A centroid table is the mean attribute profile of each cluster.
-\textbf{Read clusters:} compare centroid coordinates attribute by attribute. A high standardized centroid value means that cluster is above average on that attribute; cluster labels $1,2,\ldots$ have no inherent order.
+MEANS: $C_k$ = rows assigned to cluster $k$; $\mu_k$ = centroid/mean vector; $|C_k|$ = cluster size. CALC: assign each row to nearest centroid, recompute centroid as coordinate-wise mean, repeat if asked. READ CENTROID TABLE: high standardized coordinate = cluster is above average on that attribute; cluster labels have no natural order.
 
-\subsection*{Hierarchical clustering and dendrograms}
+\subsection*{HIERARCHICAL CLUSTERING}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-\textbf{Linkage} & \textbf{Compute cluster distance as}\\ \midrule
-Single & smallest pair distance across clusters; can form chains.\\
-Complete & largest pair distance; favours compact groups.\\
-Average & average of all cross-cluster pair distances.\\
-Centroid & distance between cluster means.\\
+LINKAGE & CLUSTER DISTANCE\\ \midrule
+SINGLE / MINIMUM & smallest pair distance across two clusters; can chain.\\
+COMPLETE & largest pair distance; compact clusters.\\
+AVERAGE & average of all cross-cluster pair distances.\\
+CENTROID & distance between cluster means.\\
 \bottomrule
 \end{tabularx}
-\textbf{Read dendrogram:} leaves are rows; merge height is the distance at which groups join; a horizontal cut creates clusters by collecting branches connected below that height.
-\textbf{Choosing groups:} to get exactly $K$ clusters, cut at a height that leaves $K$ disconnected branches. A large vertical gap means a stable separation because no merges occur over that distance range.
+READ DENDROGRAM: leaves = rows; merge height = distance where groups join; first merge has smallest distance. CALC: to get $K$ clusters, cut horizontally so $K$ branches remain.
 
-\subsection*{Compare clusterings}
+\subsection*{RAND / JACCARD CLUSTER AGREEMENT}
 \[
-\fid[eq:cluster-agree]\operatorname{Rand}=\frac{f_{11}+f_{00}}{\binom N2},\qquad
-J=\frac{f_{11}}{f_{11}+f_{10}+f_{01}}.
+\fid[eq:cluster-agree]\operatorname{Rand}=\frac{f_{11}+f_{00}}{\binom N2},\quad
+J=\frac{f_{11}}{f_{11}+f_{10}+f_{01}}
 \]
-\textbf{Do this:} inspect all row pairs. $f_{11}$ = together in both clusterings; $f_{00}$ = apart in both; $f_{10},f_{01}$ = disagreement. Rand in \fref{eq:cluster-agree} counts both agreements; Jaccard ignores shared separation.
+MEANS: inspect row pairs; $f_{11}$ = together in both clusterings; $f_{00}$ = apart in both; $f_{10},f_{01}$ = together in one but apart in other. READ: Rand counts both same-cluster and different-cluster agreement; Jaccard ignores shared separation.
 
-\subsection*{Gaussian mixture model}
-\[
-\fid[eq:gmm]\begin{gathered}
-p(x)=\sum_{k=1}^K\pi_k\mathcal N(x|\mu_k,\Sigma_k),\qquad \sum_k\pi_k=1,\\
-\gamma_{ik}=\frac{\pi_k\mathcal N(x_i|\mu_k,\Sigma_k)}
-{\sum_j\pi_j\mathcal N(x_i|\mu_j,\Sigma_j)} .
-\end{gathered}
-\]
-\textbf{Do this:} use \fref{eq:gmm}; for row $i$ compute one component score $\pi_k$ times Gaussian density; divide each score by the sum of all component scores; responsibilities $\gamma_{ik}$ sum to $1$ across $k$ and the largest gives a hard label.
-
-\subsection*{KDE, local density, ARD}
-\[
-\fid[eq:kde]\begin{aligned}
-\hat p(x)&=\frac1N\sum_i\mathcal N(x|x_i,\sigma^2I),\\
-\ell_{\rm LOO}(\sigma)&=\sum_i\log\!\left[
-\frac1{N-1}\sum_{j\ne i}\mathcal N(x_i|x_j,\sigma^2I)\right].
-\end{aligned}
-\]
+\subsection*{LOCAL DENSITY / OUTLIER}
 \[
 \fid[eq:local-density]\begin{aligned}
 \operatorname{dens}(x_i,K)&=
 \left(\frac1K\sum_{x_j\in N_i}d(x_i,x_j)\right)^{-1},\\
-\operatorname{ARD}(x_i,K)&=
-\frac1K\sum_{x_j\in N_i}
-\frac{\operatorname{dens}(x_i,K)}{\operatorname{dens}(x_j,K)}.
+\operatorname{ARD}(x_i,K)&=\frac1K\sum_{x_j\in N_i}
+\frac{\operatorname{dens}(x_i,K)}{\operatorname{dens}(x_j,K)}
 \end{aligned}
 \]
-\textbf{Do this:} for KDE use \fref{eq:kde}: add Gaussian bumps from training points; for LOO exclude the evaluated point $j=i$; larger $\sigma$ smooths more. For local density use \fref{eq:local-density}: find $K$ nearest neighbours, average their distances, invert; for ARD compute neighbour densities too and average density ratios. Small density or small ARD is most outlying.
-\textbf{Which outlier score:} KDE compares to global density; KNN density compares neighbour distances; ARD compares a point to its own neighbours. ARD is useful when clusters have different densities because it asks whether the point is sparse relative to nearby points.
+MEANS: $N_i$ = $K$ nearest neighbours of row $i$; density = inverse average neighbour distance; ARD = density relative to neighbours. READ: small density or small ARD is outlying; ARD is useful when clusters have different density.
+
+\subsection*{ASSOCIATION RULES / APRIORI}
+\[
+\fid[eq:assoc]\begin{aligned}
+\operatorname{supp}(X)&=\frac{\#(X)}N,\\
+\operatorname{conf}(X\to Y)&=\frac{\operatorname{supp}(X\cup Y)}
+{\operatorname{supp}(X)},\\
+\operatorname{lift}(X\to Y)&=\frac{\operatorname{conf}(X\to Y)}
+{\operatorname{supp}(Y)}
+\end{aligned}
+\]
+MEANS: $X,Y$ = disjoint itemsets; $X$ = left side/antecedent; $Y$ = right side/consequent; $\#(X)$ = baskets containing all items in $X$; $N$ = baskets. CALC: count baskets with $X$, $Y$, and $X\cup Y$. READ: support = frequency; confidence = $P(Y|X)$; lift $>1$ means $Y$ is more common after seeing $X$ than baseline. APRIORI: if an itemset is below minimum support, all supersets are also below.

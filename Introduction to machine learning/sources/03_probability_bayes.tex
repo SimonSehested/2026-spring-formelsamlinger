@@ -1,41 +1,56 @@
-\section*{Probability, Bayes, densities}
-\subsection*{Conditional probability and Bayes}
-\textbf{Purpose:} turn likelihoods and priors into class probabilities after seeing $x$.
+\section*{PROBABILITY / BAYES / DENSITY}
+\subsection*{BAYES RULE}
 \[
 \fid[eq:bayes]\begin{aligned}
 P(A|B)&=\frac{P(A,B)}{P(B)},\\
-P(A)&=\sum_cP(A|c)P(c),\\
 P(y=c|x)&=\frac{P(x|y=c)P(y=c)}
-{\sum_{c'}P(x|y=c')P(y=c')}.
+{\sum_{c'}P(x|y=c')P(y=c')}
 \end{aligned}
 \]
-\textbf{Symbols:} prior $P(y=c)$ is class frequency before $x$; likelihood $P(x|y=c)$ says how likely $x$ is inside class $c$; posterior $P(y=c|x)$ is the final class probability.
-\textbf{Do this:} use \fref{eq:bayes}; for each class compute score = likelihood $\times$ prior; add all scores; divide each score by the sum; choose the largest posterior.
+MEANS: $A,B$ = events; $x$ = observed attributes; $y$ = class label; $c,c'$ = possible classes; $P(y=c)$ = prior/class frequency before seeing $x$; $P(x|y=c)$ = likelihood/density of $x$ inside class $c$; $P(y=c|x)$ = posterior after seeing $x$. CALC: for each class, score = likelihood $\times$ prior; divide each score by sum of all class scores. READ: equal likelihoods do not imply equal posteriors if priors differ.
 
-\subsection*{Counts and Naive Bayes}
+\subsection*{COUNT TABLE / NAIVE BAYES}
 \[
 \fid[eq:naive-bayes]\begin{aligned}
 \hat P(y=c|x=a)&=
 \frac{\#\{i:y_i=c,x_i=a\}}{\#\{i:x_i=a\}},\\
 \operatorname{score}(c)&=P(y=c)\prod_{m=1}^MP(x_m|y=c),\\
-P(y=c|x)&=\frac{\operatorname{score}(c)}{\sum_{c'}\operatorname{score}(c')},\\
-\log\operatorname{score}(c)&=\log P(c)+\sum_m\log P(x_m|c).
+P(c|x)&=\frac{\operatorname{score}(c)}
+{\sum_{c'}\operatorname{score}(c')}
 \end{aligned}
 \]
-\textbf{How to use tables:} for each class row/column, pick the probability for the observed value of each attribute; multiply them with the prior as in \fref{eq:naive-bayes}; normalize scores so posteriors sum to $1$. Use log-scores when products are tiny; the largest log-score gives the same class.
-\textbf{From counts:} if a table gives raw counts, convert each needed entry to a conditional probability by dividing by the total count in the same condition/class. For $P(x_m=a|y=c)$, denominator is the number of rows in class $c$, not all rows.
+MEANS: $\#\{\}$ = count rows satisfying condition; $a$ = specific value; $x_m$ = attribute $m$ of row $x$; score = unnormalized posterior. READ TABLE: for $P(x_m=a|y=c)$ divide by number of rows in class $c$. NAIVE means multiply feature probabilities as if conditionally independent given the class.
 
-\subsection*{Gaussian density classifier}
+\subsection*{GAUSSIAN DENSITY CLASSIFIER}
 \[
 \fid[eq:gauss]\begin{aligned}
 \mathcal N(x|\mu,\Sigma)&=
 \frac{\exp[-\tfrac12(x-\mu)^\top\Sigma^{-1}(x-\mu)]}
 {(2\pi)^{M/2}|\Sigma|^{1/2}},\\
-\mathcal N(x|\mu,\sigma^2)&=\frac1{\sqrt{2\pi}\sigma}
-\exp\!\left[-\frac{(x-\mu)^2}{2\sigma^2}\right),\\
-\hat y&=\argmax_c\{\mathcal N(x|\mu_c,\Sigma_c)P(c)\}.
+\mathcal N(x|\mu,\sigma^2)&=\frac{e^{-(x-\mu)^2/(2\sigma^2)}}
+{\sqrt{2\pi}\sigma},\\
+\hat y&=\argmax_c\mathcal N(x|\mu_c,\Sigma_c)P(c)
 \end{aligned}
 \]
-\textbf{Symbols:} $\mu$ is centre, $\Sigma$ covariance, $\sigma$ standard deviation, $|\Sigma|$ determinant. Density height is not a probability by itself.
-\textbf{Do this:} use \fref{eq:gauss}; for each class insert $x,\mu_c,\Sigma_c$ or $\sigma_c$; multiply density by prior; choose the largest class score. Curves are highest near $\mu$; larger variance makes a wider, lower curve.
-\textbf{Boundary reading:} with equal priors, choose the class with larger density at $x$; with unequal priors, a class with lower density can still win if its prior is large enough.
+MEANS: $\mu$ = mean/center; $\Sigma$ = covariance matrix; $\sigma$ = 1D standard deviation; $|\Sigma|$ = determinant; $\Sigma^{-1}$ weights distance by covariance. READ CURVE: highest near $\mu$; larger variance = wider and lower. READ SCATTER: covariance sign gives tilt; diagonal entries give spread of coordinates. DENSITY HEIGHT is not a probability alone; compare density $\times$ prior.
+
+\subsection*{GMM / EM RESPONSIBILITY}
+\[
+\fid[eq:gmm]\begin{aligned}
+p(x)&=\sum_{k=1}^K\pi_k\mathcal N(x|\mu_k,\Sigma_k),\\
+\gamma_{ik}=P(z_i=k|x_i)&=
+\frac{\pi_k\mathcal N(x_i|\mu_k,\Sigma_k)}
+{\sum_j\pi_j\mathcal N(x_i|\mu_j,\Sigma_j)}
+\end{aligned}
+\]
+MEANS: $K$ = number of components; $\pi_k$ = mixing weight/prior of component $k$; $z_i$ = hidden component label; $\gamma_{ik}$ = responsibility/posterior for row $i$ and component $k$. E-STEP: compute all $\gamma_{ik}$ using current parameters. READ: responsibilities for one row sum to 1; largest responsibility gives hard component assignment; large $\pi_k$ means many expected points from component $k$.
+
+\subsection*{KDE / LEAVE-ONE-OUT DENSITY}
+\[
+\fid[eq:kde]\begin{aligned}
+\hat p(x)&=\frac1N\sum_{j=1}^N\mathcal N(x|x_j,\sigma^2I),\\
+\hat p_{\rm LOO}(x_i)&=\frac1{N-1}
+\sum_{j\ne i}\mathcal N(x_i|x_j,\sigma^2I)
+\end{aligned}
+\]
+MEANS: KDE = average of Gaussian kernels centered at training rows; $\sigma$ = kernel width; $I$ = identity covariance. CALC: for LOO, use all kernel values except the row's own kernel. READ: larger $\sigma$ smooths more; small density means unusual compared with training rows.

@@ -1,14 +1,15 @@
-\section*{Validation and output}
-\subsection*{Hold-out and cross-validation}
+\section*{VALIDATION / METRICS / MODEL OUTPUT}
+\subsection*{HOLD-OUT / K-FOLD / NESTED CV}
 \[
-\fid[eq:cv-error]E_T=\frac1{|T|}\sum_{i\in T}L(y_i,\hat f(x_i)),\qquad
-E_{\rm CV}=\frac1K\sum_{k=1}^K E_k .
+\fid[eq:cv-error]\begin{aligned}
+E_T&=\frac1{|T|}\sum_{i\in T}L(y_i,\hat f(x_i)),&
+E_{\rm CV}&=\frac1K\sum_{k=1}^KE_k,\\
+\hat E_{\rm gen}&=\frac1{K_1}\sum_{i=1}^{K_1}E^{\rm test}_{s_i^*,i}
+\end{aligned}
 \]
-\textbf{Symbols:} $T$ is held-out/test rows; $L$ is the task loss; $E_k$ is validation-fold error.
-\textbf{Do this:} use \fref{eq:cv-error}; fit preprocessing and model only on training rows; for each candidate compute validation or inner-CV error; choose the candidate with smallest error; report held-out/outer-fold error only after selection.
-\textbf{Nested CV reading:} inner folds choose hyperparameters; outer folds estimate the whole selection procedure. Do not choose by outer error first; average outer errors only after each outer training set has made its own inner choice.
+MEANS: $T$ = test/held-out set; $L$ = loss; $E_k$ = fold validation error; $K_1$ = outer folds; $s_i^*$ = model/complexity selected by inner CV inside outer fold $i$; $E^{\rm test}_{s_i^*,i}$ = outer test error of that selected model. CALC NESTED: inner folds choose model in each outer fold; outer test errors estimate generalization; average only the chosen model's outer errors.
 
-\subsection*{Confusion matrix and metrics}
+\subsection*{CONFUSION MATRIX}
 \[
 \fid[eq:conf-mat]\begin{array}{c|cc}
 &\hat y=+&\hat y=-\\\hline
@@ -16,51 +17,26 @@ y=+&TP&FN\\
 y=-&FP&TN
 \end{array}
 \]
+MEANS: $+$ = stated positive class; $TP$ = actual positive predicted positive; $FN$ = actual positive predicted negative; $FP$ = actual negative predicted positive; $TN$ = actual negative predicted negative. READ: do not trust row/column position blindly; identify actual class and predicted class from table labels.
+
+\subsection*{CLASSIFICATION METRICS}
 \[
 \fid[eq:class-metrics]\begin{aligned}
 \operatorname{Acc}&=\frac{TP+TN}{N},&
-\operatorname{Recall}=\operatorname{TPR}&=\frac{TP}{TP+FN},\\
-\operatorname{FPR}&=\frac{FP}{FP+TN},&
-\operatorname{Precision}&=\frac{TP}{TP+FP},\\
-\operatorname{Specificity}&=\frac{TN}{TN+FP},&
-F_1&=\frac{2\,\operatorname{Precision}\operatorname{Recall}}
-{\operatorname{Precision}+\operatorname{Recall}}.
+\operatorname{Err}&=1-\operatorname{Acc},\\
+\operatorname{Recall}=\operatorname{TPR}&=\frac{TP}{TP+FN},&
+\operatorname{FPR}&=\frac{FP}{FP+TN},\\
+\operatorname{Precision}&=\frac{TP}{TP+FP},&
+F_1&=\frac{2PR}{P+R}
 \end{aligned}
 \]
-\textbf{Do this:} first name the positive class, then fill \fref{eq:conf-mat}. Use \fref{eq:class-metrics}: accuracy denominator = all cases; recall/TPR = actual positives; precision = predicted positives; FPR/specificity = actual negatives. Recall asks what positives were found; precision asks what predicted positives were correct.
-\textbf{Matrix orientation:} if the shown matrix swaps rows/columns, do not copy positions blindly. Identify each count from the words: TP = actual positive and predicted positive; FN = actual positive predicted negative; FP = actual negative predicted positive; TN = actual negative predicted negative.
+MEANS: $N=TP+FN+FP+TN$; $P$ = precision; $R$ = recall. READ: recall = fraction of actual positives found; precision = fraction of predicted positives correct; FPR = fraction of actual negatives wrongly predicted positive.
 
-\subsection*{ROC curves and thresholds}
+\subsection*{ROC / AUC / THRESHOLD}
 \[
-\fid[eq:roc]\operatorname{ROC}(\tau)=(\operatorname{FPR}(\tau),\operatorname{TPR}(\tau)),\qquad
-\operatorname{AUC}=\text{area under ROC}.
-\]
-\textbf{Do this:} sort positive scores high to low. Start at $(0,0)$ with no predicted positives. When the next row is truly positive, increase $TP$ and TPR using \fref{eq:class-metrics}; when truly negative, increase $FP$ and FPR. Lowering $\tau$ moves toward $(1,1)$; upper-left and high AUC mean better ranking.
-\textbf{Threshold choice:} a higher threshold predicts fewer positives, usually lower TPR and lower FPR. If false positives are expensive, prefer a point with smaller FPR; if missed positives are expensive, prefer larger TPR.
-
-\subsection*{Paired model comparison}
-\[
-\fid[eq:mcnemar]\begin{array}{c|cc}
-&B\ {\rm correct}&B\ {\rm wrong}\\\hline
-A\ {\rm correct}&n_{11}&n_{12}\\
-A\ {\rm wrong}&n_{21}&n_{22}
-\end{array}
-\qquad
-\hat\theta=\frac{n_{12}-n_{21}}N
-\]
-\[
-\fid[eq:mcnemar-p]\begin{aligned}
-p&=2F_{\operatorname{Binom}(n_{12}+n_{21},\,1/2)}
-\!\left(\min(n_{12},n_{21})\right).
+\fid[eq:roc]\begin{aligned}
+\operatorname{ROC}(\tau)&=(\operatorname{FPR}(\tau),\operatorname{TPR}(\tau)),\\
+\operatorname{AUC}&=\text{area under ROC}
 \end{aligned}
 \]
-\[
-\fid[eq:paired-reg]\begin{aligned}
-z_i&=L_A(i)-L_B(i),\\
-\bar z&=\frac1N\sum_i z_i,\qquad
-s_z^2=\frac1{N-1}\sum_i(z_i-\bar z)^2,\\
-\operatorname{CI}_{1-\alpha}&:\quad
-\bar z\pm t_{1-\alpha/2,N-1}\frac{s_z}{\sqrt N}.
-\end{aligned}
-\]
-\textbf{Do this:} for classifiers use \fref{eq:mcnemar}; only disagreements $n_{12},n_{21}$ affect $p$ in \fref{eq:mcnemar-p}; positive $\hat\theta$ favours A. For regression use \fref{eq:paired-reg}; compute one loss difference per same test row; $\bar z<0$ favours A when lower loss is better; a CI containing $0$ gives no demonstrated difference.
+MEANS: threshold $\tau$ turns scores/probabilities into classes; ROC x-axis = FPR; ROC y-axis = TPR. CALC FROM SORTED SCORES: start at $(0,0)$ with no predicted positives; lowering threshold over a true positive moves up; over a true negative moves right. READ: upper-left is best; random ranking has AUC near 0.5; high threshold usually predicts fewer positives.

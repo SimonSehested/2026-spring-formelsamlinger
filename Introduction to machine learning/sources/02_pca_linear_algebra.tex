@@ -1,49 +1,54 @@
-\section*{PCA, SVD, vectors}
-\subsection*{Components, scores, reconstruction}
-\textbf{Purpose:} replace correlated attributes by orthogonal axes ordered by variance.
+\section*{PCA / SVD / VECTORS}
+\subsection*{PCA OBJECTS}
 \[
 \fid[eq:pca-svd]\begin{aligned}
 \tilde X&=USV^\top,& V&=[v_1,\ldots,v_M],\\
 Z&=\tilde XV=US,& z_{ik}&=\tilde x_i^\top v_k,\\
-z_i&=\tilde x_iV_K,& \hat{\tilde x}_i&=z_iV_K^\top .
+\hat{\tilde x}_i&=z_iV_K^\top
 \end{aligned}
 \]
-\textbf{Symbols:} columns of $V$ are loading vectors; $v_k$ is PC $k$; $Z$ contains scores; $s_k$ is singular value; $V_K$ keeps the first $K$ PCs.
-\textbf{How to read it:} large $|v_{mk}|$ means attribute $m$ strongly defines PC $k$; a positive score means the row points in the direction of positive loadings. If all signs in one PC flip, interpretation flips but distances and variance do not change.
-\textbf{Projection recipe:} use \fref{eq:pca-svd}; standardize row values first if needed; take column $v_k$; multiply matching entries $\tilde x_{im}v_{mk}$; add them to get score $z_{ik}$.
+MEANS: $\tilde X$ = centered/standardized data; $U,S,V$ = SVD matrices; $S$ has singular values $s_k$; $v_k$ = column $k$ of $V$, the PC $k$ loading vector; $Z$ = score matrix; $z_{ik}$ = row $i$'s coordinate on PC $k$; $V_K$ = first $K$ loading columns. READ $V$: read down column $k$; large $|v_{mk}|$ means attribute $m$ defines PC $k$. Sign says direction only; all signs in one PC may flip with same meaning.
 
-\subsection*{Explained variance}
+\subsection*{PCA PROJECTION / VARIANCE}
+\[
+\fid[eq:pca-var]\begin{aligned}
+z_k&=\tilde Xv_k,\\
+\Var(z_k)&=\frac1{N-1}\sum_i z_{ik}^2
+=\frac{v_k^\top\tilde X^\top\tilde Xv_k}{N-1}
+=\frac{s_k^2}{N-1}
+\end{aligned}
+\]
+MEANS: $z_k$ = all scores on PC $k$; $z_{ik}$ = score for row $i$; $N-1$ gives unbiased sample variance; $s_k$ = singular value. CALC: center/standardize row, multiply matching entries by loading column, add. READ SCORE: positive score means row points in positive loading direction; negative score means opposite profile.
+
+\subsection*{EXPLAINED VARIANCE}
 \[
 \fid[eq:pca-evr]\begin{aligned}
 \lambda_k&=\frac{s_k^2}{N-1},&
 \operatorname{EVR}_k&=\frac{s_k^2}{\sum_j s_j^2},\\
-\operatorname{cumEVR}(K)&=\frac{\sum_{k=1}^Ks_k^2}{\sum_j s_j^2}.&
+\operatorname{cumEVR}(K)&=\frac{\sum_{k=1}^Ks_k^2}{\sum_j s_j^2}
 \end{aligned}
 \]
-\textbf{Do this:} use \fref{eq:pca-evr}: square each singular value; divide by the total squared singular values; accumulate from PC1 upward; choose the smallest $K$ whose cumulative value reaches the required fraction.
+MEANS: $\lambda_k$ = variance on PC $k$; EVR = fraction of total variance explained by one PC; cumEVR = fraction explained by first $K$ PCs. CALC: square singular values, divide by total, accumulate. USE: choose smallest $K$ reaching required variance.
 
-\subsection*{Interpreting a PC in words}
-\textbf{Do this:} choose one PC column in $V$ from \fref{eq:pca-svd}; rank variables by largest $|v_{mk}|$; describe the positive side using variables with positive loadings and the negative side using variables with negative loadings. If two variables have same sign, high scores tend to have both high; opposite signs mean the PC contrasts them.
-\textbf{For a score:} compute $z_{ik}$ with \fref{eq:pca-svd}; if $z_{ik}$ is large positive, read row $i$ using the positive-loading variables; if large negative, read it using the negative-loading variables.
-
-\subsection*{Read PCA output and plots}
+\subsection*{PCA PLOTS AND OUTPUT}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-\textbf{Object} & \textbf{How to solve/read}\\ \midrule
-Loading column $v_k$ & Read down column $k$; largest absolute entries name variables defining PC $k$; sign tells positive/negative direction.\\
-Score plot & Each point is one row in PC coordinates from \fref{eq:pca-svd}; nearby points have similar standardized profiles.\\
-Loading plot & Points/arrows are attributes; same direction = similar contribution pattern; opposite direction = negative relation in PC plane.\\
-Biplot & Project an observation along a variable arrow; far in arrow direction means high value for that variable after scaling.\\
+OBJECT & READ IT\\ \midrule
+LOADING COLUMN & variable weights for one PC; largest absolute entries name what the PC measures.\\
+SCORE PLOT & each point is one row in PC coordinates; nearby points have similar standardized profiles.\\
+LOADING PLOT & variable arrows/points; same direction = similar contribution; opposite = negative relation.\\
+BIPLOT & project an observation along a variable arrow; far in arrow direction = high value of that variable.\\
+PC DIRECTIONS & columns of $V$ are unit length and mutually perpendicular: $v_a^\top v_b=0$, $\|v_k\|=1$.\\
 \bottomrule
 \end{tabularx}
-\textbf{Choosing $K$:} if the task says ``at least $90\%$ variance'', use cumulative EVR in \fref{eq:pca-evr}. If it asks for a 2D plot, use PC1 and PC2 even if cumulative EVR is below the target, then state how much variance the two axes explain.
 
-\subsection*{Norm and cosine}
+\subsection*{NORM / DOT PRODUCT / COSINE}
 \[
 \fid[eq:norm-cos]\begin{aligned}
 \|x\|_2&=\sqrt{x^\top x},&
-\cos(x,y)&=\frac{x^\top y}{\|x\|_2\|y\|_2},\\
-\|X\|_F^2&=\sum_{ij}x_{ij}^2=\sum_ks_k^2.&
+x^\top y&=\sum_mx_my_m,\\
+\cos(x,y)&=\frac{x^\top y}{\|x\|_2\|y\|_2},&
+\|X\|_F^2&=\sum_{ij}x_{ij}^2=\sum_ks_k^2
 \end{aligned}
 \]
-\textbf{Do this:} for \fref{eq:norm-cos}, multiply matching vector entries and sum for $x^\top y$; divide by both vector lengths. Cosine near $1$ means same direction; Euclidean distance also changes when vector lengths change.
+MEANS: $\|x\|_2$ = vector length; $x^\top y$ = dot product; cosine = direction similarity; $\|X\|_F$ = matrix length. READ: cosine near 1 = same direction; near 0 = perpendicular; near -1 = opposite direction.

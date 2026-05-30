@@ -2,21 +2,22 @@
 
 | Task family | Object shown / cue | Calculation core | Interpretation required | Sheet support |
 |---|---|---|---|---|
-| Standardize/read summaries | Data table, histogram, boxplot, scatter/correlation/distance matrix | `F1`, `F2`, `F3` | Above/below mean, plot spread, correlation sign/strength, named distance, plot-to-number matching | Data, plots, matrices |
-| Project with PCA | `S`, `V`, score/loading/biplot | `F4`, `F5` | Columns are PCs, rows are scores, loadings define variable direction and positive/negative PC meaning | PCA, SVD, vectors |
-| Compare vectors | Norm/cosine table or sparse vectors | `F6`, `F27`, `F28` | Direction similarity versus length/distance | PCA and associations |
-| Classify from probabilities | Count table, prior/likelihood table, density curve | `F7`, `F8`, `F9` | Prior, likelihood, posterior, density height | Probability, Bayes, densities |
-| Predict number/class | Weight vector, new input, class scores | `F10`--`F14` | Coefficient sign/unit, threshold, 2D boundary, local KNN boundary, softmax probabilities | Prediction and boundaries |
-| Select/evaluate model | Hold-out/CV/nested-CV table | `F15` | Minimum validation/inner-CV error; held-out/outer error after selection | Validation and output |
-| Read binary classifier output | Confusion matrix, metric request, ROC curve | `F16`--`F18` | Positive class, matrix orientation, denominators, ROC threshold movement | Validation and output |
-| Compare paired models | Same test rows for two models | `F19`--`F21` | Disagreements, sign of loss difference, CI containing zero | Validation and output |
-| Calculate tree/ensemble/ANN output | Split table, boost weights, network diagram | `F22`--`F24` | Node impurity, normalized weights, hidden activations | Trees, ensembles, ANN |
-| Form/read clusters | Centroids, dendrogram, clustering comparison | `F25`, `F26` plus linkage table | Nearest centroid, merge height, pair agreement | Clustering and outliers |
-| Soft cluster/outlier | GMM/KDE/local-density table | `F27`--`F29` | Responsibility sums, density height, smallest density/ARD as outlier | Clustering and outliers |
-| Mine item/text data | Basket/rule table, binary or tf-idf vectors | `F30`--`F32` | Co-occurrence, sparse similarity, rare term weighting | Associations and sparse vectors |
+| Find a term fast | Unknown word/object in question | None or nearest formula | Meaning of term and first action | `LOOKUP` table and `FAST CONCEPT CHECKS` |
+| Read data summaries | Data table, histogram, boxplot, scatter matrix | Standardization, covariance, correlation, distance | Axes, spread, sign, strength, row vs column comparison | `DATA, PLOTS, MATRICES` |
+| Match matrix to plot | Scatter/covariance/correlation options | Correlation sign and magnitude | Up/down tilt, narrowness, covariance ellipse | `COVARIANCE / CORRELATION / DISTANCE` |
+| Project with PCA | `Xtilde`, `S`, `V`, score/loading table | Projection, score variance, EVR | Columns of `V`, positive/negative scores, component meaning | `PCA / SVD / VECTORS` |
+| Classify with probabilities | Count table, prior, likelihood, Gaussian density | Bayes, Naive Bayes, density times prior | Prior vs likelihood vs posterior; denominator from condition | `PROBABILITY / BAYES / DENSITY` |
+| Read density models | KDE/GMM plot, component table, responsibility | KDE LOO, GMM responsibility | Density height, component assignment, covariance/weight reading | `GMM / EM RESPONSIBILITY`, `KDE` |
+| Predict numeric/class output | Weight vector, test point, feature map | Linear/ridge/logistic/KNN formulas | Weight sign, threshold, heatmap, boundary type | `PREDICTION / BOUNDARIES` |
+| Evaluate models | CV table, nested CV table | Fold averages and selected outer error | Model selection vs performance estimate | `VALIDATION / METRICS / MODEL OUTPUT` |
+| Read classifier output | Confusion matrix, ROC, threshold counts | Accuracy, recall, precision, FPR, ROC point | Positive class, table orientation, threshold movement | `CONFUSION MATRIX`, `ROC / AUC` |
+| Compare paired models | Same test rows for two classifiers/regressors | McNemar, paired loss CI | Disagreements, sign of difference, CI containing zero | `PAIRED MODEL COMPARISON` |
+| Read trees/ensembles/ANN | Split table, boundary figure, boost weights, ANN diagram | Impurity gain, AdaBoost, forward pass, parameter count | Tree inequalities, weighted votes, activations, biases | `TREES / ADABOOST / ANN` |
+| Cluster/read groups | Centroid table, dendrogram, partition comparison | K-means, linkage, Rand/Jaccard | Cluster profiles, merge heights, pair agreement | `CLUSTERING / ASSOCIATION` |
+| Mine association rules | Binary basket table or itemsets | Support, confidence, lift | Frequency, conditional frequency, Apriori pruning | `ASSOCIATION RULES / APRIORI` |
 
 ## Rewrite audit result
 
-Every final displayed formula block has a compact formula ID. Every retained procedure line now either cites an `F#` formula or states the concrete operation directly, for example plot matching, PC wording, denominator selection, ROC updates, boost-weight normalization, centroid recomputation, ARD ratio calculation, or Apriori pruning.
+The sheet now supports both calculation and concept-definition questions. Every retained formula is paired with nearby symbol explanations, and every major table/plot/output object has a reading rule. The 2025 exams drove additions for PCA score variance, nested CV, regularization bias/variance, feature-map heatmaps, tree-boundary reading, AdaBoost class-label weights, ANN parameter counts, GMM E-step responsibilities, and covariance/scatter interpretation.
 
 Excluded: rare / derivable / low-value / exam-format only / warning-only / not worth 4-page space.

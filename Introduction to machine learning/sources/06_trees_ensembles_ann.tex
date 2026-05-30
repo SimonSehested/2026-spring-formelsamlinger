@@ -1,38 +1,47 @@
-\section*{Trees, ensembles, ANN}
-\subsection*{Decision tree split}
+\section*{TREES / ADABOOST / ANN}
+\subsection*{DECISION TREE / HUNT SPLIT}
 \[
 \fid[eq:tree-imp]\begin{aligned}
-I_{\rm error}&=1-\max_cp_c,&
+I_{\rm error}&=1-\max_cp_c,\\
 I_{\rm Gini}&=1-\sum_cp_c^2,\\
-I_{\rm ent}&=-\sum_cp_c\log_2p_c,&
-\operatorname{gain}&=I(\text{parent})-\sum_v\frac{N_v}{N}I(\text{child }v).
+I_{\rm ent}&=-\sum_cp_c\log_2p_c,\\
+\operatorname{gain}&=I({\rm parent})
+-\sum_v\frac{N_v}{N}I({\rm child}\ v)
 \end{aligned}
 \]
-\textbf{Do this:} for each candidate split, count class labels in every node; compute $p_c=n_c/N_{\rm node}$; insert $p_c$ in the chosen impurity in \fref{eq:tree-imp}; multiply each child impurity by $N_v/N$; choose the split with largest gain. Read a tree by following thresholds from root to leaf; classification leaf returns majority/class fractions, regression leaf returns mean response.
-\textbf{Regression tree:} replace class fractions by response variance/SSE inside each node if the task is numeric prediction; the chosen split is the one giving the lowest weighted child error or largest error reduction.
+MEANS: $p_c=n_c/N_{\rm node}$ = class fraction in node; $I$ = impurity; $v$ = child branch; $N_v/N$ = child size weight. CALC: count labels in parent and children, compute impurity, subtract weighted child impurity, choose largest gain. READ TREE: follow inequalities root to leaf; a leaf region is intersection of all split rules on that path; classification leaf predicts majority/class fractions.
 
-\subsection*{AdaBoost}
+\subsection*{ADABOOST: CLASS-LABEL VERSION}
 \[
-\fid[eq:adaboost]\begin{aligned}
-\epsilon_t&=\sum_iq_i^{(t)}\ind[h_t(x_i)\ne y_i],&
-\alpha_t&=\frac12\log\frac{1-\epsilon_t}{\epsilon_t},\\
-q_i^{(t+1)}&\propto q_i^{(t)}
-\exp\!\big(\alpha_t\ind[h_t(x_i)\ne y_i]\big),&
-H(x)&=\operatorname{sign}\sum_t\alpha_th_t(x).
-\end{aligned}
+\fid[eq:adaboost]\begin{gathered}
+\epsilon_t=\sum_iq_i^{(t)}\ind[h_t(x_i)\ne y_i],\quad
+\alpha_t=\frac12\log\frac{1-\epsilon_t}{\epsilon_t},\\
+\tilde q_i^{(t+1)}=
+\begin{cases}
+q_i^{(t)}e^{-\alpha_t},&h_t(x_i)=y_i\\
+q_i^{(t)}e^{\alpha_t},&h_t(x_i)\ne y_i
+\end{cases}
+\end{gathered}
 \]
-\textbf{Do this:} use signed labels/classes for $h_t$. In \fref{eq:adaboost}, add current weights $q_i^{(t)}$ only for misclassified rows to get $\epsilon_t$; compute $\alpha_t$; multiply each row weight by the shown factor; divide all new weights by their sum so they add to $1$; final class is the sign of weighted votes.
+\[
+\fid[eq:adaboost-vote]H(x)=\argmax_c\sum_t\alpha_t\ind[h_t(x)=c]
+\]
+MEANS: $q_i^{(t)}$ = row weight before round $t$; $\epsilon_t$ = weighted error; $\alpha_t$ = classifier vote weight; $\tilde q$ = unnormalized updated weight; normalize only if next round needs weights summing to 1. READ: wrong rows get larger weight; correct rows get smaller weight when $\epsilon_t<0.5$. More rounds can overfit if weak learners are flexible.
 
-\subsection*{Neural-network forward pass}
+\subsection*{ANN FORWARD PASS}
 \[
 \fid[eq:ann]\begin{aligned}
-a_j&=w_{0j}^{(1)}+\sum_mw_{mj}^{(1)}x_m,\\
+a_j&=w_{0j}^{(1)}+\sum_mw_{mj}^{(1)}x_m,&
 h_j&=g(a_j),\\
-\hat y&=w_0^{(2)}+\sum_jw_j^{(2)}h_j,\\
-\operatorname{ReLU}(a)&=\max(0,a),\quad
-\sigma(a)=\frac1{1+e^{-a}},\quad
-\tanh(a)\in[-1,1].
+\hat y&=w_0^{(2)}+\sum_jw_j^{(2)}h_j,&
+\operatorname{ReLU}(a)&=\max(0,a),\\
+\sigma(a)&=\frac1{1+e^{-a}}
 \end{aligned}
 \]
-\textbf{Do this:} from a diagram/table, gather all incoming weights for hidden unit $j$; compute $a_j$ with \fref{eq:ann}; apply the stated activation to get $h_j$; multiply hidden outputs by outgoing weights and add output bias; apply final sigmoid/threshold only if the task says classification probability/class.
-\textbf{Reading weights:} a large positive incoming weight makes that input increase the hidden activation; a large negative weight makes it decrease. Bias is added even when all inputs are zero.
+MEANS: $a_j$ = input to hidden unit $j$; $w_{0j}^{(1)}$ = hidden bias; $w_{mj}^{(1)}$ = input-to-hidden weight; $h_j$ = hidden activation; $g$ = activation; $w^{(2)}$ = hidden-to-output weights. CALC: compute all hidden $a_j$, apply activation, multiply hidden outputs by output weights, add output bias. OUTPUT: linear for real-valued regression; sigmoid for binary probability; softmax for multiclass; ReLU only for nonnegative target.
+
+\subsection*{ANN PARAMETER COUNT}
+\[
+\fid[eq:ann-count]\#w=(M+1)n_h+(n_h+1)C
+\]
+MEANS: $M$ = input attributes; $n_h$ = hidden units; $C$ = output units/classes; `+1' counts bias. For one output, $\#w=(M+1)n_h+(n_h+1)$. READ WEIGHTS: large positive input weight increases hidden activation; large negative weight decreases it; bias is added even when inputs are zero.

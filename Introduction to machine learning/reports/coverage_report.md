@@ -2,38 +2,29 @@
 
 ## Sources inspected
 
-- `input/exams/`: solved and unsolved 02450 exam sets, Spring/Fall 2017--2024.
-- `input/lectures/`: 02451 lecture slide sets 01--13.
-- Existing `sources/*.tex`, `PLAN.md`, `prompts/style_guide.md`, and `prompts/verification_guide.md`.
+- `input/exams/`: 02450/02452 exam sets, with 2025 Spring/Fall weighted highest.
+- `input/lectures/`: 02451 lecture slide sets 01--13 as support material.
+- Existing source files, prior reports, and the 2025 coverage assessment.
 
-The course is 02450/02451 Introduction to Machine Learning and Data Mining / Introduction to Machine Learning. The sheet is organized around recurring calculation and output-reading tasks from the exam-derived reports.
+## Current design
+
+The sheet is now a fast printed lookup aid rather than a dense prose summary. It uses uppercase scan terms, compact tables, local symbol explanations, and short `MEANS / READ / CALC` rules. It is designed to be usable when copied by hand, so it does not depend on color or bold text.
 
 ## Included high-value coverage
 
 | Object/task family | Final support |
 |---|---|
-| Standardization, plots, covariance/correlation, distances | Formula IDs for scaling, correlation and distances; explicit axis/matrix reading recipes plus plot-to-number matching. |
-| PCA/SVD, projections, explained variance | Formula IDs for SVD/scores/reconstruction and EVR; explicit loading, score plot, biplot, PC-wording and projection instructions. |
-| Bayes, Naive Bayes, Gaussian density | Posterior/count/log-score/density formulas with table-reading and class-score recipes. |
-| Linear/ridge/logistic regression, KNN, softmax | Prediction and boundary formulas with explicit calculation order, coefficient reading and threshold/boundary rules. |
-| Validation, confusion matrix, ROC, paired tests | CV/nested-CV selection rule, denominator/orientation rules, ROC update and threshold procedure, McNemar and paired-loss CI. |
-| Trees, AdaBoost, ANN | Split gain, regression-tree cue, boosting weight normalization, weight reading and neural forward-pass recipes. |
-| K-means, dendrograms, cluster agreement, GMM, KDE/ARD | Assignment, centroid reading, dendrogram group choice, responsibility normalization and outlier calculation recipes. |
-| Association rules, sparse similarity, text vectors | Support/confidence/lift, Apriori pruning, Jaccard/SMC and tf-idf/cosine recipes. |
+| Lookup/navigation | Mini-index of scan terms and final concept/action tables for quick search. |
+| Data, plots, matrices | Standardization, covariance/correlation, distances, histograms, scatter matrices, count tables, covariance-ellipse reading. |
+| PCA/SVD | SVD objects, projection, score variance, explained variance, loadings, scores, biplots, orthonormal PC directions. |
+| Probability/Bayes/density | Bayes rule, count-table probabilities, Naive Bayes, Gaussian density, GMM responsibility/E-step, KDE/LOO. |
+| Prediction/boundaries | Linear/ridge, logistic regression, feature maps, heatmaps, KNN, softmax, boundary-shape recognition. |
+| Validation/metrics | Hold-out, K-fold, nested CV, confusion matrix, accuracy/error/recall/precision/FPR/F1, ROC/AUC, paired tests. |
+| Trees/ensembles/ANN | Hunt split impurities, tree-boundary reading, AdaBoost class-label weights/votes, ANN forward pass, output activations, parameter count. |
+| Clustering/association | K-means, dendrogram linkage, Rand/Jaccard cluster agreement, local density/ARD, association support/confidence/lift/Apriori. |
 
-## Structure
+## Compression and cuts
 
-- `sources/01_exam_and_data.tex`
-- `sources/02_pca_linear_algebra.tex`
-- `sources/03_probability_bayes.tex`
-- `sources/04_regression_classification.tex`
-- `sources/05_validation_metrics.tex`
-- `sources/06_trees_ensembles_ann.tex`
-- `sources/07_clustering_density.tex`
-- `sources/08_association_text_checks.tex`
+The rewrite shifts space toward 2025-tested concepts and interpretation tasks. Long prose was replaced by tables and scan-first labels. Low-priority material was compressed: text/tf-idf was removed, softmax reduced to one lookup row, Jaccard retained only where useful for cluster agreement, and ARD kept compactly.
 
-## Compression decisions
-
-Included formulas and recipes were rewritten instead of left as vague reminders. After the first 10pt rewrite left unused page space, additional high-value reading rules and a final object-to-action table were added back. Repeated symbol prose and warning-only text remain removed.
-
-Excluded: exam-format material / guessing strategy / warning-only text / long derivations / full EM derivation / low-frequency extensions beyond the recurring exam objects.
+Excluded: exam-format material / guessing strategy / warning-only text / long derivations / full EM derivation / full backpropagation / low-frequency text-mining details / broad textbook explanations.

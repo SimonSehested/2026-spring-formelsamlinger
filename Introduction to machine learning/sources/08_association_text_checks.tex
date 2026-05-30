@@ -1,47 +1,67 @@
-\section*{Associations and sparse vectors}
-\subsection*{Association rules and Apriori}
-\[
-\fid[eq:assoc]\begin{aligned}
-\operatorname{supp}(X)&=\frac{\#(X)}N,\\
-\operatorname{conf}(X\to Y)&=\frac{\operatorname{supp}(X\cup Y)}{\operatorname{supp}(X)},\\
-\operatorname{lift}(X\to Y)&=\frac{\operatorname{conf}(X\to Y)}{\operatorname{supp}(Y)}.
-\end{aligned}
-\]
-\textbf{Symbols:} $X$ antecedent, $Y$ consequent, disjoint itemsets; $\#(X)$ is baskets containing $X$.
-\textbf{Do this:} use \fref{eq:assoc}; count baskets containing $X$, $Y$, and $X\cup Y$; support is count divided by $N$; confidence is the fraction of $X$ baskets that also contain $Y$; lift compares confidence to baseline support of $Y$. Apriori: discard candidate itemsets below minimum support, and only extend retained frequent itemsets.
-
-\subsection*{Binary attributes and Jaccard}
-\[
-\fid[eq:jaccard]\begin{gathered}
-\begin{array}{c|cc}
-&b=1&b=0\\\hline
-a=1&f_{11}&f_{10}\\
-a=0&f_{01}&f_{00}
-\end{array}
-\\
-J(a,b)=\frac{f_{11}}{f_{11}+f_{10}+f_{01}},\qquad
-\operatorname{SMC}=\frac{f_{11}+f_{00}}M.
-\end{gathered}
-\]
-\textbf{Do this:} for each attribute, count which cell of \fref{eq:jaccard} the pair $(a_m,b_m)$ falls in. Jaccard ignores shared zeros, so use it for sparse baskets/word presence; SMC counts both shared ones and shared zeros.
-
-\subsection*{Text vectors and cosine}
-\[
-\fid[eq:tfidf]\operatorname{tfidf}_{ij}=\operatorname{tf}_{ij}\log\frac{N}{\operatorname{df}_j},\qquad
-\cos(x,y)=\frac{x^\top y}{\|x\|_2\|y\|_2}.
-\]
-\textbf{Do this:} use \fref{eq:tfidf}; multiply term frequency by inverse document frequency, so rare terms get larger weight; compare documents with cosine from \fref{eq:norm-cos}. Cosine near $1$ means similar word-weight direction, independent of document length scale.
-
-\subsection*{Choose from the given object}
+\section*{FAST CONCEPT CHECKS}
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
-\textbf{Given} & \textbf{Use this concrete action}\\ \midrule
-Class probabilities/scores & Normalize scores with \fref{eq:bayes}, \fref{eq:naive-bayes}, \fref{eq:gmm} or \fref{eq:softmax}; choose largest.\\
-Weights and a new row & Add intercept, multiply weights and inputs using \fref{eq:lin-ridge}, \fref{eq:logistic} or \fref{eq:ann}.\\
-Validation table & Choose smallest validation/inner error with \fref{eq:cv-error}; report held-out/outer error.\\
-Confusion/ROC & Define positive class, fill counts, then use denominators in \fref{eq:class-metrics}.\\
-Centroids/dendrogram & Assign nearest centroid with \fref{eq:kmeans}, or cut dendrogram at requested height/$K$.\\
-Density/neighbours & Use \fref{eq:gmm}, \fref{eq:kde} or \fref{eq:local-density}; smallest density/ARD is most outlying.\\
-Baskets/text vectors & Count rule supports with \fref{eq:assoc}, or compare sparse vectors with \fref{eq:jaccard}/\fref{eq:tfidf}.\\
+TERM & MEANS / READS AS\\ \midrule
+ATTRIBUTE / FEATURE & one column of $X$; measured variable used as input.\\
+OBSERVATION & one row of $X$; one fish/robot/sample/person.\\
+TARGET / LABEL & value to predict; numeric for regression, class for classification.\\
+WEIGHT $w_j$ & effect of feature $j$ in a linear score; sign gives direction.\\
+INTERCEPT / BIAS & constant added when all inputs are zero; use leading 1 in input vector.\\
+PRIOR & class probability before seeing attributes.\\
+LIKELIHOOD & density/probability of observed attributes inside a class.\\
+POSTERIOR & class probability after seeing attributes.\\
+LOADING & PCA weight of an original attribute in one PC.\\
+SCORE & coordinate of an observation on a PC.\\
+CENTROID & mean vector/profile of a k-means cluster.\\
+RESPONSIBILITY & GMM posterior probability that component $k$ generated row $i$.\\
+THRESHOLD & cutoff turning score/probability into a class.\\
+REGULARIZATION & penalty on weights; shrinks weights to reduce variance.\\
+OVERFITTING & low training error but poor unseen/test error; model too variable.\\
+\bottomrule
+\end{tabularx}
+
+\subsection*{WHEN YOU SEE THIS, DO THIS}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+EXAM OBJECT & FIRST ACTION\\ \midrule
+CORRELATION OPTIONS & compare scatter sign/strength with matrix entries.\\
+DISTANCE TABLE + KNN & remove test row in LOOCV, sort distances, vote/average.\\
+DENDROGRAM OPTIONS & find first smallest-distance merges and their heights.\\
+PCA $V$ MATRIX & choose column = PC; read variable weights down that column.\\
+PROBABILITY TABLE & identify denominator from condition after $|$.\\
+CONFUSION MATRIX & name positive class, then locate TP/FN/FP/TN by labels.\\
+ROC FROM COUNTS & compute one point $(FP/(FP+TN),TP/(TP+FN))$.\\
+TREE BOUNDARY & turn each node into an axis inequality; intersect along path.\\
+HEATMAP OUTPUT & identify feature map; contours are constant model score.\\
+ANN TABLE & compute hidden units first, then output; count biases.\\
+\bottomrule
+\end{tabularx}
+
+\subsection*{MODEL CHOICE / STATEMENT CUES}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+CUE & CORRECT READING\\ \midrule
+LOW BIAS, HIGH VARIANCE & model too flexible; increase $\lambda$, simplify features, or use more data.\\
+HIGH BIAS, LOW VARIANCE & model too simple; add features, reduce $\lambda$, or use more flexible model.\\
+TRAIN ERROR VERY LOW & not enough alone to prove overfitting; compare with validation/test error.\\
+CV FOR COMPLEXITY & use validation/inner folds to choose; use held-out/outer folds to estimate performance.\\
+LINEAR ANN ACTIVATIONS & many linear layers collapse to one linear model.\\
+OUTPUT ACTIVATION & linear = real regression; sigmoid = binary probability; softmax = multiclass probabilities.\\
+\bottomrule
+\end{tabularx}
+
+\subsection*{QUICK SYMBOL DICTIONARY}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+SYMBOL & MEANS\\ \midrule
+$i$ & row/observation index.\\
+$j,m$ & attribute/feature index.\\
+$k$ & component, cluster, class, fold, or neighbour index; read context.\\
+$c$ & class label.\\
+$\hat{\ }$ & estimated or predicted value.\\
+$\tilde{\ }$ & centered or standardized value.\\
+$\argmax$ & choose the input/class giving largest value.\\
+$\argmin$ & choose the input/model giving smallest value.\\
+$\ind[\cdot]$ & indicator: 1 if condition true, 0 otherwise.\\
 \bottomrule
 \end{tabularx}
