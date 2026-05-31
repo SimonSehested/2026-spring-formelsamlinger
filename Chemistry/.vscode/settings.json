@@ -1,0 +1,8 @@
+{
+  "python.analysis.extraPaths": [
+    "./support_material/input/exams"
+  ],
+  "python.autoComplete.extraPaths": [
+    "./support_material/input/exams"
+  ]
+}

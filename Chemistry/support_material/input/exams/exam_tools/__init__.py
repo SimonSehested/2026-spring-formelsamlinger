@@ -1,6 +1,13 @@
 """Reusable calculation tools inferred from the supplied chemistry exams."""
 
+from .constants import *  # noqa: F403
+from .constants import __all__ as _constant_exports
 from .chemistry import (
+    AVOGADRO_MOL,
+    FARADAY_C_MOL,
+    GAS_CONSTANT_J_MOL_K,
+    LIGHT_SPEED_M_S,
+    PLANCK_J_S,
     arrhenius_ratio,
     cell_potential,
     clausius_clapeyron_pressure,
@@ -16,6 +23,12 @@ from .chemistry import (
 )
 
 __all__ = [
+    *_constant_exports,
+    "AVOGADRO_MOL",
+    "FARADAY_C_MOL",
+    "GAS_CONSTANT_J_MOL_K",
+    "LIGHT_SPEED_M_S",
+    "PLANCK_J_S",
     "arrhenius_ratio",
     "cell_potential",
     "clausius_clapeyron_pressure",

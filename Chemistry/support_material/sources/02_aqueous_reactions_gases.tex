@@ -152,16 +152,23 @@ Oxidation produces electrons and increases oxidation state; reduction consumes e
 \end{aligned}
 \end{equation}
 
+\subsubsection{Oxidation-state formula:}
+\begin{equation}\label{eq:aqueous:oxidation-state-sum}
+\sum_i n_i\,\mathrm{OS}_i = q_{\text{species}}
+\end{equation}
+where \(n_i\) is the number of atoms of element \(i\), \(\mathrm{OS}_i\) is its oxidation state, and \(q_{\text{species}}\) is the total charge of the molecule or ion. Assign known values first, usually \(\ce{O}=-II\), \(\ce{H}=+I\), free elements \(=0\), and monatomic ions \(=\) their ion charge; set the unknown oxidation state to \(x\) and solve.
+
 \subsection{Exam recipe: redox balancing}
 \textbf{Use when:} an oxidation--reduction equation must be balanced in acidic or basic aqueous solution.
 
 \textbf{Given / Find:} Given reactant and product species plus acidic or basic medium; find the balanced overall equation.
 
-\textbf{Required references:} Half-reaction procedure \eqref{eq:aqueous:redox-half-reaction-sequence}.
+\textbf{Required references:} Oxidation-state rules in Table~\ref{tab:electrochem:oxidation-rules}; half-reaction procedure \eqref{eq:aqueous:redox-half-reaction-sequence}.
 
 \textbf{Steps:}
 \begin{enumerate}
-    \item Separate oxidation and reduction half-reactions by identifying which oxidation states increase and decrease.
+    \item Identify oxidation states with \eqref{eq:aqueous:oxidation-state-sum} for the atoms that change: multiply each atom count by its oxidation state, set the sum equal to the species charge, and solve any unknown \(x\).
+    \item Separate oxidation and reduction half-reactions: oxidation state increases for oxidation and decreases for reduction.
     \item For each half-reaction, balance non-\(\ce{H}\), non-\(\ce{O}\) atoms, then add \(\ce{H2O}\), \(\ce{H+}\), and \(\ce{e-}\) in the order prescribed by \eqref{eq:aqueous:redox-half-reaction-sequence}.
     \item Multiply each balanced half-reaction by the smallest integers that give equal electron counts, then add and cancel identical species.
     \item For basic solution, apply the final conversion step in \eqref{eq:aqueous:redox-half-reaction-sequence} and cancel excess water.

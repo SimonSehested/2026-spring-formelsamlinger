@@ -17,6 +17,10 @@ In a notebook or script:
 ```python
 from exam_tools import *
 
+# Offline SI constants are included as plain floats.
+cell_voltage = 356900 / (2 * faraday_constant)
+rate_energy = 23268 * molar_gas_constant
+
 # Saturated Mg(OH)2, Ksp = 5.61e-12
 s = solubility_from_ksp(5.61e-12, (1, 2))
 ph = 14.0 + __import__("math").log10(2 * s)
@@ -44,7 +48,14 @@ examples and an exam-task index.
 
 ## Final API
 
-The public API contains 12 functions:
+The public API contains the exam functions plus a vendored offline CODATA
+constants table. Use `faraday_constant`, `avogadro_constant`,
+`molar_gas_constant`, `planck_constant`, `speed_of_light_in_vacuum`, or
+`constant("molar gas constant")` directly as numeric SI values. Do not import
+`sympy.physics.units` in the exam notebook; those objects are symbolic and can
+render poorly in VS Code notebooks.
+
+The calculation functions are:
 
 ```python
 arrhenius_ratio

@@ -2,19 +2,62 @@ import math
 import unittest
 
 from exam_tools import (
+    F,
+    N_A,
+    PHYSICAL_CONSTANTS,
+    R,
     arrhenius_ratio,
+    avogadro_constant,
     cell_potential,
     clausius_clapeyron_pressure,
+    constant,
+    constant_info,
+    elementary_charge,
     equilibrium_constant,
+    faraday_constant,
     freezing_point_depression,
     ideal_gas,
+    molar_gas_constant,
     kinetic_linear_fit,
     molar_mass,
+    planck_constant,
     solubility_complete_check,
     solubility_from_ksp,
+    speed_of_light_in_vacuum,
     unit_cell_volume,
     weak_solution_ph,
 )
+
+
+class PhysicalConstantsTests(unittest.TestCase):
+    def test_common_constants_are_numeric_floats(self):
+        for value in (
+            faraday_constant,
+            avogadro_constant,
+            molar_gas_constant,
+            planck_constant,
+            speed_of_light_in_vacuum,
+            elementary_charge,
+        ):
+            self.assertIsInstance(value, float)
+
+    def test_exam_aliases_match_canonical_constants(self):
+        self.assertEqual(R, molar_gas_constant)
+        self.assertEqual(F, faraday_constant)
+        self.assertEqual(N_A, avogadro_constant)
+
+    def test_constant_lookup_accepts_source_and_snake_case_names(self):
+        self.assertEqual(constant("molar_gas_constant"), molar_gas_constant)
+        self.assertEqual(constant("molar gas constant"), molar_gas_constant)
+        self.assertEqual(constant("Molar Gas Constant"), molar_gas_constant)
+
+    def test_constant_info_exposes_units_and_source_name(self):
+        info = constant_info("faraday_constant")
+        self.assertEqual(info.unit, "C mol^-1")
+        self.assertEqual(info.source_name, "Faraday constant")
+
+    def test_vendored_table_contains_full_scipy_snapshot(self):
+        self.assertGreaterEqual(len(PHYSICAL_CONSTANTS), 445)
 
 
 class Winter2022CalculationTests(unittest.TestCase):
