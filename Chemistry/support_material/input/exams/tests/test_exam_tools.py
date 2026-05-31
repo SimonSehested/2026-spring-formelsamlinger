@@ -40,6 +40,14 @@ class Winter2022CalculationTests(unittest.TestCase):
         amount = ideal_gas(pressure_pa=101325, volume_m3=33.6e-6, temperature_k=273.15)
         self.assertAlmostEqual(0.108 / amount, molar_mass("C5H12"), delta=0.5)
 
+    def test_ideal_gas_accepts_unit_specific_inputs(self):
+        amount = ideal_gas(p_atm=1.0, V_mL=33.6, T_C=0.0)
+        self.assertAlmostEqual(0.108 / amount, molar_mass("C5H12"), delta=0.5)
+
+    def test_ideal_gas_rejects_duplicate_units_for_same_quantity(self):
+        with self.assertRaises(ValueError):
+            ideal_gas(p_Pa=101325, p_atm=1.0, V_L=1.0, T_K=298.15)
+
     def test_clausius_clapeyron_q11(self):
         p2_atm = clausius_clapeyron_pressure(101325, 184.65, 303.15, 14.7) / 101325
         self.assertAlmostEqual(p2_atm, 42.0, delta=1.0)

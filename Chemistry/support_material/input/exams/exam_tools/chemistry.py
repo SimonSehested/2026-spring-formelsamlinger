@@ -7,6 +7,7 @@ import re
 from typing import Sequence
 
 GAS_CONSTANT_J_MOL_K = 8.314462618
+ATM_TO_PA = 101325.0
 FARADAY_C_MOL = 96485.33212
 
 # Standard atomic weights rounded at ordinary exam-calculation precision.
@@ -143,30 +144,111 @@ def freezing_point_depression(
 
 def ideal_gas(
     *,
+    p: float | None = None,
+    p_Pa: float | None = None,
+    p_atm: float | None = None,
     pressure_pa: float | None = None,
+    V: float | None = None,
+    V_m3: float | None = None,
+    V_L: float | None = None,
+    V_mL: float | None = None,
     volume_m3: float | None = None,
+    n: float | None = None,
     amount_mol: float | None = None,
+    T: float | None = None,
+    T_K: float | None = None,
+    T_C: float | None = None,
     temperature_k: float | None = None,
+    temperature_c: float | None = None,
 ) -> float:
-    """Solve ``pV=nRT`` for the single missing SI-valued argument.
+    """Solve ``pV=nRT`` for the single missing variable.
 
-    Parameters use Pa, m3, mol and K. Exactly one parameter must be ``None``; the
-    return value has the unit of that missing parameter.
+    Pressure can be supplied as ``p``/``p_Pa``/``pressure_pa`` in Pa or
+    ``p_atm`` in atm. Volume can be supplied as ``V``/``V_m3``/``volume_m3`` in
+    m3, ``V_L`` in L or ``V_mL`` in mL. Temperature can be supplied as
+    ``T``/``T_K``/``temperature_k`` in K or ``T_C``/``temperature_c`` in deg C.
+    Exactly one of pressure, volume, amount and temperature must be omitted; the
+    return value is always in the SI unit of the missing variable.
     """
 
-    values = (pressure_pa, volume_m3, amount_mol, temperature_k)
+    def _single_value(
+        name: str,
+        values: tuple[tuple[str, float | None, float, float], ...],
+    ) -> float | None:
+        supplied = [
+            (unit_name, value, scale, offset)
+            for unit_name, value, scale, offset in values
+            if value is not None
+        ]
+        if len(supplied) > 1:
+            supplied_names = ", ".join(unit_name for unit_name, _, _, _ in supplied)
+            raise ValueError(f"Provide only one {name} unit, got {supplied_names}")
+        if not supplied:
+            return None
+        unit_name, value, scale, offset = supplied[0]
+        converted = value * scale + offset
+        _positive(unit_name, converted)
+        return converted
+
+    pressure_pa_value = _single_value(
+        "pressure",
+        (
+            ("p", p, 1.0, 0.0),
+            ("p_Pa", p_Pa, 1.0, 0.0),
+            ("pressure_pa", pressure_pa, 1.0, 0.0),
+            ("p_atm", p_atm, ATM_TO_PA, 0.0),
+        ),
+    )
+    volume_m3_value = _single_value(
+        "volume",
+        (
+            ("V", V, 1.0, 0.0),
+            ("V_m3", V_m3, 1.0, 0.0),
+            ("volume_m3", volume_m3, 1.0, 0.0),
+            ("V_L", V_L, 1e-3, 0.0),
+            ("V_mL", V_mL, 1e-6, 0.0),
+        ),
+    )
+    amount_mol_value = _single_value(
+        "amount",
+        (
+            ("n", n, 1.0, 0.0),
+            ("amount_mol", amount_mol, 1.0, 0.0),
+        ),
+    )
+    temperature_k_value = _single_value(
+        "temperature",
+        (
+            ("T", T, 1.0, 0.0),
+            ("T_K", T_K, 1.0, 0.0),
+            ("temperature_k", temperature_k, 1.0, 0.0),
+            ("T_C", T_C, 1.0, 273.15),
+            ("temperature_c", temperature_c, 1.0, 273.15),
+        ),
+    )
+
+    values = (pressure_pa_value, volume_m3_value, amount_mol_value, temperature_k_value)
     if sum(value is None for value in values) != 1:
         raise ValueError("Exactly one ideal-gas parameter must be omitted")
-    for name, value in zip(("pressure_pa", "volume_m3", "amount_mol", "temperature_k"), values):
-        if value is not None:
-            _positive(name, value)
-    if pressure_pa is None:
-        return amount_mol * GAS_CONSTANT_J_MOL_K * temperature_k / volume_m3  # type: ignore[operator]
-    if volume_m3 is None:
-        return amount_mol * GAS_CONSTANT_J_MOL_K * temperature_k / pressure_pa  # type: ignore[operator]
-    if amount_mol is None:
-        return pressure_pa * volume_m3 / (GAS_CONSTANT_J_MOL_K * temperature_k)  # type: ignore[operator]
-    return pressure_pa * volume_m3 / (GAS_CONSTANT_J_MOL_K * amount_mol)
+    if pressure_pa_value is None:
+        return (
+            amount_mol_value
+            * GAS_CONSTANT_J_MOL_K
+            * temperature_k_value
+            / volume_m3_value
+        )  # type: ignore[operator]
+    if volume_m3_value is None:
+        return (
+            amount_mol_value
+            * GAS_CONSTANT_J_MOL_K
+            * temperature_k_value
+            / pressure_pa_value
+        )  # type: ignore[operator]
+    if amount_mol_value is None:
+        return pressure_pa_value * volume_m3_value / (
+            GAS_CONSTANT_J_MOL_K * temperature_k_value
+        )
+    return pressure_pa_value * volume_m3_value / (GAS_CONSTANT_J_MOL_K * amount_mol_value)
 
 
 def equilibrium_constant(delta_g_kj_mol: float, temperature_k: float) -> float:
