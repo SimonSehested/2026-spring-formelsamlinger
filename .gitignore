@@ -1,2 +1,24 @@
 Chemistry/alle_slides_kemi.pdf
 Chemistry/Chemistry2e-WEB.pdf
+Chemistry/ALLE_EKSAMENSSAET_SAMLET.pdf
+Chemistry/elektronkonfigurationer_alle_grundstoffer.pdf
+Chemistry/Kemi_noter-3.pdf
+Chemistry/kemi_stofnavne_og_formler.pdf
+Chemistry/oktettreglen_eksamensark.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+
+# LaTeX build output
+*.aux
+*.log
+*.toc
+*.out
+*.idx
+*.ind
+*.ilg
+build.log
+
+# Local editor state
+.vscode/

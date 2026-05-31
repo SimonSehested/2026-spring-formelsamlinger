@@ -17,14 +17,14 @@ Symbol & Betydning & Enhed/type & Dukker op i \\
 \bottomrule
 \endlastfoot
 \multicolumn{4}{@{}l}{\textbf{Signaler og signalveje}}\\
-\(r\), \(R(s)\), \(R\) & Reference i tid/Laplace-domæne. \(R(s)=1/s\) for unit step og \(R(s)=h_0/s\) for step med størrelse \(h_0\). & Systemspecifik & \S\ref{sec:start}, \S\ref{sec:feedback}, \S\ref{sec:disturbance}, \S\ref{sec:metodefinder}\\
-\(e\), \(E(s)\), \(E\) & Fejl mellem reference og målt output; fx \(e=r-Hy\). & Systemspecifik & \S\ref{sec:start}, \S\ref{sec:feedback}, \S\ref{sec:disturbance}\\
-\(u\), \(U(s)\), \(U\) & Kontrolsignal/plantinput. I modelafsnit er \(U(s)\) Laplace-transformeret input. & Systemspecifik & \S\ref{sec:model}, \S\ref{sec:feedback}, \S\ref{sec:limits}, \S\ref{sec:metodefinder}\\
-\(u_{\mathrm{lin}}(t)\) & Ubegrænset lineær controllerkommando før saturation/rate limit. & Som \(u\) & \S\ref{sec:limits}, \S\ref{sec:python}\\
+\(r\), \(R(s)\), \(R\) & Reference i tid/Laplace-domæne. \(R(s)=1/s\) for unit step og \(R(s)=h_0/s\) for step med størrelse \(h_0\). & Systemspecifik & \S\ref{sec:feedback}, \S\ref{sec:disturbance}\\
+\(e\), \(E(s)\), \(E\) & Fejl mellem reference og målt output; fx \(e=r-Hy\). & Systemspecifik & \S\ref{sec:feedback}, \S\ref{sec:disturbance}\\
+\(u\), \(U(s)\), \(U\) & Kontrolsignal/plantinput. I modelafsnit er \(U(s)\) Laplace-transformeret input. & Systemspecifik & \S\ref{sec:model}, \S\ref{sec:feedback}, \S\ref{sec:limits}\\
+\(u_{\mathrm{lin}}(t)\) & Ubegrænset lineær controllerkommando før saturation/rate limit. & Som \(u\) & \S\ref{sec:limits}\\
 \(u_{\mathrm{sat}}(t)\) & Satureret aktuatorsignal efter amplitudebegrænsning. & Som \(u\) & \S\ref{sec:limits}\\
 \(u_{\min},u_{\max}\) & Nedre og øvre amplitudelimit for aktuator. & Som \(u\) & \S\ref{sec:limits}\\
 \(\dot u(t)\) & Tidsafledt aktuatorsignal; bruges til rate limit. & \(u\)/s & \S\ref{sec:limits}\\
-\(y\), \(Y(s)\), \(Y\) & Output i tid/Laplace-domæne. I modelafsnit er \(Y(s)\) Laplace-transformeret output. & Systemspecifik & \S\ref{sec:start}, \S\ref{sec:model}, \S\ref{sec:feedback}, \S\ref{sec:disturbance}\\
+\(y\), \(Y(s)\), \(Y\) & Output i tid/Laplace-domæne. I modelafsnit er \(Y(s)\) Laplace-transformeret output. & Systemspecifik & \S\ref{sec:model}, \S\ref{sec:feedback}, \S\ref{sec:disturbance}\\
 \(d\), \(D(s)\), \(D\) & Disturbance og disturbance path. \(D(s)\) kan også være transferfunktionen fra disturbance til outputbidrag. & Varierer & \S\ref{sec:disturbance}, \S\ref{sec:feedforward}\\
 \(d_0\) & Konstant disturbance-størrelse i \(D(s)=d_0/s\). & Som disturbance & \S\ref{sec:disturbance}\\
 \(n\), \(N\) & Measurement noise i feedbackmålingen; \(N=0\) betyder at noise sættes til nul i superposition. & Varierer & \S\ref{sec:disturbance}\\
@@ -32,87 +32,87 @@ Symbol & Betydning & Enhed/type & Dukker op i \\
 \(u_0\), \(\tilde u\) & Input-arbejdspunkt og input-deviation ved linearisering. & Som \(u\) & \S\ref{sec:model}\\
 \(h_0\) & Stepstørrelse/amplitude. & Som reference & \S\ref{sec:time}, \S\ref{sec:feedback}\\
 \multicolumn{4}{@{}l}{\textbf{Transferfunktioner og blokke}}\\
-\(G(s)\), \(G\) & Plant eller generel transferfunktion. Bruges også i \(G=Y/U\). & Ratio & \S\ref{sec:start}, \S\ref{sec:metodefinder}, \S\ref{sec:model}, \S\ref{sec:bode}, \S\ref{sec:feedback}, \S\ref{sec:pilead}, \S\ref{sec:disturbance}, \S\ref{sec:feedforward}, \S\ref{sec:python}\\
+\(G(s)\), \(G\) & Plant eller generel transferfunktion. Bruges også i \(G=Y/U\). & Ratio & \S\ref{sec:model}, \S\ref{sec:bode}, \S\ref{sec:feedback}, \S\ref{sec:pilead}, \S\ref{sec:disturbance}, \S\ref{sec:feedforward}\\
 \(G_1(s)\) & Førsteordens standardmodel. & Ratio & \S\ref{sec:time}\\
 \(G_2(s)\) & Andenordens standardmodel. & Ratio & \S\ref{sec:time}\\
 \(G_{er}(s)\) & Error transferfunktion \(E(s)/R(s)\). & Ratio & \S\ref{sec:feedback}\\
 \(G_{yd}(s)\) & Transferfunktion fra disturbance til output. & Ratio & \S\ref{sec:feedforward}\\
 \(F_{\mathrm{track}}(s)\) & Reference feed-forward, typisk plantinvers plus lavpasfilter. & Ratio & \S\ref{sec:tracking-feedforward}\\
-\(C(s)\), \(C\) & Controller. & Ratio & \S\ref{sec:metodefinder}, \S\ref{sec:feedback}, \S\ref{sec:pilead}, \S\ref{sec:limits}, \S\ref{sec:feedforward}\\
+\(C(s)\), \(C\) & Controller. & Ratio & \S\ref{sec:feedback}, \S\ref{sec:pilead}, \S\ref{sec:limits}, \S\ref{sec:feedforward}\\
 \(C_0(s)\), \(C_0\) & Controllerdelen uden \(K_P\), brugt når \(K_P\) isoleres fra magnitudebalancen. & Ratio & \S\ref{sec:pilead}\\
-\(C_{PI}\) & PI-controllerform/genkendelsessignal. & Ratio & \S\ref{sec:metodefinder}\\
-\(C_{\mathrm{lead}}\) & Lead-controllerform/genkendelsessignal. & Ratio & \S\ref{sec:metodefinder}\\
+\(C_{PI}\) & PI-controllerform/genkendelsessignal. & Ratio & \S\ref{sec:pilead}\\
+\(C_{\mathrm{lead}}\) & Lead-controllerform/genkendelsessignal. & Ratio & \S\ref{sec:pilead}\\
 \(C_{\mathrm{lag}}(s)\) & Lag-led i P-Lead-Lag-design. & Ratio & \S\ref{sec:limits}\\
 \(H(s)\), \(H\) & Sensor-/måleled i feedbackgrenen. & Ratio & \S\ref{sec:feedback}, \S\ref{sec:disturbance}\\
 \(F(s)\), \(F\) & Referenceprefilter. & Ratio & \S\ref{sec:disturbance}\\
-\(F_d(s)\), \(F_d\) & Disturbance feed-forward-blok. & Ratio & \S\ref{sec:metodefinder}, \S\ref{sec:disturbance}, \S\ref{sec:feedforward}, \S\ref{sec:python}\\
-\(L(s)\), \(L\) & Loop transfer function, typisk \(CG\) eller \(CGH\) afhængigt af sensor. & Ratio & \S\ref{sec:bode}, \S\ref{sec:feedback}, \S\ref{sec:disturbance}, \S\ref{sec:python}\\
-\(S(s)\), \(S\) & Sensitivity \(1/(1+L)\). & Ratio & \S\ref{sec:metodefinder}, \S\ref{sec:feedback}, \S\ref{sec:disturbance}\\
-\(T(s)\), \(T\) & Complementary sensitivity \(L/(1+L)\). & Ratio & \S\ref{sec:metodefinder}, \S\ref{sec:disturbance}\\
+\(F_d(s)\), \(F_d\) & Disturbance feed-forward-blok. & Ratio & \S\ref{sec:disturbance}, \S\ref{sec:feedforward}\\
+\(L(s)\), \(L\) & Loop transfer function, typisk \(CG\) eller \(CGH\) afhængigt af sensor. & Ratio & \S\ref{sec:bode}, \S\ref{sec:feedback}, \S\ref{sec:disturbance}\\
+\(S(s)\), \(S\) & Sensitivity \(1/(1+L)\). & Ratio & \S\ref{sec:feedback}, \S\ref{sec:disturbance}\\
+\(T(s)\), \(T\) & Complementary sensitivity \(L/(1+L)\). & Ratio & \S\ref{sec:disturbance}\\
 \multicolumn{4}{@{}l}{\textbf{Laplace, polynomier og stabilitet}}\\
-\(s\) & Laplacevariabel. Bruges også som polynomiumsvariabel i scripts. & \(\mathrm{s}^{-1}\) & \S\ref{sec:model}, \S\ref{sec:feedback}, \S\ref{sec:pilead}, \S\ref{sec:limits}, \S\ref{sec:feedforward}, \S\ref{sec:python}\\
+\(s\) & Laplacevariabel. Bruges også som polynomiumsvariabel i scripts. & \(\mathrm{s}^{-1}\) & \S\ref{sec:model}, \S\ref{sec:feedback}, \S\ref{sec:pilead}, \S\ref{sec:limits}, \S\ref{sec:feedforward}\\
 \(j\), \(\mathrm{j}\) & Imaginær enhed i frekvensrespons \(s=j\omega\). & -- & \S\ref{sec:model}, \S\ref{sec:bode}, \S\ref{sec:pilead}\\
 \(\sigma\) & Realdel af \(s=\sigma+j\omega\). & \(\mathrm{s}^{-1}\) & \S\ref{sec:symbolregister}\\
-\(\omega\) & Vinkelfrekvens. & rad/s & \S\ref{sec:start}, \S\ref{sec:model}, \S\ref{sec:bode}, \S\ref{sec:pilead}, \S\ref{sec:python}\\
-\(p\) & Pol eller karakteristisk polynomium afhængigt af kontekst; \(p(s,K)\) er karakteristisk polynomium med gain. & \(\mathrm{s}^{-1}\) eller polynomium & \S\ref{sec:model}, \S\ref{sec:python}\\
+\(\omega\) & Vinkelfrekvens. & rad/s & \S\ref{sec:model}, \S\ref{sec:bode}, \S\ref{sec:pilead}\\
+\(p\) & Pol eller karakteristisk polynomium afhængigt af kontekst; \(p(s,K)\) er karakteristisk polynomium med gain. & \(\mathrm{s}^{-1}\) eller polynomium & \S\ref{sec:model}\\
 \(z\) & Zero/nulpunkt. & \(\mathrm{s}^{-1}\) & \S\ref{sec:model}\\
 \(a_n,\ldots,a_0\) & Nævnerkoefficienter i transferfunktion. \(a_1,a_0\) bruges også ved andenordensmatch. & Varierer & \S\ref{sec:model}, \S\ref{sec:time}\\
 \(b_m,\ldots,b_0\) & Tællerkoefficienter i transferfunktion. & Varierer & \S\ref{sec:model}\\
 \(m,n\) & Polynomiumsgrader eller afledningsorden. \(n\) kan også betyde noise; læs konteksten. & Heltal & \S\ref{sec:model}, \S\ref{sec:disturbance}\\
-\(K\) & Generelt realt gain eller parameter i karakteristisk polynomium. & Varierer & \S\ref{sec:model}, \S\ref{sec:python}\\
+\(K\) & Generelt realt gain eller parameter i karakteristisk polynomium. & Varierer & \S\ref{sec:model}\\
 \(K_{\mathrm{ss}}\) & DC/static gain \(\lim_{s\to0}G(s)\). & output/input & \S\ref{sec:model}, \S\ref{sec:time}\\
-\(\LHP\) & Left half-plane; poler med negativ realdel. & Område & \S\ref{sec:start}, \S\ref{sec:model}, \S\ref{sec:feedback}, \S\ref{sec:feedforward}, \S\ref{sec:python}\\
-\(\RHP\) & Right half-plane; poler med positiv realdel. & Område & \S\ref{sec:model}, \S\ref{sec:bode}, \S\ref{sec:nyquist}, \S\ref{sec:python}\\
-\(P\) & Antal open-loop RHP-poler i Nyquistkriteriet. & Antal & \S\ref{sec:metodefinder}, \S\ref{sec:nyquist}\\
+\(\LHP\) & Left half-plane; poler med negativ realdel. & Område & \S\ref{sec:model}, \S\ref{sec:feedback}, \S\ref{sec:feedforward}\\
+\(\RHP\) & Right half-plane; poler med positiv realdel. & Område & \S\ref{sec:model}, \S\ref{sec:bode}, \S\ref{sec:nyquist}\\
+\(P\) & Antal open-loop RHP-poler i Nyquistkriteriet. & Antal & \S\ref{sec:nyquist}\\
 \(N\) & Netto clockwise encirclements i Nyquistkriteriet. Kan også betyde noise; læs konteksten. & Antal eller signal & \S\ref{sec:nyquist}, \S\ref{sec:disturbance}\\
 \(Z\) & Antal closed-loop RHP-poler i Nyquistkriteriet. & Antal & \S\ref{sec:nyquist}\\
 \multicolumn{4}{@{}l}{\textbf{Tidsrespons}}\\
 \(\tau\) & Førsteordens tidskonstant. & s & \S\ref{sec:time}\\
 \(\omega_b\) & Break frequency for førsteordensled. & rad/s & \S\ref{sec:time}\\
-\(\omega_n\) & Naturlig frekvens for andenordensstandardform. & rad/s & \S\ref{sec:time}, \S\ref{sec:python}\\
-\(\zeta\) & Damping ratio. & -- & \S\ref{sec:time}, \S\ref{sec:python}\\
-\(M_p\) & Overshoot som ratio; procent fås ved at gange med 100. & -- eller \% & \S\ref{sec:time}, \S\ref{sec:python}\\
-\(t_r\) & Rise time. & s & \S\ref{sec:metodefinder}, \S\ref{sec:time}\\
-\(t_s\) & Settling time, her typisk 2\%-approksimation. & s & \S\ref{sec:metodefinder}, \S\ref{sec:time}\\
+\(\omega_n\) & Naturlig frekvens for andenordensstandardform. & rad/s & \S\ref{sec:time}\\
+\(\zeta\) & Damping ratio. & -- & \S\ref{sec:time}\\
+\(M_p\) & Overshoot som ratio; procent fås ved at gange med 100. & -- eller \% & \S\ref{sec:time}\\
+\(t_r\) & Rise time. & s & \S\ref{sec:time}\\
+\(t_s\) & Settling time, her typisk 2\%-approksimation. & s & \S\ref{sec:time}\\
 \multicolumn{4}{@{}l}{\textbf{Bode, Nyquist og marginer}}\\
 \(M\) & Lineær magnitude, fx \(M=|G(j\omega_c)|\). & Ratio & \S\ref{sec:bode}, \S\ref{sec:pilead}\\
 \(M_{\mathrm{dB}}\) & Magnitude i decibel. & dB & \S\ref{sec:bode}\\
-\(\omega_c\) & Gain crossover frequency, hvor loopmagnitude er 1. & rad/s & \S\ref{sec:metodefinder}, \S\ref{sec:bode}, \S\ref{sec:pilead}, \S\ref{sec:limits}, \S\ref{sec:python}\\
+\(\omega_c\) & Gain crossover frequency, hvor loopmagnitude er 1. & rad/s & \S\ref{sec:bode}, \S\ref{sec:pilead}, \S\ref{sec:limits}\\
 \(\omega_\pi\) & Phase crossover frequency, hvor fasen er \(-180^\circ\). & rad/s & \S\ref{sec:bode}\\
-\(\gamma_M\) & Phase margin. & grader & \S\ref{sec:metodefinder}, \S\ref{sec:bode}, \S\ref{sec:pilead}, \S\ref{sec:limits}, \S\ref{sec:python}\\
+\(\gamma_M\) & Phase margin. & grader & \S\ref{sec:bode}, \S\ref{sec:pilead}, \S\ref{sec:limits}\\
 \(K_M\) & Gain margin som lineær faktor. & faktor & \S\ref{sec:bode}\\
 \(\phi_c\) & Fase ved crossoverpunkt på enhedscirklen. & grader & \S\ref{sec:bode}\\
 \(x,y\) & Real- og imaginærdel af Nyquistpunkt; også generelle tilstands-/outputsymboler i andre kontekster. & Ratio & \S\ref{sec:model}, \S\ref{sec:bode}\\
 \(a\) & Positiv realakseskæringsstørrelse når Nyquistkurven skærer i \(-a\). & Ratio & \S\ref{sec:nyquist}\\
 \multicolumn{4}{@{}l}{\textbf{Controllerdesign}}\\
-\(K_P\) & Proportionalgain. & -- eller ratio & \S\ref{sec:start}, \S\ref{sec:metodefinder}, \S\ref{sec:bode}, \S\ref{sec:feedback}, \S\ref{sec:pilead}, \S\ref{sec:python}\\
+\(K_P\) & Proportionalgain. & -- eller ratio & \S\ref{sec:bode}, \S\ref{sec:feedback}, \S\ref{sec:pilead}\\
 \(K_u\) & Ultimativ/kritisk proportionalgain ved sustained oscillation. & -- eller ratio & \S\ref{sec:ziegler}\\
 \(P_u\) & Ultimativ oscillationsperiode. & s & \S\ref{sec:ziegler}\\
 \(\omega_u\) & Ultimativ oscillationsfrekvens. & rad/s & \S\ref{sec:ziegler}\\
-\(\tau_i\) & PI-/Lag-tid; \(N_i=\omega_c\tau_i\). & s & \S\ref{sec:pilead}, \S\ref{sec:limits}, \S\ref{sec:python}\\
+\(\tau_i\) & PI-/Lag-tid; \(N_i=\omega_c\tau_i\). & s & \S\ref{sec:pilead}, \S\ref{sec:limits}\\
 \(T_i\) & Integral time i ideal PID/Ziegler--Nichols notation. & s & \S\ref{sec:ziegler}\\
 \(T_d\) & Derivative time i ideal PID/Ziegler--Nichols notation. & s & \S\ref{sec:ziegler}\\
-\(\tau_d\) & Lead-tid. & s & \S\ref{sec:pilead}, \S\ref{sec:python}\\
-\(\alpha\) & Lead-forhold; skal opfylde \(0<\alpha<1\). & -- & \S\ref{sec:start}, \S\ref{sec:metodefinder}, \S\ref{sec:pilead}, \S\ref{sec:limits}, \S\ref{sec:python}\\
-\(N_i\) & Dimensionsløs PI-zero-placering \(N_i=\omega_c\tau_i\). & -- & \S\ref{sec:metodefinder}, \S\ref{sec:pilead}, \S\ref{sec:limits}, \S\ref{sec:python}\\
+\(\tau_d\) & Lead-tid. & s & \S\ref{sec:pilead}\\
+\(\alpha\) & Lead-forhold; skal opfylde \(0<\alpha<1\). & -- & \S\ref{sec:pilead}, \S\ref{sec:limits}\\
+\(N_i\) & Dimensionsløs PI-zero-placering \(N_i=\omega_c\tau_i\). & -- & \S\ref{sec:pilead}, \S\ref{sec:limits}\\
 \(\phi_{PI}\) & PI-leddets fasebidrag ved crossover. & grader & \S\ref{sec:pilead}\\
 \(\phi_G\) & Plantens fase ved crossover. & grader & \S\ref{sec:pilead}\\
 \(\phi_{\mathrm{lead}}\) & Krævet leadfasebidrag. & grader & \S\ref{sec:pilead}\\
 \(\phi_{\max}\) & Maksimalt leadfaseboost. & grader & \S\ref{sec:pilead}\\
-\(\beta\) & Lag-forhold; skal opfylde \(\beta>1\). & -- & \S\ref{sec:start}, \S\ref{sec:metodefinder}, \S\ref{sec:limits}, \S\ref{sec:python}\\
+\(\beta\) & Lag-forhold; skal opfylde \(\beta>1\). & -- & \S\ref{sec:limits}\\
 \(\phi_{\mathrm{lag}}\) & Lag-leddets fasebidrag; normalt negativt. & grader & \S\ref{sec:limits}\\
 \(\phi_{\mathrm{uden\ lag}}\) & Samlet fase før Lag-leddet tilføjes. & grader & \S\ref{sec:limits}\\
 \multicolumn{4}{@{}l}{\textbf{Limits, feed-forward og øvrige}}\\
 \(R_{\max}\) & Maksimal aktuatorrate. & \(u\)/s & \S\ref{sec:limits}\\
 \(\tau_f\) & Lavpasfilterets tidskonstant i en realiserbar feed-forward invers. & s & \S\ref{sec:tracking-feedforward}\\
-\(\sigma_D\) & Fortegn for disturbancebidrag ved summering; \(\sigma_D\in\{-1,+1\}\). & -- & \S\ref{sec:feedforward}, \S\ref{sec:python}\\
+\(\sigma_D\) & Fortegn for disturbancebidrag ved summering; \(\sigma_D\in\{-1,+1\}\). & -- & \S\ref{sec:feedforward}\\
 \(\Re,\Im\) & Real- og imaginærdel. & -- & \S\ref{sec:bode}, \S\ref{sec:pilead}\\
 \(\angle(\cdot)\) & Fase/vinkel af kompleks størrelse. & grader & \S\ref{sec:bode}, \S\ref{sec:pilead}\\
-\(\operatorname{atan2}\) & Kvadrantkorrekt vinkelfunktion. & Funktion & \S\ref{sec:bode}, \S\ref{sec:pilead}, \S\ref{sec:python}\\
+\(\operatorname{atan2}\) & Kvadrantkorrekt vinkelfunktion. & Funktion & \S\ref{sec:bode}, \S\ref{sec:pilead}\\
 \(\arctan\), \(\sin\), \(\sin^{-1}\), \(\sqrt{\cdot}\), \(\log_{10}\), \(e^{(\cdot)}\) & Matematiske standardfunktioner brugt i fase-, lead-, Bode- og tidsresponsformler. & Funktioner & \S\ref{sec:time}, \S\ref{sec:bode}, \S\ref{sec:pilead}, \S\ref{sec:limits}\\
 \(\lim\), \(\max\), \(\min\) & Grænseværdi og maksimum/minimum; bruges til DC-gain, final value og actuatorgrænser. & Operatorer & \S\ref{sec:model}, \S\ref{sec:feedback}, \S\ref{sec:limits}\\
-\(\pi\), \(\infty\), \(\%\), \(^\circ\) & Matematisk konstant, uendelighed, procent og grader. & Konstanter/enheder & \S\ref{sec:start}, \S\ref{sec:time}, \S\ref{sec:bode}, \S\ref{sec:pilead}\\
-\(<,>,\leq,\geq\) & Ulighedstegn til stabilitetsintervaller, parameterkrav og actuatorlimits. & Relationer & \S\ref{sec:start}, \S\ref{sec:model}, \S\ref{sec:limits}, \S\ref{sec:python}\\
+\(\pi\), \(\infty\), \(\%\), \(^\circ\) & Matematisk konstant, uendelighed, procent og grader. & Konstanter/enheder & \S\ref{sec:time}, \S\ref{sec:bode}, \S\ref{sec:pilead}\\
+\(<,>,\leq,\geq\) & Ulighedstegn til stabilitetsintervaller, parameterkrav og actuatorlimits. & Relationer & \S\ref{sec:model}, \S\ref{sec:limits}\\
 \(\sum F\), \(m\), \(\ddot x\) & Newtons 2. lov i mekanisk modellering: kraftsum, masse og acceleration. & N, kg, m/s\(^2\) & \S\ref{sec:model}\\
 \end{longtable}
 \normalsize

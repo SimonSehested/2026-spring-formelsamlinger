@@ -75,9 +75,9 @@ Den udledte error transferfunktion, referenceform og bekræftelse af closed-loop
       i \(\LHP\).
 \item Beregn \(e_{\mathrm{ss}}\) med \eqref{eq:steady-state-error}: gang først med
       \(s\), forkort \(s\) fra step-inputtet, og sæt derefter \(s=0\).
-\item Hvis \(L(s)\) har \(n\) rene integratorer, er systemtypen \(n\). I stabil unity
-      feedback giver type 0 typisk endelig stepfejl, type 1 nul stepfejl for step og
-      endelig fejl for ramp.
+\item Systemtypen bestemmes af open-loop transferfunktionen \(L(s)\): hvis \(L(s)\)
+      har \(n\) rene integratorer, dvs. \(n\) faktorer \(s\) i nævneren ved origo,
+      er systemtypen \(n\).
 \end{enumerate}
 
 \paragraph{Formler}
@@ -86,8 +86,9 @@ Den udledte error transferfunktion, referenceform og bekræftelse af closed-loop
 e_{\mathrm{ss}}=\lim_{s\to0}sE(s),\qquad
 G_{er}(s)=S(s)=\frac1{1+L(s)}\quad\text{(negativ unity feedback)}.
 \end{equation}
-For stabil unity feedback: type 0 giver endelig normalt ikke-nul stepfejl; type 1
-giver nul stepfejl.
+For stabil unity feedback giver type 0 endelig, normalt ikke-nul, fejl for step-input;
+type 1 giver nul steady-state error for step og endelig fejl for ramp; type 2 giver
+nul fejl for både step og ramp.
 \begin{equation}
 \label{eq:static-error-constants}
 K_p^\ast=\lim_{s\to0}L(s),\qquad
@@ -101,11 +102,12 @@ e_{\mathrm{ramp}}=\frac1{K_v},\qquad
 e_{\mathrm{parabolic}}=\frac1{K_a}.
 \end{equation}
 Hvis konstanten er \(\infty\), er fejlen \(0\); hvis konstanten er \(0\), er fejlen
-\(\infty\). En type-1 unity-feedback loop har derfor nul stepfejl, endelig rampfejl og
-uendelig parabolic-fejl.
+\(\infty\). Eksempel: \(G(s)=K/(s(s+3))\) er et type 1-system, fordi open-loop
+transferfunktionen har én integrator, altså én faktor \(s\) i nævneren.
 
 \paragraph{Symboler}
-\(e_{\mathrm{ss}}\) er endelig fejl; systemtype er antal rene integratorer i \(L(s)\).
+\(e_{\mathrm{ss}}\) er endelig fejl; systemtype er antal rene integratorer i open-loop
+\(L(s)\).
 
 \paragraph{Antagelser}
 Final value theorem kræver asymptotisk stabilt closed loop for den betragtede respons.
