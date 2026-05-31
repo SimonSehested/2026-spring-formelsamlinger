@@ -74,6 +74,8 @@ Fusion, vaporization, and sublimation are endothermic in the forward direction.
 
 \textbf{Required references:} Equation~\ref{eq:phase:hydrogen-bonding}, Equation~\ref{eq:phase:force-recognition}, Equation~\ref{eq:phase:clausius-clapeyron}, and Equation~\ref{eq:phase:two-point-vapor-pressure}.
 
+\pythontool{\texttt{clausius\_clapeyron\_pressure(...)} naar \(P_2\) skal beregnes fra to temperaturer og \(\Delta H_{\mathrm{vap}}\)}
+
 \textbf{Steps:}
 \begin{enumerate}
     \item For each molecule, mark dispersion, dipole--dipole behavior if polar, and hydrogen bonding only when the motif in Equation~\ref{eq:phase:hydrogen-bonding} is present.
@@ -128,6 +130,8 @@ Use the diagonal that actually touches atoms: edge for simple cubic, body diagon
 \textbf{Given / Find:} cell type and any two useful dimensional or mass quantities; find \(\rho\), \(a^3\), \(a\), or \(r\).
 
 \textbf{Required references:} Table~\ref{tab:phase:cubic-unit-cells}, Table~\ref{tab:phase:cubic-radius-relations}, and Equation~\ref{eq:phase:unit-cell-density}.
+
+\pythontool{\texttt{unit\_cell\_volume(...)} naar densitet og \(Z\) skal omsaettes til cellevolumen}
 
 \textbf{Steps:}
 \begin{enumerate}
@@ -187,6 +191,8 @@ M_{\mathrm{solute}}=\frac{m_{\mathrm{solute}}}{n_{\mathrm{solute}}}
 
 \textbf{Required references:} Equations~\ref{eq:phase:molality}, \ref{eq:phase:freezing-point-depression}, \ref{eq:phase:boiling-point-elevation}, and \ref{eq:phase:solution-transition-temperature}.
 
+\pythontool{\texttt{freezing\_point\_depression(...)} til frysepunktssaenkning med solut, solventmasse og van't Hoff-faktor}
+
 \textbf{Steps:}
 \begin{enumerate}
     \item Convert the solute amount to moles and convert solvent mass alone to kilograms.
@@ -206,6 +212,8 @@ M_{\mathrm{solute}}=\frac{m_{\mathrm{solute}}}{n_{\mathrm{solute}}}
 \textbf{Given / Find:} Given \(m_{\mathrm{solute}}\), solvent mass, \(K_f\) or \(K_b\), measured phase-change temperature, and dissociation assumption; find \(M_{\mathrm{solute}}\).
 
 \textbf{Required references:} Equations~\ref{eq:phase:freezing-point-depression}, \ref{eq:phase:boiling-point-elevation}, \ref{eq:phase:solution-transition-temperature}, and \ref{eq:phase:solute-molar-mass}.
+
+\pythontool{\texttt{freezing\_point\_depression(...)} som kontrol for \(m\), \(\Delta T_f\) og frysepunkt; omarranger stadig manuelt naar den ukendte er molarmassen}
 
 \textbf{Steps:}
 \begin{enumerate}

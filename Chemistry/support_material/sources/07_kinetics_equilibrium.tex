@@ -109,6 +109,8 @@ A catalyst speeds forward and reverse reactions by lowering activation barriers;
 
 \textbf{Required references:} Table~\ref{tab:kinetics:integrated-rate-laws} and equation~\eqref{eq:kinetics:half-life} when a half-life is requested.
 
+\pythontool{\texttt{kinetic\_linear\_fit(...)} for hver af orden 0, 1 og 2, saa \(R^2\), haeldning og skaering sammenlignes ensartet}
+
 \textbf{Steps:}
 \begin{enumerate}
     \item Construct all three transformed data sets by calculating \([\ce{A}]_t\), \(\ln[\ce{A}]_t\), and \(1/[\ce{A}]_t\) for each listed time.
@@ -146,6 +148,8 @@ A catalyst speeds forward and reverse reactions by lowering activation barriers;
 \textbf{Given / Find:} given \(k\) and \(T\) values and/or catalyst information; find \(E_{\mathrm a}\), a new \(k\), or the correct catalyst conclusion.
 
 \textbf{Required references:} equations~\eqref{eq:kinetics:arrhenius}, \eqref{eq:kinetics:arrhenius-two-temperature}, and \eqref{eq:kinetics:catalyst-effect}.
+
+\pythontool{\texttt{arrhenius\_ratio(...)} naar opgaven spoerger efter \(k_2/k_1\)}
 
 \textbf{Steps:}
 \begin{enumerate}
@@ -244,6 +248,8 @@ Use negative signed coefficients \(\nu_i\) for reactants and positive coefficien
 \textbf{Given / Find:} Given a balanced equilibrium, initial composition, volume, and \(K\) or thermodynamic data from which \(K\) can be obtained; find the equilibrium composition.
 
 \textbf{Required references:} Equations~\eqref{eq:kinetics:reaction-quotient}, \eqref{eq:kinetics:ice-extent}, and \eqref{eq:thermo:equilibrium-constant} when \(K\) must first be calculated.
+
+\pythontool{\texttt{equilibrium\_constant(...)} naar \(K\) foerst skal findes fra \(\Delta G^\circ\); selve ICE-polynomiet skal opstilles fra reaktionen foer numerisk loesning}
 
 \textbf{Steps:}
 \begin{enumerate}

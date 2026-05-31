@@ -110,6 +110,8 @@ Use the approximation only when the computed \(x/c_0\leq 0.05\); otherwise use t
 
 \textbf{Required references:} equations~\eqref{eq:acid:ph-poh-water}, \eqref{eq:acid:weak-equilibrium-constants}, \eqref{eq:acid:pk-conversion}, \eqref{eq:acid:conjugate-relation}, \eqref{eq:acid:weak-approximation}, and \eqref{eq:acid:weak-exact-quadratic}.
 
+\pythontool{\texttt{weak\_solution\_ph(...)} med \texttt{"acid"} eller \texttt{"base"} naar 5\%-testen fejler eller pH skal kontrolleres hurtigt}
+
 \textbf{Steps:}
 \begin{enumerate}
     \item Select the equilibrium constant by using \(K_a\) for \(\ce{HA}\) or \(K_b\) for \(\ce{B}\), converting a supplied \(pK\) with Equation~\eqref{eq:acid:pk-conversion}, and using Equation~\eqref{eq:acid:conjugate-relation} only when the conjugate constant is supplied.
@@ -261,6 +263,8 @@ A common ion lowers solubility by shifting dissolution toward the solid.
 \textbf{Given / Find:} given a salt formula, \(K_{sp}\), and optionally initial ion concentrations; find \(s\), \(Q_{sp}\), precipitation direction, or pH for a hydroxide.
 
 \textbf{Required references:} equations~\eqref{eq:acid:dissolution-reaction}, \eqref{eq:acid:ksp-expression}, \eqref{eq:acid:qsp-expression}, \eqref{eq:acid:common-ion-approximation}, and \eqref{eq:acid:ph-poh-water}; Tables~\ref{tab:acid:solubility-patterns} and \ref{tab:acid:precipitation-test}.
+
+\pythontool{\texttt{solubility\_from\_ksp(...)} til molar solubility med stoikiometri og common ion; brug \texttt{solubility\_complete\_check(...)} naar en tilsat saltmasse skal vurderes som helt opløst eller i overskud}
 
 \textbf{Steps:}
 \begin{enumerate}

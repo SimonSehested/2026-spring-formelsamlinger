@@ -42,6 +42,8 @@ For a strong soluble electrolyte, each formula unit produces the number of disso
 
 \textbf{Required references:} Equations \eqref{eq:aqueous:complete-dissolution-ions} and \eqref{eq:aqueous:concentration-dilution}; use Equation \eqref{eq:atoms:mole-mass-particles} if a mass is given.
 
+\pythontool{\texttt{molar\_mass(...)} naar den givne saltmasse foerst skal omregnes til stofmaengde}
+
 \textbf{Steps:}
 \begin{enumerate}
     \item Write the complete dissociation equation and balance the ionic coefficients; for example, one \(\ce{Al2(SO4)3}\) formula unit produces \(2+3=5\) ions.
@@ -123,6 +125,8 @@ The coefficient ratio is taken from the balanced net ionic precipitation reactio
 \textbf{Given / Find:} Given a precipitate mass, its identity, the sampled solution volume, and the analyte ion; find the analyte concentration.
 
 \textbf{Required references:} Equation~\eqref{eq:aqueous:gravimetric-precipitation}, Equation~\eqref{eq:atoms:mole-mass-particles}, and the net ionic reaction method in Equation~\eqref{eq:aqueous:net-ionic-example}.
+
+\pythontool{\texttt{molar\_mass(...)} for praecipitatets molarmasse, isaer ved salte med parenteser eller tunge ioner}
 
 \textbf{Steps:}
 \begin{enumerate}
@@ -208,6 +212,8 @@ Use \eqref{eq:aqueous:gas-density} when density, pressure, and temperature ident
 
 \textbf{Required references:} Equations~\eqref{eq:aqueous:ideal-gas-law} and \eqref{eq:aqueous:gas-density}; use Equation~\eqref{eq:atoms:molecular-factor} when an empirical formula is given.
 
+\pythontool{\texttt{ideal\_gas(...)} til at finde gasmol eller den manglende \(p,V,n,T\), og \texttt{molar\_mass(...)} til empirisk- og molekylformelmassen}
+
 \textbf{Steps:}
 \begin{enumerate}
     \item Convert temperature to kelvin and use consistent pressure-volume units with the chosen gas constant.
@@ -233,6 +239,8 @@ At the same temperature, the lighter gas effuses faster because its molar mass i
 
 \textbf{Required references:} Combined gas law \eqref{eq:aqueous:combined-gas-law}; use \eqref{eq:aqueous:ideal-gas-law} only when moles must first be determined.
 
+\pythontool{\texttt{ideal\_gas(...)} naar en af \(p,V,n,T\) mangler eller naar gas tilfoejes, fjernes eller forbruges}
+
 \textbf{Steps:}
 \begin{enumerate}
     \item Confirm that the amount of gas is constant; otherwise calculate or track \(n\) with \eqref{eq:aqueous:ideal-gas-law} instead of applying \eqref{eq:aqueous:combined-gas-law}.
@@ -250,6 +258,8 @@ At the same temperature, the lighter gas effuses faster because its molar mass i
 \textbf{Given / Find:} Given a balanced reaction and gas-state data; find reacting moles, product mass, product gas volume, or final gas pressure.
 
 \textbf{Required references:} Equations \eqref{eq:aqueous:ideal-gas-law}, \eqref{eq:aqueous:dalton-law}, and \eqref{eq:atoms:stoichiometric-conversion}.
+
+\pythontool{\texttt{ideal\_gas(...)} til gasmol/tryk efter reaktion og \texttt{molar\_mass(...)} til produkt- eller reaktantmasser}
 
 \textbf{Steps:}
 \begin{enumerate}
@@ -269,6 +279,8 @@ At the same temperature, the lighter gas effuses faster because its molar mass i
 \textbf{Given / Find:} Given two gas identities or molar masses in one container; find relative effusion rate or enrichment of the remaining gas.
 
 \textbf{Required references:} Equation \eqref{eq:aqueous:graham-effusion}.
+
+\pythontool{\texttt{molar\_mass(...)} naar effusionssammenligningen kraever molarmasser fra kemiske formler}
 
 \textbf{Steps:}
 \begin{enumerate}

@@ -98,6 +98,8 @@ Positive \(E^\circ_{\mathrm{cell}}\) gives negative \(\Delta G^\circ\) and produ
 
 \textbf{Required references:} Equations~\eqref{eq:electrochem:electrode-processes}, \eqref{eq:electrochem:standard-cell-potential}, \eqref{eq:electrochem:gibbs-from-potential}, and \eqref{eq:electrochem:equilibrium-from-potential}.
 
+\pythontool{\texttt{equilibrium\_constant(...)} efter \(\Delta G^\circ=-nFE^\circ\) er beregnet, eller \texttt{constant("F")} ved manuel \(\Delta G^\circ\)-beregning}
+
 \textbf{Steps:}
 \begin{enumerate}
     \item Select the more positive reduction potential as reduction at the cathode.
@@ -152,6 +154,8 @@ Write the cell reaction so its equilibrium constant matches the desired dissolut
 
 \textbf{Required references:} Equations~\eqref{eq:electrochem:standard-cell-potential}, \eqref{eq:electrochem:cell-equilibrium-gibbs}, and \eqref{eq:acid:ksp-expression}.
 
+\pythontool{\texttt{equilibrium\_constant(...)} efter \(E^\circ\rightarrow\Delta G^\circ\); brug \texttt{constant("F")} og \texttt{constant("R")} til manuel kontrol}
+
 \textbf{Steps:}
 \begin{enumerate}
     \item Write and balance half-reactions so their sum is the salt dissolution reaction whose equilibrium expression is \(K_{sp}\), rather than its reverse precipitation reaction.
@@ -170,6 +174,8 @@ Write the cell reaction so its equilibrium constant matches the desired dissolut
 \textbf{Given / Find:} Given two concentrations, temperature \(298\,\mathrm K\), and the electrode ion charge; find cell voltage and spontaneous electrode direction.
 
 \textbf{Required references:} Equations~\eqref{eq:electrochem:concentration-standard-potential} and \eqref{eq:electrochem:concentration-cell-potential}; use Equation~\eqref{eq:electrochem:nernst} instead if the temperature is not \(298\,\mathrm K\).
+
+\pythontool{\texttt{cell\_potential(...)} for Nernst-beregninger og koncentrationsceller, isaer naar \(T\neq298\,\mathrm K\)}
 
 \textbf{Steps:}
 \begin{enumerate}
