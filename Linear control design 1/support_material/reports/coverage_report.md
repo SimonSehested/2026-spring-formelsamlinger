@@ -12,11 +12,11 @@
 | Leverance | Status |
 | --------- | ------ |
 | `reports/input_audit.md` | Opdateret; alle eksamens- og forelæsningskilder dækket |
-| `reports/full_curriculum_report.md` | Eksisterer; forelæsning 1-13 kortlagt |
+| `reports/full_curriculum_report.md` | Opdateret; forelæsning 1-13 kortlagt med slide-audit mod `lcd.pdf` |
 | `reports/exam_set_analyses/S20.md`, `F21.md`, `2022.md`, `E23.md`, `F25.md` | Oprettet/opdateret; synlige opgaver analyseret |
 | `reports/merged_task_taxonomy.md` | Opdateret for S20/F21/2022/E23/F25 |
 | `reports/script_inventory.md`, `python_coverage_report.md` | Opdateret; ingen nye scripts nødvendige |
-| `sections/*.tex`, `main.tex`, `lcd.pdf` | LaTeX-noter opdateret og PDF forsøgt bygget i final review |
+| `sections/*.tex`, `main.tex`, `lcd.pdf` | LaTeX-noter udvidet for både eksamener og slidepensum; PDF bygget i final review |
 | `exam_verification_report.md` | Opdateret med mapping for alle synlige opgaver |
 
 ## Hovedemner og notesektioner
@@ -30,11 +30,14 @@
 | Blokdiagram, systemtype og stationær fejl | `sections/05_feedback_error.tex` | S20 Q3,Q19; F21 Q1,Q16,Q19; 2022 Q16; E23 Q1-Q5,Q9,Q12,Q18-Q20; F25 Q2,Q4,Q14,Q15,Q18 |
 | P-Lead, PI-Lead og Ziegler--Nichols | `sections/06_controller_design.tex` | S20 Q10-Q11,Q14-Q15; F21 Q18; 2022 Q13,Q17,Q19-Q20; E23 Q14-Q15; F25 Q8,Q16 |
 | Lag, limits, disturbance, sensitivity og feed-forward | `sections/07_limits_disturbances_feedforward.tex` | S20 Q17-Q19; F21 Q17,Q20; 2022 Q18; F25 Q12,Q17,Q19 |
+| White/grey/black-box, linearisering, dominerende poler og delay | `sections/03_model_time.tex` | Forelæsning 3-5 og 11; REGBOT/modelidentifikation |
+| REGBOT balance og cascaded control | `sections/06_controller_design.tex` | Forelæsning 9-13; mandatory assignment-kontekst |
+| Non-minimum phase og rate limiter-faldgruber | `sections/04_frequency_stability.tex`, `sections/07_limits_disturbances_feedforward.tex` | Forelæsning 6 og 11 |
 
 ## Fravalgte eller nedprioriterede emner
 
 - 2022 Q1 og Q10 er ikke analyseret fagligt, fordi de ikke fremgår brugbart af tekstlaget; de er markeret i `2022.md` og `exam_verification_report.md` som manuelle reviewpunkter.
-- Automatisk billedfortolkning af Bode, Nyquist, steprespons og blokdiagrammer er fortsat fravalgt, fordi figurerne ikke har strukturerede data, og fortolkningen er en central eksamenskompetence.
+- Automatisk billedfortolkning af Bode, Nyquist, steprespons, REGBOT-arkitektur og blokdiagrammer er fortsat fravalgt, fordi figurerne ikke har strukturerede data, og fortolkningen er en central eksamenskompetence.
 - Der er ikke tilføjet nye Python-funktioner for P-Lead zero/pole, bandwidth eller static loopgain, fordi de er direkte fålinjeformler og hurtigere/sikrere i noterne end som særskilte API'er.
 
 ## Symbolregisterstatus
@@ -49,7 +52,7 @@ Symbolregister er inkluderet i `sections/02_symbolregister.tex`. De nye sæt bru
 
 ## Buildstatus
 
-- Build og tests er dokumenteret i `reports/final_review_report.md`.
+- Build og tests er dokumenteret i `reports/final_review_report.md`; efter slide-audit skal PDF-tekstkontrollen også finde `REGBOT`, `black-box`, `lineariser`, `dominant`, `rate limiter`, `delay` og `non-minimum`.
 - Hvis `latexmk` ikke fungerer lokalt, bruges samme direkte `pdflatex`-flow som tidligere.
 
 ## Kendte begrænsninger og manuelle reviewpunkter

@@ -79,6 +79,76 @@ den indsætter \(s=j\omega\), finder marginale gainværdier og tester intervalle
 \(p=(s+1)^3+K\) fås stabilitet for \(-1<K<8\), eller \(0<K<8\) når positivt gain
 kræves. Grænsepunkter med poler på imaginæraksen tælles ikke som asymptotisk stabile.
 
+\subsection{White-, grey- og black-box modellering / system identification}
+\label{sec:modelling-types}
+
+\paragraph{Brug når}
+Slides eller opgave spørger om modeltype, valg af transferfunktionsstruktur,
+parameterestimat fra data eller REGBOT-transferfunktion fra målinger.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item White-box: start i fysiske love, angiv antagelser, lineariser om et arbejdspunkt
+      og udled \(G(s)\). Parametre har fysisk betydning.
+\item Grey-box: brug kendt fysisk struktur, men estimer ukendte parametre fra data.
+      Kontroller at de estimerede værdier stadig er fysisk rimelige.
+\item Black-box: vælg en modelstruktur, fx pol-/zero-orden og eventuel delay, og fit
+      koefficienter direkte til input-output-data.
+\item Brug små eksitationssignaler ved identifikation, hvis modellen skal være lineær.
+      Store steps kan aktivere saturation, rate limit eller friktion og give en model,
+      der ikke beskriver small-signal-dynamikken.
+\item Valider modellen på andre data end fit-data. En lav fit-fejl er ikke nok, hvis
+      poler, DC-gain, delay eller responsretning er fysisk forkert.
+\end{enumerate}
+
+\paragraph{Formler og tommelfingerregler}
+Førsteordens black-box fra et step: \(K_{\mathrm{ss}}=\Delta y/\Delta u\), og
+\(\tau\) aflæses hvor output har nået ca. \(63.2\%\) af den samlede ændring. Har
+responsen et tydeligt dødtidsstykke, modelleres det separat som \(e^{-sL}\) eller
+approksimeres kun hvis opgaven kræver en rational transferfunktion.
+
+\paragraph{Hurtigtjek}
+Modelstrukturen skal kunne forklare både fortegn på DC-gain, startretning, dominerende
+tidskonstant og eventuel delay. REGBOT-data i slides bruges som et eksempel på, at samme
+fysiske system kan behandles som white-box i balanceudledningen og black-box ved
+målebaseret positions-/hastighedsmodel.
+
+\paragraph{Typiske fælder}
+At kalde en datatilpasset model ``white-box''; at bruge et fit fra store signaler til
+linear controllerdesign; at glemme at en black-box model uden fysisk tolkning stadig
+skal kontrolleres for stabilitet og properness.
+
+\subsection{Linearisering og tilstandsform / operating point, Jacobian}
+\label{sec:linearization}
+
+\paragraph{Brug når}
+Opgaven giver en ikke-lineær ligning, et inverted-pendulum/REGBOT-arbejdspunkt eller
+beder om en lokal transferfunktion omkring et stationært punkt.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Find arbejdspunktet ved at sætte tidsafledte lig nul og løse
+      \(0=f(x_0,u_0)\). Arbejdspunktet skal passe til den driftssituation, controlleren
+      skal bruges i.
+\item Skriv deviation variables: \(\tilde x=x-x_0\), \(\tilde u=u-u_0\),
+      \(\tilde y=y-y_0\). Det er disse små signaler, Laplace-transferfunktionen
+      beskriver.
+\item For \(\dot x=f(x,u)\), \(y=g(x,u)\) bruges Jacobian:
+      \(A=\partial f/\partial x|_0\), \(B=\partial f/\partial u|_0\),
+      \(C=\partial g/\partial x|_0\), \(D=\partial g/\partial u|_0\).
+\item Den lokale model er \(\dot{\tilde x}=A\tilde x+B\tilde u\),
+      \(\tilde y=C\tilde x+D\tilde u\). Transferfunktionen er
+      \(G(s)=C(sI-A)^{-1}B+D\), når denne form er nødvendig.
+\item Efter linearisering: kontroller polerne. For REGBOT balance giver tilt/velocity-
+      planten typisk en ustabil lokal model, som skal stabiliseres før performance
+      designes.
+\end{enumerate}
+
+\paragraph{Typiske fælder}
+At blande absolutte signaler og deviationssignaler; at linearisere omkring et punkt,
+der ikke er stationært; at bruge den lokale lineære model til store vinkler eller
+store referencespring.
+
 \subsection{Første- og andenordens steprespons / time response, overshoot}
 \label{sec:time}
 
@@ -165,3 +235,37 @@ ikke nok.
 \code{second\_order\_characteristics(denominator)} returnerer
 \(\omega_n,\zeta,M_p\) for en allerede identificeret standardnævner og kan kontrollere
 F21 Q9; vurder selv om højereordensdynamik gør metoden ugyldig.
+
+\subsection{Dominerende poler og delay / model reduction}
+\label{sec:dominant-delay}
+
+\paragraph{Brug når}
+Slides spørger efter mest dominerende pol, om ekstra poler kan ignoreres, eller når et
+procesrespons har tydelig time delay/lag.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Dominerende poler er de stabile poler tættest på imaginæraksen, dvs. med mindst
+      negativ realdel. De bestemmer den langsomste envelope i tidsresponsen.
+\item For en reel pol \(p<0\) er tidskonstanten \(\tau=-1/p\). For et komplekst par
+      \(-\zeta\omega_n\pm j\omega_d\) er envelope-tidskonstanten
+      \(1/(\zeta\omega_n)\), og oscillationsperioden er \(2\pi/\omega_d\).
+\item En hurtig ekstra pol kan ofte ignoreres i en dominant-pole-approksimation, hvis
+      dens realdel ligger mindst ca. 5 gange længere mod venstre end den dominerende
+      pol. Ellers kan den ændre overshoot, rise time og Bodefase mærkbart.
+\item Time delay \(L\) skrives ideelt som \(e^{-sL}\). Det ændrer ikke magnitude, men
+      giver ekstra fase \(-\omega L\) rad, altså \(-\omega L\,180/\pi\) grader.
+\item Hvis opgaven kræver en rational model for delay, bruges en Padé-approksimation
+      kun som approximation; den kan introducere zeros og må ikke forveksles med den
+      fysiske delay.
+\end{enumerate}
+
+\paragraph{Hurtigtjek}
+I controllerdesign skal \(\omega_c\) ikke vælges så højt, at delayfasen eller en
+ikke-dominerende pol spiser phase margin. Ved limited systems-slides vælges
+\(\omega_c\) ofte over den dominerende pol for hastighed, men ikke så højt at rate
+limiteren aktiveres.
+
+\paragraph{Typiske fælder}
+At vælge polen med størst absolutværdi som dominerende; at ignorere delayfase ved
+crossover; at bruge en dominant-pole-approksimation uden at tjekke de øvrige poler.

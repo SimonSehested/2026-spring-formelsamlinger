@@ -191,3 +191,36 @@ F25 Q8: \(K_u=30\), \(\omega_u=\sqrt5\), \(P_u=2.809\), så \(K_P=18\),
 \paragraph{Typiske fælder}
 At bruge \(K_u\) direkte som \(K_P\), at bytte \(P_u/2\) og \(P_u/8\), eller at vende
 \(2\pi/\omega_u\).
+
+\subsection{Cascaded control og REGBOT balance / inner and outer loops}
+\label{sec:cascade-regbot}
+
+\paragraph{Brug når}
+Slides omtaler REGBOT balance, inverted pendulum, tilt-controller, velocity-controller
+eller position-controller i kaskade.
+
+\paragraph{Metode}
+\begin{enumerate}
+\item Design indefra og ud. Det inderste loop skal være stabilt og hurtigere end det
+      loop, der bruger det som aktuatormodel.
+\item For REGBOT balance er den fysiske tolkning: motor/wheel dynamics giver kraft eller
+      acceleration, tilt-loopet stabiliserer den ustabile pendulvinkel, velocity-loopet
+      laver en tilt-reference, og position-loopet laver en velocity-reference.
+\item Når et indre loop er lukket, erstattes det i ydre design af dets closed-loop
+      transferfunktion eller en lavordens approximation, ikke af den oprindelige åbne
+      plant.
+\item Vælg ydre crossover tydeligt lavere end indre crossover, så tidskonstanterne er
+      separerede. Hvis loops ligger for tæt, ødelægger de hinandens phase margin.
+\item Kontroller til sidst hele kaskaden med actuatorlimits, fordi et stabilt lineært
+      inderloop stadig kan kræve for stor motorhastighed, acceleration eller tilt-vinkel.
+\end{enumerate}
+
+\paragraph{Hurtigtjek}
+Et open-loop-ustabilt balanceled skal først stabiliseres; position eller velocity kan
+ikke designes robust oven på et ustabilt tilt-loop. I en eksamensforklaring er det ofte
+nok at angive looprækkefølgen, separationen i bandwidth og hvorfor referencesignalet
+går fra ydre til indre loop.
+
+\paragraph{Typiske fælder}
+At tune position-loopet direkte på den ustabile pendulplant; at gøre alle loops lige
+hurtige; at validere hvert loop isoleret uden at kontrollere den samlede kaskade.

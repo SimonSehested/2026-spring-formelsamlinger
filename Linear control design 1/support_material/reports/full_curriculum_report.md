@@ -338,11 +338,31 @@ Notation anvendt her: `G(s)` er plant/system, `C(s)` controller, `L(s)=C(s)G(s)`
 - At invertere en RHP-zero eller en improper plant uden filter.
 - At påstå perfekt rejection ved modelusikkerhed eller umålt disturbance.
 
+## Slide-audit 1. juni 2026
+
+Efter den nye eksamensopdatering blev alle 13 lecture-PDF'er igen tekstudtrukket og
+sammenlignet med `lcd.pdf`. De fleste eksamensnære emner var allerede dækket, men
+slides indeholdt flere faglige begreber som ikke fremgik tydeligt nok af den kompakte
+PDF. Disse er nu lagt ind som korte metodeafsnit eller hurtigchecks:
+
+| Slide-emne | Status i `lcd.pdf` | Notesektion |
+| ---------- | ------------------ | ----------- |
+| White/grey/black-box modelling og system identification | Tilføjet eksplicit | `03_model_time.tex`, `Modellering` |
+| Linearisering, deviation variables og Jacobian/tilstandsform | Udvidet fra kort omtale til operationel metode | `03_model_time.tex`, `Linearisering` |
+| Dominerende poler, model reduction og delayfase | Tilføjet | `03_model_time.tex`, `Dominerende poler og delay` |
+| Non-minimum phase/RHP-zero og inverse-response faldgrube | Tilføjet i Bode-hurtigtjek | `04_frequency_stability.tex` |
+| REGBOT balance og cascaded control | Tilføjet som metodeafsnit | `06_controller_design.tex` |
+| Rate limiter vs saturation og limited-system crossovervalg | Udvidet | `07_limits_disturbances_feedforward.tex` |
+| Ziegler--Nichols, Nyquist, disturbance/sensitivity, feed-forward og prefilter | Allerede dækket fra eksamensopdateringen | `04`, `06`, `07` |
+
 ## Svagt eller ikke dokumenteret
 
-- Heuristisk Ziegler-Nichols nævnes i pensum og er nu direkte repræsenteret af F25 Q8; slutnoterne prioriterer derfor en kort, operationel PID-opskrift.
-- Mandatory REGBOT assignment og cascaded balance-control omtales, men er ikke direkte testet i det tilgængelige eksamenssæt.
-- Matlab/Simulink bruges i undervisningen; kildepakken indeholder ikke scripts/data til reproduktion.
+- Administrative slides om grupper, deadlines, rapportgenbrug og kursuslogistik er ikke
+  omskrevet til formler, fordi de ikke hjælper med teknisk opgaveløsning.
+- Matlab/Simulink nævnes kun som genkendelseskontekst; der er ikke indført afhængighed
+  af Matlab-kommandoer, fordi eksamen skal kunne løses fra formelsamlingen.
+- Grafiktunge slides uden strukturerede data kræver stadig manuel aflæsning i originalen
+  ved konkrete plotværdier.
 
 ## Notations- og dokumentationsusikkerheder
 

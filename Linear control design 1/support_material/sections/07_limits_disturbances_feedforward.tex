@@ -56,6 +56,10 @@ ikke-lineære, så en rent lineær marginanalyse er ikke tilstrækkelig for stor
 
 \paragraph{Hurtigtjek}
 \(\phi_{\mathrm{lag}}<0\) og \(\beta>1\). Ved windup ses typisk lang recovery efter saturation.
+En rate limiter er ikke det samme som amplitudesaturation: amplituden kan være inden for
+grænsen, selv om \(|\dot u|\) er for stor. I slides' limited-system-design vælges
+crossover ofte tæt på eller lidt over den dominerende pol, men designet skal simuleres
+eller vurderes med rate limiteren slået til.
 
 \paragraph{Typiske fælder}
 At behandle Lag som PI med garanteret nul stepfejl; at erklære stor-step-stabilitet
