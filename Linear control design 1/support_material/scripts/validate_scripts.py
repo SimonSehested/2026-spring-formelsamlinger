@@ -12,6 +12,7 @@ from scripts.control import (
     bode_to_transfer,
     closed_loop_characteristic,
     closed_loop_poles,
+    design_pi_lead,
     design_pi_lead_at_crossover,
     evaluate_transfer_function,
     find_stable_gain_ranges,
@@ -188,6 +189,35 @@ def main() -> None:
     check("design_pi_lead_at_crossover alpha Q18", np.isclose(q18["alpha"], 0.08, atol=0.005), str(q18))
     check("design_pi_lead_at_crossover Kp Q18", np.isclose(q18["proportional_gain"], 200, atol=2), str(q18))
     check("design_pi_lead_at_crossover target", np.isclose(q18["loop_magnitude_at_crossover"], 1), str(q18))
+    q18_tau = design_pi_lead(
+        [0.7, 0.35],
+        np.polymul(np.polymul([5.0, 1.0], [1.0, 0.2, 0.6]), [0.01, 1.0]),
+        omega_c=10.0,
+        phase_margin_deg=45.0,
+        tau_i=0.8,
+    )
+    check("design_pi_lead tau_i alias Q18", np.isclose(q18_tau["Kp"], q18["Kp"], atol=1e-9), str(q18_tau))
+    q18_alpha = design_pi_lead(
+        [0.7, 0.35],
+        np.polymul(np.polymul([5.0, 1.0], [1.0, 0.2, 0.6]), [0.01, 1.0]),
+        omega_c=10.0,
+        alpha=0.08008,
+        n_i=8.0,
+    )
+    check("design_pi_lead alpha given tau_d", np.isclose(q18_alpha["tau_d"], 1.0 / (10.0 * np.sqrt(0.08008))), str(q18_alpha))
+    check("design_pi_lead alpha given PM check", q18_alpha["phase_margin_deg"] is not None, str(q18_alpha))
+    q18_kp_check = design_pi_lead(
+        [0.7, 0.35],
+        np.polymul(np.polymul([5.0, 1.0], [1.0, 0.2, 0.6]), [0.01, 1.0]),
+        omega_c=10.0,
+        Kp=200.0,
+        tau_i=0.8,
+        alpha=0.08008,
+        tau_d=1.0 / (10.0 * np.sqrt(0.08008)),
+    )
+    check("design_pi_lead Kp check preserves gain", np.isclose(q18_kp_check["Kp"], 200.0), str(q18_kp_check))
+    large_lead = design_pi_lead([1.0], [1.0, 0.0, 0.0], omega_c=1.0, phase_margin_deg=89.0, n_i=100.0)
+    check("design_pi_lead large lead warning", bool(large_lead["warnings"]), str(large_lead))
     expect_value_error(
         "design_pi_lead_at_crossover invalid Ni",
         lambda: design_pi_lead_at_crossover([1], [1, 1], 1, 60, 0),

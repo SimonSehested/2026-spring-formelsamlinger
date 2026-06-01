@@ -1,6 +1,7 @@
 """Public control-analysis helpers used by the exam notebook."""
 
 from .design import (
+    design_pi_lead,
     design_pi_lead_at_crossover,
     ideal_disturbance_feedforward,
     solve_lag_beta,
@@ -23,6 +24,7 @@ __all__ = [
     "bode_to_transfer",
     "closed_loop_characteristic",
     "closed_loop_poles",
+    "design_pi_lead",
     "design_pi_lead_at_crossover",
     "evaluate_transfer_function",
     "find_stable_gain_ranges",
