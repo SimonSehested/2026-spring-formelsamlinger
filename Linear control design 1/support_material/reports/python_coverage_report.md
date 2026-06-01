@@ -7,15 +7,23 @@ Python-værktøjskassen er en regne- og kontrolhjælper. Den kræver, at brugere
 | Opgavetype | Support mode | Script/funktion | Hvad Python gør | Hvad brugeren selv skal gøre | Brug ikke når | Status |
 | ---------- | ------------ | --------------- | --------------- | ---------------------------- | ------------- | ------ |
 | Poler fra TF/ODE | `script_assisted` | `transfer_function_poles` | Beregner rødder | Udled nævner og fortolk stabilitet | Model ikke er opstillet | Valideret; dækker bl.a. S20 Q16, 2022 Q8 og E23 Q7 |
+| Samlet TF-analyse | `script_assisted` | `analyze_transfer_function` | Samler poler, zeros, DC, stabilitet, respons og frekvensdata | Udled korrekt TF og signalvej | Diagram ikke reduceret | Valideret |
 | Symbolsk stabilitetsinterval i gain | `script_primary` | `find_stable_gain_ranges` | Finder `j*w`-graenser og tester poleplacering i intervaller | Udled `p(s,K)` og kontroller at gain-interval er relevant | Graden i `s` aendres med gain eller model kun er figur | Valideret |
+| Kompakt stabilitetsinterval | `script_primary` | `solve_stability_interval_by_boundary` | Kortere output fra samme boundary-workflow | Udled `p(s,K)` | Graden i `s` aendres med gain | Valideret |
 | P-gain closed-loop kontrol | `script_assisted` | `closed_loop_poles` | Beregner poler for foreslået gain | Kontrollér loopstruktur og vælg kandidat | Feedback ikke matcher formel | Valideret |
 | TF ved frekvens | `script_assisted` | `evaluate_transfer_function` | Beregner kompleks værdi | Udled TF og vælg relevant frekvens | Plot skal fortolkes | Valideret; relevant for 2022 Q7/Q13 |
+| TF ved frekvens med Bode-tal | `script_assisted` | `frequency_response_point` | Returnerer kompleks værdi, magnitude, dB og fase | Udled TF og vælg relevant frekvens | Plot skal fortolkes | Valideret |
+| Closed-loop analyse fra koefficienter | `script_assisted` | `closed_loop_analysis_from_coefficients` | Returnerer karakteristik, poler, stabilitet og DC-gain | Kontrollér loopstruktur | Ikke-standard feedback | Valideret |
 | Unit-step-fejl | `script_assisted` | `unity_feedback_step_error` | DC/slutværdi med stabilitetscheck | Bekræft error path | Ikke-unity/anden error-definition | Valideret; referencefejl dækkes, disturbance-fejl kræver manuel path |
+| Stationær referencefejl bred | `script_assisted` | `steady_state_error_analysis` | Step/ramp/parabel, type og fejlkonstanter | Bekræft standard unity error path | Disturbance path uden reduktion | Valideret |
 | Andenordens overshoot | `script_assisted` | `second_order_characteristics` | `omega_n`, `zeta`, overshoot | Match nævner til standardform | Højereordensdomineret system | Valideret; relevant for S20 Q5 og 2022 Q3 |
+| Andenordensanalyse bred | `script_assisted` | `second_order_analysis` | Tilføjer poler, omega_d, peak time og settling-estimater | Match nævner til standardform | Højereordensdomineret system | Valideret |
 | PM fra Nyquist-punkt | `script_assisted` | `phase_margin_from_point` | Beregner vinkel/margin | Aflæs rette punkt/kvadrant | Encirclement er spørgsmålet | Valideret |
-| PI-Lead ved specificeret crossover | `script_primary` | `design_pi_lead_at_crossover` | Løser fase- og magnitudebalance | Vælg struktur/specifikation og check limits | Designvalget er åbent | Valideret |
+| Nyquist-punktanalyse | `script_assisted` | `nyquist_point_analysis` | PM plus magnitude, dB, afstand til -1 og warnings | Aflæs rette punkt/kvadrant | Encirclement er spørgsmålet | Valideret |
+| PI-Lead ved specificeret crossover | `script_primary` | `design_pi_lead` / `design_pi_lead_at_crossover` | Løser eller checker PI-lead-parametre | Vælg struktur/specifikation og check limits | Designvalget er åbent | Valideret |
 | Lag-parameter | `script_primary` | `solve_lag_beta` | Løser `beta` fra krævet lagfase | Udled fasebalance | Det er PI, ikke Lag | Valideret |
-| Ideal disturbance feed-forward | `script_assisted` | `ideal_disturbance_feedforward` | Danner ratio og checker proper/stable | Læs fortegn og vurdér model/måling | Ukendt/unmeasured disturbance | Valideret |
+| Lag-design bred | `script_primary` | `design_lag` | Beta plus tider/frekvenser og check-mode | Udled fasebalance | Limit/windupdesign | Valideret |
+| Ideal disturbance feed-forward | `script_assisted` | `ideal_disturbance_feedforward` / `feedforward_analysis` | Danner ratio og checker proper/stable/realiserbarhed | Læs fortegn og vurdér model/måling | Ukendt/unmeasured disturbance | Valideret |
 | Blokdiagram fra figur | `notes_only` | Ingen | Intet | Udled signalalgebra | Altid | Ikke automatiseret |
 | Bode/Nyquist-figurfortolkning | `notes_only` | Ingen | Intet | Aflæs curves, direction, RHP/LHP | Altid | Ikke automatiseret |
 | Limited system/windup | `notes_only` | Ingen | Intet | Vurder ikke-linearitet og mitigation | Altid | Ikke automatiseret |
@@ -26,7 +34,7 @@ Python-værktøjskassen er en regne- og kontrolhjælper. Den kræver, at brugere
 ## Dækket af Python
 
 - Pol-/gain-/DC-kontrol og symbolske stabile gain-intervaller efter at den matematiske model er opstillet.
-- Simple phase-margin- og andenordensberegninger fra numeriske input.
+- Frekvenspunkter, Nyquistpunkt-checks og andenordensberegninger fra numeriske input.
 - De gentagne designrelationer for PI-Lead og P-Lead-Lag.
 - Nominal properness/stability-check af en udledt disturbance feed-forward ratio.
 

@@ -80,9 +80,12 @@ At bruge 38.9 dB som gain 38.9 i stedet for \(10^{38.9/20}\approx88\) (F21 Q6);
 at afgøre RHP/LHP uden phaseplot.
 
 \paragraph{Python}
-\code{evaluate\_transfer\_function(num,den,omega)} kan evaluere en kendt model;
-\code{closed\_loop\_poles(num,den,K)} kan kontrollere foreslået P-gain. Brugeren skal
-selv aflæse plots og verificere loopstruktur.
+\code{bode\_to\_transfer(dc\_gain\_db,poles,zeros,s)} bruges, når Bode-asymptoterne
+allerede er aflæst som DC-gain og break-frekvenser; funktionen afgør ikke RHP/LHP uden
+din fasefortolkning. \code{frequency\_response\_point(num,den,omega)} og
+\code{evaluate\_transfer\_function(num,den,omega)} kan evaluere en kendt model ved en
+valgt frekvens. \code{closed\_loop\_poles(num,den,K)} kan kontrollere foreslået P-gain.
+Brugeren skal selv aflæse plots og verificere loopstruktur.
 
 \subsection{Nyquist-stabilitet for ustabil plant / encirclement, RHP poles}
 \label{sec:nyquist}
@@ -138,6 +141,10 @@ At vælge lille positiv gain for en open-loop-ustabil plant; at vende CW/CCW-for
 \paragraph{Python}
 Ingen funktion automatiserer encirclement fra figuren. Efter manuel stabiliseringsbeslutning
 kan \code{closed\_loop\_poles} bruges, hvis en fuld analytisk \(G(s)\) er angivet.
+\code{find\_stable\_gain\_ranges(p,K,s)} bruges, når du har et gain-afhængigt
+karakteristisk polynomium og vil finde marginale \(K\)-værdier samt stabile intervaller.
+\code{solve\_stability\_interval\_by\_boundary(p,K,s)} er en kortere wrapper til samme
+boundary-workflow, når du ikke behøver hele den detaljerede analyse.
 
 \subsection{Phase margin fra Nyquist-punkt / unit-circle point}
 
@@ -183,3 +190,6 @@ At aflevere \(\phi_c\), radianværdien eller \(-\phi_c\) som margin.
 \paragraph{Python}
 \code{phase\_margin\_from\_point(real\_part,imaginary\_part)} returnerer marginen,
 når du har aflæst det rette punkt.
+\code{nyquist\_point\_analysis(real\_part,imaginary\_part)} bruges, når du også vil
+checke punktets magnitude, dB-værdi, fase, afstand til \(-1\) og om punktet faktisk
+ligger tæt på enhedscirklen. Funktionen tæller ikke encirclements.

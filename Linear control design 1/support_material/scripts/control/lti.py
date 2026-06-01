@@ -43,6 +43,28 @@ def evaluate_transfer_function(
     return complex(np.polyval(num, 1j * omega) / den_value)
 
 
+def frequency_response_point(
+    numerator: Iterable[float],
+    denominator: Iterable[float],
+    omega: float,
+) -> dict[str, object]:
+    """Return magnitude, phase and rectangular data at one frequency."""
+
+    value = evaluate_transfer_function(numerator, denominator, omega)
+    magnitude = float(abs(value))
+    phase_deg = float(np.degrees(np.angle(value)))
+    return {
+        "value": value,
+        "real": float(value.real),
+        "imag": float(value.imag),
+        "magnitude": magnitude,
+        "magnitude_db": None if np.isclose(magnitude, 0.0) else float(20.0 * np.log10(magnitude)),
+        "phase_deg": phase_deg,
+        "omega": float(omega),
+        "warnings": [],
+    }
+
+
 def transfer_function_poles(denominator: Iterable[float]) -> np.ndarray:
     """Use when a denominator polynomial is already derived from the task.
 
@@ -51,6 +73,17 @@ def transfer_function_poles(denominator: Iterable[float]) -> np.ndarray:
     """
     den = _polynomial(denominator, "denominator")
     return np.roots(den)
+
+
+def _polynomial_roots_and_stability(denominator: np.ndarray, tolerance: float = 1e-10) -> dict[str, object]:
+    poles = np.roots(np.trim_zeros(denominator, trim="f"))
+    return {
+        "poles": poles,
+        "stable": bool(np.all(np.real(poles) < -tolerance)),
+        "has_rhp_poles": bool(np.any(np.real(poles) > tolerance)),
+        "has_imaginary_axis_poles": bool(np.any(np.abs(np.real(poles)) <= tolerance)),
+        "marginal_poles": [complex(pole) for pole in poles if abs(pole.real) <= tolerance],
+    }
 
 
 def closed_loop_poles(
@@ -75,6 +108,40 @@ def closed_loop_poles(
     return np.roots(np.trim_zeros(characteristic, trim="f"))
 
 
+def closed_loop_analysis_from_coefficients(
+    numerator: Iterable[float],
+    denominator: Iterable[float],
+    proportional_gain: float = 1.0,
+    feedback_gain: float = 1.0,
+) -> dict[str, object]:
+    """Analyze the negative-feedback characteristic formed from coefficient lists."""
+
+    num = _polynomial(numerator, "numerator")
+    den = _polynomial(denominator, "denominator")
+    loop_gain = float(proportional_gain) * float(feedback_gain)
+    if not np.isfinite(loop_gain):
+        raise ValueError("The loop gain must be finite.")
+    characteristic = np.trim_zeros(np.polyadd(den, loop_gain * num), trim="f")
+    if characteristic.size == 0 or np.allclose(characteristic, 0.0):
+        raise ValueError("Closed-loop characteristic polynomial is identically zero.")
+
+    stability = _polynomial_roots_and_stability(characteristic)
+    numerator_dc = float(loop_gain * np.polyval(num, 0.0))
+    denominator_dc = float(np.polyval(characteristic, 0.0))
+    closed_loop_dc_gain = None if np.isclose(denominator_dc, 0.0) else float(numerator_dc / denominator_dc)
+    return {
+        "characteristic": characteristic.tolist(),
+        "poles": stability["poles"],
+        "stable": stability["stable"],
+        "has_rhp_poles": stability["has_rhp_poles"],
+        "has_imaginary_axis_poles": stability["has_imaginary_axis_poles"],
+        "marginal_poles": stability["marginal_poles"],
+        "closed_loop_dc_gain": closed_loop_dc_gain,
+        "proportional_gain": float(proportional_gain),
+        "feedback_gain": float(feedback_gain),
+    }
+
+
 def unity_feedback_step_error(
     numerator: Iterable[float], denominator: Iterable[float], proportional_gain: float = 1.0
 ) -> float:
@@ -96,6 +163,79 @@ def unity_feedback_step_error(
     return float(np.polyval(den, 0.0) / denominator_dc)
 
 
+def _error_from_constant(value: float | None) -> float | None:
+    if value is None:
+        return None
+    if np.isinf(value):
+        return 0.0
+    if np.isclose(value, 0.0):
+        return np.inf
+    return float(1.0 / value)
+
+
+def steady_state_error_analysis(
+    numerator: Iterable[float],
+    denominator: Iterable[float],
+    proportional_gain: float = 1.0,
+    input_type: str = "step",
+) -> dict[str, object]:
+    """Analyze standard negative-unity-feedback steady-state error."""
+
+    num = _polynomial(numerator, "numerator")
+    den = _polynomial(denominator, "denominator")
+    gain = float(proportional_gain)
+    if not np.isfinite(gain):
+        raise ValueError("proportional_gain must be finite.")
+    normalized_input = input_type.lower()
+    if normalized_input not in {"step", "ramp", "parabolic"}:
+        raise ValueError("input_type must be 'step', 'ramp' or 'parabolic'.")
+
+    closed_loop = closed_loop_analysis_from_coefficients(num, den, gain)
+    if not closed_loop["stable"]:
+        raise ValueError("Final value theorem is not valid: the closed loop is not asymptotically stable.")
+
+    variable = sp.Symbol("s")
+    num_poly = sum(float(coeff) * variable ** power for power, coeff in enumerate(reversed(num)))
+    den_poly = sum(float(coeff) * variable ** power for power, coeff in enumerate(reversed(den)))
+    loop = sp.simplify(gain * num_poly / den_poly)
+
+    def limit_or_inf(expr: sp.Expr) -> float | None:
+        try:
+            value = sp.limit(expr, variable, 0)
+            if value is sp.oo:
+                return np.inf
+            if value is -sp.oo:
+                return -np.inf
+            return _safe_float(value)
+        except Exception:
+            return None
+
+    position_constant = limit_or_inf(loop)
+    velocity_constant = limit_or_inf(variable * loop)
+    acceleration_constant = limit_or_inf(variable**2 * loop)
+
+    poles = np.roots(den)
+    system_type = int(sum(abs(pole) <= 1e-8 for pole in poles))
+    if normalized_input == "step":
+        error = None if position_constant is None else float(1.0 / (1.0 + position_constant)) if np.isfinite(position_constant) else 0.0
+    elif normalized_input == "ramp":
+        error = _error_from_constant(velocity_constant)
+    else:
+        error = _error_from_constant(acceleration_constant)
+
+    return {
+        "input_type": normalized_input,
+        "steady_state_error": error,
+        "system_type": system_type,
+        "position_error_constant_Kp": position_constant,
+        "velocity_error_constant_Kv": velocity_constant,
+        "acceleration_error_constant_Ka": acceleration_constant,
+        "closed_loop_stable": closed_loop["stable"],
+        "closed_loop_poles": closed_loop["poles"],
+        "warnings": [],
+    }
+
+
 def phase_margin_from_point(real_part: float, imaginary_part: float) -> float:
     """Use when a Nyquist point at the gain crossover has been read manually.
 
@@ -108,6 +248,33 @@ def phase_margin_from_point(real_part: float, imaginary_part: float) -> float:
         raise ValueError("The origin has no defined phase.")
     phase_deg = float(np.degrees(np.arctan2(imaginary_part, real_part)))
     return 180.0 + phase_deg
+
+
+def nyquist_point_analysis(real_part: float, imaginary_part: float) -> dict[str, object]:
+    """Analyze a manually read Nyquist point."""
+
+    if not np.isfinite(real_part) or not np.isfinite(imaginary_part):
+        raise ValueError("Nyquist coordinates must be finite.")
+    if np.isclose(real_part, 0.0) and np.isclose(imaginary_part, 0.0):
+        raise ValueError("The origin has no defined phase.")
+    point = complex(real_part, imaginary_part)
+    magnitude = float(abs(point))
+    phase_deg = float(np.degrees(np.arctan2(imaginary_part, real_part)))
+    warnings = []
+    if not np.isclose(magnitude, 1.0, rtol=0.05, atol=0.05):
+        warnings.append("Pointet ligger ikke tydeligt paa enhedscirklen; PM kraever et gain-crossover-punkt.")
+    return {
+        "point": point,
+        "real": float(real_part),
+        "imag": float(imaginary_part),
+        "magnitude": magnitude,
+        "magnitude_db": float(20.0 * np.log10(magnitude)),
+        "phase_deg": phase_deg,
+        "phase_margin_deg": float(180.0 + phase_deg),
+        "distance_to_minus_one": float(abs(point + 1.0)),
+        "near_unit_circle": bool(np.isclose(magnitude, 1.0, rtol=0.05, atol=0.05)),
+        "warnings": warnings,
+    }
 
 
 def bode_to_transfer(
@@ -1258,3 +1425,39 @@ def second_order_characteristics(denominator: Iterable[float]) -> dict[str, floa
         else 0.0
     )
     return {"omega_n": omega_n, "zeta": zeta, "overshoot_percent": overshoot}
+
+
+def second_order_analysis(denominator: Iterable[float]) -> dict[str, object]:
+    """Return common exam metrics for a standard second-order denominator."""
+
+    base = second_order_characteristics(denominator)
+    den = _polynomial(denominator, "denominator")
+    normalized = den / den[0]
+    omega_n = float(base["omega_n"])
+    zeta = float(base["zeta"])
+    poles = np.roots(normalized)
+    if zeta < 1.0:
+        omega_d = float(omega_n * np.sqrt(1.0 - zeta**2))
+        peak_time = float(np.pi / omega_d)
+        damping_class = "underdamped"
+    elif np.isclose(zeta, 1.0):
+        omega_d = 0.0
+        peak_time = None
+        damping_class = "critically damped"
+    else:
+        omega_d = None
+        peak_time = None
+        damping_class = "overdamped"
+
+    settling_time_2_percent = float(4.0 / (zeta * omega_n)) if zeta > 0.0 else None
+    settling_time_5_percent = float(3.0 / (zeta * omega_n)) if zeta > 0.0 else None
+    return {
+        **base,
+        "overshoot_fraction": float(base["overshoot_percent"] / 100.0),
+        "poles": poles,
+        "omega_d": omega_d,
+        "peak_time": peak_time,
+        "settling_time_2_percent": settling_time_2_percent,
+        "settling_time_5_percent": settling_time_5_percent,
+        "damping_class": damping_class,
+    }

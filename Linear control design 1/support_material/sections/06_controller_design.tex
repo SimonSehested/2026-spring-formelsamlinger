@@ -81,9 +81,13 @@ solutiontekst og direkte TF-evaluering afviger lidt i plantfasen, men begge væl
 svare den lineære faktor \(1/\sqrt{\alpha}\) som om den var dB.
 
 \paragraph{Python}
-\code{design\_pi\_lead\_at\_crossover(num,den,omega\_c,phase\_margin\_deg,n\_i)}
-udfører netop ovenstående beregning og returnerer targetchecks. Vælg ikke controllerstruktur
-eller crossover blindt ud fra outputtet.
+\code{design\_pi\_lead(num,den,omega\_c,phase\_margin\_deg,n\_i,tau\_i,alpha,tau\_d,Kp)}
+bruges, når PI-Lead-strukturen er valgt, men opgaven kan give forskellige kendte
+størrelser. Funktionen kan designe de manglende parametre eller checke en foreslået
+regulator og returnerer targetchecks, faktisk crossover, phase margin, gain margin og
+warnings. \code{design\_pi\_lead\_at\_crossover(num,den,omega\_c,phase\_margin\_deg,n\_i)}
+er den gamle wrapper til klassisk design med \(N_i\). Vælg ikke controllerstruktur eller
+crossover blindt ud fra outputtet.
 
 \subsection{P-gain fra margin / proportional controller design}
 

@@ -60,6 +60,11 @@ en figur hvor gain ligger i målegrenen.
 \paragraph{Python}
 Ingen parser til diagrammet. Når du selv har reduceret til \(E/R=1/(1+KG)\), kan
 \code{unity\_feedback\_step\_error} kontrollere slutværdien.
+\code{closed\_loop\_characteristic(forward,feedback,s)} bruges, når forward- og
+feedbackgrenene er skrevet symbolsk, og du vil danne den karakteristiske ligning.
+\code{closed\_loop\_analysis\_from\_coefficients(num,den,K)} bruges, når du har
+koefficienter for \(G(s)\) og vil have karakteristisk polynomium, poler, stabilitet og
+closed-loop DC-gain. \code{closed\_loop\_poles(num,den,K)} er den korte pol-liste.
 
 \subsection{Stationær referencefejl / final value, system type}
 
@@ -131,3 +136,8 @@ At beregne \(Y/R\) når opgaven spørger om \(E/R\), eller at bruge en ikke-ende
 \paragraph{Python}
 \code{unity\_feedback\_step\_error(num,den,proportional\_gain)} kontrollerer
 standardloopet og afviser ustabil slutværdi; signalvejen er stadig manuel.
+\code{steady\_state\_error\_analysis(num,den,proportional\_gain,input\_type)} bruges,
+når standard negativ unity feedback er bekræftet, og du vil have systemtype,
+fejlkonstanter \(K_p^\ast,K_v,K_a\), closed-loop-poler og stationær fejl for step,
+ramp eller parabel. Brug den ikke på disturbance- eller sensorfejl uden først at have
+reduceret signalvejen til den tilsvarende standardform.

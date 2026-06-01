@@ -68,6 +68,10 @@ ud fra en small-signal transferfunktion.
 \paragraph{Python}
 \code{solve\_lag\_beta(lag\_phase\_deg,n\_i)} beregner \(\beta\) fra den fase,
 du selv har udledt (F21 Q17). Der automatiseres ikke limit- eller windupdesign.
+\code{design\_lag(lag\_phase\_deg,n\_i,omega\_c,tau\_i,beta)} bruges, når du vil have
+mere end \(\beta\): funktionen kan beregne eller checke lagfasen, finde \(\tau_i\),
+\(N_i\), lag-zero/pole-frekvenser og warnings. Den vælger ikke den manglende fase for
+dig; fasebalancen skal stadig udledes fra opgaven.
 
 \subsection{Disturbance og sensitivity / \(S\), \(T\), prefilter}
 \label{sec:disturbance}
@@ -195,6 +199,10 @@ modelusikkerhed.
 \code{ideal\_disturbance\_feedforward(...,disturbance\_sign)} danner ratioen og
 rapporterer proper/stable efter at du har valgt fortegnet. For F21 Q20 er
 \(\sigma_D=-1\), og nominalt fås \(G_{yd}=0\).
+\code{feedforward\_analysis(...,disturbance\_sign)} bruges, når den samme ideelle
+feed-forward også skal vurderes for poler, nulpunkter, relative degree, strict
+properness, minimum-phase og realiserbarhed. Funktionen kan ikke afgøre om disturbance
+er målelig eller om fortegnet er korrekt; det er stadig diagramlæsning.
 
 \subsection{Reference feed-forward for nul stationær fejl / inverse with low-pass}
 \label{sec:tracking-feedforward}

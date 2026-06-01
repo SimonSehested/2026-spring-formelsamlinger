@@ -71,6 +71,14 @@ at bevare fortegn.
 \code{transfer\_function\_poles(denominator)} kontrollerer poler efter din udledning.
 Angiv koefficienter i faldende potenser af \(s\). Funktionen erstatter ikke modelleringen
 og må ikke bruges på et ufortolket diagram.
+\code{analyze\_transfer\_function(G, variable=s)} bruges, når du allerede har en
+symbolsk transferfunktion og vil have samlet output: poler, nulpunkter, DC-gain,
+systemtype, stabilitet, tidsrespons-estimater og frekvensmetrics. Brug den ikke som
+erstatning for at vælge det rigtige input/outputpar fra et diagram.
+\code{frequency\_response\_point(num,den,omega)} bruges, når en kendt model skal
+evalueres ved én frekvens, og du vil have både kompleks værdi, magnitude, dB og fase.
+\code{evaluate\_transfer\_function(num,den,omega)} er den korte wrapper, når kun
+den komplekse værdi \(G(j\omega)\) ønskes.
 
 Hvis et realt gain \(K\) indgår i det karakteristiske polynomium \(p(s,K)\), bruges
 \code{find\_stable\_gain\_ranges(p, K, s)}. Den accepterer også den rationale
@@ -235,6 +243,9 @@ ikke nok.
 \code{second\_order\_characteristics(denominator)} returnerer
 \(\omega_n,\zeta,M_p\) for en allerede identificeret standardnævner og kan kontrollere
 F21 Q9; vurder selv om højereordensdynamik gør metoden ugyldig.
+\code{second\_order\_analysis(denominator)} bruges, når du også vil have poler,
+dæmpningsklasse, dæmpet frekvens, peak time og 2\%/5\%-settling-estimater. Den kræver
+stadig, at nævneren faktisk må behandles som standard anden orden.
 
 \subsection{Dominerende poler og delay / model reduction}
 \label{sec:dominant-delay}

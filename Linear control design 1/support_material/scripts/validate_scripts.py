@@ -3,24 +3,33 @@
 from __future__ import annotations
 
 import math
+from pathlib import Path
 
 import numpy as np
 import sympy as sp
 
 from scripts.control import (
+    __all__ as PUBLIC_CONTROL_HELPERS,
     analyze_transfer_function,
     bode_to_transfer,
+    closed_loop_analysis_from_coefficients,
     closed_loop_characteristic,
     closed_loop_poles,
+    design_lag,
     design_pi_lead,
     design_pi_lead_at_crossover,
     evaluate_transfer_function,
+    feedforward_analysis,
     find_stable_gain_ranges,
+    frequency_response_point,
     ideal_disturbance_feedforward,
+    nyquist_point_analysis,
     phase_margin_from_point,
+    second_order_analysis,
     second_order_characteristics,
     solve_lag_beta,
     solve_stability_interval_by_boundary,
+    steady_state_error_analysis,
     transfer_function_poles,
     unity_feedback_step_error,
 )
@@ -48,6 +57,14 @@ def main() -> None:
     value = evaluate_transfer_function([1.0], [1.0, 1.0], 1.0)
     check("evaluate_transfer_function normal", np.isclose(value, 0.5 - 0.5j), str(value))
     expect_value_error("evaluate_transfer_function invalid omega", lambda: evaluate_transfer_function([1], [1, 1], -1))
+    point = frequency_response_point([1.0], [1.0, 1.0], 1.0)
+    check(
+        "frequency_response_point normal",
+        np.isclose(point["value"], 0.5 - 0.5j)
+        and np.isclose(point["magnitude"], np.sqrt(0.5))
+        and np.isclose(point["phase_deg"], -45.0),
+        str(point),
+    )
 
     poles = transfer_function_poles([1.0, 2.0, 1.0])
     check("transfer_function_poles known", np.allclose(np.sort(poles), [-1, -1]), str(poles))
@@ -72,6 +89,12 @@ def main() -> None:
     q11 = closed_loop_poles([120.0], [1.0, 43.0, 120.0, 0.0], 25.0)
     check("closed_loop_poles F21 Q11", np.all(np.real(q11) < 0), str(q11))
     expect_value_error("closed_loop_poles invalid gain", lambda: closed_loop_poles([1], [1, 1], math.inf))
+    q11_analysis = closed_loop_analysis_from_coefficients([120.0], [1.0, 43.0, 120.0, 0.0], 25.0)
+    check(
+        "closed_loop_analysis_from_coefficients stable",
+        q11_analysis["stable"] is True and np.all(np.real(q11_analysis["poles"]) < 0),
+        str(q11_analysis),
+    )
 
     symbolic_analysis = analyze_transfer_function(20 / (s**2 + 5 * s + 20), s)
     check(
@@ -167,15 +190,34 @@ def main() -> None:
 
     q16_error = unity_feedback_step_error([1224.0], [1.0, 30.0, 257.0, 612.0], 2.0)
     check("unity_feedback_step_error F21 Q16", np.isclose(q16_error, 0.2), str(q16_error))
+    q16_error_analysis = steady_state_error_analysis([1224.0], [1.0, 30.0, 257.0, 612.0], 2.0)
+    check(
+        "steady_state_error_analysis step",
+        np.isclose(q16_error_analysis["steady_state_error"], 0.2)
+        and q16_error_analysis["system_type"] == 0,
+        str(q16_error_analysis),
+    )
+    ramp_error = steady_state_error_analysis([1.0], [1.0, 0.0], 2.0, input_type="ramp")
+    check("steady_state_error_analysis ramp type1", np.isclose(ramp_error["steady_state_error"], 0.5), str(ramp_error))
     expect_value_error("unity_feedback_step_error unstable", lambda: unity_feedback_step_error([1], [1, -1], 0))
 
     margin = phase_margin_from_point(0.134, -0.99)
     check("phase_margin_from_point F21 Q14", np.isclose(margin, 97.71, atol=0.1), str(margin))
+    nyquist = nyquist_point_analysis(0.134, -0.99)
+    check("nyquist_point_analysis F21 Q14", np.isclose(nyquist["phase_margin_deg"], 97.71, atol=0.1), str(nyquist))
     expect_value_error("phase_margin_from_point origin", lambda: phase_margin_from_point(0, 0))
 
     metrics = second_order_characteristics([1.0, 5.0, 20.0])
     # F21 rounds the multiple-choice boundary K=20 to 12%; the exact value is 12.026%.
     check("second_order_characteristics Q9 rounded limit", metrics["overshoot_percent"] <= 12.1, str(metrics))
+    full_metrics = second_order_analysis([1.0, 5.0, 20.0])
+    check(
+        "second_order_analysis extended",
+        full_metrics["overshoot_percent"] <= 12.1
+        and full_metrics["peak_time"] is not None
+        and full_metrics["settling_time_2_percent"] is not None,
+        str(full_metrics),
+    )
     check("second_order_characteristics known critical", second_order_characteristics([1, 2, 1])["overshoot_percent"] == 0, "critical damping")
     expect_value_error("second_order_characteristics invalid", lambda: second_order_characteristics([1, 2]))
 
@@ -225,17 +267,38 @@ def main() -> None:
 
     beta = solve_lag_beta(-8.9193, 3.0)
     check("solve_lag_beta F21 Q17", np.isclose(beta, 1.9886, atol=1e-3), str(beta))
+    lag = design_lag(-8.9193, n_i=3.0, omega_c=10.0)
+    check(
+        "design_lag F21 Q17",
+        np.isclose(lag["beta"], 1.9886, atol=1e-3) and np.isclose(lag["tau_i"], 0.3),
+        str(lag),
+    )
     expect_value_error("solve_lag_beta wrong phase", lambda: solve_lag_beta(10, 3))
 
     feedforward = ideal_disturbance_feedforward(
         [10.5, 21.0], [1.0, 4.0, 21.0], [1.0], [0.01, 1.0], -1
     )
+    feedforward_full = feedforward_analysis(
+        [10.5, 21.0], [1.0, 4.0, 21.0], [1.0], [0.01, 1.0], -1
+    )
     check("ideal_disturbance_feedforward Q20 proper", bool(feedforward["proper"]), str(feedforward))
     check("ideal_disturbance_feedforward Q20 stable", bool(feedforward["stable"]), str(feedforward))
+    check(
+        "feedforward_analysis Q20 realizable",
+        bool(feedforward_full["realizable"]) and feedforward_full["relative_degree"] >= 0,
+        str(feedforward_full),
+    )
     expect_value_error(
         "ideal_disturbance_feedforward sign",
         lambda: ideal_disturbance_feedforward([1], [1, 1], [1], [1, 1], 0),
     )
+
+    support_root = Path(__file__).resolve().parents[1]
+    notebook_text = (support_root.parent / "exam_toolbox.ipynb").read_text(encoding="utf-8")
+    sections_text = "\n".join(path.read_text(encoding="utf-8") for path in (support_root / "sections").glob("*.tex"))
+    for helper in PUBLIC_CONTROL_HELPERS:
+        check(f"documentation notebook {helper}", helper in notebook_text, "found")
+        check(f"documentation notes {helper}", helper.replace("_", r"\_") in sections_text or helper in sections_text, "found")
 
     print(f"Validated {len(RESULTS)} checks.")
     for name, detail in RESULTS:

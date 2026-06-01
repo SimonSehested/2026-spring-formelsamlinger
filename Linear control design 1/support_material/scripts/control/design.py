@@ -377,6 +377,61 @@ def solve_lag_beta(lag_phase_deg: float, n_i: float) -> float:
     return float(beta)
 
 
+def design_lag(
+    lag_phase_deg: float | None = None,
+    n_i: float | None = None,
+    omega_c: float | None = None,
+    tau_i: float | None = None,
+    beta: float | None = None,
+) -> dict[str, object]:
+    """Design or check the simple lag element used in the exam notes."""
+
+    warnings: list[str] = []
+    omega_c = _optional_positive_finite("omega_c", omega_c)
+    n_i = _optional_positive_finite("n_i", n_i)
+    tau_i = _optional_positive_finite("tau_i", tau_i)
+    beta = _optional_positive_finite("beta", beta)
+
+    if tau_i is None and n_i is not None and omega_c is not None:
+        tau_i = n_i / omega_c
+    elif n_i is None and tau_i is not None and omega_c is not None:
+        n_i = omega_c * tau_i
+    elif tau_i is not None and n_i is not None and omega_c is not None:
+        implied = omega_c * tau_i
+        if not np.isclose(implied, n_i, rtol=1e-5, atol=1e-9):
+            warnings.append(f"n_i={n_i:.6g} does not match omega_c*tau_i={implied:.6g}; tau_i is used.")
+            n_i = implied
+
+    if beta is None:
+        if lag_phase_deg is None or n_i is None:
+            raise ValueError("lag_phase_deg and n_i are required when beta is not supplied.")
+        beta = solve_lag_beta(lag_phase_deg, n_i)
+    elif beta <= 1.0:
+        raise ValueError("beta must be greater than 1 for a Lag compensator.")
+
+    if lag_phase_deg is not None and n_i is not None:
+        achieved_phase = float(np.degrees(np.arctan(n_i * (1.0 - beta) / (1.0 + beta * n_i**2))))
+        if not np.isclose(achieved_phase, lag_phase_deg, atol=1e-5):
+            warnings.append(f"Supplied beta gives lag phase {achieved_phase:.6g} deg, not {lag_phase_deg:.6g} deg.")
+    elif n_i is not None:
+        achieved_phase = float(np.degrees(np.arctan(n_i * (1.0 - beta) / (1.0 + beta * n_i**2))))
+    else:
+        achieved_phase = None
+
+    zero_frequency = None if tau_i is None else float(1.0 / tau_i)
+    pole_frequency = None if tau_i is None else float(beta / tau_i)
+    return {
+        "beta": float(beta),
+        "lag_phase_deg": achieved_phase,
+        "tau_i": None if tau_i is None else float(tau_i),
+        "n_i": None if n_i is None else float(n_i),
+        "omega_c": omega_c,
+        "zero_frequency_rad_s": zero_frequency,
+        "pole_frequency_rad_s": pole_frequency,
+        "warnings": warnings,
+    }
+
+
 def ideal_disturbance_feedforward(
     plant_numerator: Iterable[float],
     plant_denominator: Iterable[float],
@@ -418,4 +473,50 @@ def ideal_disturbance_feedforward(
         "proper": proper,
         "stable": stable,
         "nominal_cancellation": proper and stable,
+    }
+
+
+def feedforward_analysis(
+    plant_numerator: Iterable[float],
+    plant_denominator: Iterable[float],
+    disturbance_numerator: Iterable[float],
+    disturbance_denominator: Iterable[float],
+    disturbance_sign: int,
+) -> dict[str, object]:
+    """Return ideal disturbance feed-forward plus realizability checks."""
+
+    base = ideal_disturbance_feedforward(
+        plant_numerator,
+        plant_denominator,
+        disturbance_numerator,
+        disturbance_denominator,
+        disturbance_sign,
+    )
+    numerator = np.asarray(base["numerator"], dtype=float)
+    denominator = np.asarray(base["denominator"], dtype=float)
+    zeros = np.roots(numerator) if numerator.size > 1 else np.array([])
+    poles = np.roots(denominator) if denominator.size > 1 else np.array([])
+    relative_degree = int(denominator.size - numerator.size)
+    minimum_phase = bool(np.all(np.real(zeros) < 0.0))
+    warnings: list[str] = []
+    if not base["proper"]:
+        warnings.append("Ideal feed-forward is improper; add a stable low-pass filter or use an approximation.")
+    if not base["stable"]:
+        warnings.append("Ideal feed-forward is unstable; exact dynamic cancellation is not realizable.")
+    if not minimum_phase:
+        warnings.append("Feed-forward has non-minimum-phase zeros.")
+    return {
+        **base,
+        "zeros": zeros,
+        "poles": poles,
+        "relative_degree": relative_degree,
+        "strictly_proper": bool(relative_degree > 0),
+        "minimum_phase": minimum_phase,
+        "warnings": warnings,
+        "realizable": bool(base["proper"] and base["stable"]),
+        "realizability_text": (
+            "nominalt realiserbar ideal feed-forward"
+            if base["proper"] and base["stable"]
+            else "ikke direkte realiserbar uden approximation/filter"
+        ),
     }
