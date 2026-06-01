@@ -143,10 +143,23 @@ Overshootformlen gælder standard underdæmpet anden orden. Approksimationen for
 \paragraph{Hurtigtjek}
 Et stabilt førsteordenssystem overshooter ikke. Større \(\zeta\) betyder mindre
 overshoot; højere \(\omega_n\) betyder typisk hurtigere respons.
+Closed-loop bandwidth fra et Bodeplot aflæses ved første frekvens hvor magnitude er
+3 dB under lavfrekvensniveauet:
+\[
+|T(j\omega_b)|=\frac{|T(0)|}{\sqrt2}.
+\]
+Hvis lavfrekvensniveauet er \(+3\) dB, ligger \(-3\) dB-punktet derfor ved 0 dB i
+plottet. For et oscillerende steprespons aflæses den dæmpede egenfrekvens fra
+peakperioden \(T_d\):
+\[
+\omega_d=\frac{2\pi}{T_d}.
+\]
 
 \paragraph{Typiske fælder}
 At bruge procent i formlen uden at dividere med 100; F21 Q9 afrunder grænsen
-\(K=20\), som giver \(12.026\%\) ved eksakt beregning.
+\(K=20\), som giver \(12.026\%\) ved eksakt beregning. Ved match mellem Bode og
+steprespons skal både slutværdi, initialhop, resonans og hastighed passe; én af dem er
+ikke nok.
 
 \paragraph{Python}
 \code{second\_order\_characteristics(denominator)} returnerer

@@ -122,6 +122,9 @@ placering; et konkret blokdiagram har forrang.
 \paragraph{Hurtigtjek}
 Et prefilter uden for loopet må ikke ændre \(L\), PM/GM eller disturbance rejection.
 Stor lavfrekvent loopgain reducerer typisk outputdisturbance via \(S(0)\).
+Ved flere disturbancekurver bruges DC-niveauet først: en disturbance efter en integrator
+kan have nul steady-state-output, mens en disturbance før integratoren kan kræve et
+ikke-nul controllerinput og give et lavfrekvent niveau bestemt af \(K_P\).
 
 \paragraph{Typiske fælder}
 At bruge fejlsignalet fra en korrupt måling som performancefejl eller bytte input- og
@@ -232,3 +235,7 @@ kun lavfrekvent/asymptotisk, ikke nødvendigvis i transienten.
 \paragraph{Hurtigtjek}
 Ved \(s=0\) giver \eqref{eq:tracking-feedforward} \(G(0)F_{\mathrm{track}}(0)=1\), så
 unit-step steady-state error kan blive nul.
+Når plantinversen har højere tællergrad end nævnergrad, skal den gøres proper med et
+stabilt lavpasfilter af tilstrækkelig orden. Vælg filtertidskonstanten lille i forhold
+til de relevante planttidskonstanter, hvis opgaven kræver lavfrekvent tracking eller
+disturbance cancellation.

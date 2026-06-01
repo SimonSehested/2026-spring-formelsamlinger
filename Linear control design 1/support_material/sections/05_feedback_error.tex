@@ -45,6 +45,13 @@ disturbancegrene lægges ind som særskilte bidrag.
 
 \paragraph{Hurtigtjek}
 Sæt en sidegren lig nul og kontroller at resultatet reduceres til et kendt enkelt loop.
+For systemtype og statisk loopgain samles open-loop først som én rational funktion.
+Type er antal poler i origo. For type \(n\) er den relevante statiske konstant
+\[
+K_0=\lim_{s\to0}s^nL(s).
+\]
+Eksempel: \(1+K_2/s=(s+K_2)/s\) indeholder stadig én integrator, så en controller som
+\(K_1(1+K_2/s)\) er en PI-controller.
 
 \paragraph{Typiske fælder}
 At sætte en forward sidegren ind i loopnævneren eller anvende unity-feedbackformlen på
@@ -114,6 +121,9 @@ Final value theorem kræver asymptotisk stabilt closed loop for den betragtede r
 
 \paragraph{Hurtigtjek}
 F21 Q16: \(G(0)=2\), \(K_P=2\), derfor \(e_{\mathrm{ss}}=1/(1+4)=0.2\).
+Når en disturbance \(d\) spørger til output eller fejl, skal reference sættes til nul,
+og DC-ligningerne skrives for disturbance-pathen. Referencefejlformlen kan ikke
+genbruges ukritisk, fordi disturbance-fortegnet ofte ændrer fejlsignalets fortegn.
 
 \paragraph{Typiske fælder}
 At beregne \(Y/R\) når opgaven spørger om \(E/R\), eller at bruge en ikke-endelig DC-gain.

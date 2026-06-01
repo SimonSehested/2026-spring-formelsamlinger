@@ -63,11 +63,22 @@ placeres ved ønsket crossover; plantmodellen er gyldig omkring operationen.
 \paragraph{Hurtigtjek}
 \(0<\alpha<1\), positive tidskonstanter og gain; det beregnede loop skal have
 magnitude 1 og fase \(-180^\circ+\gamma_M\) ved \(\omega_c\).
+For et rent P-Lead-led uden PI bruges samme leaddel:
+\[
+C_D(s)=\frac{\tau_d s+1}{\alpha\tau_d s+1},\qquad
+\omega_{\max}=\frac{1}{\tau_d\sqrt{\alpha}},\qquad
+|C_D(j\omega_{\max})|=\frac1{\sqrt{\alpha}}.
+\]
+Hvis \(\omega_c\) og \(\alpha\) er givet, er
+\(\tau_d=1/(\omega_c\sqrt{\alpha})\), lead-zero-frekvensen er \(1/\tau_d\), og
+lead-polfrekvensen er \(1/(\alpha\tau_d)\). I dB er leadbidraget ved centerfrekvens
+\(20\log_{10}(1/\sqrt{\alpha})\).
 
 \paragraph{Typiske fælder}
 At glemme den negative PI-fase eller at bruge grader som radianer. F21 Q18's
 solutiontekst og direkte TF-evaluering afviger lidt i plantfasen, men begge vælger
-\(\alpha\approx0.08\), \(K_P\approx200\).
+\(\alpha\approx0.08\), \(K_P\approx200\). For P-Lead: at bytte zero og pole eller
+svare den lineære faktor \(1/\sqrt{\alpha}\) som om den var dB.
 
 \paragraph{Python}
 \code{design\_pi\_lead\_at\_crossover(num,den,omega\_c,phase\_margin\_deg,n\_i)}
@@ -115,6 +126,9 @@ stemme med det anvendte Bodeargument.
 
 \paragraph{Hurtigtjek}
 F21 Q6: \(38.9\) dB kræver \(K_P\approx88\), ikke 38.9.
+Efter et design skal hele Bode/Nyquist-kurven kontrolleres. Et loop med resonans kan
+have et ekstra magnitude peak over 0 dB ved fase under \(-180^\circ\), selv om det
+ønskede crossoverpunkt er designet korrekt.
 
 \paragraph{Typiske fælder}
 At acceptere marginal gain som stabilt eller at overse type-0 stationær fejl.

@@ -3,13 +3,14 @@
 ## Kørsel
 
 - Kommando: `python -m scripts.validate_scripts`
-- Resultat: `Validated 28 checks.`; alle checks bestået.
+- Resultat: `Validated 36 checks.`; alle checks bestået.
 - Importtest: `python -c "from scripts.control import *; print('public import ok')"` bestået.
 - Compiletest: `python -m compileall -q scripts` bestået.
 
 | Funktion | Fil | Kategori | Testinput | Forventet resultat | Faktisk resultat | Status | Begrænsninger |
 | -------- | --- | -------- | --------- | ------------------ | ---------------- | ------ | ------------- |
 | `evaluate_transfer_function` | `scripts/control/lti.py` | Normal/invalid | `1/(s+1)`, `omega=1`; `omega=-1` | `0.5-0.5j`; fejl | Som forventet | Bestået | Kræver allerede opstillet TF |
+| `analyze_transfer_function` | `scripts/control/lti.py` | Symbolsk/numerisk settling | `20/(s^2+5s+20)`, `1/(s+1)`, `k/(s^2+5s+k)` | Stabilitet, andenordensdata, 2%/1%-settling for numerisk stabil model | Som forventet | Bestået | Settling beregnes kun for stabile, proper, numeriske modeller med ikke-nul slutværdi |
 | `transfer_function_poles` | `scripts/control/lti.py` | Known/invalid | `[1,2,1]`; ledende nul | `[-1,-1]`; fejl | Som forventet | Bestået | Fortolker ikke figur |
 | `closed_loop_poles` | `scripts/control/lti.py` | Boundary/exam/invalid | Q4 `K=8`; Q11 `K=25`; infinite gain | Marginal; stabil; fejl | Q4 imaginærakse, Q11 alle LHP, fejl | Bestået | Struktur skal verificeres manuelt |
 | `find_stable_gain_ranges` | `scripts/control/stability.py` | Boundary/interval/rational/invalid | `(s+1)^3+K`; `1+K/(s+1)^3`; gain-afhaengig ledende koefficient | `-1<K<8`, positivt `0<K<8`; rational form samme svar; fejl | Som forventet | Bestået | Kræver karakteristisk ligning med konstant grad efter samling |

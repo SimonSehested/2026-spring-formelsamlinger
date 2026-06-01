@@ -80,6 +80,13 @@ def main() -> None:
         and symbolic_analysis["omega_n"] == 2 * sp.sqrt(5),
         str(symbolic_analysis),
     )
+    first_order_analysis = analyze_transfer_function(1 / (s + 1), s)
+    check(
+        "analyze_transfer_function settling time",
+        np.isclose(first_order_analysis["settling_time_2_percent"], -math.log(0.02), atol=0.01)
+        and np.isclose(first_order_analysis["settling_time_1_percent"], -math.log(0.01), atol=0.01),
+        str(first_order_analysis),
+    )
     parameterized_analysis = analyze_transfer_function(k / (s**2 + 5 * s + k), s)
     check(
         "analyze_transfer_function parameterized",

@@ -6,6 +6,8 @@ from typing import Iterable
 
 import numpy as np
 import sympy as sp
+from scipy import signal
+from scipy.optimize import brentq
 
 
 s = sp.Symbol("s")
@@ -141,9 +143,66 @@ def bode_to_transfer(
     return sp.factor(sp.simplify(sp.together(transfer_function)))
 
 
-import sympy as sp
-import numpy as np
-from scipy.optimize import brentq
+def _poly_float_coefficients(poly: sp.Poly) -> list[float]:
+    coefficients = []
+    for coefficient in poly.all_coeffs():
+        value = complex(sp.N(coefficient))
+        if not np.isfinite(value.real) or not np.isfinite(value.imag):
+            raise ValueError("Polynomial coefficients must be finite.")
+        if abs(value.imag) > 1e-10:
+            raise ValueError("Polynomial coefficients must be real for time-domain metrics.")
+        coefficients.append(float(value.real))
+    return coefficients
+
+
+def _step_settling_time(
+    numerator: sp.Poly,
+    denominator: sp.Poly,
+    band_fraction: float,
+) -> float | None:
+    """Return unit-step settling time for a stable, proper numeric model."""
+
+    if numerator.degree() > denominator.degree():
+        return None
+
+    num = _poly_float_coefficients(numerator)
+    den = _poly_float_coefficients(denominator)
+    poles = np.roots(den)
+    stable_poles = poles[np.real(poles) < -1e-10]
+    if stable_poles.size != poles.size:
+        return None
+
+    final_value = float(np.polyval(num, 0.0) / np.polyval(den, 0.0))
+    if np.isclose(final_value, 0.0):
+        return None
+
+    slowest_decay = float(np.min(-np.real(stable_poles)))
+    fastest_frequency = float(max(1.0, np.max(np.abs(poles))))
+    base_horizon = max(10.0 / slowest_decay, 8.0 / fastest_frequency)
+    tolerance = band_fraction * abs(final_value)
+    system = signal.TransferFunction(num, den)
+
+    for multiplier in (1, 2, 4, 8):
+        horizon = base_horizon * multiplier
+        points = int(np.clip(2500 * multiplier, 2500, 40000))
+        times = np.linspace(0.0, horizon, points)
+        tout, response = signal.step(system, T=times)
+        error = np.abs(response - final_value)
+        outside = np.flatnonzero(error > tolerance)
+
+        if outside.size == 0:
+            return 0.0
+        last_outside = int(outside[-1])
+        if last_outside < len(tout) - 1:
+            t0, t1 = float(tout[last_outside]), float(tout[last_outside + 1])
+            e0, e1 = float(error[last_outside]), float(error[last_outside + 1])
+            if not np.isclose(e0, e1):
+                fraction = (tolerance - e0) / (e1 - e0)
+                if 0.0 <= fraction <= 1.0:
+                    return t0 + fraction * (t1 - t0)
+            return t1
+
+    return None
 
 
 def analyze_transfer_function(G: sp.Expr, variable: sp.Symbol | None = None) -> dict[str, object]:
@@ -230,11 +289,29 @@ def analyze_transfer_function(G: sp.Expr, variable: sp.Symbol | None = None) -> 
         "stability_text": stability_text,
         "y(0+)": y0,
         "y(inf)": yinf,
+        "settling_time_2_percent": None,
+        "settling_time_1_percent": None,
+        "settling_time_text": "ikke beregnet",
     }
 
     if not parameters:
         phase_margin_data = phase_margin(transfer_function, variable)
         result.update(phase_margin_data)
+
+        if stable:
+            settling_2 = _step_settling_time(numerator, denominator, 0.02)
+            settling_1 = _step_settling_time(numerator, denominator, 0.01)
+            result.update(
+                {
+                    "settling_time_2_percent": settling_2,
+                    "settling_time_1_percent": settling_1,
+                    "settling_time_text": (
+                        "unit-step settling time relativt til slutvaerdien"
+                        if settling_2 is not None or settling_1 is not None
+                        else "settling time ikke veldefineret for denne transferfunktion"
+                    ),
+                }
+            )
 
     if denominator.degree() == 2:
         a2, a1, a0 = denominator.all_coeffs()
