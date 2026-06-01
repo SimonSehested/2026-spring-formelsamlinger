@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Iterable
+from collections import Counter
+from typing import Callable, Iterable
 
 import numpy as np
 import sympy as sp
@@ -155,6 +156,694 @@ def _poly_float_coefficients(poly: sp.Poly) -> list[float]:
     return coefficients
 
 
+def _safe_float(value: object) -> float | None:
+    try:
+        numeric = complex(sp.N(value)) if isinstance(value, sp.Basic) else complex(value)  # type: ignore[arg-type]
+    except Exception:
+        return None
+    if not np.isfinite(numeric.real) or not np.isfinite(numeric.imag):
+        return None
+    if abs(numeric.imag) > 1e-8:
+        return None
+    return float(numeric.real)
+
+
+def _safe_complex(value: object, tol: float = 1e-12) -> complex | None:
+    try:
+        numeric = complex(sp.N(value)) if isinstance(value, sp.Basic) else complex(value)  # type: ignore[arg-type]
+    except Exception:
+        return None
+    if not np.isfinite(numeric.real) or not np.isfinite(numeric.imag):
+        return None
+    real = 0.0 if abs(numeric.real) < tol else float(numeric.real)
+    imag = 0.0 if abs(numeric.imag) < tol else float(numeric.imag)
+    return complex(real, imag)
+
+
+def _plain_float(value: float | np.floating | None) -> float | None:
+    if value is None:
+        return None
+    value = float(value)
+    return value if np.isfinite(value) else None
+
+
+def _safe_limit(expr: sp.Expr, variable: sp.Symbol, point: object, warnings: list[str], name: str) -> object:
+    try:
+        return sp.limit(expr, variable, point)
+    except Exception as exc:
+        warnings.append(f"{name} kunne ikke beregnes: {exc}")
+        return None
+
+
+def _poly_degree(poly: sp.Poly) -> int:
+    return int(poly.degree()) if not poly.is_zero else -sp.oo  # type: ignore[return-value]
+
+
+def _numeric_roots_safe(
+    poly: sp.Poly,
+    warnings: list[str],
+    used_numeric_fallbacks: list[str],
+    name: str,
+) -> list[complex]:
+    if poly.degree() <= 0:
+        return []
+    try:
+        coeffs = _poly_float_coefficients(poly)
+        if "numpy.roots" not in used_numeric_fallbacks:
+            used_numeric_fallbacks.append("numpy.roots")
+        return [complex(root) for root in np.roots(coeffs)]
+    except Exception:
+        pass
+    try:
+        return [complex(root) for root in poly.nroots(n=30, maxsteps=200)]
+    except Exception as exc:
+        warnings.append(f"{name}: SymPy nroots fejlede; bruger numpy.roots fallback ({exc}).")
+        if "numpy.roots" not in used_numeric_fallbacks:
+            used_numeric_fallbacks.append("numpy.roots")
+        coeffs = _poly_float_coefficients(poly)
+        return [complex(root) for root in np.roots(coeffs)]
+
+
+def _coerce_phase_margin_data(data: dict[str, object]) -> dict[str, object]:
+    coerced = dict(data)
+    for key in ("gain_crossover_frequency", "phase_at_gain_crossover_deg", "phase_margin_deg"):
+        if key in coerced:
+            coerced[key] = _plain_float(coerced[key])  # type: ignore[arg-type]
+    return coerced
+
+
+def _normalized_polys(numerator: sp.Poly, denominator: sp.Poly, variable: sp.Symbol) -> tuple[sp.Expr, sp.Expr, sp.Expr]:
+    leading = denominator.LC()
+    normalized_numerator = sp.simplify(numerator.as_expr() / leading)
+    normalized_denominator = sp.simplify(denominator.as_expr() / leading)
+    normalized_g = sp.factor(sp.cancel(sp.together(normalized_numerator / normalized_denominator)))
+    return normalized_g, normalized_numerator, normalized_denominator
+
+
+def _pole_zero_metrics(
+    poles: list[complex] | None,
+    zeros: list[complex] | None,
+    order: int,
+    tol: float,
+) -> dict[str, object]:
+    if poles is None or zeros is None:
+        return {
+            "dominant_poles": None,
+            "dominant_pole": None,
+            "fast_poles": None,
+            "pole_time_constants": None,
+            "zero_time_constants": None,
+            "minimum_phase": None,
+            "has_integrator": None,
+            "integrator_count": None,
+            "pole_zero_cancellations": None,
+            "minimal_order_estimate": None,
+        }
+
+    stable_poles = [p for p in poles if p.real < -tol]
+    if stable_poles:
+        min_abs_real = min(abs(p.real) for p in stable_poles)
+        dominant_poles = [p for p in stable_poles if abs(abs(p.real) - min_abs_real) <= max(tol, 1e-4 * min_abs_real)]
+        dominant_pole = dominant_poles[0]
+        fast_poles = [p for p in stable_poles if p not in dominant_poles]
+    else:
+        dominant_poles = []
+        dominant_pole = None
+        fast_poles = []
+
+    def time_constant(root: complex) -> float | None:
+        return float(-1.0 / root.real) if root.real < -tol else None
+
+    cancellations = []
+    unmatched_zeros = list(zeros)
+    for pole in poles:
+        if not unmatched_zeros:
+            break
+        distances = [abs(pole - zero) for zero in unmatched_zeros]
+        index = int(np.argmin(distances))
+        if distances[index] <= tol:
+            zero = unmatched_zeros.pop(index)
+            cancellations.append({"pole": pole, "zero": zero, "distance": float(distances[index])})
+
+    return {
+        "dominant_poles": dominant_poles,
+        "dominant_pole": dominant_pole,
+        "fast_poles": fast_poles,
+        "pole_time_constants": [{"pole": p, "tau": time_constant(p)} for p in poles],
+        "zero_time_constants": [{"zero": z, "tau": time_constant(z)} for z in zeros],
+        "minimum_phase": all(z.real < tol for z in zeros),
+        "has_integrator": any(abs(p) <= tol for p in poles),
+        "integrator_count": int(sum(1 for p in poles if abs(p) <= tol)),
+        "pole_zero_cancellations": cancellations,
+        "minimal_order_estimate": int(order - len(cancellations)),
+    }
+
+
+def _simulation_horizon(poles: list[complex], stable: bool | None, minimum: float = 10.0) -> tuple[float, int]:
+    stable_poles = [p for p in poles if p.real < -1e-10]
+    if stable and stable_poles:
+        max_tau = max(-1.0 / p.real for p in stable_poles)
+        fastest = max(1.0, max(abs(p) for p in stable_poles))
+        horizon = max(minimum, 8.0 * max_tau, 8.0 / fastest)
+    else:
+        scale = max([abs(p) for p in poles] + [1.0])
+        horizon = max(minimum, 8.0 / scale)
+    points = int(np.clip(max(5000, horizon * 500), 5000, 10000))
+    return float(horizon), points
+
+
+def _first_crossing_time(times: np.ndarray, values: np.ndarray, threshold: float, increasing: bool = True) -> float | None:
+    if increasing:
+        indices = np.flatnonzero(values >= threshold)
+    else:
+        indices = np.flatnonzero(values <= threshold)
+    if indices.size == 0:
+        return None
+    i = int(indices[0])
+    if i == 0:
+        return float(times[0])
+    t0, t1 = times[i - 1], times[i]
+    y0, y1 = values[i - 1], values[i]
+    if np.isclose(y0, y1):
+        return float(t1)
+    return float(t0 + (threshold - y0) * (t1 - t0) / (y1 - y0))
+
+
+def _settling_from_samples(times: np.ndarray, values: np.ndarray, final_value: float, band_fraction: float) -> float | None:
+    tolerance = band_fraction * max(abs(final_value), 1e-12)
+    outside = np.flatnonzero(np.abs(values - final_value) > tolerance)
+    if outside.size == 0:
+        return 0.0
+    last_outside = int(outside[-1])
+    if last_outside >= len(times) - 1:
+        return None
+    return float(times[last_outside + 1])
+
+
+def _compute_step_metrics(
+    numerator: sp.Poly,
+    denominator: sp.Poly,
+    transfer_function: sp.Expr,
+    variable: sp.Symbol,
+    poles: list[complex] | None,
+    stable: bool | None,
+    final_value_expr: object,
+    warnings: list[str],
+    used_numeric_fallbacks: list[str],
+    compute_symbolic: bool = True,
+) -> dict[str, object]:
+    result: dict[str, object] = {
+        "step_response_expression": None,
+        "rise_time_10_90": None,
+        "rise_time_0_100": None,
+        "peak_time": None,
+        "peak_value": None,
+        "overshoot_percent": None,
+        "undershoot_percent": None,
+        "steady_state_error_open_loop_step": None,
+        "steady_state_error_unity_feedback_step": None,
+        "monotonic_step_response": None,
+        "initial_slope": None,
+        "max_slope": None,
+        "time_of_max_slope": None,
+    }
+
+    if compute_symbolic:
+        t = sp.Symbol("t", positive=True, real=True)
+        try:
+            result["step_response_expression"] = sp.simplify(sp.inverse_laplace_transform(transfer_function / variable, variable, t))
+        except Exception as exc:
+            warnings.append(f"Symbolsk steprespons kunne ikke beregnes: {exc}")
+
+    final_value = _safe_float(final_value_expr)
+    if final_value is not None:
+        result["steady_state_error_open_loop_step"] = float(1.0 - final_value)
+        dc_gain = _safe_float(sp.limit(transfer_function, variable, 0))
+        if dc_gain is not None:
+            result["steady_state_error_unity_feedback_step"] = _finite_error_from_constant(dc_gain)
+
+    if numerator.degree() > denominator.degree() or poles is None:
+        return result
+
+    try:
+        num = _poly_float_coefficients(numerator)
+        den = _poly_float_coefficients(denominator)
+        horizon, points = _simulation_horizon(poles, stable)
+        tout, response = signal.step(signal.TransferFunction(num, den), T=np.linspace(0.0, horizon, points))
+        y = np.asarray(response, dtype=float)
+        if not np.all(np.isfinite(y)):
+            return result
+        if "numeric_step_response" not in used_numeric_fallbacks:
+            used_numeric_fallbacks.append("numeric_step_response")
+
+        y0 = float(y[0])
+        target = final_value if final_value is not None and np.isfinite(final_value) else float(y[-1])
+        direction = 1.0 if target >= y0 else -1.0
+        normalized = direction * (y - y0)
+        total_change = direction * (target - y0)
+
+        if abs(total_change) > 1e-12:
+            t10 = _first_crossing_time(tout, normalized, 0.1 * total_change, True)
+            t90 = _first_crossing_time(tout, normalized, 0.9 * total_change, True)
+            t100 = _first_crossing_time(tout, normalized, total_change, True)
+            result["rise_time_10_90"] = None if t10 is None or t90 is None else float(t90 - t10)
+            result["rise_time_0_100"] = t100
+
+        if direction >= 0:
+            peak_index = int(np.argmax(y))
+            trough = float(np.min(y))
+            undershoot = max(0.0, (min(y0, target) - trough) / max(abs(target), 1e-12) * 100.0)
+        else:
+            peak_index = int(np.argmin(y))
+            trough = float(np.max(y))
+            undershoot = max(0.0, (trough - max(y0, target)) / max(abs(target), 1e-12) * 100.0)
+        peak_value = float(y[peak_index])
+        result["peak_time"] = float(tout[peak_index])
+        result["peak_value"] = peak_value
+        result["overshoot_percent"] = max(0.0, (direction * (peak_value - target)) / max(abs(target), 1e-12) * 100.0)
+        result["undershoot_percent"] = undershoot
+
+        slopes = np.gradient(y, tout)
+        result["initial_slope"] = float(slopes[0])
+        max_slope_index = int(np.argmax(np.abs(slopes)))
+        result["max_slope"] = float(slopes[max_slope_index])
+        result["time_of_max_slope"] = float(tout[max_slope_index])
+
+        dy = np.diff(y)
+        slope_tol = max(1e-8, 1e-6 * max(1.0, float(np.max(np.abs(y)))))
+        significant = dy[np.abs(dy) > slope_tol]
+        result["monotonic_step_response"] = bool(
+            significant.size == 0 or np.all(significant >= 0) or np.all(significant <= 0)
+        )
+    except Exception as exc:
+        warnings.append(f"Numerisk steprespons kunne ikke beregnes: {exc}")
+
+    return result
+
+
+def _compute_impulse_metrics(
+    numerator: sp.Poly,
+    denominator: sp.Poly,
+    transfer_function: sp.Expr,
+    variable: sp.Symbol,
+    poles: list[complex] | None,
+    stable: bool | None,
+    warnings: list[str],
+    used_numeric_fallbacks: list[str],
+) -> dict[str, object]:
+    result: dict[str, object] = {
+        "impulse_response_expression": None,
+        "impulse_peak_value": None,
+        "impulse_peak_time": None,
+        "impulse_area": None,
+    }
+    t = sp.Symbol("t", positive=True, real=True)
+    try:
+        result["impulse_response_expression"] = sp.simplify(sp.inverse_laplace_transform(transfer_function, variable, t))
+    except Exception as exc:
+        warnings.append(f"Symbolsk impulsrespons kunne ikke beregnes: {exc}")
+
+    if numerator.degree() > denominator.degree() or poles is None:
+        return result
+    try:
+        num = _poly_float_coefficients(numerator)
+        den = _poly_float_coefficients(denominator)
+        horizon, points = _simulation_horizon(poles, stable)
+        tout, response = signal.impulse(signal.TransferFunction(num, den), T=np.linspace(0.0, horizon, points))
+        y = np.asarray(response, dtype=float)
+        if not np.all(np.isfinite(y)):
+            return result
+        if "numeric_impulse_response" not in used_numeric_fallbacks:
+            used_numeric_fallbacks.append("numeric_impulse_response")
+        index = int(np.argmax(np.abs(y)))
+        result["impulse_peak_value"] = float(y[index])
+        result["impulse_peak_time"] = float(tout[index])
+        result["impulse_area"] = float(np.trapezoid(y, tout))
+    except Exception as exc:
+        warnings.append(f"Numerisk impulsrespons kunne ikke beregnes: {exc}")
+    return result
+
+
+def _finite_error_from_constant(value: float | None) -> float | None:
+    if value is None or np.isnan(value):
+        return None
+    if np.isposinf(value) or value == np.inf:
+        return 0.0
+    if np.isneginf(value) or value == -np.inf:
+        return 0.0
+    denominator = 1.0 + value
+    if np.isclose(denominator, 0.0):
+        return None
+    return float(1.0 / denominator)
+
+
+def _inverse_or_none(value: float | None) -> float | None:
+    if value is None or np.isnan(value):
+        return None
+    if np.isinf(value):
+        return 0.0
+    if np.isclose(value, 0.0):
+        return None
+    return float(1.0 / value)
+
+
+def _steady_state_error_constants(G: sp.Expr, variable: sp.Symbol, warnings: list[str]) -> dict[str, object]:
+    values: dict[str, object] = {}
+    for key, expr in (
+        ("position_error_constant_Kp", G),
+        ("velocity_error_constant_Kv", variable * G),
+        ("acceleration_error_constant_Ka", variable**2 * G),
+    ):
+        try:
+            limit_value = sp.limit(expr, variable, 0)
+            values[key] = _safe_float(limit_value)
+            if values[key] is None and limit_value in (sp.oo, -sp.oo):
+                values[key] = float("inf")
+        except Exception as exc:
+            values[key] = None
+            warnings.append(f"{key} kunne ikke beregnes: {exc}")
+    kp = values["position_error_constant_Kp"]
+    kv = values["velocity_error_constant_Kv"]
+    ka = values["acceleration_error_constant_Ka"]
+    values["steady_state_error_unity_feedback_step"] = _finite_error_from_constant(kp if isinstance(kp, float) else None)
+    values["steady_state_error_unity_feedback_ramp"] = _inverse_or_none(kv if isinstance(kv, float) else None)
+    values["steady_state_error_unity_feedback_parabolic"] = _inverse_or_none(ka if isinstance(ka, float) else None)
+    return values
+
+
+def _frequency_response_metrics(
+    G: sp.Expr,
+    variable: sp.Symbol,
+    poles: list[complex],
+    zeros: list[complex],
+    dc_gain: object,
+    relative_degree: int,
+    warnings: list[str],
+) -> dict[str, object]:
+    result: dict[str, object] = {
+        "gain_margin": None,
+        "gain_margin_db": None,
+        "phase_crossover_frequency": None,
+        "bandwidth_3db": None,
+        "resonant_peak": None,
+        "resonant_peak_db": None,
+        "resonant_frequency": None,
+        "low_frequency_gain_db": None,
+        "high_frequency_rolloff_db_per_decade": float(-20 * relative_degree),
+        "break_frequencies": None,
+        "bode_asymptote_description": None,
+        "nyquist_stability_hint": None,
+    }
+    breaks = sorted(
+        float(abs(root.real) if abs(root.imag) < 1e-8 and root.real < 0 else abs(root))
+        for root in [*zeros, *poles]
+        if abs(root) > 1e-12
+    )
+    result["break_frequencies"] = breaks
+    result["bode_asymptote_description"] = (
+        f"Lavfrekvent gain starter ved DC-gain; haeldningen aendres ved break-frekvenserne "
+        f"{breaks} og ender med {result['high_frequency_rolloff_db_per_decade']:.0f} dB/dekade."
+    )
+    dc = _safe_float(dc_gain)
+    if dc is not None and abs(dc) > 0 and np.isfinite(dc):
+        result["low_frequency_gain_db"] = float(20.0 * np.log10(abs(dc)))
+
+    try:
+        Gjw = sp.lambdify(variable, G, "numpy")
+
+        def H(w: float) -> complex:
+            return complex(Gjw(1j * w))
+
+        roots_for_grid = [abs(x) for x in [*poles, *zeros] if abs(x) > 1e-9]
+        w_min = max(1e-6, min(roots_for_grid + [1.0]) / 1000.0)
+        w_max = max(1e3, max(roots_for_grid + [1.0]) * 1000.0)
+        ws = np.logspace(np.log10(w_min), np.log10(w_max), 20000)
+        values = np.array([H(float(w)) for w in ws])
+        mags = np.abs(values)
+        phases = np.unwrap(np.angle(values)) * 180.0 / np.pi
+        finite = np.isfinite(mags) & np.isfinite(phases)
+        if not np.any(finite):
+            return result
+        ws, mags, phases = ws[finite], mags[finite], phases[finite]
+        peak_index = int(np.argmax(mags))
+        result["resonant_peak"] = float(mags[peak_index])
+        result["resonant_peak_db"] = float(20.0 * np.log10(mags[peak_index])) if mags[peak_index] > 0 else None
+        result["resonant_frequency"] = float(ws[peak_index])
+
+        if dc is not None and dc != 0 and np.isfinite(dc):
+            threshold = abs(dc) / np.sqrt(2.0)
+            below = np.flatnonzero(mags <= threshold)
+            if below.size:
+                result["bandwidth_3db"] = float(ws[int(below[0])])
+
+        shifted = phases + 180.0
+        crossings = []
+        for i in range(len(ws) - 1):
+            if shifted[i] == 0 or shifted[i] * shifted[i + 1] < 0:
+                def phase_error(w: float) -> float:
+                    return float(np.angle(H(w), deg=True) + 180.0)
+
+                try:
+                    wc = brentq(phase_error, float(ws[i]), float(ws[i + 1]))
+                    crossings.append(wc)
+                except Exception:
+                    pass
+        if crossings:
+            wpc = float(crossings[0])
+            mag_at_wpc = abs(H(wpc))
+            result["phase_crossover_frequency"] = wpc
+            if mag_at_wpc > 0 and np.isfinite(mag_at_wpc):
+                gm = 1.0 / mag_at_wpc
+                result["gain_margin"] = float(gm)
+                result["gain_margin_db"] = float(20.0 * np.log10(gm))
+
+        rhp_poles = sum(1 for pole in poles if pole.real > 1e-7)
+        result["nyquist_stability_hint"] = (
+            "Open-loop har ingen RHP-poler; Nyquist kan vurderes direkte omkring -1."
+            if rhp_poles == 0
+            else f"Open-loop har {rhp_poles} RHP-pol(er); lukket stabilitet kraever korrekt Nyquist-indkredsning."
+        )
+    except Exception as exc:
+        warnings.append(f"Frekvensanalyse kunne ikke beregnes: {exc}")
+    return result
+
+
+def _differential_equation_from_polynomials(
+    numerator: sp.Poly,
+    denominator: sp.Poly,
+    variable: sp.Symbol,
+) -> dict[str, object]:
+    t = sp.Symbol("t")
+    y = sp.Function("y")
+    u = sp.Function("u")
+
+    def side(poly: sp.Poly, fn: Callable[[sp.Symbol], sp.Expr]) -> sp.Expr:
+        degree = poly.degree()
+        expression = 0
+        for index, coefficient in enumerate(poly.all_coeffs()):
+            power = degree - index
+            term = fn(t) if power == 0 else sp.diff(fn(t), t, power)
+            expression += coefficient * term
+        return sp.simplify(expression)
+
+    lhs = side(denominator, y)
+    rhs = side(numerator, u)
+    equation = sp.Eq(lhs, rhs)
+    return {
+        "differential_equation": str(equation),
+        "differential_equation_latex": sp.latex(equation),
+    }
+
+
+def _closed_loop_analysis(
+    numerator: sp.Poly,
+    denominator: sp.Poly,
+    variable: sp.Symbol,
+    tol: float,
+    warnings: list[str],
+    used_numeric_fallbacks: list[str],
+) -> dict[str, object]:
+    defaults = {
+        "closed_loop_T": None,
+        "sensitivity_S": None,
+        "closed_loop_poles": None,
+        "closed_loop_zeros": None,
+        "closed_loop_stable": None,
+        "closed_loop_dc_gain": None,
+        "closed_loop_step_final_value": None,
+        "closed_loop_step_settling_time_2_percent": None,
+        "closed_loop_step_overshoot_percent": None,
+        "closed_loop_step_rise_time_10_90": None,
+    }
+    try:
+        char_expr = sp.expand(denominator.as_expr() + numerator.as_expr())
+        T = sp.factor(sp.cancel(sp.together(numerator.as_expr() / char_expr)))
+        S = sp.factor(sp.cancel(sp.together(denominator.as_expr() / char_expr)))
+        cl_num_expr, cl_den_expr = sp.fraction(T)
+        cl_num = sp.Poly(sp.expand(cl_num_expr), variable)
+        cl_den = sp.Poly(sp.expand(cl_den_expr), variable)
+        cl_poles = _numeric_roots_safe(cl_den, warnings, used_numeric_fallbacks, "closed-loop poler")
+        cl_zeros = _numeric_roots_safe(cl_num, warnings, used_numeric_fallbacks, "closed-loop nulpunkter")
+        cl_stable = all(p.real < -tol for p in cl_poles)
+        cl_final = sp.limit(T, variable, 0)
+        step_metrics = _compute_step_metrics(
+            cl_num,
+            cl_den,
+            T,
+            variable,
+            cl_poles,
+            cl_stable,
+            cl_final,
+            warnings,
+            used_numeric_fallbacks,
+            compute_symbolic=False,
+        )
+        return {
+            "closed_loop_T": T,
+            "sensitivity_S": S,
+            "closed_loop_poles": cl_poles,
+            "closed_loop_zeros": cl_zeros,
+            "closed_loop_stable": bool(cl_stable),
+            "closed_loop_dc_gain": cl_final,
+            "closed_loop_step_final_value": cl_final,
+            "closed_loop_step_settling_time_2_percent": _step_settling_time(cl_num, cl_den, 0.02) if cl_stable else None,
+            "closed_loop_step_overshoot_percent": step_metrics.get("overshoot_percent"),
+            "closed_loop_step_rise_time_10_90": step_metrics.get("rise_time_10_90"),
+        }
+    except Exception as exc:
+        warnings.append(f"Closed-loop analyse kunne ikke beregnes: {exc}")
+        return defaults
+
+
+def _root_locus_analysis(
+    numerator: sp.Poly,
+    denominator: sp.Poly,
+    poles: list[complex],
+    zeros: list[complex],
+    tol: float,
+    warnings: list[str],
+) -> dict[str, object]:
+    n_poles = len(poles)
+    n_zeros = len(zeros)
+    asymptotes = n_poles - n_zeros
+    centroid = None
+    angles: list[float] = []
+    if asymptotes > 0:
+        centroid = complex((sum(poles) - sum(zeros)) / asymptotes)
+        angles = [float((2 * k + 1) * 180.0 / asymptotes) for k in range(asymptotes)]
+
+    real_points = sorted([x.real for x in [*poles, *zeros] if abs(x.imag) <= tol])
+    segments = []
+    if real_points:
+        bounds = [-float("inf"), *real_points, float("inf")]
+        for left, right in zip(bounds[:-1], bounds[1:]):
+            test = right - 1.0 if np.isneginf(left) else left + 1.0 if np.isposinf(right) else (left + right) / 2.0
+            count_right = sum(1 for x in real_points if x > test + tol)
+            if count_right % 2 == 1:
+                segments.append({"from": float(left), "to": float(right)})
+
+    samples = []
+    gains = [0, 0.1, 0.5, 1, 2, 5, 10, 50, 100]
+    try:
+        num = np.asarray(_poly_float_coefficients(numerator), dtype=float)
+        den = np.asarray(_poly_float_coefficients(denominator), dtype=float)
+        for gain in gains:
+            characteristic = np.polyadd(den, gain * num)
+            roots = [complex(root) for root in np.roots(np.trim_zeros(characteristic, trim="f"))]
+            samples.append({"gain": float(gain), "poles": roots})
+    except Exception as exc:
+        warnings.append(f"Root locus sample-poler kunne ikke beregnes: {exc}")
+        samples = None
+
+    return {
+        "root_locus_asymptote_centroid": centroid,
+        "root_locus_asymptote_angles_deg": angles,
+        "root_locus_real_axis_segments": segments,
+        "root_locus_sample_poles": samples,
+    }
+
+
+def _state_space_analysis(
+    numerator: sp.Poly,
+    denominator: sp.Poly,
+    warnings: list[str],
+) -> dict[str, object]:
+    defaults = {
+        "state_space_A": None,
+        "state_space_B": None,
+        "state_space_C": None,
+        "state_space_D": None,
+        "controllable": None,
+        "observable": None,
+        "controllability_rank": None,
+        "observability_rank": None,
+    }
+    try:
+        if numerator.degree() > denominator.degree():
+            return defaults
+        num = _poly_float_coefficients(numerator)
+        den = _poly_float_coefficients(denominator)
+        A, B, C, D = signal.tf2ss(num, den)
+        n = A.shape[0]
+        controllability = B
+        for i in range(1, n):
+            controllability = np.hstack((controllability, np.linalg.matrix_power(A, i) @ B))
+        observability = C
+        for i in range(1, n):
+            observability = np.vstack((observability, C @ np.linalg.matrix_power(A, i)))
+        cr = int(np.linalg.matrix_rank(controllability))
+        orank = int(np.linalg.matrix_rank(observability))
+        return {
+            "state_space_A": A.astype(float).tolist(),
+            "state_space_B": B.astype(float).tolist(),
+            "state_space_C": C.astype(float).tolist(),
+            "state_space_D": D.astype(float).tolist(),
+            "controllable": bool(cr == n),
+            "observable": bool(orank == n),
+            "controllability_rank": cr,
+            "observability_rank": orank,
+        }
+    except Exception as exc:
+        warnings.append(f"State-space analyse kunne ikke beregnes: {exc}")
+        return defaults
+
+
+def _modal_analysis(poles: list[complex] | None, tol: float) -> dict[str, object]:
+    if poles is None:
+        return {"modes": None, "dominant_mode_description": None}
+
+    def key(pole: complex) -> tuple[int, int]:
+        return (round(pole.real / tol), round(pole.imag / tol))
+
+    counts = Counter(key(pole) for pole in poles)
+    representatives: dict[tuple[int, int], complex] = {}
+    for pole in poles:
+        representatives.setdefault(key(pole), pole)
+
+    modes = []
+    for group_key, multiplicity in counts.items():
+        pole = representatives[group_key]
+        tau = float(-1.0 / pole.real) if pole.real < -tol else None
+        omega_n = float(abs(pole)) if abs(pole.imag) > tol else None
+        damping = float(-pole.real / abs(pole)) if abs(pole.imag) > tol and abs(pole) > tol else None
+        base = f"exp({pole.real:.4g} t)" if abs(pole.imag) <= tol else f"exp({pole.real:.4g} t) sinus/cosinus med omega={abs(pole.imag):.4g}"
+        if multiplicity > 1:
+            base = f"t^k {base}, k=0..{multiplicity - 1}"
+        modes.append(
+            {
+                "pole": pole,
+                "multiplicity": int(multiplicity),
+                "time_constant": tau,
+                "damping": damping,
+                "natural_frequency": omega_n,
+                "description": base,
+            }
+        )
+    stable_modes = [mode for mode in modes if isinstance(mode["time_constant"], float)]
+    dominant = max(stable_modes, key=lambda mode: mode["time_constant"])["description"] if stable_modes else None
+    return {"modes": modes, "dominant_mode_description": dominant}
+
+
 def _step_settling_time(
     numerator: sp.Poly,
     denominator: sp.Poly,
@@ -207,6 +896,9 @@ def _step_settling_time(
 
 def analyze_transfer_function(G: sp.Expr, variable: sp.Symbol | None = None) -> dict[str, object]:
     """Analyze a symbolic continuous-time rational transfer function."""
+    tol = 1e-7
+    analysis_warnings: list[str] = []
+    used_numeric_fallbacks: list[str] = []
 
     if variable is None:
         free_symbols = list(sp.sympify(G).free_symbols)
@@ -248,12 +940,8 @@ def analyze_transfer_function(G: sp.Expr, variable: sp.Symbol | None = None) -> 
         stable = None
         stability_text = "afhaenger af parametre"
     else:
-        zeros_numeric = (
-            [complex(root) for root in numerator.nroots()]
-            if numerator.degree() > 0
-            else []
-        )
-        poles_numeric = [complex(root) for root in denominator.nroots()]
+        zeros_numeric = _numeric_roots_safe(numerator, analysis_warnings, used_numeric_fallbacks, "nulpunkter")
+        poles_numeric = _numeric_roots_safe(denominator, analysis_warnings, used_numeric_fallbacks, "poler")
 
         stable = all(pole.real < -1e-10 for pole in poles_numeric)
         has_rhp_poles = any(pole.real > 1e-10 for pole in poles_numeric)
@@ -270,8 +958,15 @@ def analyze_transfer_function(G: sp.Expr, variable: sp.Symbol | None = None) -> 
         else:
             stability_text = "uklar"
 
-    y0 = sp.limit(transfer_function, variable, sp.oo)
-    yinf = sp.limit(transfer_function, variable, 0, "+")
+    y0 = _safe_limit(transfer_function, variable, sp.oo, analysis_warnings, "y(0+)")
+    yinf = _safe_limit(transfer_function, variable, 0, analysis_warnings, "y(inf)")
+    normalized_g, normalized_numerator, normalized_denominator = _normalized_polys(numerator, denominator, variable)
+    numerator_order = numerator.degree()
+    denominator_order = denominator.degree()
+    relative_degree = denominator_order - numerator_order
+    dc_gain = _safe_limit(transfer_function, variable, 0, analysis_warnings, "DC-gain")
+    coefficient_values = numerator.all_coeffs() + denominator.all_coeffs()
+    is_symbolic_exact = not any(coefficient.is_Float for coefficient in coefficient_values)
 
     result: dict[str, object] = {
         "G(s)": transfer_function,
@@ -281,9 +976,9 @@ def analyze_transfer_function(G: sp.Expr, variable: sp.Symbol | None = None) -> 
         "poles_exact": poles_exact,
         "zeros_numeric": zeros_numeric,
         "poles_numeric": poles_numeric,
-        "dc_gain": sp.limit(transfer_function, variable, 0),
-        "order": denominator.degree(),
-        "numerator_order": numerator.degree(),
+        "dc_gain": dc_gain,
+        "order": denominator_order,
+        "numerator_order": numerator_order,
         "system_type": poles_exact.get(sp.Integer(0), 0),
         "stable": stable,
         "stability_text": stability_text,
@@ -292,10 +987,22 @@ def analyze_transfer_function(G: sp.Expr, variable: sp.Symbol | None = None) -> 
         "settling_time_2_percent": None,
         "settling_time_1_percent": None,
         "settling_time_text": "ikke beregnet",
+        "normalized_G": normalized_g,
+        "normalized_numerator": normalized_numerator,
+        "normalized_denominator": normalized_denominator,
+        "static_gain": dc_gain,
+        "relative_degree": relative_degree,
+        "proper": bool(numerator_order <= denominator_order),
+        "strictly_proper": bool(numerator_order < denominator_order),
+        "biproper": bool(numerator_order == denominator_order),
+        "analysis_warnings": analysis_warnings,
+        "numerical_tolerance": tol,
+        "is_symbolic_exact": is_symbolic_exact,
+        "used_numeric_fallbacks": used_numeric_fallbacks,
     }
 
     if not parameters:
-        phase_margin_data = phase_margin(transfer_function, variable)
+        phase_margin_data = _coerce_phase_margin_data(phase_margin(transfer_function, variable))
         result.update(phase_margin_data)
 
         if stable:
@@ -313,6 +1020,121 @@ def analyze_transfer_function(G: sp.Expr, variable: sp.Symbol | None = None) -> 
                 }
             )
 
+        result.update(_pole_zero_metrics(poles_numeric, zeros_numeric, denominator_order, tol))
+        result.update(
+            _compute_step_metrics(
+                numerator,
+                denominator,
+                transfer_function,
+                variable,
+                poles_numeric,
+                stable,
+                yinf,
+                analysis_warnings,
+                used_numeric_fallbacks,
+            )
+        )
+        result.update(
+            _compute_impulse_metrics(
+                numerator,
+                denominator,
+                transfer_function,
+                variable,
+                poles_numeric,
+                stable,
+                analysis_warnings,
+                used_numeric_fallbacks,
+            )
+        )
+        result.update(_steady_state_error_constants(transfer_function, variable, analysis_warnings))
+        result.update(
+            _frequency_response_metrics(
+                transfer_function,
+                variable,
+                poles_numeric or [],
+                zeros_numeric or [],
+                dc_gain,
+                relative_degree,
+                analysis_warnings,
+            )
+        )
+        result.update(_differential_equation_from_polynomials(numerator, denominator, variable))
+        result.update(_closed_loop_analysis(numerator, denominator, variable, tol, analysis_warnings, used_numeric_fallbacks))
+        result.update(_root_locus_analysis(numerator, denominator, poles_numeric or [], zeros_numeric or [], tol, analysis_warnings))
+        result.update(_state_space_analysis(numerator, denominator, analysis_warnings))
+        result.update(_modal_analysis(poles_numeric, tol))
+    else:
+        parameter_warning = "Numeriske udvidede analyser springes over, fordi transferfunktionen afhaenger af parametre."
+        analysis_warnings.append(parameter_warning)
+        result.update(_pole_zero_metrics(None, None, denominator_order, tol))
+        result.update(
+            {
+                "step_response_expression": None,
+                "rise_time_10_90": None,
+                "rise_time_0_100": None,
+                "peak_time": None,
+                "peak_value": None,
+                "overshoot_percent": None,
+                "undershoot_percent": None,
+                "steady_state_error_open_loop_step": None,
+                "steady_state_error_unity_feedback_step": None,
+                "monotonic_step_response": None,
+                "initial_slope": None,
+                "max_slope": None,
+                "time_of_max_slope": None,
+                "impulse_response_expression": None,
+                "impulse_peak_value": None,
+                "impulse_peak_time": None,
+                "impulse_area": None,
+                "gain_margin": None,
+                "gain_margin_db": None,
+                "phase_crossover_frequency": None,
+                "bandwidth_3db": None,
+                "resonant_peak": None,
+                "resonant_peak_db": None,
+                "resonant_frequency": None,
+                "low_frequency_gain_db": None,
+                "high_frequency_rolloff_db_per_decade": float(-20 * relative_degree),
+                "break_frequencies": None,
+                "bode_asymptote_description": None,
+                "nyquist_stability_hint": None,
+                "position_error_constant_Kp": None,
+                "velocity_error_constant_Kv": None,
+                "acceleration_error_constant_Ka": None,
+                "steady_state_error_unity_feedback_ramp": None,
+                "steady_state_error_unity_feedback_parabolic": None,
+                "closed_loop_T": None,
+                "sensitivity_S": None,
+                "closed_loop_poles": None,
+                "closed_loop_zeros": None,
+                "closed_loop_stable": None,
+                "closed_loop_dc_gain": None,
+                "closed_loop_step_final_value": None,
+                "closed_loop_step_settling_time_2_percent": None,
+                "closed_loop_step_overshoot_percent": None,
+                "closed_loop_step_rise_time_10_90": None,
+                "root_locus_asymptote_centroid": None,
+                "root_locus_asymptote_angles_deg": None,
+                "root_locus_real_axis_segments": None,
+                "root_locus_sample_poles": None,
+                "state_space_A": None,
+                "state_space_B": None,
+                "state_space_C": None,
+                "state_space_D": None,
+                "controllable": None,
+                "observable": None,
+                "controllability_rank": None,
+                "observability_rank": None,
+                "modes": None,
+                "dominant_mode_description": None,
+            }
+        )
+        try:
+            result.update(_differential_equation_from_polynomials(numerator, denominator, variable))
+        except Exception as exc:
+            analysis_warnings.append(f"Differentialligning kunne ikke beregnes: {exc}")
+            result.update({"differential_equation": None, "differential_equation_latex": None})
+
     if denominator.degree() == 2:
         a2, a1, a0 = denominator.all_coeffs()
         omega_n = sp.sqrt(sp.simplify(a0 / a2))
@@ -327,6 +1149,9 @@ def analyze_transfer_function(G: sp.Expr, variable: sp.Symbol | None = None) -> 
                 "overshoot_percent_formula": sp.simplify(100 * overshoot),
             }
         )
+
+    if used_numeric_fallbacks:
+        result["is_symbolic_exact"] = False
 
     return result
 

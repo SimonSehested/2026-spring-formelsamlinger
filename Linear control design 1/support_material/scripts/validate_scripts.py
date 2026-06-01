@@ -94,6 +94,26 @@ def main() -> None:
         and parameterized_analysis["stability_text"] == "afhaenger af parametre",
         str(parameterized_analysis),
     )
+    extended_model = 0.64 * (0.5 * s + 1.0) / ((0.2 * s + 1.0) ** 2 * (1.0 * s + 0.2))
+    extended_analysis = analyze_transfer_function(extended_model, s)
+    extended_poles = sorted(extended_analysis["poles_numeric"], key=lambda pole: pole.real)
+    check(
+        "analyze_transfer_function extended target",
+        np.isclose(extended_analysis["zeros_numeric"][0].real, -2.0, atol=1e-7)
+        and np.allclose([pole.real for pole in extended_poles], [-5.0, -5.0, -0.2], atol=1e-6)
+        and sp.simplify(extended_analysis["dc_gain"] - sp.Rational(16, 5)) == 0
+        and extended_analysis["order"] == 3
+        and extended_analysis["system_type"] == 0
+        and extended_analysis["stable"] is True
+        and np.isclose(extended_analysis["dominant_pole"].real, -0.2, atol=1e-7)
+        and extended_analysis["relative_degree"] == 2
+        and extended_analysis["strictly_proper"] is True
+        and extended_analysis["minimum_phase"] is True
+        and np.isclose(extended_analysis["high_frequency_rolloff_db_per_decade"], -40.0)
+        and np.allclose(extended_analysis["break_frequencies"], [0.2, 2.0, 5.0, 5.0], atol=1e-7)
+        and np.isclose(extended_analysis["steady_state_error_unity_feedback_step"], 1 / 4.2),
+        str(extended_analysis),
+    )
     characteristic = closed_loop_characteristic(k / (s * (s + 5)), variable=s)
     check(
         "closed_loop_characteristic negative feedback",

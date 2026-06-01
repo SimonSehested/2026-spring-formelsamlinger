@@ -2,29 +2,34 @@
 
 ## Grundlag og prioritering
 
-Der findes nu to identificerede eksamenssæt, F21 og F25, med 20 spørgsmål hver og
-markerede svar. Prioritet vurderes ud fra gentagelse mellem sættene, centralitet i
-forelæsningerne og beregnings-/fejlrisiko.
+Der findes nu fem identificerede eksamenskilder: S20, F21, 2022, E23 og F25.
+S20, F21, E23 og F25 har løsningsnoter eller markerede svar; 2022-filen bruges som
+opgavetypekilde uden facit, og Q1/Q10 i den fil er ikke brugbart tekstudtrukket.
+Prioritet vurderes ud fra gentagelse mellem sættene, centralitet i forelæsningerne
+og beregnings-/fejlrisiko.
 
 | Opgavetype | Emne | Genkendelsessignaler | Kilder/eksamensopgaver | Hurtig metode | Nødvendige formler | Symboler/input | Support mode | Scriptkandidat | Typiske fælder | Hurtigtjek |
 | ---------- | ---- | -------------------- | ---------------------- | ------------- | ------------------ | -------------- | ------------ | -------------- | -------------- | ---------- |
-| Blokdiagramreduktion | Feedback | Blokke, summer, feedback | F21 Q1,Q16,Q19; F25 Q1,Q2,Q15; L2 | Find forward paths og loop | `forward/(1+loop)` | Fortegn, blokke | `notes_only` | Nej | Forkert signal/fortegn | Slå sidegren fra |
-| Fysisk model til TF | Modellering | RLC/masser/ODE | F21 Q2,Q7,Q8,Q12; F25 Q3,Q7,Q20; L2-L5 | Love -> ODE -> Laplace | `G=Y/U` | Parametre, initialvilkår | `notes_only`/`script_assisted` | Kun TF-kontrol | Springe udledning over | Poler og enheder |
-| Initial-/slutværdi | Tidsrespons | `y(0)`, `lim y(t)`, sammensat input | F25 Q1; L3-L4 | Skriv `Y=GU`, brug IVT/FVT | `lim sY` | `G,U,Y` | `script_assisted` | Ja | Bruge kun DC-gain | Stabilitet først |
-| Poler/zeros/stabilitet | Analyse | TF eller ODE, parameter `k` | F21 Q8,Q12; F25 Q3; L4,L6 | Faktoriser/beregn rødder | RHP-regel, koefficientkrav | Tæller/nævner | `script_assisted` | Ja | Overse origo-poler/zeros | Alle RHP/LHP |
-| Bode til/fra TF | Frekvens | dB/phase eller s-plan | F21 Q3,Q5,Q10; F25 Q5,Q10; L4,L6 | Breaks, slope, phase | `20log10|G|` | Plotværdier | `notes_only` | Nej | dB som gain; RHP | Netto slope |
-| P-gain og margin | Stabilitet/design | `K_P`, PM/GM | F21 Q4,Q6,Q11,Q15; F25 Q9,Q11; L6-L8 | Fasemål -> magnitudegain | `gamma_M=180+phi`; dB | TF/plot, mål | `script_assisted` | Ja | Grænsegain inklusiv | Closed-loop poles |
-| Nyquist-stabilitet | Stabilitet | Kurve, `-1`, RHP-pol | F21 Q13; F25 Q13,Q18; L7,L10 | Tæl P og krævet encirclement | `Z=P+N` | Retning/skæring | `notes_only` | Nej | Forkert retning | Skaleret skæring |
+| Blokdiagramreduktion | Feedback | Blokke, summer, feedback | S20 Q3; F21 Q1,Q16,Q19; E23 Q1,Q2; F25 Q1,Q2,Q15; L2 | Find forward paths og loop | `forward/(1+loop)` | Fortegn, blokke | `notes_only` | Nej | Forkert signal/fortegn | Slå sidegren fra |
+| Fysisk model til TF | Modellering | RLC/masser/ODE/state-space | S20 Q1,Q2; F21 Q2,Q7,Q8,Q12; 2022 Q8,Q9; E23 Q6,Q7; F25 Q3,Q7,Q20; L2-L5 | Love/state -> ODE -> Laplace | `G=Y/U` | Parametre, initialvilkår | `notes_only`/`script_assisted` | Kun TF-kontrol | Springe udledning over | Poler og enheder |
+| Initial-/slutværdi | Tidsrespons | `y(0)`, `lim y(t)`, sammensat input | S20 Q4; F25 Q1; L3-L4 | Skriv `Y=GU`, brug IVT/FVT | `lim sY` | `G,U,Y` | `script_assisted` | Ja | Bruge kun DC-gain | Stabilitet først |
+| Poler/zeros/stabilitet | Analyse | TF, ODE eller parameter | S20 Q16; F21 Q8,Q12; 2022 Q8,Q9; E23 Q6,Q7; F25 Q3; L4,L6 | Faktoriser/beregn rødder | RHP-regel, koefficientkrav | Tæller/nævner | `script_assisted` | Ja | Overse origo-poler/zeros | Alle RHP/LHP |
+| Systemtype og static constants | Feedback | Type 0/1/n, `K0`, integrator | 2022 Q9; E23 Q3,Q4,Q5,Q9,Q12; F25 Q4; L8,L9 | Saml `L(s)`, tæl origo-poler | `lim s^nL(s)` | Loop TF | `notes_only` | Nej | `L(0)=inf` som `K0` | Type før DC |
+| Bode til/fra TF | Frekvens | dB/phase eller s-plan | S20 Q6,Q8,Q13; F21 Q3,Q5,Q10; 2022 Q4,Q5; E23 Q8,Q10,Q11,Q16; F25 Q5,Q10; L4,L6 | Breaks, slope, phase | `20log10|G|` | Plotværdier | `notes_only` | Nej | dB som gain; RHP | Netto slope |
+| Bandwidth/damped frequency | Tids/frekvens | `-3 dB`, peakperiode | S20 Q7,Q8; E23 Q17; L4,L9 | Aflæs niveau eller periode | `|T|=|T0|/sqrt2`, `2pi/Td` | Plot | `notes_only` | Nej | Absolut 0 dB | DC-niveau først |
+| P-gain og margin | Stabilitet/design | `K_P`, PM/GM | S20 Q9; F21 Q4,Q6,Q11,Q15; 2022 Q6,Q11,Q15; E23 Q10,Q13; F25 Q9,Q11; L6-L8 | Fasemål -> magnitudegain | `gamma_M=180+phi`; dB | TF/plot, mål | `script_assisted` | Ja | Grænsegain inklusiv | Closed-loop poles |
+| Nyquist-stabilitet | Stabilitet | Kurve, `-1`, RHP-pol | S20 Q12,Q17,Q18; F21 Q13; 2022 Q12; F25 Q13,Q18; L7,L10 | Tæl P og krævet encirclement | `Z=P+N` | Retning/skæring | `notes_only` | Nej | Forkert retning | Skaleret skæring |
 | Nyquist phase margin | Stabilitet | Unit-circle point | F21 Q14; L7 | `atan2` af punkt | `180+phi_c` | `(Re,Im)` | `script_assisted` | Ja | Radian/grad | Kvadrant |
-| Stationær referencefejl | Performance | Unit step, type-0/n, ramp/parabel | F21 Q16,Q19; F25 Q4,Q14,Q15,Q18; L8,L9,L12 | Udled `E/R`, tag DC | Final value, static constants | DC gains | `script_assisted` | Ja for standardloop | Output i stedet for error | Fejl mellem 0 og 1 |
-| Settling/steprespons | Tidsrespons | `M_p`, `K`, `t_s`, stepplot | F21 Q9; F25 Q6,Q20; L4,L9 | Match standardform/dominant pol | `M_p(zeta)`, `-tau ln eps` | Nævner | `script_assisted` | Ja | 1% vs 2%; hurtig pol | Dominant pol |
-| PI-Lead-design | Controllerdesign | `omega_c`, PM, `N_i`, `alpha` | F21 Q18; F25 Q16; L8,L9 | Fasebalance -> gain | PI/lead equations | TF/specs | `script_primary` | Ja | PI-fase glemt | `0<alpha<1` |
+| Stationær referencefejl | Performance | Unit step, type-0/n, ramp/parabel | F21 Q16,Q19; 2022 Q16; E23 Q18-Q20; F25 Q4,Q14,Q15,Q18; L8,L9,L12 | Udled `E/R`, tag DC | Final value, static constants | DC gains | `script_assisted` | Ja for standardloop | Output i stedet for error | Fejl mellem 0 og 1 |
+| Settling/steprespons | Tidsrespons | `M_p`, `K`, `t_s`, stepplot | S20 Q4,Q5,Q8; F21 Q9; 2022 Q2,Q3,Q14; E23 Q16,Q17; F25 Q6,Q20; L4,L9 | Match standardform/dominant pol | `M_p(zeta)`, `-tau ln eps` | Nævner/plot | `script_assisted` | Ja | 1% vs 2%; hurtig pol | Dominant pol |
+| P-Lead og Leadbidrag | Controllerdesign | `alpha`, `tau_d`, lead zero/pole | S20 Q10,Q11,Q15; 2022 Q13,Q20; E23 Q14,Q15; L8,L9 | Center lead ved crossover | `1/(tau_d sqrt(alpha))` | `alpha,wc` | `script_assisted` | Nej særskilt | Zero/pole byttes | `0<alpha<1` |
+| PI-Lead-design | Controllerdesign | `omega_c`, PM, `N_i`, `alpha` | S20 Q14; F21 Q18; 2022 Q17,Q19; F25 Q16; L8,L9 | Fasebalance -> gain | PI/lead equations | TF/specs | `script_primary` | Ja | PI-fase glemt | `0<alpha<1` |
 | Ziegler-Nichols PID | Controllerdesign | `K_u`, `P_u`, sustained oscillation | F25 Q8; L8/L9 | Ultimate period -> PID table | `Kp=.6Ku`, `Ti=Pu/2` | `Ku,Pu` | `script_assisted` | Ja | Vende `2pi/omega` | Gain/tider |
-| P-Lead-Lag-design | Limits/design | `beta`, Lag, PM | F21 Q17; F25 Q17; L11 | Krævet lagfase -> `beta` | Lag phase | `alpha,N_i` | `script_primary` | Ja | Lag=PI | `beta>1` |
+| P-Lead-Lag-design | Limits/design | `beta`, Lag, PM | S20 Q17,Q18; F21 Q17; F25 Q17; L11 | Krævet lagfase -> `beta` | Lag phase | `alpha,N_i` | `script_primary` | Ja | Lag=PI | `beta>1` |
 | Limited systems/windup | Ikke-linearitet | saturation/rate | F25 Q12; L11 | Find limit, mitigér | limit definitions | actuator data | `notes_only` | Nej | Lineær konklusion | Små/store steps |
-| Disturbance/sensitivity | Robusthed | `d`, `S`, Bode | L12 | Superposition og loop | `S=1/(1+L)` | path/fortegn | `notes_only` | Nej | Forkert path | DC sense |
+| Disturbance/sensitivity | Robusthed | `d`, `S`, Bode | S20 Q19; E23 Q19,Q20; L12 | Superposition og loop | `S=1/(1+L)` | path/fortegn | `notes_only` | Nej | Forkert path | DC sense |
 | Prefilter | Referenceformning | `F(s)` før loop | L11,L12 | Form referencepath | `Y/R=FT` | ønsket peak | `notes_only` | Nej | Ændre marginpåstand | Loop uændret |
-| Feed-forward rejection/tracking | Robusthed | Målt `d`, `F_d`, reference-invers | F21 Q20; F25 Q19; L13 | Annulér disturbancepath eller inverter plant med filter | `F_d=-sigma_D D/G`, `1/(G(tau_f s+1))` | fortegn, `G,D` | `script_assisted` | Ja | improper/ustabil inverse | Numerator/DC nul |
+| Feed-forward rejection/tracking | Robusthed | Målt `d`, `F_d`, reference-invers | F21 Q20; 2022 Q18; F25 Q19; L13 | Annulér disturbancepath eller inverter plant med filter | `F_d=-sigma_D D/G`, `1/(G(tau_f s+1))` | fortegn, `G,D` | `script_assisted` | Ja | improper/ustabil inverse | Numerator/DC nul |
 
 ## Opgavetype: Blokdiagramreduktion og stationær fejl
 

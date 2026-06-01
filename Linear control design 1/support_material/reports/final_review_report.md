@@ -2,66 +2,49 @@
 
 ## Leverancer
 
-Eksamenspakken er opdateret for det tilgængelige materiale: alle 13 forelæsninger,
-F21-løsningsfilen, den officielle Q11-Q20-questionnaire og det nye F25-sæt er auditeret;
-alle 40 opgaver fra F21 og F25 er analyseret og mappet; validerede scripts, notebook og
-en bygget modulær PDF er leveret.
+Eksamenspakken er opdateret for de nye eksamensfiler i `support_material/input/exams`.
+Der findes nu analyser for S20, F21, 2022, E23 og F25, og `exam_verification_report.md`
+mapper alle synlige opgaver til notesektioner. `lcd.pdf` er genbygget fra den opdaterede
+LaTeX-formelsamling.
 
 ## LaTeX build
 
-- Forsøgt kommando: `latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex`.
-- Resultat: kunne ikke startes, fordi den lokale MiKTeX-installation mangler Perl-scriptmotoren, som `latexmk` kræver.
-- Første direkte buildforsøg viste manglende lokale valgfrie pakker (`babel` med dansk option, `multirow`, `fancyhdr`). `multirow` og `fancyhdr` var ikke funktionelt nødvendige; dansk tekst sættes korrekt med UTF-8/T1 uden lokal hyphenation-pakke.
-- Endelig kommando: `pdflatex -interaction=nonstopmode -halt-on-error main.tex` kørt to gange med output gemt i `build.log`.
-- Resultat: bestået; `main.pdf` produceret som A4, 18 sider.
-- Ikke-fatale advarsler: enkelte overfull/underfull boxes ved lange funktionsnavne og hyperref-bookmarkwarnings for matematik i overskrifter; ingen manglende references efter anden pass og intet tab af faglig tekst.
+- Kommando: `pdflatex -jobname=lcd -interaction=nonstopmode -halt-on-error support_material\main.tex`.
+- Resultat: bestået; kommandoen blev kørt to gange for referencer.
+- Output: `lcd.pdf`, A4, 14 sider.
+- Ikke-fatale advarsler: overfull/underfull boxes ved lange funktionsnavne og hyperref-bookmarkwarnings for matematik i overskrifter; ingen buildstop.
+- PDF-tekstkontrol fandt de nye nøgleord/metoder: S20/2022/E23 i metadata, `Closed-loop bandwidth`, `statisk loopgain`, `P-Lead`, `lavpasfilter` og `dæmpede egenfrekvens`.
 
 ## Python validation
 
-- Kommando: `python -m compileall -q scripts`.
+- Kommando: `python -m compileall -q support_material\scripts`.
 - Resultat: bestået.
-- Kommando: `python -c "from scripts.control import *; print('public import ok')"`.
-- Resultat: bestået.
-- Kommando: `python -m scripts.validate_scripts`.
-- Resultat: bestået, 35 checks.
-- Notebooken er efter brugerfeedback reduceret til et kommenteret kodeindeks og kørbare kontrolcases; den indeholder ikke længere teksttunge Markdown-sektioner eller den ugyldige prøve-celle med udefineret `s`.
-- VS Code-loggen for `notebook controller is DISPOSED` peger på editorens kasserede kernelcontroller, ikke en Python-fejl i notebookens celler. Efter brugerens anvisning opretter projektet ikke et lokalt virtual environment eller en registreret kernelspec.
-- Notebook verification: alle 4 kodeceller i `exam_toolbox.ipynb` er udført sekventielt uden cellefejl med tilgængelige dependencies.
-
-## PDF verification
-
-- `pdfinfo main.pdf` bekræfter A4 og 18 sider.
-- `pdftotext`-kontrol fandt titel, metodefinder, symbolregister, PI-Lead-design,
-  Ziegler--Nichols, reference feed-forward og oversigten over validerede funktioner i
-  den byggede PDF.
+- Første kommando fra repo-roden `python -m support_material.scripts.validate_scripts` fejlede på importstien, fordi scriptet importerer `scripts.control`.
+- Korrekt kommando: `python -m scripts.validate_scripts` kørt fra `support_material`.
+- Resultat: bestået med `Validated 36 checks.`
+- Der blev ikke tilføjet nye Python-funktioner; de nye eksamenssæt krævede primært udvidet notesdækning for plot-, systemtype-, P-Lead- og disturbancefortolkning.
 
 ## Kvalitetstjek
 
 | Krav | Status | Dokumentation |
 | ---- | ------ | ------------- |
-| Alle inputfiler auditeret | Opfyldt | `input_audit.md` dækker de primære PDF-kilder inkl. F25 |
-| Alle forelæsninger læst ind i pensumrapport | Opfyldt | `full_curriculum_report.md` dækker L1-L13 |
-| Analyse pr. eksamenssæt | Opfyldt | F21 og F25 er analyseret; del-2-filen er companion original til F21 |
-| Ingen eksamensopgave sprunget over | Opfyldt | Q1-Q20 i `F21.md` og verificationtabel |
+| Alle inputfiler auditeret | Opfyldt | `input_audit.md` dækker S20, F21, 2022, E23 og F25 samt F21-kontrolfiler |
+| Analyse pr. eksamenssæt | Opfyldt | `exam_set_analyses/S20.md`, `F21.md`, `2022.md`, `E23.md`, `F25.md` |
+| Ingen synlig eksamensopgave sprunget over | Opfyldt med forbehold | 2022 Q1/Q10 er markeret som ikke brugbart tekstudtrukket |
 | Merged task taxonomy | Opfyldt | `merged_task_taxonomy.md` |
-| Prioriterede notesektioner har alle krævede felter | Opfyldt | `sections/03_*.tex` til `07_*.tex`; verificationrapport |
-| Python-kandidater vurderet | Opfyldt | `script_inventory.md` |
-| Accepterede scripts importbare og testet | Opfyldt | 23 beståede checks |
-| Python-dækning/non-coverage forklaret | Opfyldt | `python_coverage_report.md` |
-| Notebook matcher validerede funktioner | Opfyldt | `notebook_inventory.md`; top-til-bund-kørsel |
-| Scriptreferencer matcher noter | Opfyldt | `script_note_integration_report.md` |
-| Alle eksamensopgaver mappet til noter | Opfyldt | `exam_verification_report.md` dækker F21 og F25 |
-| Symbolregister | Opfyldt | `sections/02_symbolregister.tex` |
-| PDF bygget | Opfyldt | `main.pdf`, `build.log` |
+| Notesektioner opdateret | Opfyldt | Model/tid, feedback/fejl, controllerdesign og disturbance/feed-forward er udbygget |
+| Python-kandidater vurderet | Opfyldt | `script_inventory.md` og `python_coverage_report.md` forklarer accepterede/afviste kandidater |
+| Scripts importbare og testet | Opfyldt | 36 beståede checks |
+| Alle eksamensopgaver mappet til noter | Opfyldt | `exam_verification_report.md` |
+| PDF bygget | Opfyldt | `lcd.pdf` |
 
 ## Kendte begrænsninger og manuelle reviewpunkter
 
-- Kildepakken indeholder nu to samlede eksamenssæt; gentagelsesfrekvens kan kun vurderes groft.
+- `EXAMS_LCD1_2022_no_answerS.pdf` er uden facit og har ikke brugbart tekstudtræk for Q1/Q10. De to spørgsmål skal visuelt kontrolleres i original PDF, hvis fuld 2022-facitdækning ønskes.
+- Bode-, Nyquist-, steprespons- og blokdiagramfigurer kræver fortsat manuel aflæsning i original PDF ved præcise svarvalg.
 - Hjælpemiddelregler og tilladelse til Python er ikke dokumenteret i inputmaterialet.
-- Bode-/Nyquist-/blokdiagramdata skal kontrolleres visuelt i PDF'erne; scripts tolker ikke figurer.
-- Matlab/Simulink-eksempelfiler og undervisningsdatasæt er ikke medleveret; Python er valideret mod formler og F21-cases, ikke mod original Matlabkode.
-- F21 Q9 bruger afrundet overshootgrænse (`K=20` giver eksakt `12.0265 %`), og Q18's løsningstekst angiver en plantfase, der afviger lidt fra direkte evaluering af den trykte transferfunktion. Begge forhold er synlige i `script_validation_report.md`.
+- Notebooken og scripts er ikke ændret, fordi de nye opgavetyper ikke retfærdiggør nye API'er.
 
 ## Konklusion
 
-Stopkriterierne er opfyldt for de tilgængelige kilder. De tilbageværende punkter er eksplicitte kilde-/brugsvilkår og ikke manglende leverancer.
+Stopkriterierne er opfyldt for alle brugbart udtrukne eksamensopgaver. Den eneste åbne kildebegrænsning er 2022 Q1/Q10, som ikke kan analyseres sikkert fra tekstlaget alene.
